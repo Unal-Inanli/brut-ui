@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-row-actions">Table — Row Actions</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,67 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE ROW ACTIONS -->
+      <section class="docs-section" id="table-row-actions">
+        <h2>Table — Row Actions</h2>
+        <p class="lead">Per-row kebab button that opens a shared <code>.brut-menu</code>. Place <code>&lt;button data-brut-row-actions="&lt;menu-id&gt;"&gt;</code> in any cell; selecting an item dispatches <code>brut:row-action</code> with <code>{ action, row }</code> on the anchor button.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="max-width: 640px;">
+            <table class="brut-table">
+              <thead class="brut-table__head">
+                <tr class="brut-table__row">
+                  <th class="brut-table__cell">Name</th>
+                  <th class="brut-table__cell">Role</th>
+                  <th class="brut-table__cell" style="width: 40px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="brut-table__row">
+                  <td class="brut-table__cell">Alice</td>
+                  <td class="brut-table__cell">Designer</td>
+                  <td class="brut-table__cell"><button class="brut-table__row-actions-btn" data-brut-row-actions="docs-row-menu" aria-label="Row actions">&#8801;</button></td>
+                </tr>
+                <tr class="brut-table__row">
+                  <td class="brut-table__cell">Bob</td>
+                  <td class="brut-table__cell">Engineer</td>
+                  <td class="brut-table__cell"><button class="brut-table__row-actions-btn" data-brut-row-actions="docs-row-menu" aria-label="Row actions">&#8801;</button></td>
+                </tr>
+                <tr class="brut-table__row">
+                  <td class="brut-table__cell">Carla</td>
+                  <td class="brut-table__cell">PM</td>
+                  <td class="brut-table__cell"><button class="brut-table__row-actions-btn" data-brut-row-actions="docs-row-menu" aria-label="Row actions">&#8801;</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="brut-menu" data-brut="menu" id="docs-row-menu" hidden>
+              <button class="brut-menu__item" type="button" data-brut-action="edit">Edit</button>
+              <button class="brut-menu__item" type="button" data-brut-action="duplicate">Duplicate</button>
+              <hr class="brut-menu__sep"/>
+              <button class="brut-menu__item brut-menu__item--danger" type="button" data-brut-action="delete">Delete</button>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;!-- kebab button in each row's last cell --&gt;
+&lt;button class="brut-table__row-actions-btn"
+        data-brut-row-actions="row-menu"
+        aria-label="Row actions"&gt;&amp;#8801;&lt;/button&gt;
+
+&lt;!-- shared menu (one per table) --&gt;
+&lt;div class="brut-menu" data-brut="menu" id="row-menu" hidden&gt;
+  &lt;button class="brut-menu__item" type="button" data-brut-action="edit"&gt;Edit&lt;/button&gt;
+  &lt;button class="brut-menu__item" type="button" data-brut-action="duplicate"&gt;Duplicate&lt;/button&gt;
+  &lt;hr class="brut-menu__sep"/&gt;
+  &lt;button class="brut-menu__item brut-menu__item--danger" type="button" data-brut-action="delete"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- listen for the dispatched event --&gt;
+&lt;script&gt;
+  document.addEventListener('brut:row-action', function (e) {
+    console.log(e.detail.action, e.detail.row);
+  });
+&lt;/script&gt;</pre>
       </section>
 
       <!-- ROWS -->
