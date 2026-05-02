@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:56:23Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,14 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — EXPORT
+   Download-trigger button for CSV / JSON export of visible rows.
+   Extends .brut-btn with a small download-arrow hint.
+   ============================================================ */
+.brut-table-export-btn::before {
+  content: "\2193\00A0"; /* ↓ + non-breaking space */
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+}

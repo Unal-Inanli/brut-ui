@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Export</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  .wrap { max-width: 900px; }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-6) 0 var(--sp-2); }
+  .btn-row { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-4); }
+  details { margin-top: var(--sp-4); border: var(--bw-3) solid var(--ink); padding: var(--sp-3) var(--sp-4); }
+  summary { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wide); font-size: var(--fs-xs); cursor: pointer; }
+  #last { margin-top: var(--sp-3); white-space: pre-wrap; max-height: 300px; overflow: auto; }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Table — Export</h3>
+
+  <table class="brut-table" id="demo">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+        <th class="brut-table__cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Product</td><td class="brut-table__cell brut-table__cell--num">14</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell brut-table__cell--num">7</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell">Growth</td><td class="brut-table__cell brut-table__cell--num">22</td><td class="brut-table__cell">On leave</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell brut-table__cell--num">3</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Eve</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Brand</td><td class="brut-table__cell brut-table__cell--num">18</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Frank</td><td class="brut-table__cell">Analyst</td><td class="brut-table__cell">Finance</td><td class="brut-table__cell brut-table__cell--num">9</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Grace</td><td class="brut-table__cell">Lead</td><td class="brut-table__cell">Product</td><td class="brut-table__cell brut-table__cell--num">31</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Hana</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Security</td><td class="brut-table__cell brut-table__cell--num">5</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Ivan</td><td class="brut-table__cell">DevOps</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell brut-table__cell--num">12</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Jade</td><td class="brut-table__cell">QA</td><td class="brut-table__cell">Quality</td><td class="brut-table__cell brut-table__cell--num">27</td><td class="brut-table__cell">Active</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Karl</td><td class="brut-table__cell">Data</td><td class="brut-table__cell">Analytics</td><td class="brut-table__cell brut-table__cell--num">8</td><td class="brut-table__cell">On leave</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Lena</td><td class="brut-table__cell">Scrum</td><td class="brut-table__cell">Delivery</td><td class="brut-table__cell brut-table__cell--num">20</td><td class="brut-table__cell">Active</td></tr>
+    </tbody>
+  </table>
+
+  <div class="btn-row">
+    <button class="brut-btn brut-table-export-btn" data-brut="table-export" data-brut-table="demo">Export CSV</button>
+    <button class="brut-btn brut-table-export-btn" data-brut="table-export" data-brut-table="demo" data-brut-format="json">Export JSON</button>
+    <button class="brut-btn brut-table-export-btn" data-brut="table-export" data-brut-table="demo" data-brut-filename="custom-name">Export (custom name)</button>
+  </div>
+
+  <details>
+    <summary>Last export preview</summary>
+    <pre id="last">— click an export button above —</pre>
+  </details>
+</div>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.addEventListener('brut:change', function (e) {
+    if (!e.detail) return;
+    document.querySelector('details').open = true;
+    document.getElementById('last').textContent =
+      'format: ' + e.detail.format + '  |  rows: ' + e.detail.rowCount;
+  });
+</script>
+</body></html>
