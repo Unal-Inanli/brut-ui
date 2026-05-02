@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-row-expand">Table — Row Expand</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,70 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — ROW EXPAND -->
+      <section class="docs-section" id="table-row-expand">
+        <h2>Table — Row Expand</h2>
+        <p class="lead">Expandable detail rows. Add <code>data-brut="table-row-expand"</code> to any <code>&lt;tr&gt;</code> and point <code>data-brut-row-detail</code> at a <code>&lt;template&gt;</code> id. A chevron is prepended to the first cell; click or press Space/Enter to toggle the inline detail row.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table" style="max-width: 640px;">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell brut-table__cell--num">Projects</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="docs-expand-1">
+                <td class="brut-table__cell">Alice Chen</td>
+                <td class="brut-table__cell">Designer</td>
+                <td class="brut-table__cell brut-table__cell--num">14</td>
+              </tr>
+              <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="docs-expand-2">
+                <td class="brut-table__cell">Bob Müller</td>
+                <td class="brut-table__cell">Engineer</td>
+                <td class="brut-table__cell brut-table__cell--num">7</td>
+              </tr>
+            </tbody>
+          </table>
+          <template id="docs-expand-1">
+            <div>
+              <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+                <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">alice@example.com</dd>
+                <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2021-03-15</dd>
+              </dl>
+            </div>
+          </template>
+          <template id="docs-expand-2">
+            <div>
+              <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+                <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">bob@example.com</dd>
+                <dt style="font-weight: 700;">Stack</dt><dd style="margin: 0;">Go, Kubernetes, Postgres</dd>
+              </dl>
+            </div>
+          </template>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell"&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"
+        data-brut="table-row-expand"
+        data-brut-row-detail="detail-1"&gt;
+      &lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;Designer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;template id="detail-1"&gt;
+  &lt;div&gt;…detail content…&lt;/div&gt;
+&lt;/template&gt;</pre>
       </section>
 
       <!-- ROWS -->
