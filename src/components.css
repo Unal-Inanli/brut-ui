@@ -2329,3 +2329,39 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — TOTALS
+   Styles <tfoot> rows showing column sums, averages, or counts.
+   Mirrors <thead> visual weight: ink top border, paper-2 bg,
+   display font, uppercase, xs size, wide tracking.
+   Modifier .brut-table--sticky-foot keeps totals visible while
+   scrolling a long table inside an overflow container.
+   ============================================================ */
+
+/* .brut-table__foot — applied to <tfoot> */
+.brut-table__foot {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* cells inside the foot: ink top border, paper-2 bg, bold weight + tabular numerals */
+.brut-table__foot .brut-table__cell {
+  border-top: var(--bw-3) solid var(--ink);
+  background: var(--paper-2);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: var(--num-tabular);
+}
+
+/* sticky-foot modifier — table must sit inside an overflow:auto container */
+.brut-table--sticky-foot .brut-table__foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+.brut-table--sticky-foot .brut-table__foot .brut-table__cell {
+  background: var(--paper-2);
+}
