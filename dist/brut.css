@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:54:49Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,26 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — LOADING
+   Skeleton placeholder rows for a .brut-table while data loads.
+   Apply .brut-table--loading on the <table> and emit
+   <tr class="brut-table__skel-row"> rows inside <tbody>.
+   Each cell holds a <span class="brut-table__skel">.
+   Width can be tuned per bar via inline style="width: N%".
+   ============================================================ */
+
+@keyframes brut-table-skel {
+  0%   { background: var(--concrete-200); }
+  50%  { background: var(--concrete-300); }
+  100% { background: var(--concrete-200); }
+}
+
+.brut-table__skel {
+  display: block;
+  height: var(--sp-3);
+  width: 70%;
+  background: var(--concrete-200);
+  animation: brut-table-skel var(--dur-base) var(--ease-instant) infinite;
+}

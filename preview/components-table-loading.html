@@ -1,0 +1,144 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Loading</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 880px; }
+  .controls { margin-bottom: var(--sp-4); display: flex; gap: var(--sp-3); align-items: center; }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Loading state — 6 skeleton rows</h3>
+
+  <div class="controls">
+    <button type="button" class="brut-btn" id="toggle-btn">Toggle: show real data</button>
+    <span id="state-label" style="font-size: var(--fs-sm); color: var(--concrete-400);">Currently: loading</span>
+  </div>
+
+  <table class="brut-table brut-table--loading" id="demo-table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+      </tr>
+    </thead>
+    <tbody id="demo-tbody">
+      <!-- skeleton rows -->
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 55%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 40%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 65%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 30%"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 70%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 50%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 45%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 35%"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 60%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 35%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 55%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 25%"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 45%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 60%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 40%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 30%"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 75%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 45%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 70%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 40%"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 50%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 55%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 60%"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel" style="width: 20%"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Default bar width (no inline style)</h3>
+  <table class="brut-table brut-table--loading">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Column A</th>
+        <th class="brut-table__cell">Column B</th>
+        <th class="brut-table__cell brut-table__cell--num">Column C</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+      </tr>
+      <tr class="brut-table__skel-row brut-table__row">
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+        <td class="brut-table__cell"><span class="brut-table__skel"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+(function () {
+  var table = document.getElementById('demo-table');
+  var tbody = document.getElementById('demo-tbody');
+  var btn   = document.getElementById('toggle-btn');
+  var label = document.getElementById('state-label');
+
+  var realRows = [
+    ['Alice',   'Designer',  'Product',   '14'],
+    ['Bob',     'Engineer',  'Platform',  '7'],
+    ['Carla',   'PM',        'Growth',    '22'],
+    ['Dan',     'Engineer',  'Platform',  '3'],
+    ['Eva',     'Designer',  'Brand',     '18'],
+    ['Frank',   'Analyst',   'Data',      '11']
+  ];
+
+  var skelHTML = tbody.innerHTML;
+  var loading = true;
+
+  btn.setAttribute('type', 'button');
+  btn.addEventListener('click', function () {
+    if (loading) {
+      table.classList.remove('brut-table--loading');
+      var html = realRows.map(function (row) {
+        return '<tr class="brut-table__row">'
+          + '<td class="brut-table__cell">' + row[0] + '</td>'
+          + '<td class="brut-table__cell">' + row[1] + '</td>'
+          + '<td class="brut-table__cell">' + row[2] + '</td>'
+          + '<td class="brut-table__cell brut-table__cell--num">' + row[3] + '</td>'
+          + '</tr>';
+      }).join('');
+      tbody.innerHTML = html;
+      btn.textContent = 'Toggle: show skeleton';
+      label.textContent = 'Currently: loaded';
+    } else {
+      table.classList.add('brut-table--loading');
+      tbody.innerHTML = skelHTML;
+      btn.textContent = 'Toggle: show real data';
+      label.textContent = 'Currently: loading';
+    }
+    loading = !loading;
+  });
+}());
+</script>
+</body></html>
