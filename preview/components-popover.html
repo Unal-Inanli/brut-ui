@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Popover</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 32px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Trigger + popover</h2>
+<div class="row">
+  <button class="brut-btn brut-btn--primary" type="button" data-brut-popover-open="po-filters">FILTERS</button>
+  <div class="brut-popover" id="po-filters" data-brut="popover" hidden>
+    <div class="brut-popover__head">
+      <span>Filters</span>
+      <button class="brut-popover__x" type="button" data-brut-close aria-label="Close">&times;</button>
+    </div>
+    <div class="brut-popover__body">
+      <label class="brut-cb"><input type="checkbox"/><span>Active</span></label><br/>
+      <label class="brut-cb"><input type="checkbox"/><span>Archived</span></label><br/>
+      <label class="brut-cb"><input type="checkbox"/><span>Pending</span></label>
+    </div>
+  </div>
+</div>
+
+<h2>Plain body, no head</h2>
+<div class="row">
+  <button class="brut-btn" type="button" data-brut-popover-open="po-info">WHAT IS THIS?</button>
+  <div class="brut-popover" id="po-info" data-brut="popover" hidden>
+    <div class="brut-popover__body">
+      A popover is a small anchored card. Click the trigger again, click outside,
+      or press <code class="brut-code">Esc</code> to close.
+    </div>
+  </div>
+</div>
+
+<h2>Static demo (rendered open in-place)</h2>
+<div class="brut-popover" style="position: static; display: inline-block;">
+  <div class="brut-popover__head">
+    <span>Static</span>
+    <button class="brut-popover__x" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-popover__body">Rendered as-is to inspect the styling.</div>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

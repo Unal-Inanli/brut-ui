@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Multi-select</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Empty</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Skills</label>
+  <div class="brut-multiselect" data-brut="multiselect" data-brut-name="skills">
+    <div class="brut-multiselect__field">
+      <input class="brut-multiselect__input" placeholder="Pick skills…" />
+    </div>
+    <ul class="brut-multiselect__list">
+      <li class="brut-multiselect__opt" data-value="ux">UX</li>
+      <li class="brut-multiselect__opt" data-value="css">CSS</li>
+      <li class="brut-multiselect__opt" data-value="js">JavaScript</li>
+      <li class="brut-multiselect__opt" data-value="ts">TypeScript</li>
+      <li class="brut-multiselect__opt" data-value="motion">Motion</li>
+      <li class="brut-multiselect__opt" data-value="design">Design</li>
+      <li class="brut-multiselect__empty">No matches.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Pre-selected</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Tags</label>
+  <div class="brut-multiselect" data-brut="multiselect" data-brut-name="tags">
+    <div class="brut-multiselect__field">
+      <input class="brut-multiselect__input" placeholder="Add a tag…" />
+    </div>
+    <ul class="brut-multiselect__list">
+      <li class="brut-multiselect__opt" data-value="news"  data-selected>News</li>
+      <li class="brut-multiselect__opt" data-value="press" data-selected>Press</li>
+      <li class="brut-multiselect__opt" data-value="brand">Brand</li>
+      <li class="brut-multiselect__opt" data-value="kpi">KPI</li>
+      <li class="brut-multiselect__empty">No matches.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Toggle options…</pre>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.querySelectorAll('[data-brut="multiselect"]').forEach(function (el) {
+    el.addEventListener('brut:change', function (e) {
+      var pre = document.getElementById('log');
+      pre.textContent = '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+    });
+  });
+</script>
+</body></html>

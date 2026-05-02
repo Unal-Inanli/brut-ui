@@ -1,0 +1,9 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  
+  <rect x="8" y="12" width="220" height="60" fill="#000"></rect>
+  
+  <rect x="0" y="4" width="220" height="60" fill="#FFD23F" stroke="#000" stroke-width="4"></rect>
+  
+  <text x="14" y="48" font-family="Archivo Black, Impact, sans-serif" font-size="40" fill="#000" letter-spacing="2">BRUT.</text>
+</svg>

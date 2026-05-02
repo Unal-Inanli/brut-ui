@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Type — Mono</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); color: var(--ink); font-family: var(--font-mono); }
+  pre {
+    background: var(--ink); color: var(--paper); padding: 16px;
+    border: var(--bw-3) solid var(--ink); box-shadow: var(--shadow-sm);
+    margin: 0 0 14px; font-size: 13px; line-height: 1.55; overflow: hidden;
+  }
+  .tok-comment { color: var(--concrete-300); }
+  .tok-keyword { color: var(--pop-pink); }
+  .tok-string  { color: var(--pop-lime); }
+  .tok-num     { color: var(--primary); }
+  .inline { font-family: var(--font-mono); background: var(--paper-2); padding: 1px 6px; border: 2px solid var(--ink); }
+  .kbd { font-family: var(--font-mono); font-size: 12px; font-weight: 700; background: var(--bone); padding: 2px 6px; border: 2px solid var(--ink); box-shadow: 2px 2px 0 0 var(--ink); display: inline-block; }
+  .meta { font-family: var(--font-mono); font-size: 11px; color: var(--concrete-400); }
+  .num-row { font-variant-numeric: tabular-nums lining-nums; font-size: 13px; line-height: 1.5; }
+</style></head>
+<body>
+<pre><span class="tok-comment">// Snap, never ease.</span>
+<span class="tok-keyword">const</span> ease = <span class="tok-string">'cubic-bezier(.2,.8,.2,1)'</span>;
+<span class="tok-keyword">const</span> duration = <span class="tok-num">140</span>;</pre>
+
+<div class="meta" style="margin-bottom: 8px;">
+  Inline <span class="inline">code</span> ·
+  Press <span class="kbd">⌘</span> <span class="kbd">K</span>
+</div>
+
+<div class="num-row">
+  Tabular numerals — columns line up:<br/>
+  $ &nbsp;&nbsp;&nbsp;1,204.50<br/>
+  $ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;98.00<br/>
+  $ &nbsp;&nbsp;&nbsp;9,999.99
+</div>
+
+<div class="meta" style="margin-top: 14px;">JetBrains Mono · 13/1.55 · ink panel · pop-color tokens</div>
+</body></html>

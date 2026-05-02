@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Tags</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+</style></head>
+<body>
+
+<h3>Decorative</h3>
+<div class="brut-tags">
+  <span class="brut-tag">DEFAULT</span>
+  <span class="brut-tag brut-tag--ink">INK</span>
+  <span class="brut-tag brut-tag--lime">LIME</span>
+  <span class="brut-tag brut-tag--pink">PINK</span>
+  <span class="brut-tag brut-tag--blue">BLUE</span>
+</div>
+
+<h3>Severity</h3>
+<div class="brut-tags">
+  <span class="brut-tag brut-tag--ok">OK</span>
+  <span class="brut-tag brut-tag--warn">WARN</span>
+  <span class="brut-tag brut-tag--err">ERR</span>
+  <span class="brut-tag brut-tag--info">INFO</span>
+</div>
+
+<h3>With dismiss</h3>
+<div class="brut-tags">
+  <span class="brut-tag">UX <button class="brut-tag__x" type="button" aria-label="Remove">&times;</button></span>
+  <span class="brut-tag brut-tag--lime">CSS <button class="brut-tag__x" type="button" aria-label="Remove">&times;</button></span>
+  <span class="brut-tag brut-tag--ok">PASSING <button class="brut-tag__x" type="button" aria-label="Remove">&times;</button></span>
+</div>
+
+</body></html>

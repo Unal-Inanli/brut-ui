@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Login — BRUT Demo</title>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      font-family: var(--font-sans);
+      color: var(--ink);
+    }
+
+    .login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* Left panel — ink poster */
+    .poster {
+      background: var(--ink);
+      color: var(--paper);
+      padding: var(--sp-10);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+      position: relative;
+      overflow: hidden;
+    }
+    .poster__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      font-size: var(--fs-md);
+    }
+    .poster__brand-mark {
+      width: 36px; height: 36px;
+      background: var(--primary);
+      border: 4px solid var(--paper);
+      display: grid; place-items: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--ink);
+    }
+    .poster__headline {
+      color: var(--paper);
+      max-width: 9ch;
+    }
+    .poster__headline em {
+      font-style: normal;
+      background: var(--pop-lime);
+      color: var(--ink);
+      padding: 0 8px;
+    }
+    .poster__lead { color: var(--concrete-100); max-width: 36ch; }
+    .poster__quote {
+      border-left-color: var(--pop-lime);
+      color: var(--paper);
+      margin-top: auto;
+    }
+    .poster__quote-cite {
+      display: block;
+      margin-top: var(--sp-3);
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      font-size: var(--fs-xs);
+      color: var(--pop-lime);
+    }
+
+    /* Right panel — form */
+    .panel {
+      padding: var(--sp-10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-wrap { width: 100%; max-width: 420px; }
+
+    .or-rule {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--sp-3);
+      margin: var(--sp-4) 0;
+    }
+    .or-rule__line {
+      border: 0;
+      border-top: 3px solid var(--ink);
+      width: 100%;
+      margin: 0;
+    }
+    .or-rule__label {
+      font-family: var(--font-display);
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-widest);
+    }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+    }
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: var(--fs-sm);
+      cursor: pointer;
+    }
+
+    .btn-block { width: 100%; text-align: center; }
+
+    .sso {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+    }
+    .sso .brut-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+    }
+    .sso__mark {
+      width: 18px; height: 18px;
+      display: inline-block;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: 10px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .footer-line {
+      margin-top: var(--sp-6);
+      font-size: var(--fs-sm);
+      text-align: center;
+    }
+
+    /* Stack on small screens */
+    @media (max-width: 880px) {
+      .login { grid-template-columns: 1fr; }
+      .poster { padding: var(--sp-6); }
+      .panel  { padding: var(--sp-6); }
+      .poster__quote { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="login">
+
+  <!-- LEFT: poster -->
+  <aside class="poster">
+    <div class="poster__brand">
+      <span class="poster__brand-mark">B</span>
+      <span>BRUT&nbsp;UI</span>
+    </div>
+
+    <p class="brut-eyebrow" style="color: var(--pop-lime)">Welcome back</p>
+
+    <h1 class="brut-display-3 poster__headline">
+      Log in.<br/><em>Get loud.</em>
+    </h1>
+
+    <p class="brut-lead poster__lead">
+      The system that refuses to round corners. Sign in to keep building.
+    </p>
+
+    <blockquote class="brut-quote poster__quote">
+      Soft UIs whisper. Brut shouts.
+      <span class="poster__quote-cite">— The manual</span>
+    </blockquote>
+  </aside>
+
+  <!-- RIGHT: form -->
+  <section class="panel">
+    <div class="form-wrap">
+
+      <div class="brut-stack brut-stack--sm" style="margin-bottom: var(--sp-6);">
+        <p class="brut-eyebrow">Sign in</p>
+        <h2 class="brut-h1">Hey, who goes there?</h2>
+        <p class="brut-body">Enter your credentials to continue.</p>
+      </div>
+
+      <div class="brut-alert brut-alert--info" style="margin-bottom: var(--sp-5);">
+        <span class="brut-alert__icon">i</span>
+        <div>
+          <strong>Demo mode.</strong>
+          Any email and password will get you through.
+        </div>
+      </div>
+
+      <form class="brut-form" id="login-form" autocomplete="on">
+
+        <div class="brut-field">
+          <label class="brut-field__label" for="email">Email</label>
+          <input id="email" name="email" class="brut-input" type="email"
+                 placeholder="rex@brut.dev" required autocomplete="email"/>
+        </div>
+
+        <div class="brut-field">
+          <label class="brut-field__label" for="password">Password</label>
+          <div class="brut-password" data-brut="password">
+            <input id="password" name="password" class="brut-input"
+                   type="password" placeholder="••••••••" required
+                   autocomplete="current-password"/>
+            <button class="brut-password__toggle">SHOW</button>
+          </div>
+          <span class="brut-field__hint">8+ characters. No mercy.</span>
+        </div>
+
+        <div class="row-between">
+          <label class="remember">
+            <span class="brut-switch brut-switch--on" data-brut="switch"
+                  data-brut-name="remember">
+              <input type="checkbox" hidden checked/>
+              <span class="brut-switch__knob"></span>
+            </span>
+            Remember me
+          </label>
+          <a class="brut-link" href="#">Forgot?</a>
+        </div>
+
+        <button type="submit" class="brut-btn brut-btn--primary brut-btn--lg btn-block">
+          Log in →
+        </button>
+      </form>
+
+      <div class="or-rule">
+        <hr class="or-rule__line"/>
+        <span class="or-rule__label">OR</span>
+        <hr class="or-rule__line"/>
+      </div>
+
+      <div class="sso">
+        <button class="brut-btn" type="button">
+          <span class="sso__mark">G</span> Google
+        </button>
+        <button class="brut-btn brut-btn--ink" type="button">
+          <span class="sso__mark" style="background: var(--paper); color: var(--ink);">GH</span>
+          GitHub
+        </button>
+      </div>
+
+      <p class="footer-line">
+        No account?
+        <a class="brut-link" href="#">Sign up</a>
+      </p>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = new FormData(e.currentTarget);
+    alert('Welcome, ' + (data.get('email') || 'friend') + '. (Demo only — no request was sent.)');
+  });
+</script>
+</body>
+</html>

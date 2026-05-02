@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Modal / Dialog</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 22px; background: var(--concrete-100); font-family: var(--font-sans); position: relative; min-height: 220px;}
+  .scrim {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0 8px, transparent 8px 16px);
+  }
+  .dialog {
+    position: relative;
+    width: 360px;
+    background: var(--bone);
+    border: 4px solid var(--ink);
+    box-shadow: var(--shadow-xl);
+    margin: 0 auto;
+    margin-top: 14px;
+  }
+  .head {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--ink);
+  }
+  .ttl { font-family: var(--font-display); text-transform: uppercase; font-size: 13px; letter-spacing: 0.06em;}
+  .x { width: 22px; height: 22px; background: var(--danger); border: 2px solid var(--paper); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px;}
+  .body { padding: 16px; font-size: 14px; line-height: 1.4;}
+  .foot { padding: 10px 16px; display: flex; gap: 8px; justify-content: flex-end; border-top: 4px solid var(--ink); background: var(--paper-2);}
+  .btn { font-family: var(--font-display); text-transform: uppercase; font-size: 12px; letter-spacing: 0.04em; padding: 8px 12px; border: 3px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink); background: var(--bone); cursor: pointer; }
+  .btn.primary { background: var(--primary); }
+</style></head>
+<body>
+<div class="scrim"></div>
+<div class="dialog">
+  <div class="head">
+    <span class="ttl">DELETE PROJECT?</span>
+    <span class="x">✕</span>
+  </div>
+  <div class="body">This nukes <b>concrete-mixer-v3</b> and its 14 commits. Cannot be undone. You'll be fine.</div>
+  <div class="foot">
+    <button class="btn">Cancel</button>
+    <button class="btn primary" style="background: var(--danger); color: var(--paper);">Yes, nuke it</button>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Layout</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); color: var(--ink); }
+  .group { margin-bottom: 32px; }
+  .lab {
+    font-family: var(--font-display); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--concrete-400);
+    margin-bottom: 8px;
+  }
+  .demo {
+    border: 3px solid var(--ink);
+    background: var(--bone);
+    padding: 14px;
+  }
+  .placeholder {
+    background: var(--bone);
+    border: 2px solid var(--ink);
+    padding: 8px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .placeholder.alt    { background: var(--primary); }
+  .placeholder.ink    { background: var(--ink); color: var(--paper); }
+  .placeholder.pink   { background: var(--pop-pink); }
+  .placeholder.lime   { background: var(--pop-lime); }
+</style></head>
+<body>
+
+<div class="group">
+  <div class="lab">Spacing scale · --sp-1 → --sp-20</div>
+  <div class="demo" style="display:flex; gap:12px; align-items:flex-end;">
+    <div style="background:var(--ink); width:14px; height:4px"></div>
+    <div style="background:var(--ink); width:14px; height:8px"></div>
+    <div style="background:var(--ink); width:14px; height:12px"></div>
+    <div style="background:var(--ink); width:14px; height:16px"></div>
+    <div style="background:var(--ink); width:14px; height:20px"></div>
+    <div style="background:var(--ink); width:14px; height:24px"></div>
+    <div style="background:var(--ink); width:14px; height:32px"></div>
+    <div style="background:var(--ink); width:14px; height:40px"></div>
+    <div style="background:var(--ink); width:14px; height:48px"></div>
+    <div style="background:var(--ink); width:14px; height:64px"></div>
+    <div style="background:var(--ink); width:14px; height:80px"></div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-container · sm / md / lg</div>
+  <div class="brut-container brut-container--sm" style="border:3px solid var(--ink); background:var(--bone); padding:8px 12px; margin-bottom:8px;">--sm · 720px</div>
+  <div class="brut-container brut-container--md" style="border:3px solid var(--ink); background:var(--bone); padding:8px 12px; margin-bottom:8px;">--md · 960px</div>
+  <div class="brut-container brut-container--lg" style="border:3px solid var(--ink); background:var(--bone); padding:8px 12px;">--lg · 1200px (default)</div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-section · paper / paper-2 / ink / primary</div>
+  <div style="border:3px solid var(--ink);">
+    <div class="brut-section brut-section--tight">.brut-section</div>
+    <div class="brut-section brut-section--tight brut-section--paper-2">.brut-section--paper-2</div>
+    <div class="brut-section brut-section--tight brut-section--ink">.brut-section--ink</div>
+    <div class="brut-section brut-section--tight brut-section--primary brut-section--flush">.brut-section--primary --flush</div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-stack · sm / md / lg / xl</div>
+  <div class="demo" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:18px;">
+    <div class="brut-stack brut-stack--sm">
+      <div class="placeholder">--sm</div>
+      <div class="placeholder">8px</div>
+      <div class="placeholder">gap</div>
+    </div>
+    <div class="brut-stack brut-stack--md">
+      <div class="placeholder">--md</div>
+      <div class="placeholder">16px</div>
+      <div class="placeholder">gap</div>
+    </div>
+    <div class="brut-stack brut-stack--lg">
+      <div class="placeholder">--lg</div>
+      <div class="placeholder">24px</div>
+      <div class="placeholder">gap</div>
+    </div>
+    <div class="brut-stack brut-stack--xl">
+      <div class="placeholder">--xl</div>
+      <div class="placeholder">40px</div>
+      <div class="placeholder">gap</div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-cluster · default + --between</div>
+  <div class="demo brut-stack brut-stack--md">
+    <div class="brut-cluster">
+      <span class="placeholder">v2.0</span>
+      <span class="placeholder alt">Stable</span>
+      <span class="placeholder lime">React</span>
+      <span class="placeholder pink">Brutalist</span>
+    </div>
+    <div class="brut-cluster brut-cluster--between">
+      <span class="placeholder">Left edge</span>
+      <span class="placeholder ink">Right edge</span>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-bar · header / footer strip</div>
+  <div class="brut-bar demo">
+    <span style="font-family:var(--font-display); font-size:18px; text-transform:uppercase;">BRUT.</span>
+    <div class="brut-cluster brut-cluster--lg">
+      <span class="placeholder">Docs</span>
+      <span class="placeholder">Kit</span>
+      <span class="placeholder">GitHub</span>
+    </div>
+    <span class="placeholder alt">Get started</span>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-grid · --3 / --4</div>
+  <div class="brut-grid brut-grid--3" style="margin-bottom:14px;">
+    <div class="placeholder" style="height:60px">1</div>
+    <div class="placeholder alt" style="height:60px">2</div>
+    <div class="placeholder" style="height:60px">3</div>
+  </div>
+  <div class="brut-grid brut-grid--4">
+    <div class="placeholder" style="height:48px">1</div>
+    <div class="placeholder" style="height:48px">2</div>
+    <div class="placeholder lime" style="height:48px">3</div>
+    <div class="placeholder" style="height:48px">4</div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-split · sidebar + main</div>
+  <div class="brut-split">
+    <aside class="brut-split__side placeholder" style="height:120px">__side · 220px</aside>
+    <main class="brut-split__main placeholder" style="height:120px; background:var(--paper-2)">__main · flex:1, min-width:0</main>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-rule · thin / default / thick / vert</div>
+  <div class="demo brut-stack brut-stack--md">
+    <hr class="brut-rule brut-rule--thin"/>
+    <hr class="brut-rule"/>
+    <hr class="brut-rule brut-rule--thick"/>
+    <div class="brut-bar" style="height:32px;">
+      <span style="font-family:var(--font-display); font-size:12px; text-transform:uppercase;">Left</span>
+      <span class="brut-rule brut-rule--vert"></span>
+      <span style="font-family:var(--font-display); font-size:12px; text-transform:uppercase;">Right</span>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-aspect · square / video / portrait / wide</div>
+  <div class="brut-grid brut-grid--4">
+    <div class="brut-aspect brut-aspect--square"   style="display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:11px; text-transform:uppercase;">1:1</div>
+    <div class="brut-aspect brut-aspect--video"    style="display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:11px; text-transform:uppercase;">16:9</div>
+    <div class="brut-aspect brut-aspect--portrait" style="display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:11px; text-transform:uppercase;">3:4</div>
+    <div class="brut-aspect brut-aspect--wide"     style="display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:11px; text-transform:uppercase;">21:9</div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lab">.brut-shape · rotated decoration (inside position:relative)</div>
+  <div style="position:relative; height:200px; border:4px solid var(--ink); background:var(--paper); overflow:hidden; padding:24px; box-shadow: var(--shadow-md);">
+    <span class="brut-shape brut-shape--pink   brut-shape--rot-r brut-shape--offset-tr"></span>
+    <span class="brut-shape brut-shape--lime   brut-shape--rot-l brut-shape--offset-bl"></span>
+    <span class="brut-shape brut-shape--blue   brut-shape--rot-r" style="top:50%; left:30%; width:70px; height:70px;"></span>
+    <h2 style="font-family:var(--font-display); font-size:42px; line-height:0.95; text-transform:uppercase; letter-spacing:-0.02em; margin:0; position:relative; z-index:1;">Hero with shapes.</h2>
+  </div>
+</div>
+
+</body></html>

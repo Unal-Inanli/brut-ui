@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Colors — Core</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 20px; background: var(--paper); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .sw {
+    border: var(--bw-3) solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    padding: 14px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sw .name { font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .sw .hex  { font-family: var(--font-mono); font-size: 12px; }
+  .light .name, .light .hex { color: var(--ink); }
+  .dark  .name, .dark .hex  { color: var(--paper); }
+</style></head>
+<body>
+<div class="row">
+  <div class="sw dark"  style="background:#000000"><span class="name">Ink</span><span class="hex">#000000</span></div>
+  <div class="sw light" style="background:#FAF7F0"><span class="name">Paper</span><span class="hex">#FAF7F0</span></div>
+  <div class="sw light" style="background:#FFD23F"><span class="name">Primary</span><span class="hex">#FFD23F</span></div>
+  <div class="sw light" style="background:#FFFFFF"><span class="name">Bone</span><span class="hex">#FFFFFF</span></div>
+</div>
+</body></html>

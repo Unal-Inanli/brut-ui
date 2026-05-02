@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BRUT — Neo-Brutalist HTML+CSS UI Kit</title>
+  <link rel="stylesheet" href="../dist/brut.css" />
+  <style>
+    /* docs-only chrome — kept out of the kit */
+    body { margin: 0; }
+    .docs-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    .docs-nav {
+      position: sticky; top: 0; align-self: start;
+      height: 100vh; overflow-y: auto;
+      border-right: 4px solid var(--ink);
+      background: var(--paper-2);
+      padding: var(--sp-5);
+    }
+    .docs-nav h1 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      margin: 0 0 var(--sp-4);
+      letter-spacing: 0.02em;
+    }
+    .docs-nav h2 {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: var(--sp-5) 0 var(--sp-2);
+      color: var(--concrete-400);
+    }
+    .docs-nav a {
+      display: block;
+      padding: 4px 0;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    .docs-nav a:hover { border-bottom-color: var(--ink); }
+    .docs-main { padding: var(--sp-7) var(--sp-7) var(--sp-9); max-width: 1200ffpx; margin-left: 1.5rem; padding: 2rem 0rem;}
+    .docs-section { margin-bottom: var(--sp-9); padding-bottom: var(--sp-8); }
+    .docs-section:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+    .docs-section > h2 {
+      font-family: var(--font-display);
+      font-size: var(--fs-2xl);
+      text-transform: uppercase;
+      margin: 0 0 var(--sp-2);
+      letter-spacing: 0.01em;
+    }
+    .docs-section > p.lead {
+      font-size: var(--fs-md);
+      color: var(--concrete-400);
+      margin: 0 0 var(--sp-5);
+      max-width: 64ch;
+    }
+    .docs-block { margin-bottom: var(--sp-6); }
+    .docs-block:last-child { margin-bottom: 0; }
+    .docs-block > h3 {
+      font-family: var(--font-display);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--concrete-400);
+      margin: 0 0 var(--sp-3);
+    }
+
+    /* PREVIEW — default is centered flex row with breathing room.
+       Use .docs-preview--block for vertical layouts (auto-spaces children). */
+    .docs-preview {
+      border: 4px solid var(--ink);
+      background: var(--paper);
+      padding: var(--sp-6);
+      box-shadow: 4px 4px 0 0 var(--ink);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      align-items: center;
+      min-height: 120px;
+    }
+    .docs-preview--block { display: block; }
+    .docs-preview--block > * + * { margin-top: var(--sp-4); }
+    .docs-preview--start { align-items: flex-start; }
+
+    /* When a snippet immediately follows a preview, glue them with a shared border. */
+    .docs-preview + .docs-snippet { border-top: 0; }
+
+    .docs-snippet {
+      margin: 0;
+      padding: var(--sp-4);
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      border: 4px solid var(--ink);
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.5;
+    }
+
+    /* Foundations chrome */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--sp-3); width: 100%; }
+    .swatch {
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 0 var(--ink);
+      padding: var(--sp-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      min-height: 88px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .swatch span:first-child {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    .swatch code { font-size: 11px; opacity: 0.85; }
+
+    .scale-list { width: 100%; }
+    .scale-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: var(--sp-4);
+      align-items: center;
+      padding: var(--sp-3) 0;
+      border-bottom: 1px dashed var(--concrete-200);
+    }
+    .scale-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .scale-row code { font-family: var(--font-mono); font-size: 12px; }
+    .scale-row__bar { height: 8px; background: var(--ink); }
+
+    .shadow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: var(--sp-7);
+      width: 100%;
+    }
+    .shadow-card {
+      height: 80px;
+      background: var(--bone);
+      border: 4px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .border-grid { display: flex; flex-wrap: wrap; gap: var(--sp-6); width: 100%; }
+    .border-cell { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); }
+    .border-cell code { font-family: var(--font-mono); font-size: 11px; color: var(--concrete-400); }
+    .border-sample {
+      background: var(--bone);
+      width: 80px; height: 60px;
+      box-shadow: 4px 4px 0 0 var(--ink);
+    }
+
+    /* Layout demo tiles — used in the Layout sections to show structure. */
+    .layout-tile {
+      background: var(--primary-soft);
+      border: 3px solid var(--ink);
+      padding: var(--sp-4) var(--sp-5);
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .layout-tile--ink   { background: var(--ink); color: var(--paper); }
+    .layout-tile--lime  { background: var(--pop-lime); }
+    .layout-tile--pink  { background: var(--pop-pink); }
+    .layout-tile--bone  { background: var(--bone); }
+    .layout-frame {
+      width: 100%;
+      border: 3px dashed var(--concrete-300);
+      padding: var(--sp-4);
+      background: var(--paper-2);
+    }
+    .layout-frame__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--concrete-400);
+      margin-bottom: var(--sp-2);
+    }
+
+    @media (max-width: 800px) {
+      .docs-shell { grid-template-columns: 1fr; }
+      .docs-nav { position: relative; height: auto; border-right: 0; border-bottom: 4px solid var(--ink); }
+      .docs-main { padding: var(--sp-5); }
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-shell">
+
+    <!-- ───────────── SIDEBAR ───────────── -->
+    <nav class="docs-nav">
+      <h1>BRUT</h1>
+      <p style="font-family: var(--font-sans); font-size: 13px; margin: 0 0 var(--sp-3); color: var(--concrete-400);">
+        HTML + CSS only. One file: <code>dist/brut.css</code>.
+      </p>
+
+      <h2>Get started</h2>
+      <a href="#install">Install</a>
+      <a href="#build">Build</a>
+
+      <h2>Foundations</h2>
+      <a href="#colors">Colors</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#shadows">Shadows</a>
+      <a href="#borders">Borders</a>
+
+      <h2>Components</h2>
+      <a href="#buttons">Buttons</a>
+      <a href="#badges">Badges</a>
+      <a href="#cards">Cards</a>
+      <a href="#accordion">Accordion</a>
+
+      <h2>Data</h2>
+      <a href="#table">Table</a>
+      <a href="#rows">Rows</a>
+
+      <h2>Forms</h2>
+      <a href="#inputs">Inputs</a>
+      <a href="#textarea">Textarea</a>
+      <a href="#select">Select</a>
+      <a href="#input-group">Input group</a>
+      <a href="#search">Search</a>
+      <a href="#password">Password</a>
+      <a href="#stepper">Stepper</a>
+      <a href="#toggles">Toggles</a>
+      <a href="#checkboxes">Checkboxes</a>
+      <a href="#radios">Radios</a>
+      <a href="#segmented">Segmented</a>
+      <a href="#range">Range</a>
+      <a href="#color">Color</a>
+      <a href="#file">File</a>
+      <a href="#dropzone">Dropzone</a>
+      <a href="#otp">OTP</a>
+      <a href="#tags">Tags</a>
+      <a href="#tag-input">Tag input</a>
+      <a href="#combobox">Combobox</a>
+      <a href="#multiselect">Multi-select</a>
+      <a href="#date">Date</a>
+      <a href="#time">Time</a>
+      <a href="#range-dual">Range dual</a>
+      <a href="#rating">Rating</a>
+      <a href="#fieldset">Fieldset</a>
+      <a href="#field">Field wrapper</a>
+      <a href="#form-layouts">Form layouts</a>
+
+      <h2>Feedback</h2>
+      <a href="#alerts">Alerts</a>
+      <a href="#toast">Toast</a>
+      <a href="#tooltip">Tooltip</a>
+      <a href="#popover">Popover</a>
+      <a href="#skeleton">Skeleton</a>
+      <a href="#spinner">Spinner</a>
+      <a href="#empty">Empty state</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#avatars">Avatars</a>
+      <a href="#dialog">Dialog</a>
+      <a href="#drawer">Drawer</a>
+
+      <h2>Navigation</h2>
+      <a href="#topnav">Topnav</a>
+      <a href="#sidebar">Sidebar nav</a>
+      <a href="#footer">Footer</a>
+      <a href="#breadcrumbs">Breadcrumbs</a>
+      <a href="#pagination">Pagination</a>
+      <a href="#menu">Menu</a>
+
+      <h2>Layout</h2>
+      <a href="#layout-container">Container</a>
+      <a href="#layout-section">Section</a>
+      <a href="#layout-stack">Stack / Cluster / Bar</a>
+      <a href="#layout-grid">Grid / Split</a>
+      <a href="#layout-misc">Rule / Aspect / Shape</a>
+    </nav>
+
+    <!-- ───────────── MAIN ───────────── -->
+    <main class="docs-main">
+
+      <!-- INSTALL -->
+      <section class="docs-section" id="install">
+        <h2>Install</h2>
+        <p class="lead">Drop the CSS bundle into your page. Add the JS bundle if you use any interactive form component (search clear, password toggle, stepper, switch, checkbox, radio, segmented, tabs, tag input, OTP, combobox, file, dropzone, character counter, rating, dialog).</p>
+        <pre class="docs-snippet">&lt;link rel="stylesheet" href="dist/brut.css"&gt;
+&lt;script src="dist/brut.js" defer&gt;&lt;/script&gt;  &lt;!-- only if you use a data-brut="…" component --&gt;</pre>
+        <p class="lead" style="margin-top: var(--sp-4);">All <code>data-brut="…"</code> components auto-init on <code>DOMContentLoaded</code>. For markup added later, call <code>Brut.init(root)</code> to wire any new instances. Re-init is a no-op.</p>
+      </section>
+
+      <!-- BUILD -->
+      <section class="docs-section" id="build">
+        <h2>Build</h2>
+        <p class="lead">Source lives in <code>src/tokens.css</code>, <code>src/components.css</code>, and <code>src/js/</code>. Run the build to produce both bundles.</p>
+        <pre class="docs-snippet">npm run build
+# or
+bash build.sh
+
+# outputs:
+#   dist/brut.css   ← tokens.css + components.css
+#   dist/brut.js    ← src/js/core.js + src/js/components/*.js</pre>
+      </section>
+
+      <!-- COLORS -->
+      <section class="docs-section" id="colors">
+        <h2>Colors</h2>
+        <p class="lead">Ink on paper is the baseline. Yellow drives every primary action. Pop colors are accents — never decoration.</p>
+
+        <div class="docs-block">
+          <h3>Core</h3>
+          <div class="docs-preview">
+            <div class="swatch-grid">
+              <div class="swatch" style="background:#000;color:#fff;"><span>INK</span><code>--ink</code></div>
+              <div class="swatch" style="background:#FAF7F0;"><span>PAPER</span><code>--paper</code></div>
+              <div class="swatch" style="background:#FFD23F;"><span>PRIMARY</span><code>--primary</code></div>
+              <div class="swatch" style="background:#FFE680;"><span>PRIMARY SOFT</span><code>--primary-soft</code></div>
+            </div>
+          </div>
+          <pre class="docs-snippet">background: var(--ink);
+background: var(--paper);
+background: var(--primary);</pre>
+        </div>
+
+        <div class="docs-block">
+          <h3>Pop accents</h3>
+          <div class="docs-preview">
+            <div class="swatch-grid">
+              <div class="swatch" style="background:#FF6B9D;"><span>PINK</span><code>--pop-pink</code></div>
+              <div class="swatch" style="background:#C6F432;"><span>LIME</span><code>--pop-lime</code></div>
+              <div class="swatch" style="background:#4D7CFF;color:#fff;"><span>BLUE</span><code>--pop-blue</code></div>
+              <div class="swatch" style="background:#FF7A2E;"><span>ORANGE</span><code>--pop-orange</code></div>
+              <div class="swatch" style="background:#B57BFF;"><span>PURPLE</span><code>--pop-purple</code></div>
+              <div class="swatch" style="background:#7FE3C4;"><span>MINT</span><code>--pop-mint</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Semantic</h3>
+          <div class="docs-preview">
+            <div class="swatch-grid">
+              <div class="swatch" style="background:#D9F7E5;"><span>SUCCESS</span><code>--success-bg</code></div>
+              <div class="swatch" style="background:#FFF1CC;"><span>WARNING</span><code>--warning-bg</code></div>
+              <div class="swatch" style="background:#FFD9D6;"><span>DANGER</span><code>--danger-bg</code></div>
+              <div class="swatch" style="background:#DDE6FF;"><span>INFO</span><code>--info-bg</code></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TYPOGRAPHY -->
+      <section class="docs-section" id="typography">
+        <h2>Typography</h2>
+        <p class="lead">Three families: Archivo Black for display, Space Grotesk for body, JetBrains Mono for code.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-display-1">DISPLAY 1.</div>
+          <div class="brut-display-2">DISPLAY 2.</div>
+          <h1 class="brut-h1">Heading 1</h1>
+          <h2 class="brut-h2">Heading 2</h2>
+          <p class="brut-lead">A lead paragraph sets the tone.</p>
+          <p class="brut-body">Body copy. Sentence case. Periods. Mouthy but useful.</p>
+          <p class="brut-code">const ship = () =&gt; "loud";</p>
+        </div>
+        <pre class="docs-snippet">&lt;h1 class="brut-display-1"&gt;DISPLAY 1.&lt;/h1&gt;
+&lt;h2 class="brut-h1"&gt;Heading 1&lt;/h2&gt;
+&lt;p class="brut-lead"&gt;A lead paragraph sets the tone.&lt;/p&gt;
+&lt;p class="brut-body"&gt;Body copy.&lt;/p&gt;
+&lt;code class="brut-code"&gt;const x = 1;&lt;/code&gt;</pre>
+      </section>
+
+      <!-- SPACING -->
+      <section class="docs-section" id="spacing">
+        <h2>Spacing</h2>
+        <p class="lead">4px base. Tokens <code>--sp-1</code>…<code>--sp-9</code>. Use them — never hardcode pixels.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="scale-list">
+            <div class="scale-row"><code>--sp-1</code><div class="scale-row__bar" style="width:4px;"></div></div>
+            <div class="scale-row"><code>--sp-2</code><div class="scale-row__bar" style="width:8px;"></div></div>
+            <div class="scale-row"><code>--sp-3</code><div class="scale-row__bar" style="width:12px;"></div></div>
+            <div class="scale-row"><code>--sp-4</code><div class="scale-row__bar" style="width:16px;"></div></div>
+            <div class="scale-row"><code>--sp-5</code><div class="scale-row__bar" style="width:24px;"></div></div>
+            <div class="scale-row"><code>--sp-6</code><div class="scale-row__bar" style="width:32px;"></div></div>
+            <div class="scale-row"><code>--sp-7</code><div class="scale-row__bar" style="width:48px;"></div></div>
+            <div class="scale-row"><code>--sp-8</code><div class="scale-row__bar" style="width:64px;"></div></div>
+            <div class="scale-row"><code>--sp-9</code><div class="scale-row__bar" style="width:96px;"></div></div>
+          </div>
+        </div>
+        <pre class="docs-snippet">padding: var(--sp-3);
+margin-block: var(--sp-6);
+gap: var(--sp-4);</pre>
+      </section>
+
+      <!-- SHADOWS -->
+      <section class="docs-section" id="shadows">
+        <h2>Shadows</h2>
+        <p class="lead">Hard offset only. Six steps. The shadow IS the elevation system.</p>
+        <div class="docs-preview">
+          <div class="shadow-grid">
+            <div class="shadow-card" style="box-shadow: var(--shadow-xs);">XS</div>
+            <div class="shadow-card" style="box-shadow: var(--shadow-sm);">SM</div>
+            <div class="shadow-card" style="box-shadow: var(--shadow-md);">MD</div>
+            <div class="shadow-card" style="box-shadow: var(--shadow-lg);">LG</div>
+            <div class="shadow-card" style="box-shadow: var(--shadow-xl);">XL</div>
+            <div class="shadow-card" style="box-shadow: var(--shadow-2xl);">2XL</div>
+          </div>
+        </div>
+        <pre class="docs-snippet">box-shadow: var(--shadow-sm);  /* 4px 4px 0 0 ink */
+box-shadow: var(--shadow-md);  /* 6px 6px 0 0 ink */
+box-shadow: var(--shadow-lg);  /* 8px 8px 0 0 ink */</pre>
+      </section>
+
+      <!-- BORDERS -->
+      <section class="docs-section" id="borders">
+        <h2>Borders</h2>
+        <p class="lead">4px ink default. 3px for small controls. 6–8px for hero shapes. Color is always ink (except errors).</p>
+        <div class="docs-preview">
+          <div class="border-grid">
+            <div class="border-cell">
+              <span class="border-sample" style="border:3px solid var(--ink);"></span>
+              <code>3px / sm</code>
+            </div>
+            <div class="border-cell">
+              <span class="border-sample" style="border:4px solid var(--ink);"></span>
+              <code>4px / default</code>
+            </div>
+            <div class="border-cell">
+              <span class="border-sample" style="border:6px solid var(--ink);"></span>
+              <code>6px / hero</code>
+            </div>
+            <div class="border-cell">
+              <span class="border-sample" style="border:8px solid var(--ink);"></span>
+              <code>8px / hero+</code>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">border: var(--bw-3) solid var(--ink);
+border: var(--bw-4) solid var(--ink);
+border: var(--bw-6) solid var(--ink);</pre>
+      </section>
+
+      <!-- BUTTONS -->
+      <section class="docs-section" id="buttons">
+        <h2>Buttons</h2>
+        <p class="lead">Hard border, offset shadow, lifts on hover, stamps on press.</p>
+        <div class="docs-preview">
+          <button class="brut-btn">DEFAULT</button>
+          <button class="brut-btn brut-btn--primary">PRIMARY</button>
+          <button class="brut-btn brut-btn--ink">INK</button>
+          <button class="brut-btn brut-btn--pink">PINK</button>
+          <button class="brut-btn brut-btn--lime">LIME</button>
+        </div>
+        <pre class="docs-snippet">&lt;button class="brut-btn"&gt;DEFAULT&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--primary"&gt;PRIMARY&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--ink"&gt;INK&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--sm"&gt;SMALL&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--lg"&gt;LARGE&lt;/button&gt;</pre>
+      </section>
+
+      <!-- BADGES -->
+      <section class="docs-section" id="badges">
+        <h2>Badges</h2>
+        <div class="docs-preview">
+          <span class="brut-badge">DEFAULT</span>
+          <span class="brut-badge brut-badge--ok">OK</span>
+          <span class="brut-badge brut-badge--warn">WARN</span>
+          <span class="brut-badge brut-badge--err">ERR</span>
+          <span class="brut-badge brut-badge--info">INFO</span>
+        </div>
+        <pre class="docs-snippet">&lt;span class="brut-badge"&gt;DEFAULT&lt;/span&gt;
+&lt;span class="brut-badge brut-badge--ok"&gt;OK&lt;/span&gt;
+&lt;span class="brut-badge brut-badge--err"&gt;ERR&lt;/span&gt;</pre>
+      </section>
+
+      <!-- CARDS -->
+      <section class="docs-section" id="cards">
+        <h2>Cards</h2>
+        <p class="lead">Border, offset shadow, 20px padding. No internal dividers.</p>
+        <div class="docs-preview docs-preview--start" style="gap: var(--sp-6);">
+          <div class="brut-card" style="flex: 1 1 240px;">
+            <h3 class="brut-h2" style="font-size: 18px; margin-bottom: var(--sp-2);">Card title.</h3>
+            <p class="brut-body" style="font-size: 14px;">Stack a heading and body inside any <code>.brut-card</code>.</p>
+          </div>
+          <div class="brut-card" style="flex: 1 1 240px; background: var(--primary);">
+            <h3 class="brut-h2" style="font-size: 18px; margin-bottom: var(--sp-2);">Tinted.</h3>
+            <p class="brut-body" style="font-size: 14px;">Override <code>background</code> for emphasis variants.</p>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-card"&gt;
+  &lt;h3&gt;Card title.&lt;/h3&gt;
+  &lt;p&gt;Body copy.&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- ACCORDION -->
+      <section class="docs-section" id="accordion">
+        <h2>Accordion</h2>
+        <p class="lead">Stacked disclosure panels. Click a head to toggle <code>--open</code>. Default behavior closes other panels when one opens; add <code>data-brut-allow-multi</code> to allow multiple open at once.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-accordion" data-brut="accordion" style="max-width: 520px;">
+            <div class="brut-accordion__item brut-accordion__item--open">
+              <button class="brut-accordion__head" type="button">
+                <span>SHIPPING</span>
+                <span class="brut-accordion__icon" aria-hidden="true"></span>
+              </button>
+              <div class="brut-accordion__body">Standard shipping in 3-5 business days. Express in 1-2.</div>
+            </div>
+            <div class="brut-accordion__item">
+              <button class="brut-accordion__head" type="button">
+                <span>RETURNS</span>
+                <span class="brut-accordion__icon" aria-hidden="true"></span>
+              </button>
+              <div class="brut-accordion__body">30-day return window. Item must be unworn and tagged.</div>
+            </div>
+            <div class="brut-accordion__item">
+              <button class="brut-accordion__head" type="button">
+                <span>WARRANTY</span>
+                <span class="brut-accordion__icon" aria-hidden="true"></span>
+              </button>
+              <div class="brut-accordion__body">2-year limited warranty on manufacturing defects.</div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-accordion" data-brut="accordion"&gt;
+  &lt;div class="brut-accordion__item brut-accordion__item--open"&gt;
+    &lt;button class="brut-accordion__head" type="button"&gt;
+      &lt;span&gt;SHIPPING&lt;/span&gt;
+      &lt;span class="brut-accordion__icon" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="brut-accordion__body"&gt;…&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- more items --&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TABLE -->
+      <section class="docs-section" id="table">
+        <h2>Table</h2>
+        <p class="lead">Hard-edged data grid. Add <code>data-brut="table"</code> to enable click-to-sort headers and a select-all-rows checkbox. Modifiers: <code>--striped</code>, <code>--bordered</code>, <code>--compact</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table brut-table--striped" data-brut="table">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell" style="width: 36px;">
+                  <span class="brut-cb" data-brut-select-all></span>
+                </th>
+                <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
+                <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="role">Role</th>
+                <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell" data-sort-value="alice">Alice</td>
+                <td class="brut-table__cell" data-sort-value="designer">Designer</td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="14">14</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell" data-sort-value="bob">Bob</td>
+                <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="7">7</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell" data-sort-value="carla">Carla</td>
+                <td class="brut-table__cell" data-sort-value="pm">PM</td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="22">22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table brut-table--striped" data-brut="table"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;&lt;span class="brut-cb" data-brut-select-all&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty"&gt;Qty&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;&lt;label class="brut-cb" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
+      &lt;td class="brut-table__cell" data-sort-value="alice"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- ROWS -->
+      <section class="docs-section" id="rows">
+        <h2>Rows</h2>
+        <p class="lead">Settings-style list: leading slot + title and subtitle + trailing slot. Use <code>--bordered</code> for an outer frame and row dividers, <code>--clickable</code> to highlight on hover.</p>
+        <div class="docs-preview docs-preview--block">
+          <ul class="brut-rows brut-rows--bordered" style="max-width: 520px;">
+            <li class="brut-rows__item">
+              <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-pink);">JD</span></span>
+              <div class="brut-rows__main">
+                <span class="brut-rows__title">Jane Doe</span>
+                <span class="brut-rows__sub">jane@example.com &middot; admin</span>
+              </div>
+              <span class="brut-rows__trail"><span class="brut-badge brut-badge--ok">OK</span></span>
+            </li>
+            <li class="brut-rows__item">
+              <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-lime);">RX</span></span>
+              <div class="brut-rows__main">
+                <span class="brut-rows__title">Rex Kim</span>
+                <span class="brut-rows__sub">rex@example.com &middot; editor</span>
+              </div>
+              <span class="brut-rows__trail">
+                <label class="brut-switch" data-brut="switch">
+                  <input type="checkbox" hidden checked>
+                  <span class="brut-switch__knob"></span>
+                </label>
+              </span>
+            </li>
+            <li class="brut-rows__item">
+              <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span></span>
+              <div class="brut-rows__main">
+                <span class="brut-rows__title">Sam Kruger</span>
+                <span class="brut-rows__sub">sam@example.com &middot; viewer</span>
+              </div>
+              <span class="brut-rows__trail"><button class="brut-btn brut-btn--sm" type="button">EDIT</button></span>
+            </li>
+          </ul>
+        </div>
+        <pre class="docs-snippet">&lt;ul class="brut-rows brut-rows--bordered"&gt;
+  &lt;li class="brut-rows__item"&gt;
+    &lt;span class="brut-rows__lead"&gt;&lt;span class="brut-avatar"&gt;JD&lt;/span&gt;&lt;/span&gt;
+    &lt;div class="brut-rows__main"&gt;
+      &lt;span class="brut-rows__title"&gt;Jane Doe&lt;/span&gt;
+      &lt;span class="brut-rows__sub"&gt;jane@example.com&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;span class="brut-rows__trail"&gt;&lt;span class="brut-badge brut-badge--ok"&gt;OK&lt;/span&gt;&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      </section>
+
+      <!-- INPUTS -->
+      <section class="docs-section" id="inputs">
+        <h2>Inputs</h2>
+        <p class="lead">Single-line text. <code>--sm</code> / <code>--lg</code> for size; <code>--err</code> / <code>--ok</code> for state. Disabled and readonly are styled too.</p>
+        <div class="docs-preview docs-preview--block">
+          <input class="brut-input brut-input--sm" type="text" placeholder="Small" style="max-width:360px;" />
+          <input class="brut-input" type="email" placeholder="you@example.com" style="max-width:360px;" />
+          <input class="brut-input brut-input--lg" type="text" placeholder="Large" style="max-width:360px;" />
+          <input class="brut-input brut-input--err" type="text" value="bad value" style="max-width:360px;" />
+          <input class="brut-input brut-input--ok" type="text" value="looks good" style="max-width:360px;" />
+          <input class="brut-input" type="text" value="readonly" readonly style="max-width:360px;" />
+          <input class="brut-input" type="text" value="disabled" disabled style="max-width:360px;" />
+        </div>
+        <pre class="docs-snippet">&lt;input class="brut-input" type="email" /&gt;
+&lt;input class="brut-input brut-input--sm" /&gt;        &lt;!-- small --&gt;
+&lt;input class="brut-input brut-input--lg" /&gt;        &lt;!-- large --&gt;
+&lt;input class="brut-input brut-input--err" /&gt;       &lt;!-- error --&gt;
+&lt;input class="brut-input brut-input--ok"  /&gt;       &lt;!-- success --&gt;</pre>
+      </section>
+
+      <!-- TEXTAREA -->
+      <section class="docs-section" id="textarea">
+        <h2>Textarea</h2>
+        <div class="docs-preview docs-preview--block">
+          <textarea class="brut-textarea" placeholder="Make it loud." style="max-width:480px;">Ship loud. Ship today.</textarea>
+        </div>
+        <pre class="docs-snippet">&lt;textarea class="brut-textarea" rows="3"&gt;…&lt;/textarea&gt;</pre>
+      </section>
+
+      <!-- SELECT -->
+      <section class="docs-section" id="select">
+        <h2>Select</h2>
+        <p class="lead">Native <code>&lt;select&gt;</code> restyled. Falls back to the OS list. No JS required.</p>
+        <div class="docs-preview">
+          <select class="brut-select" style="max-width:280px;">
+            <option>Solo Operator</option>
+            <option>Studio</option>
+            <option>Agency</option>
+          </select>
+        </div>
+        <pre class="docs-snippet">&lt;select class="brut-select"&gt;
+  &lt;option&gt;Solo Operator&lt;/option&gt;
+  &lt;option&gt;Studio&lt;/option&gt;
+&lt;/select&gt;</pre>
+      </section>
+
+      <!-- INPUT GROUP -->
+      <section class="docs-section" id="input-group">
+        <h2>Input group</h2>
+        <p class="lead">Prefix and suffix addons. Wraps a <code>.brut-input</code>; addons are <code>.brut-input-group__addon</code> spans.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-input-group" style="max-width:320px;">
+            <span class="brut-input-group__addon">$</span>
+            <input class="brut-input" type="number" value="49" />
+            <span class="brut-input-group__addon">USD</span>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-input-group"&gt;
+  &lt;span class="brut-input-group__addon"&gt;$&lt;/span&gt;
+  &lt;input class="brut-input" type="number" /&gt;
+  &lt;span class="brut-input-group__addon"&gt;USD&lt;/span&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- SEARCH -->
+      <section class="docs-section" id="search">
+        <h2>Search</h2>
+        <p class="lead">Input with an × clear button. Needs <code>dist/brut.js</code> — wires on <code>data-brut="search"</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-search" data-brut="search" style="max-width:360px;">
+            <input class="brut-input" type="search" placeholder="Find anything…" value="brut" />
+            <button class="brut-search__clear" aria-label="Clear">×</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-search" data-brut="search"&gt;
+  &lt;input class="brut-input" type="search" placeholder="Find…" /&gt;
+  &lt;button class="brut-search__clear"&gt;×&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- PASSWORD -->
+      <section class="docs-section" id="password">
+        <h2>Password</h2>
+        <p class="lead">Input with SHOW / HIDE toggle. Needs <code>dist/brut.js</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-password" data-brut="password" style="max-width:360px;">
+            <input class="brut-input" type="password" value="hunter2" />
+            <button class="brut-password__toggle">SHOW</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-password" data-brut="password"&gt;
+  &lt;input class="brut-input" type="password" /&gt;
+  &lt;button class="brut-password__toggle"&gt;SHOW&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- STEPPER -->
+      <section class="docs-section" id="stepper">
+        <h2>Stepper</h2>
+        <p class="lead">Number input with − / + buttons. Reads <code>min</code>, <code>max</code>, <code>step</code> from the inner input. Needs <code>dist/brut.js</code>.</p>
+        <div class="docs-preview">
+          <div class="brut-stepper" data-brut="stepper">
+            <button class="brut-stepper__btn" data-brut-step="down">−</button>
+            <input class="brut-stepper__input" type="number" min="0" max="99" step="1" value="3" />
+            <button class="brut-stepper__btn" data-brut-step="up">+</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-stepper" data-brut="stepper"&gt;
+  &lt;button class="brut-stepper__btn" data-brut-step="down"&gt;−&lt;/button&gt;
+  &lt;input class="brut-stepper__input" type="number" value="3" /&gt;
+  &lt;button class="brut-stepper__btn" data-brut-step="up"&gt;+&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TOGGLES -->
+      <section class="docs-section" id="toggles">
+        <h2>Toggles</h2>
+        <p class="lead">Visual switch synced to a hidden <code>&lt;input type="checkbox"&gt;</code>. With <code>data-brut="switch"</code> and <code>dist/brut.js</code> the switch is keyboard-accessible and clickable; without JS it remains a static visual.</p>
+        <div class="docs-preview">
+          <label class="brut-switch" data-brut="switch">
+            <input type="checkbox" hidden />
+            <span class="brut-switch__knob"></span>
+          </label>
+          <label class="brut-switch brut-switch--on" data-brut="switch">
+            <input type="checkbox" hidden checked />
+            <span class="brut-switch__knob"></span>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-switch" data-brut="switch"&gt;
+  &lt;input type="checkbox" hidden /&gt;
+  &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- CHECKBOXES -->
+      <section class="docs-section" id="checkboxes">
+        <h2>Checkboxes</h2>
+        <div class="docs-preview">
+          <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden /></label>
+          <label class="brut-cb brut-cb--on" data-brut="checkbox"><input type="checkbox" hidden checked /></label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-cb" data-brut="checkbox"&gt;
+  &lt;input type="checkbox" hidden /&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- RADIOS -->
+      <section class="docs-section" id="radios">
+        <h2>Radios</h2>
+        <p class="lead">Round companion to checkboxes. Group by the inner radio's <code>name</code> attribute.</p>
+        <div class="docs-preview">
+          <label class="brut-radio brut-radio--on" data-brut="radio"><input type="radio" name="size" value="md" hidden checked /></label>
+          <label class="brut-radio" data-brut="radio"><input type="radio" name="size" value="lg" hidden /></label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-radio" data-brut="radio"&gt;
+  &lt;input type="radio" name="size" value="md" hidden /&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- ALERTS -->
+      <section class="docs-section" id="alerts">
+        <h2>Alerts</h2>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-alert brut-alert--ok">
+            <div class="brut-alert__icon">✓</div>
+            <div><strong>Shipped.</strong> Build is live.</div>
+          </div>
+          <div class="brut-alert brut-alert--warn">
+            <div class="brut-alert__icon">!</div>
+            <div><strong>Heads up.</strong> This action is irreversible.</div>
+          </div>
+          <div class="brut-alert brut-alert--err">
+            <div class="brut-alert__icon">✕</div>
+            <div><strong>Failed.</strong> Try again or check logs.</div>
+          </div>
+          <div class="brut-alert brut-alert--info">
+            <div class="brut-alert__icon">i</div>
+            <div><strong>FYI.</strong> Maintenance window starts Sunday.</div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-alert brut-alert--ok"&gt;
+  &lt;div class="brut-alert__icon"&gt;✓&lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;Shipped.&lt;/strong&gt; Build is live.&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TOAST -->
+      <section class="docs-section" id="toast">
+        <h2>Toast</h2>
+        <p class="lead">Non-blocking transient notification. Programmatic API + auto-dismiss. A host element <code>data-brut="toast-host"</code> collects toasts; if none exists <code>Brut.toast()</code> creates one and appends it to <code>&lt;body&gt;</code>.</p>
+        <div class="docs-preview">
+          <button class="brut-btn brut-btn--primary" type="button" onclick="Brut.toast({ kind: 'ok', message: 'Saved.' })">Saved (ok)</button>
+          <button class="brut-btn" type="button" onclick="Brut.toast({ kind: 'warn', message: 'Heads up — irreversible.' })">Warn</button>
+          <button class="brut-btn brut-btn--ink" type="button" onclick="Brut.toast({ kind: 'err', message: 'Build failed.' })">Error</button>
+          <button class="brut-btn brut-btn--lime" type="button" onclick="Brut.toast({ kind: 'info', message: 'Cache cleared.' })">Info</button>
+        </div>
+        <pre class="docs-snippet">&lt;!-- optional explicit host (corner placement) --&gt;
+&lt;div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  Brut.toast({ kind: 'ok', message: 'Saved.', timeout: 4000 });
+&lt;/script&gt;</pre>
+      </section>
+
+      <!-- TOOLTIP -->
+      <section class="docs-section" id="tooltip">
+        <h2>Tooltip</h2>
+        <p class="lead">Flat ink bubble on hover/focus. <code>data-brut="tooltip"</code> on the trigger; tip text in <code>data-brut-tip</code>; optional side via <code>data-brut-tip-side="top|bottom|left|right"</code>. Esc removes. The bubble is appended to <code>&lt;body&gt;</code> by JS and positioned with <code>getBoundingClientRect()</code>.</p>
+        <div class="docs-preview">
+          <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Top tooltip" data-brut-tip-side="top">TOP</button>
+          <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Bottom tooltip" data-brut-tip-side="bottom">BOTTOM</button>
+          <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Left tooltip" data-brut-tip-side="left">LEFT</button>
+          <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Right tooltip" data-brut-tip-side="right">RIGHT</button>
+        </div>
+        <pre class="docs-snippet">&lt;button class="brut-btn" type="button"
+        data-brut="tooltip"
+        data-brut-tip="Saved at 12:04"
+        data-brut-tip-side="top"&gt;SAVE&lt;/button&gt;</pre>
+      </section>
+
+      <!-- POPOVER -->
+      <section class="docs-section" id="popover">
+        <h2>Popover</h2>
+        <p class="lead">Anchored card opened by a trigger. Trigger has <code>data-brut-popover-open="&lt;id&gt;"</code>; popover has matching <code>id</code>, <code>data-brut="popover"</code>, and starts <code>hidden</code>. Click outside or press Esc to close.</p>
+        <div class="docs-preview">
+          <button class="brut-btn brut-btn--primary" type="button" data-brut-popover-open="docs-pop">FILTERS</button>
+          <div class="brut-popover" id="docs-pop" data-brut="popover" hidden>
+            <div class="brut-popover__head">
+              <span>Filters</span>
+              <button class="brut-popover__x" type="button" data-brut-close aria-label="Close">&times;</button>
+            </div>
+            <div class="brut-popover__body">
+              <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden/></label> Active<br/>
+              <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden/></label> Archived
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;button class="brut-btn" type="button"
+        data-brut-popover-open="filters"&gt;FILTERS&lt;/button&gt;
+&lt;div class="brut-popover" id="filters" data-brut="popover" hidden&gt;
+  &lt;div class="brut-popover__head"&gt;
+    &lt;span&gt;Filters&lt;/span&gt;
+    &lt;button class="brut-popover__x" type="button" data-brut-close&gt;&times;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="brut-popover__body"&gt;…&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- SKELETON -->
+      <section class="docs-section" id="skeleton">
+        <h2>Skeleton</h2>
+        <p class="lead">Loading placeholder with a hard ink stripe sweeping left to right. Three shapes — text line, block, circle — composed however you need.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+            <span class="brut-skeleton brut-skeleton--circle"></span>
+            <span class="brut-skeleton brut-skeleton--block" style="width: 200px;"></span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; max-width: 360px;">
+            <span class="brut-skeleton brut-skeleton--text" style="width: 80%;"></span>
+            <span class="brut-skeleton brut-skeleton--text" style="width: 95%;"></span>
+            <span class="brut-skeleton brut-skeleton--text" style="width: 60%;"></span>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;span class="brut-skeleton brut-skeleton--text" style="width: 80%;"&gt;&lt;/span&gt;
+&lt;span class="brut-skeleton brut-skeleton--block" style="height: 120px;"&gt;&lt;/span&gt;
+&lt;span class="brut-skeleton brut-skeleton--circle"&gt;&lt;/span&gt;</pre>
+      </section>
+
+      <!-- SPINNER -->
+      <section class="docs-section" id="spinner">
+        <h2>Spinner</h2>
+        <p class="lead">Square with a single side colored <code>--primary</code>, rotating 360°. No border-radius — corners rotate visibly. Three sizes.</p>
+        <div class="docs-preview">
+          <span class="brut-spinner brut-spinner--sm"></span>
+          <span class="brut-spinner brut-spinner--md"></span>
+          <span class="brut-spinner brut-spinner--lg"></span>
+        </div>
+        <pre class="docs-snippet">&lt;span class="brut-spinner brut-spinner--sm"&gt;&lt;/span&gt;
+&lt;span class="brut-spinner brut-spinner--md"&gt;&lt;/span&gt;
+&lt;span class="brut-spinner brut-spinner--lg"&gt;&lt;/span&gt;</pre>
+      </section>
+
+      <!-- EMPTY STATE -->
+      <section class="docs-section" id="empty">
+        <h2>Empty state</h2>
+        <p class="lead">Dashed-border placeholder for "nothing here yet" zones. Centered shape + title + body + action slot.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-empty" style="max-width: 520px;">
+            <div class="brut-empty__shape"></div>
+            <h3 class="brut-h2 brut-empty__title">No items yet.</h3>
+            <p class="brut-body brut-empty__body">When you add something, it'll show up here.</p>
+            <div class="brut-empty__action">
+              <button class="brut-btn brut-btn--primary" type="button">CREATE ONE</button>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-empty"&gt;
+  &lt;div class="brut-empty__shape"&gt;&lt;/div&gt;
+  &lt;h3 class="brut-h2 brut-empty__title"&gt;No items yet.&lt;/h3&gt;
+  &lt;p class="brut-body brut-empty__body"&gt;Add one to get started.&lt;/p&gt;
+  &lt;div class="brut-empty__action"&gt;
+    &lt;button class="brut-btn brut-btn--primary" type="button"&gt;CREATE ONE&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- SEGMENTED -->
+      <section class="docs-section" id="segmented">
+        <h2>Segmented</h2>
+        <p class="lead">Exclusive choice from a small set. With <code>data-brut="segmented"</code> JS toggles the active button and (optionally) writes to a hidden input named <code>data-brut-name</code>.</p>
+        <div class="docs-preview">
+          <div class="brut-seg" data-brut="segmented" data-brut-name="range">
+            <button class="brut-seg__btn brut-seg__btn--on" data-value="day">DAY</button>
+            <button class="brut-seg__btn" data-value="week">WEEK</button>
+            <button class="brut-seg__btn" data-value="month">MONTH</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-seg" data-brut="segmented" data-brut-name="range"&gt;
+  &lt;button class="brut-seg__btn brut-seg__btn--on" data-value="day"&gt;DAY&lt;/button&gt;
+  &lt;button class="brut-seg__btn" data-value="week"&gt;WEEK&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- RANGE -->
+      <section class="docs-section" id="range">
+        <h2>Range</h2>
+        <p class="lead">Native <code>&lt;input type="range"&gt;</code>, restyled. No JS required.</p>
+        <div class="docs-preview docs-preview--block">
+          <input class="brut-range" type="range" min="0" max="100" value="65" style="max-width:360px;" />
+        </div>
+        <pre class="docs-snippet">&lt;input class="brut-range" type="range" min="0" max="100" /&gt;</pre>
+      </section>
+
+      <!-- COLOR -->
+      <section class="docs-section" id="color">
+        <h2>Color</h2>
+        <p class="lead">Native color picker, restyled. No JS required.</p>
+        <div class="docs-preview">
+          <input class="brut-color" type="color" value="#FFD23F" />
+          <input class="brut-color" type="color" value="#FF6B9D" />
+          <input class="brut-color" type="color" value="#C6F432" />
+        </div>
+        <pre class="docs-snippet">&lt;input class="brut-color" type="color" value="#FFD23F" /&gt;</pre>
+      </section>
+
+      <!-- FILE -->
+      <section class="docs-section" id="file">
+        <h2>File</h2>
+        <p class="lead">Hidden native input + visible button + filename label. <code>data-brut="file"</code> updates the label as the selection changes.</p>
+        <div class="docs-preview">
+          <label class="brut-file" data-brut="file">
+            <input type="file" />
+            <span class="brut-file__btn">CHOOSE FILE</span>
+            <span class="brut-file__name">No file selected</span>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-file" data-brut="file"&gt;
+  &lt;input type="file" /&gt;
+  &lt;span class="brut-file__btn"&gt;CHOOSE FILE&lt;/span&gt;
+  &lt;span class="brut-file__name"&gt;No file selected&lt;/span&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- DROPZONE -->
+      <section class="docs-section" id="dropzone">
+        <h2>Dropzone</h2>
+        <p class="lead">Drag-and-drop file region. Wraps a hidden <code>&lt;input type="file"&gt;</code>; <code>data-brut="dropzone"</code> handles drag-over highlight and drop assignment.</p>
+        <div class="docs-preview docs-preview--block">
+          <label class="brut-dropzone" data-brut="dropzone" style="max-width:520px;">
+            <input type="file" multiple />
+            <span class="brut-dropzone__hint">Drop files here.</span>
+            <span class="brut-dropzone__sub">Or click to browse.</span>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-dropzone" data-brut="dropzone"&gt;
+  &lt;input type="file" multiple /&gt;
+  &lt;span class="brut-dropzone__hint"&gt;Drop files here.&lt;/span&gt;
+  &lt;span class="brut-dropzone__sub"&gt;Or click to browse.&lt;/span&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- OTP -->
+      <section class="docs-section" id="otp">
+        <h2>OTP</h2>
+        <p class="lead">One-cell-per-digit code input. Auto-advances on type, jumps back on Backspace, accepts paste. Cells are generated automatically when missing.</p>
+        <div class="docs-preview">
+          <div class="brut-otp" data-brut="otp" data-brut-len="6" data-brut-name="code"></div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-otp" data-brut="otp" data-brut-len="6" data-brut-name="code"&gt;&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TAGS -->
+      <section class="docs-section" id="tags">
+        <h2>Tags</h2>
+        <p class="lead">Read-only display chips. Decorative variants for taxonomy (<code>--lime</code>, <code>--pink</code>, <code>--blue</code>, <code>--ink</code>); semantic variants for state (<code>--ok</code>, <code>--warn</code>, <code>--err</code>, <code>--info</code>). Pair with <code>.brut-tags</code> for a wrapping cluster.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-tags">
+            <span class="brut-tag">UX</span>
+            <span class="brut-tag brut-tag--lime">CSS</span>
+            <span class="brut-tag brut-tag--pink">DESIGN</span>
+            <span class="brut-tag brut-tag--ink">PRO</span>
+          </div>
+          <div class="brut-tags">
+            <span class="brut-tag brut-tag--ok">OK</span>
+            <span class="brut-tag brut-tag--warn">WARN</span>
+            <span class="brut-tag brut-tag--err">ERR</span>
+            <span class="brut-tag brut-tag--info">INFO</span>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-tags"&gt;
+  &lt;span class="brut-tag"&gt;UX&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--lime"&gt;CSS&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="brut-tags"&gt;
+  &lt;span class="brut-tag brut-tag--ok"&gt;OK&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--warn"&gt;WARN&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--err"&gt;ERR&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--info"&gt;INFO&lt;/span&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TAG INPUT -->
+      <section class="docs-section" id="tag-input">
+        <h2>Tag input</h2>
+        <p class="lead">Chip-entry field. Add a tag with Enter or comma; remove with Backspace at empty field or via the per-tag × button. JS writes the comma-joined values to a hidden input.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-tag-input" data-brut="tag-input" data-brut-name="skills" style="max-width:520px;">
+            <span class="brut-tag" data-value="ux">UX <button class="brut-tag__x">×</button></span>
+            <span class="brut-tag brut-tag--lime" data-value="css">CSS <button class="brut-tag__x">×</button></span>
+            <input class="brut-tag-input__field" placeholder="Add a tag, press Enter" />
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-tag-input" data-brut="tag-input" data-brut-name="skills"&gt;
+  &lt;span class="brut-tag" data-value="ux"&gt;UX &lt;button class="brut-tag__x"&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;input class="brut-tag-input__field" placeholder="Add a tag…" /&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- COMBOBOX -->
+      <section class="docs-section" id="combobox">
+        <h2>Combobox</h2>
+        <p class="lead">Searchable single-select. Filter, arrow-key, Enter to pick. Selection writes to a hidden input.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-combobox" data-brut="combobox" data-brut-name="city" style="max-width:360px;">
+            <input class="brut-input" type="text" placeholder="Search cities…" />
+            <input type="hidden" />
+            <ul class="brut-combobox__list">
+              <li class="brut-combobox__opt" data-value="nyc">New York</li>
+              <li class="brut-combobox__opt" data-value="ber">Berlin</li>
+              <li class="brut-combobox__opt" data-value="tok">Tokyo</li>
+              <li class="brut-combobox__opt" data-value="lon">London</li>
+              <li class="brut-combobox__opt" data-value="par">Paris</li>
+              <li class="brut-combobox__empty">No matches.</li>
+            </ul>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-combobox" data-brut="combobox" data-brut-name="city"&gt;
+  &lt;input class="brut-input" type="text" /&gt;
+  &lt;input type="hidden" /&gt;
+  &lt;ul class="brut-combobox__list"&gt;
+    &lt;li class="brut-combobox__opt" data-value="nyc"&gt;New York&lt;/li&gt;
+    &lt;li class="brut-combobox__empty"&gt;No matches.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- RATING -->
+      <section class="docs-section" id="rating">
+        <h2>Rating</h2>
+        <p class="lead">Star row. Hover previews; click locks. Click the same star twice to clear. Writes to a hidden input named <code>data-brut-name</code>.</p>
+        <div class="docs-preview">
+          <div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3">
+            <button class="brut-rating__star"></button>
+            <button class="brut-rating__star"></button>
+            <button class="brut-rating__star"></button>
+            <button class="brut-rating__star"></button>
+            <button class="brut-rating__star"></button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3"&gt;
+  &lt;button class="brut-rating__star"&gt;&lt;/button&gt;
+  &lt;!-- repeat × 5 --&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- FIELDSET -->
+      <section class="docs-section" id="fieldset">
+        <h2>Fieldset</h2>
+        <p class="lead">Bordered group with a hard ink legend chip.</p>
+        <div class="docs-preview docs-preview--block">
+          <fieldset class="brut-fieldset" style="max-width:520px;">
+            <legend class="brut-fieldset__legend">SHIPPING</legend>
+            <div class="brut-form">
+              <div class="brut-field">
+                <label class="brut-field__label" for="addr">Address</label>
+                <input id="addr" class="brut-input" type="text" value="100 Main" />
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="city2">City</label>
+                <input id="city2" class="brut-input" type="text" value="New York" />
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <pre class="docs-snippet">&lt;fieldset class="brut-fieldset"&gt;
+  &lt;legend class="brut-fieldset__legend"&gt;SHIPPING&lt;/legend&gt;
+  &lt;div class="brut-form"&gt; … &lt;/div&gt;
+&lt;/fieldset&gt;</pre>
+      </section>
+
+      <!-- FIELD -->
+      <section class="docs-section" id="field">
+        <h2>Field wrapper</h2>
+        <p class="lead">Compose a label, control, hint or error, and optional character counter. <code>.brut-form</code> is a vertical stack of fields.</p>
+        <div class="docs-preview docs-preview--block">
+          <form class="brut-form" style="max-width:520px;">
+            <div class="brut-field">
+              <label class="brut-field__label" for="bio">Bio</label>
+              <textarea id="bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>
+              <span class="brut-field__counter" data-brut="counter" data-brut-for="bio"></span>
+              <span class="brut-field__hint">Plain text. Max 120 chars.</span>
+            </div>
+            <div class="brut-field">
+              <label class="brut-field__label" for="pw2">Password</label>
+              <input id="pw2" class="brut-input brut-input--err" type="password" value="••••" />
+              <span class="brut-field__error">Too short. Try again.</span>
+            </div>
+          </form>
+        </div>
+        <pre class="docs-snippet">&lt;form class="brut-form"&gt;
+  &lt;div class="brut-field"&gt;
+    &lt;label class="brut-field__label" for="bio"&gt;Bio&lt;/label&gt;
+    &lt;textarea id="bio" class="brut-textarea" maxlength="120"&gt;…&lt;/textarea&gt;
+    &lt;span class="brut-field__counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;
+    &lt;span class="brut-field__hint"&gt;Plain text.&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</pre>
+      </section>
+
+      <!-- MULTISELECT -->
+      <section class="docs-section" id="multiselect">
+        <h2>Multi-select</h2>
+        <p class="lead">Combobox-style field that holds multiple values as chips. Click an option to toggle, Backspace at empty input pops the last chip. Mirrors as one hidden <code>&lt;input&gt;</code> per selected value, dispatches <code>brut:change</code> with <code>{ values: [...] }</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-multiselect" data-brut="multiselect" data-brut-name="skills" style="max-width:520px;">
+            <div class="brut-multiselect__field">
+              <input class="brut-multiselect__input" placeholder="Pick skills…" />
+            </div>
+            <ul class="brut-multiselect__list">
+              <li class="brut-multiselect__opt" data-value="ux"     data-selected>UX</li>
+              <li class="brut-multiselect__opt" data-value="css"    data-selected>CSS</li>
+              <li class="brut-multiselect__opt" data-value="js">JavaScript</li>
+              <li class="brut-multiselect__opt" data-value="ts">TypeScript</li>
+              <li class="brut-multiselect__opt" data-value="design">Design</li>
+              <li class="brut-multiselect__empty">No matches.</li>
+            </ul>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-multiselect" data-brut="multiselect" data-brut-name="skills"&gt;
+  &lt;div class="brut-multiselect__field"&gt;
+    &lt;input class="brut-multiselect__input" placeholder="Pick skills…" /&gt;
+  &lt;/div&gt;
+  &lt;ul class="brut-multiselect__list"&gt;
+    &lt;li class="brut-multiselect__opt" data-value="ux" data-selected&gt;UX&lt;/li&gt;
+    &lt;li class="brut-multiselect__opt" data-value="css"&gt;CSS&lt;/li&gt;
+    &lt;li class="brut-multiselect__empty"&gt;No matches.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- DATE -->
+      <section class="docs-section" id="date">
+        <h2>Date</h2>
+        <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Native <code>Date</code> only — no deps.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-grid brut-grid--2" style="max-width:640px;">
+            <div class="brut-field">
+              <label class="brut-field__label">Due date</label>
+              <div class="brut-date" data-brut="date" data-brut-name="due">
+                <input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" />
+                <input type="hidden" />
+              </div>
+            </div>
+            <div class="brut-field">
+              <label class="brut-field__label">Pre-filled</label>
+              <div class="brut-date" data-brut="date" data-brut-name="start">
+                <input class="brut-input brut-date__field" type="text" readonly value="2026-05-15" />
+                <input type="hidden" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-date" data-brut="date" data-brut-name="due"&gt;
+  &lt;input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" /&gt;
+  &lt;input type="hidden" /&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TIME -->
+      <section class="docs-section" id="time">
+        <h2>Time</h2>
+        <p class="lead">Text field with a popover hour/minute stepper. 24-hour by default; pass <code>data-brut-mode="12"</code> for an AM/PM segmented toggle. Output is always <code>HH:MM</code> (24h) in the visible field and the hidden mirror.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-grid brut-grid--2" style="max-width:640px;">
+            <div class="brut-field">
+              <label class="brut-field__label">Meeting (24h)</label>
+              <div class="brut-time" data-brut="time" data-brut-name="meet">
+                <input class="brut-input brut-time__field" type="text" readonly value="09:30" />
+                <input type="hidden" />
+              </div>
+            </div>
+            <div class="brut-field">
+              <label class="brut-field__label">Doors (12h)</label>
+              <div class="brut-time" data-brut="time" data-brut-name="doors" data-brut-mode="12">
+                <input class="brut-input brut-time__field" type="text" readonly value="19:00" />
+                <input type="hidden" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-time" data-brut="time" data-brut-name="meet"&gt;
+  &lt;input class="brut-input brut-time__field" type="text" readonly value="09:30" /&gt;
+  &lt;input type="hidden" /&gt;
+&lt;/div&gt;
+
+&lt;!-- 12-hour with AM/PM toggle --&gt;
+&lt;div class="brut-time" data-brut="time" data-brut-name="doors" data-brut-mode="12"&gt;…&lt;/div&gt;</pre>
+      </section>
+
+      <!-- RANGE DUAL -->
+      <section class="docs-section" id="range-dual">
+        <h2>Range dual</h2>
+        <p class="lead">Two-thumb range slider. Native <code>&lt;input type="range"&gt;</code> can't do this; JS owns drag + keyboard, CSS owns the chrome. Mirrors min/max to two hidden inputs (<code>data-brut-name-min</code> / <code>-max</code>); dispatches <code>brut:change</code> with <code>{ min, max }</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-field" style="max-width:520px;">
+            <label class="brut-field__label">Price (0–100)</label>
+            <div class="brut-range-dual"
+                 data-brut="range-dual"
+                 data-brut-min="0" data-brut-max="100" data-brut-step="1"
+                 data-brut-value-min="20" data-brut-value-max="80"
+                 data-brut-name-min="price_min" data-brut-name-max="price_max"></div>
+          </div>
+          <div class="brut-field" style="max-width:520px;">
+            <label class="brut-field__label">Years (2000–2026, step 1)</label>
+            <div class="brut-range-dual"
+                 data-brut="range-dual"
+                 data-brut-min="2000" data-brut-max="2026" data-brut-step="1"
+                 data-brut-value-min="2010" data-brut-value-max="2020"
+                 data-brut-name-min="year_min" data-brut-name-max="year_max"></div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-range-dual"
+     data-brut="range-dual"
+     data-brut-min="0" data-brut-max="100" data-brut-step="1"
+     data-brut-value-min="20" data-brut-value-max="80"
+     data-brut-name-min="price_min" data-brut-name-max="price_max"&gt;&lt;/div&gt;</pre>
+      </section>
+
+      <!-- FORM LAYOUTS -->
+      <section class="docs-section" id="form-layouts">
+        <h2>Form layouts</h2>
+        <p class="lead">Four recipes that compose existing primitives. No new components — just <code>.brut-form</code>, <code>.brut-grid--2</code>, the new <code>.brut-field--inline</code> modifier, and <code>.brut-rows</code> with switches in the trail slot.</p>
+
+        <h3>Stacked (.brut-form)</h3>
+        <div class="docs-preview docs-preview--block">
+          <form class="brut-form" style="max-width:520px;">
+            <div class="brut-field">
+              <label class="brut-field__label" for="fl-name">Full name</label>
+              <input id="fl-name" class="brut-input" type="text" value="Rex Brut" />
+            </div>
+            <div class="brut-field">
+              <label class="brut-field__label" for="fl-email">Email</label>
+              <input id="fl-email" class="brut-input" type="email" value="rex@brut.dev" />
+            </div>
+          </form>
+        </div>
+        <pre class="docs-snippet">&lt;form class="brut-form"&gt;
+  &lt;div class="brut-field"&gt; … &lt;/div&gt;
+  &lt;div class="brut-field"&gt; … &lt;/div&gt;
+&lt;/form&gt;</pre>
+
+        <h3>Two-column (.brut-grid--2)</h3>
+        <div class="docs-preview docs-preview--block">
+          <form class="brut-form" style="max-width:640px;">
+            <div class="brut-grid brut-grid--2">
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-first">First</label>
+                <input id="fl-first" class="brut-input" type="text" value="Rex" />
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-last">Last</label>
+                <input id="fl-last" class="brut-input" type="text" value="Brut" />
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-city">City</label>
+                <input id="fl-city" class="brut-input" type="text" value="New York" />
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-zip">ZIP</label>
+                <input id="fl-zip" class="brut-input" type="text" value="10001" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <pre class="docs-snippet">&lt;form class="brut-form"&gt;
+  &lt;div class="brut-grid brut-grid--2"&gt;
+    &lt;div class="brut-field"&gt; … &lt;/div&gt;
+    &lt;div class="brut-field"&gt; … &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</pre>
+
+        <h3>Inline (.brut-field--inline)</h3>
+        <div class="docs-preview docs-preview--block">
+          <form class="brut-form" style="max-width:520px;">
+            <div class="brut-field brut-field--inline">
+              <label class="brut-field__label" for="fl-handle">Display name</label>
+              <input id="fl-handle" class="brut-input" type="text" value="@rex" />
+            </div>
+            <div class="brut-field brut-field--inline">
+              <label class="brut-field__label" for="fl-plan">Plan</label>
+              <select id="fl-plan" class="brut-select">
+                <option>Solo</option>
+                <option>Studio</option>
+                <option>Agency</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-field brut-field--inline"&gt;
+  &lt;label class="brut-field__label"&gt;Display name&lt;/label&gt;
+  &lt;input class="brut-input" type="text" /&gt;
+&lt;/div&gt;</pre>
+
+        <h3>Settings rows (.brut-rows + switch in trail)</h3>
+        <div class="docs-preview docs-preview--block">
+          <ul class="brut-rows brut-rows--bordered" style="max-width:520px;">
+            <li class="brut-rows__item">
+              <span class="brut-rows__lead">@</span>
+              <div class="brut-rows__main">
+                <div class="brut-rows__title">Email notifications</div>
+                <div class="brut-rows__sub">Weekly digest, mentions, replies.</div>
+              </div>
+              <label class="brut-rows__trail brut-switch brut-switch--on" data-brut="switch">
+                <input type="checkbox" hidden checked />
+                <span class="brut-switch__knob"></span>
+              </label>
+            </li>
+            <li class="brut-rows__item">
+              <span class="brut-rows__lead">#</span>
+              <div class="brut-rows__main">
+                <div class="brut-rows__title">Two-factor auth</div>
+                <div class="brut-rows__sub">Codes via authenticator app.</div>
+              </div>
+              <label class="brut-rows__trail brut-switch" data-brut="switch">
+                <input type="checkbox" hidden />
+                <span class="brut-switch__knob"></span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <pre class="docs-snippet">&lt;ul class="brut-rows brut-rows--bordered"&gt;
+  &lt;li class="brut-rows__item"&gt;
+    &lt;span class="brut-rows__lead"&gt;@&lt;/span&gt;
+    &lt;div class="brut-rows__main"&gt;
+      &lt;div class="brut-rows__title"&gt;Email notifications&lt;/div&gt;
+      &lt;div class="brut-rows__sub"&gt;Weekly digest, mentions.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;label class="brut-rows__trail brut-switch brut-switch--on" data-brut="switch"&gt;
+      &lt;input type="checkbox" hidden checked /&gt;
+      &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      </section>
+
+      <!-- TABS -->
+      <section class="docs-section" id="tabs">
+        <h2>Tabs</h2>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-tabs">
+            <button class="brut-tab brut-tab--on">OVERVIEW</button>
+            <button class="brut-tab">SETTINGS</button>
+            <button class="brut-tab">LOGS</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-tabs"&gt;
+  &lt;button class="brut-tab brut-tab--on"&gt;OVERVIEW&lt;/button&gt;
+  &lt;button class="brut-tab"&gt;SETTINGS&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- AVATARS -->
+      <section class="docs-section" id="avatars">
+        <h2>Avatars</h2>
+        <p class="lead">Single avatars carry initials or a glyph. Wrap a row of them in <code>.brut-avatar-group</code> for the overlapping stack pattern; the trailing <code>.brut-avatar-group__more</code> shows the overflow count.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="docs-preview">
+            <span class="brut-avatar" style="background: var(--pop-pink);">JD</span>
+            <span class="brut-avatar" style="background: var(--pop-lime);">&starf;</span>
+            <span class="brut-avatar" style="background: var(--ink); color: var(--paper);">AB</span>
+          </div>
+          <div class="docs-preview">
+            <span class="brut-avatar-group">
+              <span class="brut-avatar" style="background: var(--pop-pink);">JM</span>
+              <span class="brut-avatar" style="background: var(--pop-lime);">AD</span>
+              <span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span>
+              <span class="brut-avatar brut-avatar-group__more">+8</span>
+            </span>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;span class="brut-avatar" style="background: var(--pop-pink);"&gt;JD&lt;/span&gt;
+
+&lt;span class="brut-avatar-group"&gt;
+  &lt;span class="brut-avatar" style="background: var(--pop-pink);"&gt;JM&lt;/span&gt;
+  &lt;span class="brut-avatar" style="background: var(--pop-lime);"&gt;AD&lt;/span&gt;
+  &lt;span class="brut-avatar brut-avatar-group__more"&gt;+8&lt;/span&gt;
+&lt;/span&gt;</pre>
+      </section>
+
+      <!-- DIALOG -->
+      <section class="docs-section" id="dialog">
+        <h2>Dialog</h2>
+        <p class="lead">Visual styling only. Pair with consumer JS or a <code>&lt;dialog&gt;</code> element for interaction.</p>
+        <div class="docs-preview">
+          <div class="brut-dialog" style="width: 360px; max-width: 100%;">
+            <div class="brut-dialog__head">
+              <span style="font-family: var(--font-display); text-transform: uppercase; font-size: 13px;">CONFIRM DELETE</span>
+              <span class="brut-dialog__x">×</span>
+            </div>
+            <div style="padding: var(--sp-5);">
+              <p style="margin:0 0 var(--sp-4); font-family: var(--font-sans); font-size: 14px;">Cannot be undone. You'll be fine.</p>
+              <div class="brut-cluster" style="gap: var(--sp-3);">
+                <button class="brut-btn brut-btn--ink brut-btn--sm">DELETE</button>
+                <button class="brut-btn brut-btn--sm">CANCEL</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-dialog"&gt;
+  &lt;div class="brut-dialog__head"&gt;
+    &lt;span&gt;CONFIRM DELETE&lt;/span&gt;
+    &lt;span class="brut-dialog__x"&gt;×&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- DRAWER -->
+      <section class="docs-section" id="drawer">
+        <h2>Drawer</h2>
+        <p class="lead">Side sheet that slides in from any edge. Trigger has <code>data-brut-open="&lt;id&gt;"</code>; drawer has matching <code>id</code>, <code>data-brut="drawer"</code>, and a <code>data-brut-side</code> of <code>right</code> (default), <code>left</code>, <code>top</code>, or <code>bottom</code>. Esc, click on scrim, or <code>data-brut-close</code> closes.</p>
+        <div class="docs-preview">
+          <button class="brut-btn brut-btn--primary" type="button" data-brut-open="docs-drawer-right">RIGHT DRAWER</button>
+          <button class="brut-btn" type="button" data-brut-open="docs-drawer-left">LEFT DRAWER</button>
+          <button class="brut-btn" type="button" data-brut-open="docs-drawer-top">TOP</button>
+          <button class="brut-btn" type="button" data-brut-open="docs-drawer-bottom">BOTTOM</button>
+        </div>
+        <div class="brut-scrim" id="docs-drawer-right-scrim" hidden></div>
+        <div class="brut-drawer" id="docs-drawer-right" data-brut="drawer" data-brut-side="right" data-brut-scrim="docs-drawer-right-scrim" hidden role="dialog" aria-label="Right drawer">
+          <div class="brut-drawer__head">
+            <span>RIGHT DRAWER</span>
+            <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+          </div>
+          <div class="brut-drawer__body">
+            <p>Slides in from the right. Press Esc or click the scrim to close.</p>
+          </div>
+        </div>
+        <div class="brut-scrim" id="docs-drawer-left-scrim" hidden></div>
+        <div class="brut-drawer" id="docs-drawer-left" data-brut="drawer" data-brut-side="left" data-brut-scrim="docs-drawer-left-scrim" hidden role="dialog" aria-label="Left drawer">
+          <div class="brut-drawer__head">
+            <span>LEFT DRAWER</span>
+            <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+          </div>
+          <div class="brut-drawer__body"><p>Slides in from the left.</p></div>
+        </div>
+        <div class="brut-scrim" id="docs-drawer-top-scrim" hidden></div>
+        <div class="brut-drawer" id="docs-drawer-top" data-brut="drawer" data-brut-side="top" data-brut-scrim="docs-drawer-top-scrim" hidden role="dialog" aria-label="Top drawer">
+          <div class="brut-drawer__head">
+            <span>TOP DRAWER</span>
+            <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+          </div>
+          <div class="brut-drawer__body"><p>Full-width, max-height 80vh.</p></div>
+        </div>
+        <div class="brut-scrim" id="docs-drawer-bottom-scrim" hidden></div>
+        <div class="brut-drawer" id="docs-drawer-bottom" data-brut="drawer" data-brut-side="bottom" data-brut-scrim="docs-drawer-bottom-scrim" hidden role="dialog" aria-label="Bottom drawer">
+          <div class="brut-drawer__head">
+            <span>BOTTOM DRAWER</span>
+            <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+          </div>
+          <div class="brut-drawer__body"><p>Full-width, max-height 80vh.</p></div>
+        </div>
+        <pre class="docs-snippet">&lt;button class="brut-btn" type="button" data-brut-open="cart"&gt;CART&lt;/button&gt;
+&lt;div class="brut-scrim" id="cart-scrim" hidden&gt;&lt;/div&gt;
+&lt;div class="brut-drawer" id="cart" data-brut="drawer"
+     data-brut-side="right" data-brut-scrim="cart-scrim" hidden&gt;
+  &lt;div class="brut-drawer__head"&gt;
+    &lt;span&gt;CART&lt;/span&gt;
+    &lt;button class="brut-drawer__x" type="button" data-brut-close&gt;&times;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="brut-drawer__body"&gt;…&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TOPNAV -->
+      <section class="docs-section" id="topnav">
+        <h2>Topnav</h2>
+        <p class="lead">Sticky page header. Brand + links + CTA on one row, with a mobile burger that collapses links below 760px. <code>data-brut="topnav"</code> wires the toggle.</p>
+        <div class="docs-preview docs-preview--block">
+          <header class="brut-topnav" data-brut="topnav" style="position: relative;">
+            <div class="brut-topnav__inner">
+              <a class="brut-topnav__brand" href="#topnav">
+                <span class="brut-topnav__mark">B</span>
+                <span>BRUT&nbsp;UI</span>
+              </a>
+              <nav class="brut-topnav__links">
+                <a class="brut-topnav__link brut-topnav__link--active" href="#topnav">Docs</a>
+                <a class="brut-topnav__link" href="#topnav">Components</a>
+                <a class="brut-topnav__link" href="#topnav">Demos</a>
+              </nav>
+              <a class="brut-btn brut-btn--primary brut-btn--sm brut-topnav__cta" href="#topnav">Read the docs &rarr;</a>
+              <button class="brut-topnav__burger" type="button" aria-label="Toggle menu">&equiv;</button>
+            </div>
+          </header>
+        </div>
+        <pre class="docs-snippet">&lt;header class="brut-topnav" data-brut="topnav"&gt;
+  &lt;div class="brut-topnav__inner"&gt;
+    &lt;a class="brut-topnav__brand" href="/"&gt;
+      &lt;span class="brut-topnav__mark"&gt;B&lt;/span&gt;
+      &lt;span&gt;BRUT UI&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;nav class="brut-topnav__links"&gt;
+      &lt;a class="brut-topnav__link brut-topnav__link--active" href="#"&gt;Docs&lt;/a&gt;
+      &lt;a class="brut-topnav__link" href="#"&gt;Components&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;a class="brut-btn brut-btn--primary brut-btn--sm brut-topnav__cta" href="#"&gt;CTA&lt;/a&gt;
+    &lt;button class="brut-topnav__burger" type="button" aria-label="Toggle menu"&gt;&amp;equiv;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</pre>
+      </section>
+
+      <!-- SIDEBAR -->
+      <section class="docs-section" id="sidebar">
+        <h2>Sidebar nav</h2>
+        <p class="lead">Vertical app nav for dashboards. Group titles can be plain headings or <code>&lt;button&gt;</code>s — buttons make groups collapsible when wired with <code>data-brut="sidebar"</code>.</p>
+        <div class="docs-preview docs-preview--start">
+          <aside class="brut-sidebar" data-brut="sidebar" style="height: 320px; background: var(--paper-2);">
+            <a class="brut-sidebar__brand" href="#sidebar">
+              <span class="brut-topnav__mark">B</span>
+              <span>BRUT</span>
+            </a>
+            <div class="brut-sidebar__group">
+              <button class="brut-sidebar__group-title" type="button">Main</button>
+              <a class="brut-sidebar__item brut-sidebar__item--active" href="#sidebar"><span class="brut-sidebar__icon">◆</span> Dashboard</a>
+              <a class="brut-sidebar__item" href="#sidebar"><span class="brut-sidebar__icon">▤</span> Projects</a>
+              <a class="brut-sidebar__item" href="#sidebar"><span class="brut-sidebar__icon">◉</span> Inbox</a>
+            </div>
+            <div class="brut-sidebar__group">
+              <button class="brut-sidebar__group-title" type="button">Workspace</button>
+              <a class="brut-sidebar__item" href="#sidebar"><span class="brut-sidebar__icon">⚙</span> Settings</a>
+            </div>
+          </aside>
+        </div>
+        <pre class="docs-snippet">&lt;aside class="brut-sidebar" data-brut="sidebar"&gt;
+  &lt;a class="brut-sidebar__brand" href="/"&gt;BRAND&lt;/a&gt;
+  &lt;div class="brut-sidebar__group"&gt;
+    &lt;button class="brut-sidebar__group-title" type="button"&gt;Main&lt;/button&gt;
+    &lt;a class="brut-sidebar__item brut-sidebar__item--active" href="#"&gt;Dashboard&lt;/a&gt;
+    &lt;a class="brut-sidebar__item" href="#"&gt;Projects&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;</pre>
+      </section>
+
+      <!-- FOOTER -->
+      <section class="docs-section" id="footer">
+        <h2>Footer</h2>
+        <p class="lead">Inverted ink slab — paper text on black. Brand, links, and a mono legal line.</p>
+        <div class="docs-preview docs-preview--block">
+          <footer class="brut-footer" style="margin: 0;">
+            <div class="brut-footer__inner">
+              <a class="brut-footer__brand" href="#footer">
+                <span class="brut-topnav__mark">B</span>
+                <span>BRUT&nbsp;UI</span>
+              </a>
+              <nav class="brut-footer__links">
+                <a class="brut-footer__link" href="#footer">Docs</a>
+                <a class="brut-footer__link" href="#footer">Demos</a>
+                <a class="brut-footer__link" href="#footer">Components</a>
+                <a class="brut-footer__link" href="#footer">GitHub</a>
+              </nav>
+              <span class="brut-footer__legal">&copy; 2026 &middot; MIT &middot; v0.1</span>
+            </div>
+          </footer>
+        </div>
+        <pre class="docs-snippet">&lt;footer class="brut-footer"&gt;
+  &lt;div class="brut-footer__inner"&gt;
+    &lt;a class="brut-footer__brand" href="/"&gt;BRUT UI&lt;/a&gt;
+    &lt;nav class="brut-footer__links"&gt;
+      &lt;a class="brut-footer__link" href="#"&gt;Docs&lt;/a&gt;
+      &lt;a class="brut-footer__link" href="#"&gt;Demos&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;span class="brut-footer__legal"&gt;&amp;copy; 2026 · MIT&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</pre>
+      </section>
+
+      <!-- BREADCRUMBS -->
+      <section class="docs-section" id="breadcrumbs">
+        <h2>Breadcrumbs</h2>
+        <p class="lead">Hard-edged path nav. Static markup, no JS.</p>
+        <div class="docs-preview docs-preview--block">
+          <ol class="brut-crumbs">
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#breadcrumbs">Home</a></li>
+            <li class="brut-crumbs__sep">/</li>
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#breadcrumbs">Settings</a></li>
+            <li class="brut-crumbs__sep">/</li>
+            <li class="brut-crumbs__item brut-crumbs__current">Profile</li>
+          </ol>
+          <ol class="brut-crumbs">
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#breadcrumbs">Home</a></li>
+            <li class="brut-crumbs__sep">/</li>
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#breadcrumbs">Projects</a></li>
+            <li class="brut-crumbs__sep">/</li>
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#breadcrumbs">Concrete-mixer-v3</a></li>
+            <li class="brut-crumbs__sep">/</li>
+            <li class="brut-crumbs__item brut-crumbs__current">Permissions</li>
+          </ol>
+        </div>
+        <pre class="docs-snippet">&lt;ol class="brut-crumbs"&gt;
+  &lt;li class="brut-crumbs__item"&gt;&lt;a class="brut-crumbs__link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="brut-crumbs__sep"&gt;/&lt;/li&gt;
+  &lt;li class="brut-crumbs__item"&gt;&lt;a class="brut-crumbs__link" href="#"&gt;Settings&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="brut-crumbs__sep"&gt;/&lt;/li&gt;
+  &lt;li class="brut-crumbs__item brut-crumbs__current"&gt;Profile&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      </section>
+
+      <!-- PAGINATION -->
+      <section class="docs-section" id="pagination">
+        <h2>Pagination</h2>
+        <p class="lead">Square 36px buttons in a row. Mark the current page with <code>--active</code> and use <code>.brut-pager__gap</code> for an ellipsis. CSS-only; the consumer wires links.</p>
+        <div class="docs-preview docs-preview--block">
+          <nav class="brut-pager" aria-label="Pagination">
+            <button class="brut-pager__btn" type="button" aria-label="Previous">&lsaquo;</button>
+            <button class="brut-pager__btn" type="button">1</button>
+            <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">2</button>
+            <button class="brut-pager__btn" type="button">3</button>
+            <span class="brut-pager__gap" aria-hidden="true">&hellip;</span>
+            <button class="brut-pager__btn" type="button">9</button>
+            <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+          </nav>
+          <nav class="brut-pager" aria-label="Pagination">
+            <a class="brut-pager__btn" href="#pagination">&lsaquo;</a>
+            <a class="brut-pager__btn" href="#pagination">1</a>
+            <a class="brut-pager__btn brut-pager__btn--active" href="#pagination" aria-current="page">2</a>
+            <a class="brut-pager__btn" href="#pagination">3</a>
+            <a class="brut-pager__btn" href="#pagination">&rsaquo;</a>
+          </nav>
+        </div>
+        <pre class="docs-snippet">&lt;nav class="brut-pager" aria-label="Pagination"&gt;
+  &lt;button class="brut-pager__btn" type="button" aria-label="Previous"&gt;&amp;lsaquo;&lt;/button&gt;
+  &lt;button class="brut-pager__btn" type="button"&gt;1&lt;/button&gt;
+  &lt;button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page"&gt;2&lt;/button&gt;
+  &lt;button class="brut-pager__btn" type="button"&gt;3&lt;/button&gt;
+  &lt;span class="brut-pager__gap"&gt;&amp;hellip;&lt;/span&gt;
+  &lt;button class="brut-pager__btn" type="button"&gt;9&lt;/button&gt;
+  &lt;button class="brut-pager__btn" type="button" aria-label="Next"&gt;&amp;rsaquo;&lt;/button&gt;
+&lt;/nav&gt;</pre>
+      </section>
+
+      <!-- MENU -->
+      <section class="docs-section" id="menu">
+        <h2>Menu</h2>
+        <p class="lead">Context / overflow menu. Trigger has <code>data-brut-menu-open="&lt;id&gt;"</code>; the menu has matching <code>id</code>, <code>data-brut="menu"</code>, and starts <code>hidden</code>. Click outside, press Esc, or click any item to close. Arrow keys move focus.</p>
+        <div class="docs-preview">
+          <button class="brut-btn brut-btn--primary" type="button" data-brut-menu-open="docs-menu">ACTIONS</button>
+          <div class="brut-menu" id="docs-menu" data-brut="menu" hidden>
+            <button class="brut-menu__item" type="button">Edit</button>
+            <button class="brut-menu__item" type="button">Duplicate</button>
+            <button class="brut-menu__item" type="button">Share</button>
+            <hr class="brut-menu__sep"/>
+            <button class="brut-menu__item brut-menu__item--danger" type="button">Delete</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;button class="brut-btn" type="button"
+        data-brut-menu-open="row-actions"&gt;ACTIONS&lt;/button&gt;
+&lt;div class="brut-menu" id="row-actions" data-brut="menu" hidden&gt;
+  &lt;button class="brut-menu__item" type="button"&gt;Edit&lt;/button&gt;
+  &lt;button class="brut-menu__item" type="button"&gt;Duplicate&lt;/button&gt;
+  &lt;hr class="brut-menu__sep"/&gt;
+  &lt;button class="brut-menu__item brut-menu__item--danger" type="button"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- LAYOUT: container -->
+      <section class="docs-section" id="layout-container">
+        <h2>Container</h2>
+        <p class="lead">Max-width centered wrapper. The page-level frame.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="layout-frame">
+            <div class="layout-frame__label">.brut-container (max-width 1200px)</div>
+            <div class="layout-tile">PAGE CONTENT</div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-container"&gt;
+  &lt;!-- page content --&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- LAYOUT: section -->
+      <section class="docs-section" id="layout-section">
+        <h2>Section</h2>
+        <p class="lead">Full-bleed band with a 4px ink bottom rule. Opt out with <code>--flush</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="border-bottom: 4px solid var(--ink); padding: var(--sp-6) var(--sp-5); background: var(--paper-2);">
+            <div class="layout-tile layout-tile--bone">SECTION A</div>
+          </div>
+          <div style="padding: var(--sp-6) var(--sp-5); background: var(--bone);">
+            <div class="layout-tile">SECTION B (--flush)</div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;section class="brut-section"&gt; … &lt;/section&gt;
+&lt;section class="brut-section brut-section--flush"&gt; … &lt;/section&gt;</pre>
+      </section>
+
+      <!-- LAYOUT: stack -->
+      <section class="docs-section" id="layout-stack">
+        <h2>Stack / Cluster / Bar</h2>
+        <p class="lead">One-axis flow. Stack is vertical. Cluster wraps horizontally. Bar is a single horizontal row.</p>
+        <div class="docs-preview docs-preview--block">
+          <div>
+            <div class="layout-frame__label">.brut-stack</div>
+            <div class="brut-stack" style="max-width: 240px;">
+              <div class="layout-tile">A</div>
+              <div class="layout-tile layout-tile--lime">B</div>
+              <div class="layout-tile layout-tile--pink">C</div>
+            </div>
+          </div>
+          <div>
+            <div class="layout-frame__label">.brut-cluster</div>
+            <div class="brut-cluster">
+              <div class="layout-tile">A</div>
+              <div class="layout-tile layout-tile--lime">B</div>
+              <div class="layout-tile layout-tile--pink">C</div>
+              <div class="layout-tile layout-tile--ink">D</div>
+            </div>
+          </div>
+          <div>
+            <div class="layout-frame__label">.brut-bar</div>
+            <div class="brut-bar">
+              <div class="layout-tile">LEFT</div>
+              <div class="layout-tile layout-tile--ink">RIGHT</div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-stack"&gt; … &lt;/div&gt;          &lt;!-- vertical --&gt;
+&lt;div class="brut-cluster"&gt; … &lt;/div&gt;        &lt;!-- horizontal, wraps --&gt;
+&lt;div class="brut-bar"&gt; … &lt;/div&gt;            &lt;!-- horizontal, no wrap --&gt;</pre>
+      </section>
+
+      <!-- LAYOUT: grid -->
+      <section class="docs-section" id="layout-grid">
+        <h2>Grid / Split</h2>
+        <p class="lead">Two-axis layout. Grid is fluid columns. Split is a two-column layout with a fixed aside.</p>
+        <div class="docs-preview docs-preview--block">
+          <div>
+            <div class="layout-frame__label">.brut-grid</div>
+            <div class="brut-grid">
+              <div class="layout-tile">A</div>
+              <div class="layout-tile layout-tile--lime">B</div>
+              <div class="layout-tile layout-tile--pink">C</div>
+              <div class="layout-tile layout-tile--ink">D</div>
+            </div>
+          </div>
+          <div>
+            <div class="layout-frame__label">.brut-split</div>
+            <div class="brut-split">
+              <aside class="layout-tile" style="width: 160px; flex: none;">SIDE</aside>
+              <main class="layout-tile layout-tile--bone" style="flex: 1;">MAIN CONTENT</main>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-grid"&gt; … &lt;/div&gt;
+&lt;div class="brut-split"&gt; &lt;aside&gt;…&lt;/aside&gt; &lt;main&gt;…&lt;/main&gt; &lt;/div&gt;</pre>
+      </section>
+
+      <!-- LAYOUT: misc -->
+      <section class="docs-section" id="layout-misc">
+        <h2>Rule / Aspect / Shape</h2>
+        <p class="lead"><code>.brut-rule</code> is a 4px ink line. <code>.brut-aspect</code> locks aspect ratio. <code>.brut-shape</code> drops a rotated offset rectangle into a hero.</p>
+        <div class="docs-preview docs-preview--block">
+          <div>
+            <div class="layout-frame__label">.brut-rule</div>
+            <hr class="brut-rule" />
+          </div>
+          <div>
+            <div class="layout-frame__label">.brut-aspect.brut-aspect--video</div>
+            <div class="brut-aspect brut-aspect--video" style="max-width: 320px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em;">16 / 9</div>
+          </div>
+          <div>
+            <div class="layout-frame__label">.brut-shape (positioned in a hero)</div>
+            <div style="position: relative; height: 140px; background: var(--bone); border: 4px solid var(--ink); overflow: hidden;">
+              <div class="brut-shape brut-shape--rot-r" style="position: absolute; top: -24px; right: -24px;"></div>
+              <div style="position: absolute; bottom: var(--sp-4); left: var(--sp-4); font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em;">HERO COPY.</div>
+            </div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;hr class="brut-rule"&gt;
+&lt;div class="brut-aspect brut-aspect--video"&gt; … &lt;/div&gt;
+&lt;div class="brut-shape brut-shape--rot-r"&gt;&lt;/div&gt;</pre>
+      </section>
+
+    </main>
+  </div>
+  <script src="../dist/brut.js" defer></script>
+</body>
+</html>

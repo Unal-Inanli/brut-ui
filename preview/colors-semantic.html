@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Colors — Semantic</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 20px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pair {
+    border: var(--bw-3) solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+  }
+  .top { flex: 1; padding: 10px 12px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .bot { padding: 8px 12px; border-top: var(--bw-2) solid var(--ink); display: flex; justify-content: space-between; align-items: center; }
+  .name { font-family: var(--font-display); font-size: 13px; text-transform: uppercase; color: var(--paper); }
+  .hex  { font-family: var(--font-mono); font-size: 11px; }
+  .lab  { font-family: var(--font-display); font-size: 11px; text-transform: uppercase; color: var(--ink); }
+</style></head>
+<body>
+<div class="row">
+  <div class="pair">
+    <div class="top" style="background:#2ECC71"><span class="name">Success</span><span class="hex" style="color:#fff">#2ECC71</span></div>
+    <div class="bot" style="background:#D9F7E5"><span class="lab">bg</span><span class="hex">#D9F7E5</span></div>
+  </div>
+  <div class="pair">
+    <div class="top" style="background:#FFB020"><span class="name" style="color:var(--ink)">Warning</span><span class="hex">#FFB020</span></div>
+    <div class="bot" style="background:#FFF1CC"><span class="lab">bg</span><span class="hex">#FFF1CC</span></div>
+  </div>
+  <div class="pair">
+    <div class="top" style="background:#FF3B30"><span class="name">Danger</span><span class="hex" style="color:#fff">#FF3B30</span></div>
+    <div class="bot" style="background:#FFD9D6"><span class="lab">bg</span><span class="hex">#FFD9D6</span></div>
+  </div>
+  <div class="pair">
+    <div class="top" style="background:#4D7CFF"><span class="name">Info</span><span class="hex" style="color:#fff">#4D7CFF</span></div>
+    <div class="bot" style="background:#DDE6FF"><span class="lab">bg</span><span class="hex">#DDE6FF</span></div>
+  </div>
+</div>
+</body></html>

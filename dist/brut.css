@@ -1,0 +1,2668 @@
+/*!
+ * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
+ * Built 2026-05-02T07:40:48Z
+ * Bundle: src/tokens.css + src/components.css
+ */
+
+/* ============================================
+   BRUT — Neo-Brutalist UI Kit
+   Foundational tokens: color + type
+   ============================================ */
+
+/* --- Webfonts (Google Fonts substitutes) ---
+   Archivo Black — display / heavy headlines (substitute for a true industrial grotesk)
+   Space Grotesk — body / UI sans (clean geometric grotesk with personality)
+   JetBrains Mono — code / mono (chunky, technical)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* ---------- COLOR ---------- */
+
+  /* Ink + paper — the brutalist baseline. Pure black, off-white paper. */
+  --ink:        #000000;          /* every border, every shadow, every outline */
+  --paper:      #FAF7F0;          /* default page background — warm, off-white */
+  --paper-2:    #F2EEE3;          /* secondary surface (cards on paper) */
+  --bone:       #FFFFFF;          /* pure white — used sparingly, e.g. inputs */
+
+  /* Neutrals — concrete tones. Cool greys with a hint of warmth. */
+  --concrete-50:  #ECEAE3;
+  --concrete-100: #DCD8CC;
+  --concrete-200: #BFB9A8;
+  --concrete-300: #8A8576;
+  --concrete-400: #4F4D45;
+  --concrete-500: #1F1E1A;
+
+  /* Primary — saturated, candy-flat. No gradients. */
+  --primary:        #FFD23F;       /* "highlighter" yellow — main accent */
+  --primary-soft:   #FFE680;
+  --primary-deep:   #E0B400;
+
+  /* Secondary palette — the hallmark neo-brutalist pop colors */
+  --pop-pink:    #FF6B9D;
+  --pop-lime:    #C6F432;
+  --pop-blue:    #4D7CFF;
+  --pop-orange:  #FF7A2E;
+  --pop-purple:  #B57BFF;
+  --pop-mint:    #7FE3C4;
+
+  /* Semantic — signal colors with hard edges */
+  --success:    #2ECC71;
+  --success-bg: #D9F7E5;
+  --warning:    #FFB020;
+  --warning-bg: #FFF1CC;
+  --danger:     #FF3B30;
+  --danger-bg:  #FFD9D6;
+  --info:       #4D7CFF;
+  --info-bg:    #DDE6FF;
+
+  /* Foreground / background semantic tokens */
+  --bg-1:       var(--paper);
+  --bg-2:       var(--paper-2);
+  --bg-3:       var(--bone);
+  --fg-1:       var(--ink);
+  --fg-2:       var(--concrete-400);
+  --fg-3:       var(--concrete-300);
+  --border:     var(--ink);
+
+  /* ---------- TYPE ---------- */
+
+  --font-display: 'Archivo Black', 'Helvetica Neue', Impact, sans-serif;
+  --font-sans:    'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  /* Type scale — chunky, generous, no dainty steps */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   22px;
+  --fs-xl:   28px;
+  --fs-2xl:  36px;
+  --fs-3xl:  48px;
+  --fs-4xl:  64px;
+  --fs-5xl:  88px;
+  --fs-6xl:  128px;
+
+  --lh-tight:  0.95;
+  --lh-snug:   1.1;
+  --lh-normal: 1.35;
+  --lh-loose:  1.6;
+
+  --tracking-tightest: -0.04em; /* hero display only */
+  --tracking-tight:    -0.02em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.04em;
+  --tracking-wider:    0.08em;
+  --tracking-widest:   0.12em;   /* for ALL CAPS labels */
+
+  /* Font weights — Space Grotesk ships 400/500/600/700 */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold: 600;
+  --fw-bold:    700;
+  --fw-display: 900; /* Archivo Black is a single 900-weight */
+
+  /* Numerals — tabular for tables and stat blocks */
+  --num-tabular:    "tnum" 1, "lnum" 1;
+  --num-proportional: "pnum" 1, "lnum" 1;
+
+  /* ---------- SHAPE / SHADOW / SPACE ---------- */
+
+  /* Border widths — thick, deliberate */
+  --bw-1: 2px;
+  --bw-2: 3px;
+  --bw-3: 4px;     /* default brutalist border */
+  --bw-4: 6px;
+  --bw-5: 8px;
+
+  /* Corner radii — mostly hard. A touch of softening allowed sparingly. */
+  --r-0: 0px;
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+
+  /* Shadow system — HARD-EDGED OFFSET. No blur, no soft drop shadows. */
+  --shadow-xs:  2px 2px 0 0 var(--ink);
+  --shadow-sm:  4px 4px 0 0 var(--ink);
+  --shadow-md:  6px 6px 0 0 var(--ink);
+  --shadow-lg:  8px 8px 0 0 var(--ink);
+  --shadow-xl:  12px 12px 0 0 var(--ink);
+  --shadow-2xl: 16px 16px 0 0 var(--ink);
+
+  /* Spacing — 4px base */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* Motion — snap, don't ease. */
+  --ease-snap:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-instant: steps(1, end);
+  --dur-fast:   80ms;
+  --dur-base:   140ms;
+  --dur-slow:   220ms;
+}
+
+/* ---------- SEMANTIC ELEMENT STYLES ---------- */
+
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* All headings reset margins — let the layout decide rhythm. */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { margin: 0; }
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+
+h5, .h5 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+h6, .h6 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+p, .p {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+
+small, .small {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+strong, b { font-weight: var(--fw-bold); }
+em, i    { font-style: italic; }
+
+.eyebrow,
+.label {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+}
+
+/* Anchors — chunky underlines, never thin. */
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+  font-weight: var(--fw-medium);
+}
+a:hover { background: var(--primary); }
+
+/* Lists — square bullets, hard counters. */
+ul, ol {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  padding-left: 1.4em;
+  margin: 0;
+}
+ul { list-style: square; }
+ol { list-style: decimal; }
+li::marker {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+}
+li + li { margin-top: 4px; }
+
+/* Blockquote — left ink rule, body-weight, no italic by default. */
+blockquote {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  border-left: var(--bw-3) solid var(--ink);
+  padding: var(--sp-2) var(--sp-4);
+  margin: 0;
+}
+
+/* Horizontal rule — 4px ink line, the only divider we ship. */
+hr {
+  border: 0;
+  border-top: var(--bw-3) solid var(--ink);
+  margin: var(--sp-6) 0;
+}
+
+/* Inline code, kbd, samp — chunky chip with hard border. */
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  font-weight: var(--fw-medium);
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border: var(--bw-1) solid var(--ink);
+}
+kbd {
+  background: var(--bone);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  font-size: 0.85em;
+}
+
+/* Block code. */
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--sp-4);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  overflow: auto;
+  margin: 0;
+}
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ---------- TYPE UTILITY CLASSES ---------- */
+.t-display    { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-tight); line-height: var(--lh-tight); }
+.t-sans       { font-family: var(--font-sans); }
+.t-mono       { font-family: var(--font-mono); }
+.t-uppercase  { text-transform: uppercase; letter-spacing: var(--tracking-widest); }
+.t-tabular    { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--num-tabular); }
+.t-tight      { letter-spacing: var(--tracking-tight); }
+.t-tightest   { letter-spacing: var(--tracking-tightest); }
+.t-wide       { letter-spacing: var(--tracking-wide); }
+.t-wider      { letter-spacing: var(--tracking-wider); }
+.t-widest     { letter-spacing: var(--tracking-widest); }
+.t-balance    { text-wrap: balance; }
+.t-pretty     { text-wrap: pretty; }
+
+/* Selection: high contrast, no gradient */
+::selection { background: var(--primary); color: var(--ink); }
+
+
+/* Shared component styles for docs page — these classes are referenced
+   by the inline previews AND by the code snippets the user copies. */
+
+/* ============================================================
+   TYPOGRAPHY
+   Component-level classes that compose the type tokens into
+   ready-made styles. Use these instead of hand-rolling sizes.
+   ============================================================ */
+
+/* DISPLAY — only for hero / poster moments. ALL CAPS. */
+.brut-display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 11vw, 128px);
+  line-height: 0.9;
+  letter-spacing: var(--tracking-tightest);
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+.brut-display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 0.92;
+  letter-spacing: var(--tracking-tightest);
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+.brut-display-3 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 0.95;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* HEADINGS — H1 through H6, in semantic order. */
+.brut-h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  margin: 0;
+}
+.brut-h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  margin: 0;
+}
+.brut-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+.brut-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.brut-h5 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.brut-h6 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin: 0;
+}
+
+/* BODY copy — three densities. */
+.brut-lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  margin: 0;
+  max-width: 60ch;
+}
+.brut-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  margin: 0;
+  max-width: 70ch;
+}
+.brut-small {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  margin: 0;
+  max-width: 80ch;
+}
+.brut-caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-normal);
+  color: var(--concrete-400);
+  margin: 0;
+}
+
+/* EYEBROW / KICKER / OVERLINE — short, chunky, ALL CAPS. */
+.brut-eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  line-height: 1;
+  margin: 0;
+}
+.brut-kicker {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  line-height: 1;
+  background: var(--primary);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  padding: 4px 8px;
+}
+.brut-overline {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--concrete-400);
+  margin: 0;
+}
+
+/* QUOTE — left rule, no italic. */
+.brut-quote {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  border-left: 4px solid var(--ink);
+  padding: 6px 16px;
+  margin: 0;
+}
+/* Pull-quote — display-weight, with thick top + bottom rules. */
+.brut-pull-quote {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  border-top: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  padding: 16px 0;
+  margin: 0;
+  text-wrap: balance;
+}
+.brut-pull-quote cite {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--concrete-400);
+  margin-top: 10px;
+}
+
+/* LINK — chunky underline. Yellow on hover. */
+.brut-link {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-link:hover  { background: var(--primary); }
+.brut-link:active { background: var(--primary-deep); color: var(--paper); }
+
+/* CODE — inline + kbd + block. */
+.brut-code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border: 2px solid var(--ink);
+}
+.brut-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: var(--fw-bold);
+  background: var(--bone);
+  padding: 2px 6px;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  display: inline-block;
+  line-height: 1.1;
+}
+.brut-pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 16px;
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  overflow: auto;
+  margin: 0;
+}
+.brut-pre .tok-comment { color: var(--concrete-300); }
+.brut-pre .tok-keyword { color: var(--pop-pink); }
+.brut-pre .tok-string  { color: var(--pop-lime); }
+.brut-pre .tok-num     { color: var(--primary); }
+
+/* LISTS — square bullets, hard counters, optional check. */
+.brut-list {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  list-style: square;
+  padding-left: 1.4em;
+  margin: 0;
+}
+.brut-list--ord { list-style: decimal; }
+.brut-list--check {
+  list-style: none;
+  padding-left: 0;
+}
+.brut-list--check li {
+  position: relative;
+  padding-left: 30px;
+}
+.brut-list--check li::before {
+  content: "✓";
+  position: absolute; left: 0; top: 0;
+  width: 20px; height: 20px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  background: var(--primary);
+  border: 2px solid var(--ink);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  line-height: 1;
+}
+.brut-list li + li { margin-top: 4px; }
+
+/* DROP CAP — first letter as a hard ink block. */
+.brut-drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 0.9;
+  float: left;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 10px 4px;
+  margin: 4px 10px 0 0;
+  text-transform: uppercase;
+}
+
+/* HIGHLIGHT — yellow text marker. */
+.brut-mark {
+  background: var(--primary);
+  color: var(--ink);
+  padding: 1px 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* NUM — display-style figure for stats. Tabular by default. */
+.brut-num {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: var(--num-tabular);
+  margin: 0;
+}
+
+/* TEXT-LINK INLINE in body copy — works inside <p> without breaking rhythm. */
+.brut-prose {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  max-width: 70ch;
+}
+.brut-prose > * + * { margin-top: 14px; }
+.brut-prose h2, .brut-prose .brut-h2 { margin-top: 32px; }
+.brut-prose h3, .brut-prose .brut-h3 { margin-top: 24px; }
+.brut-prose ul, .brut-prose ol { padding-left: 1.4em; }
+.brut-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border: 2px solid var(--ink);
+}
+
+
+
+/* BUTTON */
+.brut-btn {
+  font-family: var(--font-display);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 18px;
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--ink);
+  cursor: pointer;
+  background: var(--bone);
+  color: var(--ink);
+  line-height: 1;
+  transition: transform 80ms cubic-bezier(.2,.8,.2,1),
+              box-shadow 80ms cubic-bezier(.2,.8,.2,1);
+}
+.brut-btn:hover  { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--ink); }
+.brut-btn:active { transform: translate( 2px,  2px); box-shadow: 0 0 0 0 var(--ink); }
+.brut-btn--primary { background: var(--primary); }
+.brut-btn--ink     { background: var(--ink);      color: var(--paper); }
+.brut-btn--pink    { background: var(--pop-pink); color: var(--ink); }
+.brut-btn--lime    { background: var(--pop-lime); color: var(--ink); }
+.brut-btn--sm { padding: 8px 12px;  font-size: 12px; border-width: 3px;
+                box-shadow: 3px 3px 0 0 var(--ink); }
+.brut-btn--lg { padding: 16px 24px; font-size: 18px;
+                box-shadow: 6px 6px 0 0 var(--ink); }
+
+/* BADGE */
+.brut-badge {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border: 3px solid var(--ink);
+  background: var(--bone);
+  color: var(--ink);
+  line-height: 1;
+  display: inline-block;
+}
+.brut-badge--ok   { background: var(--success-bg); }
+.brut-badge--warn { background: var(--warning-bg); }
+.brut-badge--err  { background: var(--danger-bg); }
+.brut-badge--info { background: var(--info-bg); }
+
+/* CARD */
+.brut-card {
+  background: var(--bone);
+  border: 4px solid var(--ink);
+  box-shadow: 6px 6px 0 0 var(--ink);
+  padding: 20px;
+}
+
+/* ============================================================
+   DATA
+   Tables and settings-style row lists. Static structure; the
+   table picks up sortable / select-all behavior when wrapped in
+   data-brut="table" (see src/js/components/table.js).
+   ============================================================ */
+
+/* TABLE — full-width data grid. Sortable + select-all when JS-bound. */
+.brut-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: var(--bw-3) solid var(--ink);
+  background: var(--bone);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+.brut-table__head {
+  background: var(--ink);
+  color: var(--paper);
+}
+.brut-table__head .brut-table__cell {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wider);
+  text-align: left;
+  padding: 10px 14px;
+  color: var(--paper);
+  border-bottom: var(--bw-2) solid var(--ink);
+}
+.brut-table__cell {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+.brut-table tbody .brut-table__cell {
+  border-top: var(--bw-2) solid var(--ink);
+}
+.brut-table__cell--num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.brut-table__cell--sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 28px;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-table__cell--sortable:hover { background: var(--concrete-500); }
+.brut-table__cell--sortable::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  color: var(--concrete-200);
+}
+.brut-table__cell--sorted::after      { content: "\25B2"; color: var(--paper); }
+.brut-table__cell--sorted-desc::after { content: "\25BC"; color: var(--paper); }
+.brut-table--striped tbody tr:nth-child(even) { background: var(--paper-2); }
+.brut-table--bordered .brut-table__cell + .brut-table__cell { border-left: var(--bw-2) solid var(--ink); }
+.brut-table--compact .brut-table__cell,
+.brut-table--compact .brut-table__head .brut-table__cell { padding: 6px 10px; }
+
+/* ROWS — settings-style list: lead / title+sub / trail. */
+.brut-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--bone);
+}
+.brut-rows__item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--sp-3);
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+}
+.brut-rows__lead  { display: inline-flex; align-items: center; }
+.brut-rows__main  { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.brut-rows__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+  line-height: 1.2;
+}
+.brut-rows__sub {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--concrete-400);
+  line-height: 1.3;
+}
+.brut-rows__trail { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.brut-rows--bordered { border: var(--bw-3) solid var(--ink); }
+.brut-rows--bordered .brut-rows__item + .brut-rows__item {
+  border-top: var(--bw-2) solid var(--ink);
+}
+.brut-rows--clickable .brut-rows__item {
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-rows--clickable .brut-rows__item:hover { background: var(--primary); }
+
+/* INPUT */
+.brut-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.brut-input {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  padding: 12px 14px;
+  background: var(--bone);
+  border: 4px solid var(--ink);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  outline: none;
+  color: var(--ink);
+  width: 100%;
+  box-sizing: border-box;
+}
+.brut-input:focus {
+  background: var(--primary-soft);
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+
+/* TOGGLE / SWITCH */
+.brut-switch {
+  width: 56px; height: 30px;
+  border: 3px solid var(--ink);
+  background: var(--concrete-100);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  position: relative;
+  display: inline-block;
+}
+.brut-switch--on { background: var(--pop-lime); }
+.brut-switch__knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px;
+  background: var(--ink);
+  transition: left 100ms cubic-bezier(.2,.8,.2,1);
+}
+.brut-switch--on .brut-switch__knob { left: 28px; }
+
+/* CHECKBOX */
+.brut-cb {
+  width: 22px; height: 22px;
+  border: 3px solid var(--ink);
+  background: var(--bone);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+}
+.brut-cb--on { background: var(--primary); }
+.brut-cb--on::after {
+  content: "\2715";
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 900;
+  line-height: 1;
+}
+
+/* ALERT */
+.brut-alert {
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--ink);
+  padding: 12px 16px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.brut-alert__icon {
+  width: 36px; height: 36px;
+  border: 3px solid var(--ink);
+  font-family: var(--font-display); font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  flex: none;
+}
+.brut-alert--ok   { background: var(--success-bg); }
+.brut-alert--ok   .brut-alert__icon { background: var(--success); color: var(--ink); }
+.brut-alert--warn { background: var(--warning-bg); }
+.brut-alert--warn .brut-alert__icon { background: var(--warning); color: var(--ink); }
+.brut-alert--err  { background: var(--danger-bg); }
+.brut-alert--err  .brut-alert__icon { background: var(--danger);  color: var(--paper); }
+.brut-alert--info { background: var(--info-bg); }
+.brut-alert--info .brut-alert__icon { background: var(--info);    color: var(--paper); }
+
+/* TOAST — non-blocking transient notifications. Stacked in a corner host. */
+.brut-toast-host {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  pointer-events: none;
+  max-width: 100%;
+}
+.brut-toast-host > * { pointer-events: auto; }
+.brut-toast-host--top-right    { top: 0;    right: 0; align-items: flex-end; }
+.brut-toast-host--top-left     { top: 0;    left: 0;  align-items: flex-start; }
+.brut-toast-host--bottom-right { bottom: 0; right: 0; align-items: flex-end; }
+.brut-toast-host--bottom-left  { bottom: 0; left: 0;  align-items: flex-start; }
+.brut-toast {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-3) var(--sp-4);
+  max-width: 360px;
+  min-width: 220px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  animation: brut-toast-in 120ms var(--ease-snap);
+}
+.brut-toast--leaving { opacity: 0; transition: opacity var(--dur-base) var(--ease-snap); }
+@keyframes brut-toast-in {
+  from { transform: translateY(-8px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.brut-toast__icon {
+  width: 28px; height: 28px;
+  border: var(--bw-2) solid var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  display: flex; align-items: center; justify-content: center;
+  flex: none;
+  background: var(--bone);
+}
+.brut-toast__msg { flex: 1; line-height: var(--lh-snug); }
+.brut-toast__msg strong { font-weight: var(--fw-bold); }
+.brut-toast__x {
+  flex: none;
+  width: 22px; height: 22px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+.brut-toast--ok   { background: var(--success-bg); }
+.brut-toast--ok   .brut-toast__icon { background: var(--success); color: var(--ink); }
+.brut-toast--warn { background: var(--warning-bg); }
+.brut-toast--warn .brut-toast__icon { background: var(--warning); color: var(--ink); }
+.brut-toast--err  { background: var(--danger-bg); }
+.brut-toast--err  .brut-toast__icon { background: var(--danger);  color: var(--paper); }
+.brut-toast--info { background: var(--info-bg); }
+.brut-toast--info .brut-toast__icon { background: var(--info);    color: var(--paper); }
+
+/* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
+.brut-tip {
+  position: absolute;
+  z-index: 70;
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--paper);
+  padding: 6px 10px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* POPOVER — anchored card opened by trigger. JS positions + toggles. */
+.brut-popover {
+  position: absolute;
+  z-index: 65;
+  min-width: 220px;
+  max-width: 360px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+}
+.brut-popover[hidden] { display: none; }
+.brut-popover__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+.brut-popover__body {
+  padding: var(--sp-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  line-height: var(--lh-normal);
+}
+.brut-popover__x {
+  width: 22px; height: 22px;
+  background: var(--danger);
+  border: var(--bw-1) solid var(--paper);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* SKELETON — placeholder block with a hard ink stripe sweep. */
+.brut-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--concrete-100);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  display: block;
+}
+.brut-skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 30%;
+  height: 100%;
+  background: var(--ink);
+  transform: skewX(-20deg);
+  animation: brut-skel-sweep 800ms var(--ease-snap) infinite;
+}
+@keyframes brut-skel-sweep {
+  from { left: -40%; }
+  to   { left: 130%; }
+}
+.brut-skeleton--text {
+  height: 1em;
+  width: 100%;
+}
+.brut-skeleton--block {
+  height: 96px;
+  width: 100%;
+}
+.brut-skeleton--circle {
+  width: 48px;
+  height: 48px;
+}
+
+/* SPINNER — square with one side colored, rotates 360deg. No border-radius. */
+.brut-spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: var(--bw-3) solid var(--ink);
+  border-top-color: var(--primary);
+  background: transparent;
+  animation: brut-spin 600ms linear infinite;
+}
+.brut-spinner--sm { width: 24px; height: 24px; border-width: var(--bw-2); }
+.brut-spinner--md { width: 32px; height: 32px; border-width: var(--bw-3); }
+.brut-spinner--lg { width: 48px; height: 48px; border-width: var(--bw-3); }
+@keyframes brut-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* EMPTY — dashed-border placeholder card for "nothing here yet" states. */
+.brut-empty {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-5);
+  border: var(--bw-3) dashed var(--ink);
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.brut-empty__shape {
+  width: 56px;
+  height: 56px;
+  background: var(--ink);
+  transform: rotate(-6deg);
+  margin-bottom: var(--sp-2);
+}
+.brut-empty__title {
+  margin: 0;
+}
+.brut-empty__body {
+  max-width: 48ch;
+  margin: 0 auto;
+  color: var(--concrete-300);
+}
+.brut-empty__action {
+  margin-top: var(--sp-3);
+}
+
+/* SEGMENTED */
+.brut-seg {
+  display: inline-flex;
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--ink);
+  background: var(--bone);
+}
+.brut-seg__btn {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 10px 16px;
+  background: transparent;
+  border: 0;
+  border-right: 3px solid var(--ink);
+  cursor: pointer;
+}
+.brut-seg__btn:last-child { border-right: 0; }
+.brut-seg__btn--on { background: var(--ink); color: var(--paper); }
+
+/* TABS */
+.brut-tabs {
+  display: flex;
+  border-bottom: 4px solid var(--ink);
+}
+.brut-tab {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 13px;
+  padding: 10px 16px;
+  background: var(--bone);
+  border: 4px solid var(--ink);
+  border-bottom: none;
+  margin-right: -4px;
+  cursor: pointer;
+  position: relative;
+}
+.brut-tab--on { background: var(--primary); z-index: 2; }
+
+/* ACCORDION — stacked disclosure panels. JS toggles --open on items. */
+.brut-accordion {
+  display: block;
+}
+.brut-accordion__item {
+  border: var(--bw-3) solid var(--ink);
+}
+.brut-accordion__item + .brut-accordion__item {
+  border-top: 0;
+}
+.brut-accordion__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bone);
+  border: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+.brut-accordion__head:hover {
+  background: var(--primary);
+}
+.brut-accordion__icon {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  line-height: 1;
+  margin-left: var(--sp-3);
+}
+.brut-accordion__item--open > .brut-accordion__head .brut-accordion__icon::before {
+  content: "−";
+}
+.brut-accordion__head .brut-accordion__icon::before {
+  content: "+";
+}
+.brut-accordion__body {
+  padding: var(--sp-4);
+  border-top: var(--bw-2) solid var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  display: none;
+}
+.brut-accordion__item--open > .brut-accordion__body {
+  display: block;
+}
+
+/* AVATAR */
+.brut-avatar {
+  width: 44px; height: 44px;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.brut-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+.brut-avatar-group .brut-avatar {
+  margin-left: -10px;
+  box-shadow: 0 0 0 3px var(--paper);
+  position: relative;
+}
+.brut-avatar-group .brut-avatar:first-child { margin-left: 0; }
+.brut-avatar-group__more {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+}
+
+/* DIALOG */
+.brut-dialog {
+  background: var(--bone);
+  border: 4px solid var(--ink);
+  box-shadow: 12px 12px 0 0 var(--ink);
+}
+.brut-dialog__head {
+  background: var(--ink); color: var(--paper);
+  padding: 8px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.brut-dialog__x {
+  width: 22px; height: 22px;
+  background: var(--danger);
+  border: 2px solid var(--paper);
+  font-family: var(--font-display);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+/* DRAWER — side sheet. Slides in from any edge. JS toggles --open. */
+.brut-drawer {
+  position: fixed;
+  z-index: 80;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--dur-base) var(--ease-snap);
+}
+.brut-drawer[hidden] { display: none; }
+.brut-drawer--right {
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  transform: translateX(100%);
+}
+.brut-drawer--left {
+  top: 0; left: 0; bottom: 0;
+  width: min(420px, 100vw);
+  transform: translateX(-100%);
+}
+.brut-drawer--top {
+  top: 0; left: 0; right: 0;
+  max-height: 80vh;
+  transform: translateY(-100%);
+}
+.brut-drawer--bottom {
+  bottom: 0; left: 0; right: 0;
+  max-height: 80vh;
+  transform: translateY(100%);
+}
+.brut-drawer--open.brut-drawer--right,
+.brut-drawer--open.brut-drawer--left,
+.brut-drawer--open.brut-drawer--top,
+.brut-drawer--open.brut-drawer--bottom {
+  transform: translate(0, 0);
+}
+.brut-drawer__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  border-bottom: var(--bw-3) solid var(--ink);
+}
+.brut-drawer__body {
+  padding: var(--sp-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  overflow: auto;
+  flex: 1 1 auto;
+}
+.brut-drawer__x {
+  width: 22px; height: 22px;
+  background: var(--danger);
+  border: var(--bw-1) solid var(--paper);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* MENU — context / overflow menu. JS opens, positions, and closes. */
+.brut-menu {
+  position: absolute;
+  z-index: 65;
+  min-width: 200px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-1) 0;
+}
+.brut-menu[hidden] { display: none; }
+.brut-menu__item {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+.brut-menu__item:hover,
+.brut-menu__item:focus {
+  background: var(--primary);
+  outline: 0;
+}
+.brut-menu__item--danger {
+  color: var(--danger);
+}
+.brut-menu__item--danger:hover,
+.brut-menu__item--danger:focus {
+  background: var(--danger);
+  color: var(--paper);
+}
+.brut-menu__sep {
+  border: 0;
+  border-top: var(--bw-2) solid var(--ink);
+  margin: var(--sp-1) 0;
+}
+
+/* ============================================================
+   FORMS — extended
+   Field wrappers, input variants, native-styled controls, and
+   compound widgets (stepper, otp, tags, combobox, dropzone,
+   rating). Visual styling lives here; interactive behavior for
+   any data-brut="…" hook ships as JS in src/js/components/<name>.js
+   (concatenated into dist/brut.js by build.sh). Components that do
+   not need JS (textarea, select, range, fieldset, etc.) work with
+   no script attached.
+   ============================================================ */
+
+/* FORM container — vertical stack of fields. */
+.brut-form        { display: flex; flex-direction: column; gap: var(--sp-5); }
+.brut-form--tight { gap: var(--sp-3); }
+.brut-form--loose { gap: var(--sp-8); }
+
+/* FIELD — label + control + hint/error/counter wrapper. */
+.brut-field       { display: flex; flex-direction: column; gap: var(--sp-1); }
+.brut-field__label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink);
+}
+.brut-field__hint  { font-size: 12px; color: var(--concrete-400); }
+.brut-field__error {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: var(--danger);
+}
+.brut-field__counter {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--concrete-400);
+  align-self: flex-end;
+}
+.brut-field__counter--over { color: var(--danger); font-weight: var(--fw-bold); }
+.brut-field--inline {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* INPUT — variants + states on the existing .brut-input. */
+.brut-input--sm {
+  padding: 8px 10px; font-size: 13px;
+  border-width: var(--bw-2);
+  box-shadow: var(--shadow-xs);
+}
+.brut-input--lg { padding: 16px 18px; font-size: 18px; box-shadow: var(--shadow-sm); }
+.brut-input--err {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-input--err:focus { background: var(--danger-bg); }
+.brut-input--ok {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+.brut-input:disabled,
+.brut-input[readonly] {
+  background: var(--concrete-50);
+  color: var(--concrete-400);
+  cursor: not-allowed;
+}
+.brut-input::placeholder { color: var(--concrete-300); }
+
+/* INPUT GROUP — prefix/suffix addons. Wraps an input + addon spans. */
+.brut-input-group {
+  display: inline-flex;
+  align-items: stretch;
+  width: 100%;
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  background: var(--bone);
+  box-sizing: border-box;
+}
+.brut-input-group:focus-within {
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+.brut-input-group > .brut-input {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  flex: 1;
+  min-width: 0;
+}
+.brut-input-group > .brut-input:focus { background: transparent; box-shadow: none; }
+.brut-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--concrete-400);
+  background: var(--paper-2);
+  border-right: var(--bw-2) solid var(--ink);
+}
+.brut-input-group__addon:last-child {
+  border-right: 0;
+  border-left: var(--bw-2) solid var(--ink);
+}
+
+/* TEXTAREA — same skin as .brut-input, vertical resize only. */
+.brut-textarea {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: var(--lh-normal);
+  padding: 12px 14px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  outline: none;
+  color: var(--ink);
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 88px;
+}
+.brut-textarea:focus {
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+/* SELECT — styled native, hard chevron (no SVG, no font icon). */
+.brut-select {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  padding: 12px 38px 12px 14px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  outline: none;
+  color: var(--ink);
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg,  transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:
+    right 14px top 22px,
+    right 8px  top 22px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+.brut-select:focus {
+  background-color: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+/* RADIO — round companion to .brut-cb. JS toggles --on. */
+.brut-radio {
+  width: 22px; height: 22px;
+  border: var(--bw-2) solid var(--ink);
+  border-radius: 50%;
+  background: var(--bone);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  flex: none;
+}
+.brut-radio--on::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+/* RANGE / SLIDER — native, restyled. */
+.brut-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 14px;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 8px 0;
+}
+.brut-range::-webkit-slider-runnable-track {
+  height: 14px;
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+}
+.brut-range::-moz-range-track {
+  height: 14px;
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+}
+.brut-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px; height: 22px;
+  background: var(--primary);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  margin-top: -7px;
+  cursor: pointer;
+}
+.brut-range::-moz-range-thumb {
+  width: 22px; height: 22px;
+  background: var(--primary);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+}
+
+/* RANGE DUAL — two-thumb range. JS owns drag + keyboard; this is just chrome. */
+.brut-range-dual {
+  position: relative;
+  width: 100%;
+  height: 26px;
+  margin: 8px 0;
+  user-select: none;
+  touch-action: none;
+}
+.brut-range-dual__track {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 14px;
+  transform: translateY(-50%);
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  box-sizing: border-box;
+}
+.brut-range-dual__fill {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 0;
+  background: var(--primary);
+  pointer-events: none;
+}
+.brut-range-dual__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  transform: translateY(-50%);
+  background: var(--ink);
+  border: 0;
+  box-shadow: 3px 3px 0 0 var(--ink);
+  cursor: grab;
+  padding: 0;
+  outline: none;
+}
+.brut-range-dual__thumb:focus { background: var(--ink); box-shadow: 4px 4px 0 0 var(--primary); }
+.brut-range-dual__thumb:active { cursor: grabbing; }
+
+/* FILE INPUT — chunky button + filename label. */
+.brut-file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+}
+.brut-file > input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.brut-file__btn {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  border: var(--bw-3) solid var(--ink);
+  background: var(--primary);
+  box-shadow: var(--shadow-xs);
+  line-height: 1;
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+}
+.brut-file:hover  .brut-file__btn { transform: translate(-2px, -2px); box-shadow: var(--shadow-sm); }
+.brut-file:active .brut-file__btn { transform: translate(2px, 2px);   box-shadow: 0 0 0 0 var(--ink); }
+.brut-file__name  { color: var(--concrete-400); font-family: var(--font-mono); font-size: 12px; }
+
+/* COLOR INPUT — styled native swatch. */
+.brut-color {
+  width: 44px; height: 44px;
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  background: var(--bone);
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+.brut-color::-webkit-color-swatch-wrapper { padding: 4px; }
+.brut-color::-webkit-color-swatch { border: 0; }
+.brut-color::-moz-color-swatch    { border: 0; }
+
+/* FIELDSET — bordered group with hard ink legend chip. */
+.brut-fieldset {
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  padding: var(--sp-4) var(--sp-5) var(--sp-5);
+  background: var(--bone);
+  margin: 0;
+}
+.brut-fieldset__legend {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 10px;
+}
+
+/* STEPPER — number input with -/+ buttons. JS does the math. */
+.brut-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  background: var(--bone);
+}
+.brut-stepper__btn {
+  font-family: var(--font-display);
+  font-size: 18px;
+  width: 36px;
+  background: var(--bone);
+  border: 0;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--ink);
+}
+.brut-stepper__btn:first-child { border-right: var(--bw-2) solid var(--ink); }
+.brut-stepper__btn:last-child  { border-left:  var(--bw-2) solid var(--ink); }
+.brut-stepper__btn:hover  { background: var(--primary-soft); }
+.brut-stepper__btn:active { background: var(--primary); }
+.brut-stepper__input {
+  border: 0;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  width: 56px;
+  -moz-appearance: textfield;
+}
+.brut-stepper__input::-webkit-outer-spin-button,
+.brut-stepper__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* PASSWORD — input with SHOW/HIDE toggle. JS swaps input.type. */
+.brut-password { position: relative; display: block; }
+.brut-password > .brut-input { padding-right: 64px; }
+.brut-password__toggle {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  cursor: pointer;
+  line-height: 1;
+}
+.brut-password__toggle:hover { background: var(--primary); }
+
+/* SEARCH — input with × clear button (only shown when value present). */
+.brut-search { position: relative; display: block; }
+.brut-search > .brut-input { padding-right: 38px; }
+.brut-search__clear {
+  position: absolute;
+  right: 8px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  background: var(--ink); color: var(--paper);
+  border: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  display: none;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+}
+.brut-search--has-value .brut-search__clear { display: inline-flex; }
+
+/* OTP / PIN — fixed-width cells with auto-advance. */
+.brut-otp { display: inline-flex; gap: var(--sp-2); }
+.brut-otp__cell {
+  width: 44px; height: 52px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  outline: none;
+  padding: 0;
+  color: var(--ink);
+}
+.brut-otp__cell:focus {
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+/* TAGS / CHIPS — read-only display badges, with optional × button. */
+.brut-tags { display: inline-flex; flex-wrap: wrap; gap: var(--sp-2); }
+.brut-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  background: var(--primary);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  line-height: 1;
+  color: var(--ink);
+}
+.brut-tag--ink   { background: var(--ink);      color: var(--paper); }
+.brut-tag--lime  { background: var(--pop-lime); }
+.brut-tag--pink  { background: var(--pop-pink); }
+.brut-tag--blue  { background: var(--pop-blue); color: var(--paper); }
+.brut-tag--ok    { background: var(--success-bg); }
+.brut-tag--warn  { background: var(--warning-bg); }
+.brut-tag--err   { background: var(--danger-bg);  color: var(--paper); }
+.brut-tag--info  { background: var(--info-bg);    color: var(--paper); }
+.brut-tag__x {
+  background: transparent;
+  border: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  line-height: 1;
+}
+
+/* TAG INPUT — chip entry field. JS adds tags on Enter or comma. */
+.brut-tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  width: 100%;
+  box-sizing: border-box;
+}
+.brut-tag-input:focus-within {
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+.brut-tag-input__field {
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  flex: 1;
+  min-width: 100px;
+  padding: 4px 0;
+  color: var(--ink);
+}
+
+/* COMBOBOX — searchable select. JS filters + opens the option list. */
+.brut-combobox { position: relative; display: block; }
+.brut-combobox__list {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  max-height: 240px;
+  overflow-y: auto;
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.brut-combobox--open .brut-combobox__list { display: block; }
+.brut-combobox__opt {
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--concrete-100);
+}
+.brut-combobox__opt:last-child { border-bottom: 0; }
+.brut-combobox__opt:hover,
+.brut-combobox__opt[aria-selected="true"] { background: var(--primary); }
+.brut-combobox__empty {
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--concrete-400);
+  display: none;
+}
+
+/* MULTISELECT — chips inside a combobox-style field. JS toggles selection. */
+.brut-multiselect { position: relative; display: block; }
+.brut-multiselect__field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  width: 100%;
+  box-sizing: border-box;
+  cursor: text;
+}
+.brut-multiselect--open .brut-multiselect__field,
+.brut-multiselect__field:focus-within {
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+}
+.brut-multiselect__chip {
+  /* reuse .brut-tag skin — additionally allow per-chip remove */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.brut-multiselect__input {
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  flex: 1;
+  min-width: 100px;
+  padding: 4px 0;
+  color: var(--ink);
+}
+.brut-multiselect__list {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  max-height: 240px;
+  overflow-y: auto;
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.brut-multiselect--open .brut-multiselect__list { display: block; }
+.brut-multiselect__opt {
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--concrete-100);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.brut-multiselect__opt:last-child { border-bottom: 0; }
+.brut-multiselect__opt:hover,
+.brut-multiselect__opt[aria-selected="true"] { background: var(--primary); }
+.brut-multiselect__opt--selected::before {
+  content: "✓";
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--ink);
+}
+.brut-multiselect__opt:not(.brut-multiselect__opt--selected)::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+}
+.brut-multiselect__empty {
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--concrete-400);
+  display: none;
+}
+
+/* DROPZONE — drag-and-drop file area. JS handles dragover + drop. */
+.brut-dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-7) var(--sp-5);
+  background: var(--paper-2);
+  border: var(--bw-3) dashed var(--ink);
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.brut-dropzone--drag {
+  background: var(--primary-soft);
+  border-style: solid;
+  box-shadow: var(--shadow-sm);
+}
+.brut-dropzone__hint {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: var(--tracking-wider);
+}
+.brut-dropzone__sub { font-size: 12px; color: var(--concrete-400); }
+.brut-dropzone > input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* RATING — star row. JS toggles --on per star, hover preview. */
+.brut-rating { display: inline-flex; gap: var(--sp-1); }
+.brut-rating__star {
+  width: 32px; height: 32px;
+  border: var(--bw-2) solid var(--ink);
+  background: var(--bone);
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  color: var(--ink);
+}
+.brut-rating__star::before { content: "★"; opacity: 0.18; }
+.brut-rating__star--on { background: var(--primary); }
+.brut-rating__star--on::before { opacity: 1; }
+
+/* DATE — text field + popover calendar. JS owns the grid + keyboard nav. */
+.brut-date { position: relative; display: block; }
+.brut-date__field { width: 100%; box-sizing: border-box; cursor: pointer; }
+.brut-date__pop {
+  position: absolute;
+  z-index: 55;
+  top: calc(100% + 4px);
+  left: 0;
+  display: none;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-3);
+  width: 280px;
+  box-sizing: border-box;
+}
+.brut-date--open .brut-date__pop { display: block; }
+.brut-date__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.brut-date__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink);
+}
+.brut-date__nav-btn {
+  width: 28px; height: 28px;
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  font-family: var(--font-display);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  color: var(--ink);
+}
+.brut-date__nav-btn:hover { background: var(--primary); }
+.brut-date__dows {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.brut-date__dow {
+  font-family: var(--font-display);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--concrete-400);
+  text-align: center;
+  padding: 4px 0;
+}
+.brut-date__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.brut-date__day {
+  width: 36px; height: 36px;
+  background: var(--bone);
+  border: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.brut-date__day:hover { background: var(--primary); }
+.brut-date__day--out { color: var(--concrete-300); }
+.brut-date__day--today::after {
+  content: "";
+  position: absolute;
+  left: 6px; right: 6px;
+  bottom: 4px;
+  height: 3px;
+  background: var(--ink);
+}
+.brut-date__day--selected { background: var(--ink); color: var(--paper); }
+.brut-date__day--selected::after { background: var(--paper); }
+.brut-date__day:focus { outline: var(--bw-2) solid var(--ink); outline-offset: -2px; }
+
+/* TIME — hour / minute steppers (reuses .brut-stepper) + optional 12/24 segmented. */
+.brut-time { position: relative; display: block; }
+.brut-time__field { width: 100%; box-sizing: border-box; cursor: pointer; }
+.brut-time__pop {
+  position: absolute;
+  z-index: 55;
+  top: calc(100% + 4px);
+  left: 0;
+  display: none;
+  background: var(--bone);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-3);
+  box-sizing: border-box;
+}
+.brut-time--open .brut-time__pop { display: block; }
+.brut-time__row {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+.brut-time__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+}
+.brut-time__col-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--concrete-400);
+}
+.brut-time__sep {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--ink);
+  padding-top: 14px;
+}
+.brut-time__meridian { margin-top: var(--sp-3); }
+
+
+/* ============================================================
+   NAVIGATION
+   App-shell scaffolding — topnav, sidebar, footer, breadcrumbs.
+   These are the chrome that wraps every page; layout primitives
+   below sit inside them.
+   ============================================================ */
+
+/* TOPNAV — sticky page header with brand + links + CTA + mobile burger. */
+.brut-topnav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper);
+  border-bottom: var(--bw-3) solid var(--ink);
+}
+.brut-topnav__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px var(--sp-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+.brut-topnav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--fs-md);
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
+  text-decoration: none;
+}
+.brut-topnav__mark {
+  width: 36px; height: 36px;
+  background: var(--primary);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  color: var(--ink);
+}
+.brut-topnav__links {
+  display: flex;
+  gap: var(--sp-6);
+  margin-left: var(--sp-8);
+}
+.brut-topnav__link {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 4px 2px;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-topnav__link:hover { background: var(--primary); }
+.brut-topnav__link--active {
+  box-shadow: inset 0 -3px 0 0 var(--ink);
+}
+.brut-topnav__cta { margin-left: auto; }
+.brut-topnav__burger {
+  display: none;
+  margin-left: auto;
+  width: 40px; height: 36px;
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  color: var(--ink);
+  padding: 0;
+  line-height: 1;
+}
+@media (max-width: 760px) {
+  .brut-topnav__links {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    background: var(--paper);
+    border-bottom: var(--bw-3) solid var(--ink);
+    padding: var(--sp-3) var(--sp-6);
+  }
+  .brut-topnav__links .brut-topnav__link {
+    padding: var(--sp-2) 0;
+    border-bottom: 2px dashed var(--concrete-200);
+  }
+  .brut-topnav__cta { display: none; }
+  .brut-topnav__burger { display: inline-flex; align-items: center; justify-content: center; }
+  .brut-topnav--open .brut-topnav__links { display: flex; }
+}
+
+/* SIDEBAR — vertical app nav for dashboards. */
+.brut-sidebar {
+  width: 240px;
+  background: var(--paper);
+  border-right: var(--bw-3) solid var(--ink);
+  padding: var(--sp-5) var(--sp-3);
+  box-sizing: border-box;
+}
+.brut-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0 var(--sp-2);
+  margin-bottom: var(--sp-5);
+}
+.brut-sidebar__group { margin-bottom: var(--sp-4); }
+.brut-sidebar__group-title {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--concrete-400);
+  padding: var(--sp-2) var(--sp-2);
+  margin: 0 0 var(--sp-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+}
+.brut-sidebar__group-title::after {
+  content: "";
+}
+button.brut-sidebar__group-title { cursor: pointer; }
+button.brut-sidebar__group-title::after {
+  content: "\2212"; /* − */
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+.brut-sidebar__group--closed button.brut-sidebar__group-title::after { content: "+"; }
+.brut-sidebar__group--closed .brut-sidebar__item { display: none; }
+.brut-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-sidebar__item:hover { background: var(--primary); }
+.brut-sidebar__item--active {
+  background: var(--primary);
+  box-shadow: inset 4px 0 0 0 var(--ink);
+}
+.brut-sidebar__icon {
+  width: 20px; height: 20px;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  flex: none;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+}
+
+/* FOOTER — page bottom slab. */
+.brut-footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--sp-8) var(--sp-6);
+  border-top: var(--bw-3) solid var(--ink);
+}
+.brut-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+  align-items: center;
+}
+.brut-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--fs-md);
+  letter-spacing: var(--tracking-wide);
+  color: var(--paper);
+  text-decoration: none;
+}
+.brut-footer__links {
+  display: flex;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+.brut-footer__link {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-snap);
+}
+.brut-footer__link:hover { color: var(--primary); background: transparent; }
+.brut-footer__legal {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--concrete-200);
+}
+
+/* BREADCRUMBS — flat, hard-edged path nav. */
+.brut-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+.brut-crumbs__item {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+.brut-crumbs__item + .brut-crumbs__item { margin-top: 0; }
+.brut-crumbs__link {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 2px 4px;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-crumbs__link:hover { background: var(--primary); }
+.brut-crumbs__sep {
+  color: var(--concrete-300);
+  user-select: none;
+}
+.brut-crumbs__current {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+  padding: 2px 4px;
+}
+
+/* PAGER — page navigation buttons. CSS-only; consumer wires links. */
+.brut-pager {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.brut-pager__btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bone);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+}
+.brut-pager__btn:hover  { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 0 var(--ink); }
+.brut-pager__btn:active { transform: translate( 2px,  2px); box-shadow: 0 0 0 0 var(--ink); }
+.brut-pager__btn--active {
+  background: var(--primary);
+}
+.brut-pager__btn[disabled],
+.brut-pager__btn[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.brut-pager__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--concrete-300);
+  user-select: none;
+}
+
+
+/* ============================================================
+   LAYOUT
+   Primitives for composing pages — container, section, stack,
+   cluster, bar, grid, split, rule, aspect, scrim, shape, spacer.
+   All compose tokens from colors_and_type.css. No utility soup.
+   ============================================================ */
+
+/* CONTAINER — max-width centered wrapper with gutter padding. */
+.brut-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--sp-6);
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+.brut-container--sm   { max-width: 720px; }
+.brut-container--md   { max-width: 960px; }
+.brut-container--lg   { max-width: 1200px; }
+.brut-container--xl   { max-width: 1440px; }
+.brut-container--full { max-width: none; }
+
+/* SECTION — full-bleed page band. Ships the 4px ink bottom rule
+   by default — opt out with --flush. */
+.brut-section {
+  padding-block: var(--sp-16);
+  padding-inline: var(--sp-8);
+  border-bottom: var(--bw-3) solid var(--ink);
+  background: var(--paper);
+}
+.brut-section--tight   { padding-block: var(--sp-8); }
+.brut-section--loose   { padding-block: var(--sp-20); }
+.brut-section--flush   { border-bottom: 0; }
+.brut-section--paper   { background: var(--paper); }
+.brut-section--paper-2 { background: var(--paper-2); }
+.brut-section--bone    { background: var(--bone); }
+.brut-section--ink     { background: var(--ink); color: var(--paper); }
+.brut-section--primary { background: var(--primary); }
+.brut-section--lime    { background: var(--pop-lime); }
+.brut-section--pink    { background: var(--pop-pink); }
+
+/* STACK — vertical flex column with token-sized gap. */
+.brut-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.brut-stack--xs  { gap: var(--sp-1); }
+.brut-stack--sm  { gap: var(--sp-2); }
+.brut-stack--md  { gap: var(--sp-4); }
+.brut-stack--lg  { gap: var(--sp-6); }
+.brut-stack--xl  { gap: var(--sp-10); }
+.brut-stack--2xl { gap: var(--sp-16); }
+
+/* CLUSTER — horizontal flex with wrap. For badges, button rows,
+   tag bags. Wraps onto new lines naturally. */
+.brut-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.brut-cluster--xs  { gap: var(--sp-1); }
+.brut-cluster--sm  { gap: var(--sp-2); }
+.brut-cluster--md  { gap: var(--sp-3); }
+.brut-cluster--lg  { gap: var(--sp-4); }
+.brut-cluster--xl  { gap: var(--sp-6); }
+.brut-cluster--end     { justify-content: flex-end; }
+.brut-cluster--center  { justify-content: center; }
+.brut-cluster--between { justify-content: space-between; }
+
+/* BAR — header / CTA / footer strip. justify-content: space-between
+   with wrap. Use a .brut-spacer to push children apart. */
+.brut-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+}
+
+/* GRID — CSS grid. Default auto-fit responsive; explicit-col variants
+   for fixed layouts. */
+.brut-grid {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.brut-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.brut-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.brut-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.brut-grid--tight { gap: var(--sp-2); }
+.brut-grid--loose { gap: var(--sp-10); }
+
+/* SPLIT — sidebar + main two-column. The docs page itself uses this. */
+.brut-split {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-8);
+}
+.brut-split__main { flex: 1; min-width: 0; }
+.brut-split__side { flex: none; width: 220px; }
+.brut-split--reverse { flex-direction: row-reverse; }
+
+/* RULE — 4px ink divider. Replaces hand-rolled <hr>s. */
+.brut-rule {
+  border: 0;
+  border-top: var(--bw-3) solid var(--ink);
+  margin: 0;
+  width: 100%;
+}
+.brut-rule--thin  { border-top-width: var(--bw-1); }
+.brut-rule--thick { border-top-width: var(--bw-4); }
+.brut-rule--vert {
+  border-top: 0;
+  border-left: var(--bw-3) solid var(--ink);
+  align-self: stretch;
+  width: 0;
+  margin-inline: var(--sp-2);
+}
+
+/* ASPECT — aspect-ratio box for images, embeds, media tiles. */
+.brut-aspect {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: var(--bw-3) solid var(--ink);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.brut-aspect--square   { aspect-ratio: 1 / 1; }
+.brut-aspect--video    { aspect-ratio: 16 / 9; }
+.brut-aspect--portrait { aspect-ratio: 3 / 4; }
+.brut-aspect--wide     { aspect-ratio: 21 / 9; }
+.brut-aspect > img,
+.brut-aspect > video,
+.brut-aspect > iframe {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* SCRIM — diagonal-striped overlay for modals. The only sanctioned
+   use of transparency in the kit. */
+.brut-scrim {
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(0,0,0,0.06) 0 1px,
+      transparent 1px 8px),
+    rgba(0,0,0,0.4);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brut-scrim[hidden] { display: none; }
+
+/* SHAPE — rotated, offset decorative rectangle. Drop these inside a
+   relative-positioned parent to add brutalist hero decoration. Always
+   has its own border + offset shadow. Position via the --offset-* mods
+   or override with inline `top/left/right/bottom`. */
+.brut-shape {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: var(--primary);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  z-index: 0;
+  pointer-events: none;
+}
+.brut-shape--pink   { background: var(--pop-pink); }
+.brut-shape--lime   { background: var(--pop-lime); }
+.brut-shape--blue   { background: var(--pop-blue); }
+.brut-shape--orange { background: var(--pop-orange); }
+.brut-shape--purple { background: var(--pop-purple); }
+.brut-shape--mint   { background: var(--pop-mint); }
+.brut-shape--rot-l  { transform: rotate(-8deg); }
+.brut-shape--rot-r  { transform: rotate(8deg); }
+.brut-shape--offset-tr { top: -24px;    right: -24px;  }
+.brut-shape--offset-tl { top: -24px;    left: -24px;   }
+.brut-shape--offset-br { bottom: -24px; right: -24px;  }
+.brut-shape--offset-bl { bottom: -24px; left: -24px;   }
+
+/* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
+   to push children apart without margin tricks. */
+.brut-spacer { flex: 1; }

@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Rows</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 560px; }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Bordered</h3>
+  <ul class="brut-rows brut-rows--bordered">
+    <li class="brut-rows__item">
+      <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-pink);">JD</span></span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Jane Doe</span>
+        <span class="brut-rows__sub">jane@example.com · admin</span>
+      </div>
+      <span class="brut-rows__trail"><span class="brut-badge brut-badge--ok">OK</span></span>
+    </li>
+    <li class="brut-rows__item">
+      <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-lime);">RX</span></span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Rex Kim</span>
+        <span class="brut-rows__sub">rex@example.com · editor</span>
+      </div>
+      <span class="brut-rows__trail">
+        <label class="brut-switch" data-brut="switch">
+          <input type="checkbox" hidden checked>
+          <span class="brut-switch__knob"></span>
+        </label>
+      </span>
+    </li>
+    <li class="brut-rows__item">
+      <span class="brut-rows__lead"><span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span></span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Sam Kruger</span>
+        <span class="brut-rows__sub">sam@example.com · viewer</span>
+      </div>
+      <span class="brut-rows__trail"><button class="brut-btn brut-btn--sm" type="button">EDIT</button></span>
+    </li>
+  </ul>
+
+  <h3>Bordered + Clickable</h3>
+  <div class="brut-rows brut-rows--bordered brut-rows--clickable">
+    <div class="brut-rows__item">
+      <span class="brut-rows__lead">&rarr;</span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Account</span>
+        <span class="brut-rows__sub">Email, password, 2FA</span>
+      </div>
+      <span class="brut-rows__trail">&rsaquo;</span>
+    </div>
+    <div class="brut-rows__item">
+      <span class="brut-rows__lead">&rarr;</span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Notifications</span>
+        <span class="brut-rows__sub">Email + in-app</span>
+      </div>
+      <span class="brut-rows__trail">&rsaquo;</span>
+    </div>
+    <div class="brut-rows__item">
+      <span class="brut-rows__lead">&rarr;</span>
+      <div class="brut-rows__main">
+        <span class="brut-rows__title">Billing</span>
+        <span class="brut-rows__sub">Plan, invoices, taxes</span>
+      </div>
+      <span class="brut-rows__trail">&rsaquo;</span>
+    </div>
+  </div>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

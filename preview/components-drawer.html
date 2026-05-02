@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Drawer</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Triggers (each opens a drawer from a different side)</h2>
+<div class="row">
+  <button class="brut-btn brut-btn--primary" type="button" data-brut-open="dr-right">RIGHT DRAWER</button>
+  <button class="brut-btn" type="button" data-brut-open="dr-left">LEFT DRAWER</button>
+  <button class="brut-btn" type="button" data-brut-open="dr-top">TOP DRAWER</button>
+  <button class="brut-btn" type="button" data-brut-open="dr-bottom">BOTTOM DRAWER</button>
+</div>
+
+<div class="brut-scrim" id="dr-right-scrim" hidden></div>
+<div class="brut-drawer" id="dr-right" data-brut="drawer" data-brut-side="right" data-brut-scrim="dr-right-scrim" hidden role="dialog" aria-label="Right drawer">
+  <div class="brut-drawer__head">
+    <span>RIGHT DRAWER</span>
+    <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-drawer__body">
+    <p>This drawer slides in from the right edge.</p>
+    <p>Press <code class="brut-code">Esc</code> or click the scrim to close it.</p>
+  </div>
+</div>
+
+<div class="brut-scrim" id="dr-left-scrim" hidden></div>
+<div class="brut-drawer" id="dr-left" data-brut="drawer" data-brut-side="left" data-brut-scrim="dr-left-scrim" hidden role="dialog" aria-label="Left drawer">
+  <div class="brut-drawer__head">
+    <span>LEFT DRAWER</span>
+    <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-drawer__body">
+    <p>This drawer slides in from the left edge.</p>
+  </div>
+</div>
+
+<div class="brut-scrim" id="dr-top-scrim" hidden></div>
+<div class="brut-drawer" id="dr-top" data-brut="drawer" data-brut-side="top" data-brut-scrim="dr-top-scrim" hidden role="dialog" aria-label="Top drawer">
+  <div class="brut-drawer__head">
+    <span>TOP DRAWER</span>
+    <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-drawer__body">
+    <p>Top drawer is full-width and clamped to 80vh.</p>
+  </div>
+</div>
+
+<div class="brut-scrim" id="dr-bottom-scrim" hidden></div>
+<div class="brut-drawer" id="dr-bottom" data-brut="drawer" data-brut-side="bottom" data-brut-scrim="dr-bottom-scrim" hidden role="dialog" aria-label="Bottom drawer">
+  <div class="brut-drawer__head">
+    <span>BOTTOM DRAWER</span>
+    <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-drawer__body">
+    <p>Bottom drawer is full-width and clamped to 80vh.</p>
+  </div>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

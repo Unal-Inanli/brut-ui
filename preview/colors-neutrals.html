@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Colors — Neutrals</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 20px; background: var(--paper); }
+  .row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .sw {
+    border: var(--bw-3) solid var(--ink);
+    padding: 10px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .name { font-family: var(--font-display); font-size: 12px; text-transform: uppercase; }
+  .hex  { font-family: var(--font-mono); font-size: 11px; }
+  .light .name, .light .hex { color: var(--ink); }
+  .dark  .name, .dark .hex  { color: var(--paper); }
+</style></head>
+<body>
+<div class="row">
+  <div class="sw light" style="background:#ECEAE3"><span class="name">Concrete 50</span><span class="hex">#ECEAE3</span></div>
+  <div class="sw light" style="background:#DCD8CC"><span class="name">Concrete 100</span><span class="hex">#DCD8CC</span></div>
+  <div class="sw light" style="background:#BFB9A8"><span class="name">Concrete 200</span><span class="hex">#BFB9A8</span></div>
+  <div class="sw dark"  style="background:#8A8576"><span class="name">Concrete 300</span><span class="hex">#8A8576</span></div>
+  <div class="sw dark"  style="background:#4F4D45"><span class="name">Concrete 400</span><span class="hex">#4F4D45</span></div>
+  <div class="sw dark"  style="background:#1F1E1A"><span class="name">Concrete 500</span><span class="hex">#1F1E1A</span></div>
+</div>
+</body></html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Forms — every input</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+</style>
+</head>
+<body>
+
+<h2>Field wrappers + inputs</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label" for="email">Email</label>
+    <input id="email" class="brut-input" type="email" value="rex@brut.dev"/>
+    <span class="brut-field__hint">We never share. Brut promise.</span>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label" for="pw">Password</label>
+    <input id="pw" class="brut-input brut-input--err" type="password" value="••••"/>
+    <span class="brut-field__error">Too short. Try again.</span>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label" for="bio">Bio</label>
+    <textarea id="bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>
+    <span class="brut-field__counter" data-brut="counter" data-brut-for="bio"></span>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label" for="plan">Plan</label>
+    <select id="plan" class="brut-select">
+      <option>Solo Operator</option>
+      <option>Studio</option>
+      <option>Agency</option>
+    </select>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Price</label>
+    <div class="brut-input-group">
+      <span class="brut-input-group__addon">$</span>
+      <input class="brut-input" type="number" value="49"/>
+      <span class="brut-input-group__addon">USD</span>
+    </div>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Search</label>
+    <div class="brut-search" data-brut="search">
+      <input class="brut-input" type="search" placeholder="Find anything…"/>
+      <button class="brut-search__clear" aria-label="Clear">×</button>
+    </div>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Password (toggle)</label>
+    <div class="brut-password" data-brut="password">
+      <input class="brut-input" type="password" value="hunter2"/>
+      <button class="brut-password__toggle">SHOW</button>
+    </div>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Quantity</label>
+    <div class="brut-stepper" data-brut="stepper">
+      <button class="brut-stepper__btn" data-brut-step="down">−</button>
+      <input class="brut-stepper__input" type="number" min="0" max="99" step="1" value="3"/>
+      <button class="brut-stepper__btn" data-brut-step="up">+</button>
+    </div>
+  </div>
+</div>
+
+<h2>Selection</h2>
+<div class="row">
+  <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden checked/></label>
+  <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden/></label>
+  <label class="brut-radio brut-radio--on" data-brut="radio"><input type="radio" name="size" value="md" hidden checked/></label>
+  <label class="brut-radio" data-brut="radio"><input type="radio" name="size" value="lg" hidden/></label>
+  <label class="brut-switch brut-switch--on" data-brut="switch">
+    <input type="checkbox" hidden checked/>
+    <span class="brut-switch__knob"></span>
+  </label>
+  <label class="brut-switch" data-brut="switch">
+    <input type="checkbox" hidden/>
+    <span class="brut-switch__knob"></span>
+  </label>
+</div>
+
+<h2>Range + color + file</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label" for="vol">Volume</label>
+    <input id="vol" class="brut-range" type="range" min="0" max="100" value="65"/>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Brand color</label>
+    <input class="brut-color" type="color" value="#FFD23F"/>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Resume</label>
+    <label class="brut-file" data-brut="file">
+      <input type="file"/>
+      <span class="brut-file__btn">CHOOSE FILE</span>
+      <span class="brut-file__name">No file selected</span>
+    </label>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Bulk upload</label>
+    <label class="brut-dropzone" data-brut="dropzone">
+      <input type="file" multiple/>
+      <span class="brut-dropzone__hint">Drop files here.</span>
+      <span class="brut-dropzone__sub">Or click to browse.</span>
+    </label>
+  </div>
+</div>
+
+<h2>OTP / Tags / Combobox / Rating</h2>
+<div class="brut-field" style="margin-bottom: 24px;">
+  <label class="brut-field__label">2FA code</label>
+  <div class="brut-otp" data-brut="otp" data-brut-len="6" data-brut-name="code"></div>
+</div>
+
+<div class="brut-field" style="margin-bottom: 24px;">
+  <label class="brut-field__label">Skills</label>
+  <div class="brut-tag-input" data-brut="tag-input" data-brut-name="skills">
+    <span class="brut-tag" data-value="ux">UX <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag brut-tag--lime" data-value="css">CSS <button class="brut-tag__x">×</button></span>
+    <input class="brut-tag-input__field" placeholder="Add a tag, press Enter"/>
+  </div>
+</div>
+
+<div class="brut-field" style="margin-bottom: 24px; max-width: 360px;">
+  <label class="brut-field__label">City</label>
+  <div class="brut-combobox" data-brut="combobox" data-brut-name="city">
+    <input class="brut-input" type="text" placeholder="Search cities…"/>
+    <input type="hidden"/>
+    <ul class="brut-combobox__list">
+      <li class="brut-combobox__opt" data-value="nyc">New York</li>
+      <li class="brut-combobox__opt" data-value="ber">Berlin</li>
+      <li class="brut-combobox__opt" data-value="tok">Tokyo</li>
+      <li class="brut-combobox__opt" data-value="lon">London</li>
+      <li class="brut-combobox__opt" data-value="par">Paris</li>
+      <li class="brut-combobox__empty">No matches.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="brut-field" style="margin-bottom: 24px;">
+  <label class="brut-field__label">Quality</label>
+  <div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3">
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+  </div>
+</div>
+
+<h2>Fieldset</h2>
+<fieldset class="brut-fieldset">
+  <legend class="brut-fieldset__legend">SHIPPING</legend>
+  <div class="brut-form">
+    <div class="brut-field">
+      <label class="brut-field__label" for="addr">Address</label>
+      <input id="addr" class="brut-input" type="text" value="100 Main"/>
+    </div>
+    <div class="brut-field">
+      <label class="brut-field__label" for="city">City</label>
+      <input id="city" class="brut-input" type="text" value="New York"/>
+    </div>
+  </div>
+</fieldset>
+
+<script src="../dist/brut.js"></script>
+</body></html>

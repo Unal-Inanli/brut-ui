@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Accordion</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  .row { display: flex; flex-direction: column; gap: 24px; max-width: 640px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Single-open (default)</h2>
+<div class="row">
+  <div class="brut-accordion" data-brut="accordion">
+    <div class="brut-accordion__item brut-accordion__item--open">
+      <button class="brut-accordion__head" type="button">
+        <span>SHIPPING</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">
+        Standard shipping in 3-5 business days. Express in 1-2.
+      </div>
+    </div>
+    <div class="brut-accordion__item">
+      <button class="brut-accordion__head" type="button">
+        <span>RETURNS</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">
+        30-day return window. Item must be unworn and tagged.
+      </div>
+    </div>
+    <div class="brut-accordion__item">
+      <button class="brut-accordion__head" type="button">
+        <span>WARRANTY</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">
+        2-year limited warranty on manufacturing defects.
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Allow multi-open</h2>
+<div class="row">
+  <div class="brut-accordion" data-brut="accordion" data-brut-allow-multi>
+    <div class="brut-accordion__item brut-accordion__item--open">
+      <button class="brut-accordion__head" type="button">
+        <span>ONE</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">First panel body.</div>
+    </div>
+    <div class="brut-accordion__item brut-accordion__item--open">
+      <button class="brut-accordion__head" type="button">
+        <span>TWO</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">Second panel body.</div>
+    </div>
+    <div class="brut-accordion__item">
+      <button class="brut-accordion__head" type="button">
+        <span>THREE</span>
+        <span class="brut-accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="brut-accordion__body">Third panel body.</div>
+    </div>
+  </div>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

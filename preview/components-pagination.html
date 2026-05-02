@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Pagination</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+</style></head>
+<body>
+
+<h3>Numbered</h3>
+<nav class="brut-pager" aria-label="Pagination">
+  <button class="brut-pager__btn" type="button" aria-label="Previous">&lsaquo;</button>
+  <button class="brut-pager__btn" type="button">1</button>
+  <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">2</button>
+  <button class="brut-pager__btn" type="button">3</button>
+  <span class="brut-pager__gap" aria-hidden="true">&hellip;</span>
+  <button class="brut-pager__btn" type="button">9</button>
+  <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+</nav>
+
+<h3>With disabled prev</h3>
+<nav class="brut-pager" aria-label="Pagination">
+  <button class="brut-pager__btn" type="button" aria-disabled="true" disabled>&lsaquo;</button>
+  <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">1</button>
+  <button class="brut-pager__btn" type="button">2</button>
+  <button class="brut-pager__btn" type="button">3</button>
+  <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+</nav>
+
+<h3>As anchors</h3>
+<nav class="brut-pager" aria-label="Pagination">
+  <a class="brut-pager__btn" href="#">&lsaquo;</a>
+  <a class="brut-pager__btn" href="#">1</a>
+  <a class="brut-pager__btn brut-pager__btn--active" href="#" aria-current="page">2</a>
+  <a class="brut-pager__btn" href="#">3</a>
+  <a class="brut-pager__btn" href="#">&rsaquo;</a>
+</nav>
+
+</body></html>

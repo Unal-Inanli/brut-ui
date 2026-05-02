@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Tabs + Segments</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 22px; background: var(--paper); font-family: var(--font-sans); }
+  .seg {
+    display: inline-flex;
+    border: 4px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    background: var(--bone);
+  }
+  .seg button {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 10px 16px;
+    background: transparent;
+    border: 0;
+    border-right: 3px solid var(--ink);
+    cursor: pointer;
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button.on { background: var(--ink); color: var(--paper); }
+
+  .tabs { display: flex; gap: 0; margin-top: 22px; border-bottom: 4px solid var(--ink); }
+  .tabs button {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 10px 16px;
+    background: var(--bone);
+    border: 4px solid var(--ink);
+    border-bottom: none;
+    margin-right: -4px;
+    cursor: pointer;
+    position: relative;
+  }
+  .tabs button.on { background: var(--primary); top: 0; z-index: 2;}
+
+  .pager { display: inline-flex; gap: 6px; margin-top: 22px; }
+  .pager .pg {
+    width: 34px; height: 34px;
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    background: var(--bone);
+    font-family: var(--font-display);
+    display: inline-flex; align-items:center; justify-content:center;
+  }
+  .pager .pg.on { background: var(--ink); color: var(--paper);}
+</style></head>
+<body>
+<div class="seg">
+  <button class="on">Day</button>
+  <button>Week</button>
+  <button>Month</button>
+  <button>Year</button>
+</div>
+
+<div class="tabs">
+  <button class="on">Overview</button>
+  <button>Specs</button>
+  <button>Reviews</button>
+</div>
+
+<div class="pager">
+  <span class="pg">‹</span>
+  <span class="pg">1</span>
+  <span class="pg on">2</span>
+  <span class="pg">3</span>
+  <span class="pg">›</span>
+</div>
+</body></html>

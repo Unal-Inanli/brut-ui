@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Spinner</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Sizes</h2>
+<div class="row">
+  <span class="brut-spinner brut-spinner--sm"></span>
+  <span class="brut-spinner brut-spinner--md"></span>
+  <span class="brut-spinner brut-spinner--lg"></span>
+</div>
+
+<h2>Inline with text</h2>
+<div class="row">
+  <span class="brut-spinner brut-spinner--sm"></span>
+  <span class="brut-body">Loading…</span>
+</div>
+
+<h2>Inside a button</h2>
+<div class="row">
+  <button class="brut-btn" type="button" disabled>
+    <span class="brut-spinner brut-spinner--sm" style="vertical-align: middle; margin-right: 8px;"></span>
+    SAVING
+  </button>
+</div>
+
+</body></html>

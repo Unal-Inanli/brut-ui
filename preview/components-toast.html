@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Toast</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Programmatic API</h2>
+<div class="row">
+  <button class="brut-btn brut-btn--primary" type="button" onclick="Brut.toast({ kind: 'ok', message: 'Saved.' })">Saved (ok)</button>
+  <button class="brut-btn" type="button" onclick="Brut.toast({ kind: 'warn', message: 'Heads up — irreversible.' })">Warn</button>
+  <button class="brut-btn brut-btn--ink" type="button" onclick="Brut.toast({ kind: 'err', message: 'Build failed.' })">Error</button>
+  <button class="brut-btn brut-btn--lime" type="button" onclick="Brut.toast({ kind: 'info', message: 'Cache cleared.' })">Info</button>
+  <button class="brut-btn" type="button" onclick="Brut.toast({ kind: 'ok', message: 'Sticks until you close it.', timeout: 0 })">No timeout</button>
+</div>
+
+<h2>Static markup (rendered as-is, no JS factory)</h2>
+<div class="brut-toast-host" style="position: static; padding: 0; flex-direction: column; gap: 14px; align-items: stretch; max-width: 380px;">
+  <div class="brut-toast brut-toast--ok">
+    <div class="brut-toast__icon">✓</div>
+    <div class="brut-toast__msg"><strong>Shipped.</strong> Build is live.</div>
+    <button class="brut-toast__x" type="button" aria-label="Dismiss">✕</button>
+  </div>
+  <div class="brut-toast brut-toast--warn">
+    <div class="brut-toast__icon">!</div>
+    <div class="brut-toast__msg"><strong>Heads up.</strong> Disk is 92% full.</div>
+    <button class="brut-toast__x" type="button" aria-label="Dismiss">✕</button>
+  </div>
+  <div class="brut-toast brut-toast--err">
+    <div class="brut-toast__icon">✕</div>
+    <div class="brut-toast__msg"><strong>Failed.</strong> Try again or check logs.</div>
+    <button class="brut-toast__x" type="button" aria-label="Dismiss">✕</button>
+  </div>
+  <div class="brut-toast brut-toast--info">
+    <div class="brut-toast__icon">i</div>
+    <div class="brut-toast__msg"><strong>FYI.</strong> Maintenance window starts Sunday.</div>
+    <button class="brut-toast__x" type="button" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<!-- live toast host (top-right corner, default) -->
+<div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"></div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

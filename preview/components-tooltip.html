@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Tooltip</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 64px 32px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Sides</h2>
+<div class="row">
+  <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Top tooltip" data-brut-tip-side="top">TOP</button>
+  <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Bottom tooltip" data-brut-tip-side="bottom">BOTTOM</button>
+  <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Left tooltip" data-brut-tip-side="left">LEFT</button>
+  <button class="brut-btn" type="button" data-brut="tooltip" data-brut-tip="Right tooltip" data-brut-tip-side="right">RIGHT</button>
+</div>
+
+<h2>Default (top)</h2>
+<div class="row">
+  <button class="brut-btn brut-btn--primary" type="button" data-brut="tooltip" data-brut-tip="Saved at 12:04">SAVE</button>
+  <button class="brut-btn brut-btn--ink" type="button" data-brut="tooltip" data-brut-tip="Cannot be undone">DELETE</button>
+  <a class="brut-link" href="#" data-brut="tooltip" data-brut-tip="External link">More info</a>
+</div>
+
+<h2>On focus (Tab to reveal)</h2>
+<div class="row">
+  <input class="brut-input" type="text" placeholder="Email" data-brut="tooltip" data-brut-tip="We never share email" data-brut-tip-side="bottom" style="max-width:240px;" />
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

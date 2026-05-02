@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Sidebar nav</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; background: var(--paper); font-family: var(--font-sans); }
+  .demo { display: flex; min-height: 100vh; }
+  .demo__main { flex: 1; padding: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 0 0 12px; }
+</style></head>
+<body>
+
+<div class="demo">
+  <aside class="brut-sidebar" data-brut="sidebar">
+    <a class="brut-sidebar__brand" href="#">
+      <span class="brut-topnav__mark">B</span>
+      <span>BRUT</span>
+    </a>
+
+    <div class="brut-sidebar__group">
+      <button class="brut-sidebar__group-title" type="button">Main</button>
+      <a class="brut-sidebar__item brut-sidebar__item--active" href="#">
+        <span class="brut-sidebar__icon">◆</span> Dashboard
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">▤</span> Projects
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">◉</span> Inbox
+      </a>
+    </div>
+
+    <div class="brut-sidebar__group">
+      <button class="brut-sidebar__group-title" type="button">Workspace</button>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">▦</span> Reports
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">⚑</span> Tags
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">⚙</span> Settings
+      </a>
+    </div>
+
+    <div class="brut-sidebar__group brut-sidebar__group--closed">
+      <button class="brut-sidebar__group-title" type="button">Archived</button>
+      <a class="brut-sidebar__item" href="#">Old project</a>
+    </div>
+  </aside>
+
+  <main class="demo__main">
+    <h2>Sidebar nav</h2>
+    <p>Click a group title to collapse it.</p>
+  </main>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

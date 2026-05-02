@@ -1,0 +1,46 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Avatars + Stats</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 12px; align-items: center; margin-bottom: 16px;}
+  .av {
+    width: 44px; height: 44px;
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 16px;
+    text-transform: uppercase;
+  }
+  .av.lg { width: 60px; height: 60px; font-size: 22px;}
+  .stack { display: flex; }
+  .stack .av { margin-right: -10px; }
+  .stat { border: 4px solid var(--ink); box-shadow: var(--shadow-sm); padding: 10px 14px; display: inline-flex; flex-direction: column; gap: 2px; background: var(--bone); }
+  .stat .n { font-family: var(--font-display); font-size: 28px; line-height: 1; }
+  .stat .l { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--concrete-400); letter-spacing: 0.08em;}
+  .up { color: var(--ink); }
+</style></head>
+<body>
+<div class="row">
+  <span class="av lg" style="background: var(--primary);">RX</span>
+  <span class="av" style="background: var(--pop-pink);">JM</span>
+  <span class="av" style="background: var(--pop-lime);">AD</span>
+  <span class="av" style="background: var(--pop-blue); color: var(--paper);">SK</span>
+  <span class="av" style="background: var(--ink); color: var(--paper);">+8</span>
+</div>
+<div class="row">
+  <div class="stat"><span class="n">12,408</span><span class="l">Downloads</span></div>
+  <div class="stat" style="background: var(--primary);"><span class="n">↑ 38%</span><span class="l">vs last week</span></div>
+  <div class="stat" style="background: var(--ink); color: var(--paper);"><span class="n">v2.0</span><span class="l" style="color: var(--pop-lime);">Released</span></div>
+</div>
+
+<div class="row">
+  <span class="brut-avatar-group">
+    <span class="brut-avatar" style="background: var(--pop-pink);">JM</span>
+    <span class="brut-avatar" style="background: var(--pop-lime);">AD</span>
+    <span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span>
+    <span class="brut-avatar brut-avatar-group__more">+8</span>
+  </span>
+</div>
+</body></html>

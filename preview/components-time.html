@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Time picker</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>24-hour</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label">Meeting</label>
+    <div class="brut-time" data-brut="time" data-brut-name="meet">
+      <input class="brut-input brut-time__field" type="text" readonly value="09:30" />
+      <input type="hidden" />
+    </div>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Empty</label>
+    <div class="brut-time" data-brut="time" data-brut-name="empty">
+      <input class="brut-input brut-time__field" type="text" readonly placeholder="HH:MM" />
+      <input type="hidden" />
+    </div>
+  </div>
+</div>
+
+<h2>12-hour with AM/PM</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label">Doors open</label>
+    <div class="brut-time" data-brut="time" data-brut-name="doors" data-brut-mode="12">
+      <input class="brut-input brut-time__field" type="text" readonly value="19:00" />
+      <input type="hidden" />
+    </div>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label">Minute step (15)</label>
+    <div class="brut-time" data-brut="time" data-brut-name="slot" data-brut-minute-step="15">
+      <input class="brut-input brut-time__field" type="text" readonly value="14:00" />
+      <input type="hidden" />
+    </div>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Open a picker…</pre>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.querySelectorAll('[data-brut="time"]').forEach(function (el) {
+    el.addEventListener('brut:change', function (e) {
+      var pre = document.getElementById('log');
+      pre.textContent = '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+    });
+  });
+</script>
+</body></html>

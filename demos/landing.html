@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BRUT UI — Neo-brutalist UI kit</title>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      font-family: var(--font-sans);
+      color: var(--ink);
+    }
+
+    /* ------------------------------ TOP NAV ------------------------------ */
+    .topnav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--paper);
+      border-bottom: 4px solid var(--ink);
+    }
+    .topnav__inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 14px var(--sp-6);
+      display: flex; align-items: center; gap: var(--sp-6);
+    }
+    .topnav__brand {
+      display: flex; align-items: center; gap: var(--sp-3);
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      font-size: var(--fs-md);
+      letter-spacing: var(--tracking-wide);
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .topnav__mark {
+      width: 36px; height: 36px;
+      background: var(--primary);
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 0 var(--ink);
+      display: grid; place-items: center;
+      font-family: var(--font-display);
+      font-size: 16px;
+      color: var(--ink);
+    }
+    .topnav__links {
+      display: flex; gap: var(--sp-6);
+      margin-left: var(--sp-8);
+    }
+    .topnav__link {
+      font-family: var(--font-display);
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 4px 2px;
+      transition: background var(--dur-fast) var(--ease-snap);
+    }
+    .topnav__link:hover { background: var(--primary); }
+    .topnav__cta { margin-left: auto; }
+
+    @media (max-width: 760px) {
+      .topnav__links { display: none; }
+    }
+
+    /* ------------------------------ WRAPPERS ----------------------------- */
+    .wrap     { max-width: 1200px; margin: 0 auto; padding: var(--sp-12) var(--sp-6); }
+    .wrap--sm { max-width: 1200px; margin: 0 auto; padding: var(--sp-8)  var(--sp-6); }
+
+    /* ------------------------------ HERO --------------------------------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--sp-10);
+      align-items: center;
+    }
+    .hero__heading em {
+      font-style: normal;
+      background: var(--primary);
+      padding: 0 12px;
+    }
+    .hero__preview {
+      background: var(--bone);
+      border: 4px solid var(--ink);
+      box-shadow: 12px 12px 0 0 var(--ink);
+      padding: var(--sp-5);
+      transform: rotate(-1.5deg);
+    }
+    .hero__preview-strip {
+      display: flex; gap: 6px; margin-bottom: var(--sp-4);
+    }
+    .hero__preview-strip span {
+      width: 14px; height: 14px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+    .hero__preview-strip span:nth-child(1) { background: var(--pop-pink); }
+    .hero__preview-strip span:nth-child(2) { background: var(--primary); }
+    .hero__preview-strip span:nth-child(3) { background: var(--pop-lime); }
+    @media (max-width: 880px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero__preview { transform: none; box-shadow: var(--shadow-md); }
+    }
+
+    /* ------------------------------ MARQUEE ------------------------------ */
+    .marquee {
+      background: var(--ink);
+      color: var(--paper);
+      overflow: hidden;
+      padding: var(--sp-4) 0;
+      border-top: 4px solid var(--ink);
+      border-bottom: 4px solid var(--ink);
+    }
+    .marquee__track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: brut-marquee 30s linear infinite;
+      font-family: var(--font-display);
+      font-size: var(--fs-lg);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
+    .marquee__item { padding: 0 var(--sp-6); }
+    .marquee__dot  { color: var(--pop-lime); padding: 0 var(--sp-3); }
+    @keyframes brut-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ------------------------------ STATS -------------------------------- */
+    .stat {
+      background: var(--bone);
+      border: 4px solid var(--ink);
+      box-shadow: var(--shadow-md);
+      padding: var(--sp-5);
+      display: flex; flex-direction: column; gap: var(--sp-2);
+      min-height: 180px;
+    }
+    .stat--yellow { background: var(--primary); }
+    .stat--ink    { background: var(--ink); color: var(--paper); }
+    .stat--lime   { background: var(--pop-lime); }
+    .stat__num {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 1;
+    }
+
+    /* ------------------------------ SHOWCASE ----------------------------- */
+    .show {
+      background: var(--bone);
+      border: 4px solid var(--ink);
+      box-shadow: var(--shadow-md);
+      padding: var(--sp-5);
+      display: flex; flex-direction: column; gap: var(--sp-3);
+      min-height: 240px;
+    }
+    .show__demo {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: var(--sp-3);
+      padding: var(--sp-5);
+      background: var(--paper);
+      border: 3px solid var(--ink);
+    }
+
+    /* ------------------------------ INSTALL ------------------------------ */
+    .install {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: var(--sp-8);
+      align-items: center;
+    }
+    @media (max-width: 880px) { .install { grid-template-columns: 1fr; } }
+
+    pre.codeblock {
+      background: var(--ink);
+      color: var(--paper);
+      border: 4px solid var(--ink);
+      box-shadow: var(--shadow-md);
+      padding: var(--sp-5);
+      font-family: var(--font-mono);
+      font-size: var(--fs-sm);
+      line-height: 1.55;
+      margin: 0;
+      overflow-x: auto;
+    }
+    .codeblock .tk-tag  { color: var(--pop-pink); }
+    .codeblock .tk-attr { color: var(--pop-lime); }
+    .codeblock .tk-str  { color: var(--primary); }
+    .codeblock .tk-com  { color: var(--concrete-300); }
+
+    /* ------------------------------ CTA BANNER --------------------------- */
+    .cta {
+      background: var(--primary);
+      border: 6px solid var(--ink);
+      box-shadow: 12px 12px 0 0 var(--ink);
+      padding: var(--sp-12) var(--sp-8);
+      text-align: center;
+    }
+
+    /* ------------------------------ FOOTER ------------------------------- */
+    .footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: var(--sp-8) var(--sp-6);
+      border-top: 4px solid var(--ink);
+    }
+    .footer__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      gap: var(--sp-6);
+      align-items: center;
+    }
+    .footer__links { display: flex; gap: var(--sp-6); flex-wrap: wrap; }
+    .footer__link {
+      font-family: var(--font-display);
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--paper);
+      text-decoration: none;
+    }
+    .footer__link:hover { color: var(--primary); }
+    .footer__legal {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: var(--fs-xs);
+      color: var(--concrete-200);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================== TOP NAV ======================== -->
+<header class="topnav">
+  <div class="topnav__inner">
+    <a class="topnav__brand" href="./index.html">
+      <span class="topnav__mark">B</span>
+      <span>BRUT&nbsp;UI</span>
+    </a>
+    <nav class="topnav__links">
+      <a class="topnav__link" href="../docs/index.html">Docs</a>
+      <a class="topnav__link" href="../docs/index.html#components">Components</a>
+      <a class="topnav__link" href="./index.html">Demos</a>
+      <a class="topnav__link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <a class="brut-btn brut-btn--primary brut-btn--sm topnav__cta" href="../docs/index.html">
+      Read the docs →
+    </a>
+  </div>
+</header>
+
+<!-- ======================== HERO ======================== -->
+<section class="wrap">
+  <div class="hero">
+
+    <div class="brut-stack brut-stack--lg">
+      <div class="brut-cluster brut-cluster--sm">
+        <span class="brut-kicker">v0.1</span>
+        <span class="brut-badge">MIT</span>
+        <span class="brut-badge brut-badge--ok">0 deps</span>
+      </div>
+
+      <h1 class="brut-display-2 hero__heading">
+        Stop rounding<br/>your <em>corners</em>.
+      </h1>
+
+      <p class="brut-lead">
+        BRUT is a neo-brutalist UI kit. Hard borders. Hard shadows. No gradients,
+        no blurs, no apologies. One CSS file, one tiny JS runtime, every component
+        you actually need.
+      </p>
+
+      <div class="brut-cluster brut-cluster--md">
+        <a class="brut-btn brut-btn--primary brut-btn--lg" href="../docs/index.html">
+          Browse the docs →
+        </a>
+        <a class="brut-btn brut-btn--lg" href="./index.html">View demos</a>
+      </div>
+
+      <p class="brut-caption">
+        Drop two files into your <code class="brut-code">&lt;head&gt;</code>. That's the whole install.
+      </p>
+    </div>
+
+    <!-- Hero preview — composed of real components -->
+    <aside class="hero__preview" aria-hidden="true">
+      <div class="hero__preview-strip"><span></span><span></span><span></span></div>
+
+      <div class="brut-stack brut-stack--md">
+        <p class="brut-eyebrow">Sign up</p>
+        <h3 class="brut-h3">Make it loud.</h3>
+
+        <div class="brut-field">
+          <label class="brut-field__label" for="hero-email">Email</label>
+          <input id="hero-email" class="brut-input" type="email" value="rex@brut.dev"/>
+        </div>
+
+        <div class="brut-cluster brut-cluster--between">
+          <label class="brut-cluster brut-cluster--sm" style="cursor:pointer">
+            <span class="brut-switch brut-switch--on" data-brut="switch">
+              <input type="checkbox" hidden checked/>
+              <span class="brut-switch__knob"></span>
+            </span>
+            <span class="brut-small">Send me drops</span>
+          </label>
+          <span class="brut-badge brut-badge--ok">Ready</span>
+        </div>
+
+        <button class="brut-btn brut-btn--primary" type="button">Subscribe →</button>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ======================== MARQUEE ======================== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">No gradients</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No rounded corners</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No blurred shadows</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No frameworks</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No transpilers</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No emoji</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No apologies</span><span class="marquee__dot">●</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee__item">No gradients</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No rounded corners</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No blurred shadows</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No frameworks</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No transpilers</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No emoji</span><span class="marquee__dot">●</span>
+    <span class="marquee__item">No apologies</span><span class="marquee__dot">●</span>
+  </div>
+</div>
+
+<!-- ======================== STATS ======================== -->
+<section class="wrap">
+  <div class="brut-stack brut-stack--md" style="margin-bottom: var(--sp-8);">
+    <p class="brut-eyebrow">By the numbers</p>
+    <h2 class="brut-h1">Small bundle. Big shadow.</h2>
+  </div>
+
+  <div class="brut-grid brut-grid--4">
+    <div class="stat stat--yellow">
+      <span class="brut-eyebrow">Components</span>
+      <span class="stat__num">30+</span>
+      <p class="brut-small">Visual + interactive, all in one bundle.</p>
+    </div>
+    <div class="stat">
+      <span class="brut-eyebrow">Design tokens</span>
+      <span class="stat__num">80+</span>
+      <p class="brut-small">Colors, type, spacing, shadows, motion.</p>
+    </div>
+    <div class="stat stat--lime">
+      <span class="brut-eyebrow">Dependencies</span>
+      <span class="stat__num">0</span>
+      <p class="brut-small">No npm. No CDN. No build step.</p>
+    </div>
+    <div class="stat stat--ink">
+      <span class="brut-eyebrow" style="color: var(--pop-lime)">Bundle</span>
+      <span class="stat__num">~12<span style="font-size: 0.5em">kb</span></span>
+      <p class="brut-small" style="color: var(--concrete-100)">Gzipped CSS + JS combined.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SHOWCASE ======================== -->
+<section class="wrap" style="padding-top: 0;">
+  <div class="brut-stack brut-stack--md" style="margin-bottom: var(--sp-8);">
+    <p class="brut-eyebrow">What you get</p>
+    <h2 class="brut-h1">Every primitive. None of the fluff.</h2>
+    <p class="brut-lead">
+      Buttons, inputs, switches, alerts, badges, dialogs, tabs, OTPs, tags, comboboxes,
+      ratings, file drops — built once, themable through tokens.
+    </p>
+  </div>
+
+  <div class="brut-grid brut-grid--3">
+
+    <!-- Buttons -->
+    <div class="show">
+      <span class="brut-eyebrow">Buttons</span>
+      <div class="show__demo">
+        <button type="button" class="brut-btn brut-btn--primary">Primary</button>
+        <button type="button" class="brut-btn">Default</button>
+        <button type="button" class="brut-btn brut-btn--ink">Ink</button>
+      </div>
+      <p class="brut-small">Hard offset shadow on hover. No tweens, just snap.</p>
+    </div>
+
+    <!-- Inputs -->
+    <div class="show">
+      <span class="brut-eyebrow">Inputs</span>
+      <div class="show__demo" style="display:block; padding: var(--sp-4);">
+        <div class="brut-field">
+          <label class="brut-field__label" for="show-email">Email</label>
+          <input id="show-email" class="brut-input" type="email" value="rex@brut.dev"/>
+        </div>
+      </div>
+      <p class="brut-small">Field wrapper, label, hint, and error all token-driven.</p>
+    </div>
+
+    <!-- Toggles -->
+    <div class="show">
+      <span class="brut-eyebrow">Selection</span>
+      <div class="show__demo">
+        <label class="brut-switch brut-switch--on" data-brut="switch">
+          <input type="checkbox" hidden checked/>
+          <span class="brut-switch__knob"></span>
+        </label>
+        <label class="brut-cb brut-cb--on" data-brut="checkbox">
+          <input type="checkbox" hidden checked/>
+        </label>
+        <label class="brut-radio brut-radio--on" data-brut="radio">
+          <input type="radio" name="show-radio" value="a" hidden checked/>
+        </label>
+        <label class="brut-radio" data-brut="radio">
+          <input type="radio" name="show-radio" value="b" hidden/>
+        </label>
+      </div>
+      <p class="brut-small">Switch, checkbox, radio — all keyboard-friendly.</p>
+    </div>
+
+    <!-- Alerts -->
+    <div class="show">
+      <span class="brut-eyebrow">Alerts</span>
+      <div class="show__demo" style="display:block;">
+        <div class="brut-stack brut-stack--sm">
+          <div class="brut-alert brut-alert--ok">
+            <span class="brut-alert__icon">✓</span>
+            <div><strong>Saved.</strong> Your changes shipped.</div>
+          </div>
+          <div class="brut-alert brut-alert--warn">
+            <span class="brut-alert__icon">!</span>
+            <div><strong>Heads up.</strong> Token rotates Friday.</div>
+          </div>
+        </div>
+      </div>
+      <p class="brut-small">Four severities. Hard ink icon block.</p>
+    </div>
+
+    <!-- Badges -->
+    <div class="show">
+      <span class="brut-eyebrow">Badges</span>
+      <div class="show__demo">
+        <span class="brut-badge brut-badge--ok">Live</span>
+        <span class="brut-badge">Draft</span>
+        <span class="brut-badge" style="background: var(--pop-pink)">New</span>
+        <span class="brut-badge" style="background: var(--ink); color: var(--paper)">Pro</span>
+      </div>
+      <p class="brut-small">Status chips. Solid fill, hard border.</p>
+    </div>
+
+    <!-- Type -->
+    <div class="show">
+      <span class="brut-eyebrow">Typography</span>
+      <div class="show__demo" style="display:block;">
+        <div class="brut-stack brut-stack--xs">
+          <p class="brut-eyebrow">Section label</p>
+          <h3 class="brut-h2">Loud headings.</h3>
+          <p class="brut-small">Display + sans + mono, on a single rhythm.</p>
+        </div>
+      </div>
+      <p class="brut-small">A full type scale with semantic helpers.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================== INSTALL ======================== -->
+<section class="wrap" style="padding-top: 0;">
+  <div class="install">
+
+    <div class="brut-stack brut-stack--md">
+      <p class="brut-eyebrow">Install</p>
+      <h2 class="brut-h1">Two files. Done.</h2>
+      <p class="brut-body">
+        No build step. No config. Drop the bundles into your HTML and start composing
+        with utility classes and <code class="brut-code">data-brut</code> hooks.
+      </p>
+      <div class="brut-cluster brut-cluster--md">
+        <a class="brut-btn brut-btn--ink" href="../dist/brut.css" download>Download CSS</a>
+        <a class="brut-btn" href="../dist/brut.js" download>Download JS</a>
+      </div>
+    </div>
+
+<pre class="codeblock"><span class="tk-com">&lt;!-- index.html --&gt;</span>
+<span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-str">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-str">"brut.css"</span><span class="tk-tag">/&gt;</span>
+<span class="tk-tag">&lt;script</span> <span class="tk-attr">src</span>=<span class="tk-str">"brut.js"</span><span class="tk-tag">&gt;&lt;/script&gt;</span>
+
+<span class="tk-com">&lt;!-- compose with classes + data hooks --&gt;</span>
+<span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-btn brut-btn--primary"</span><span class="tk-tag">&gt;</span>
+  Get loud
+<span class="tk-tag">&lt;/button&gt;</span></pre>
+
+  </div>
+</section>
+
+<!-- ======================== PULL QUOTE ======================== -->
+<section class="wrap" style="padding-top: 0;">
+  <blockquote class="brut-pull-quote" style="text-align: center;">
+    Soft UIs whisper. BRUT shouts.
+  </blockquote>
+</section>
+
+<!-- ======================== CTA ======================== -->
+<section class="wrap">
+  <div class="cta">
+    <p class="brut-eyebrow">Ship it</p>
+    <h2 class="brut-display-3" style="margin: var(--sp-4) 0 var(--sp-5);">
+      Ready to get loud.
+    </h2>
+    <p class="brut-lead" style="margin: 0 auto var(--sp-6); text-align: center;">
+      Open the docs, copy a snippet, paste into your project. That's the workflow.
+    </p>
+    <div class="brut-cluster brut-cluster--center brut-cluster--md">
+      <a class="brut-btn brut-btn--ink brut-btn--lg" href="../docs/index.html">
+        Read the docs →
+      </a>
+      <a class="brut-btn brut-btn--lg" href="./login.html">See a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FOOTER ======================== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <a class="topnav__brand" href="./index.html" style="color: var(--paper);">
+      <span class="topnav__mark">B</span>
+      <span>BRUT&nbsp;UI</span>
+    </a>
+    <nav class="footer__links">
+      <a class="footer__link" href="../docs/index.html">Docs</a>
+      <a class="footer__link" href="./index.html">Demos</a>
+      <a class="footer__link" href="../docs/index.html#components">Components</a>
+      <a class="footer__link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <span class="footer__legal">© 2026 · MIT · v0.1</span>
+  </div>
+</footer>
+
+<script src="../dist/brut.js"></script>
+</body>
+</html>

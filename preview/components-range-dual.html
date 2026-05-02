@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Range slider — dual thumb</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .row { display: flex; gap: 18px; align-items: center; max-width: 520px; margin-bottom: 18px; }
+  .vals { font-family: var(--font-mono); font-size: 13px; color: var(--concrete-400); }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Default 0–100, step 1</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Price</label>
+  <div class="brut-range-dual"
+       data-brut="range-dual"
+       data-brut-min="0" data-brut-max="100" data-brut-step="1"
+       data-brut-value-min="20" data-brut-value-max="80"
+       data-brut-name-min="price_min" data-brut-name-max="price_max"></div>
+  <span class="brut-field__hint" id="vals1">20 – 80</span>
+</div>
+
+<h2>Step 5, 0–500</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Budget</label>
+  <div class="brut-range-dual"
+       data-brut="range-dual"
+       data-brut-min="0" data-brut-max="500" data-brut-step="5"
+       data-brut-value-min="100" data-brut-value-max="350"
+       data-brut-name-min="budget_min" data-brut-name-max="budget_max"></div>
+  <span class="brut-field__hint" id="vals2">100 – 350</span>
+</div>
+
+<h2>Year range 2000–2026</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Years</label>
+  <div class="brut-range-dual"
+       data-brut="range-dual"
+       data-brut-min="2000" data-brut-max="2026" data-brut-step="1"
+       data-brut-value-min="2010" data-brut-value-max="2020"
+       data-brut-name-min="year_min" data-brut-name-max="year_max"></div>
+  <span class="brut-field__hint" id="vals3">2010 – 2020</span>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Drag a thumb…</pre>
+
+<script src="../dist/brut.js"></script>
+<script>
+  var pairs = [
+    ['vals1', 0],
+    ['vals2', 1],
+    ['vals3', 2]
+  ];
+  var nodes = document.querySelectorAll('[data-brut="range-dual"]');
+  pairs.forEach(function (p) {
+    var el = nodes[p[1]];
+    if (!el) return;
+    el.addEventListener('brut:change', function (e) {
+      var s = document.getElementById(p[0]);
+      if (s) s.textContent = e.detail.min + ' – ' + e.detail.max;
+      var pre = document.getElementById('log');
+      pre.textContent = '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+    });
+  });
+</script>
+</body></html>

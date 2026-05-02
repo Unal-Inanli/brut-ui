@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT logo</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); display: flex; align-items: center; justify-content: space-around; gap: 24px; }
+  .lockup { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .lab { font-family: var(--font-mono); font-size: 11px; color: var(--concrete-400); }
+  .swatch { padding: 18px; border: 4px solid var(--ink); }
+</style></head>
+<body>
+<div class="lockup">
+  <div class="swatch" style="background: var(--paper);"><img src="../assets/logo.svg" style="height: 64px;"/></div>
+  <span class="lab">primary on paper</span>
+</div>
+<div class="lockup">
+  <div class="swatch" style="background: var(--ink);"><img src="../assets/logo.svg" style="height: 64px;"/></div>
+  <span class="lab">primary on ink</span>
+</div>
+<div class="lockup">
+  <div class="swatch" style="background: var(--pop-pink);"><img src="../assets/monogram.svg" style="height: 64px;"/></div>
+  <span class="lab">monogram on pop</span>
+</div>
+</body></html>

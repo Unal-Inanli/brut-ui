@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Topnav</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; background: var(--paper); font-family: var(--font-sans); min-height: 200vh; }
+  .demo-section { padding: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 0 0 12px; }
+</style></head>
+<body>
+
+<header class="brut-topnav" data-brut="topnav">
+  <div class="brut-topnav__inner">
+    <a class="brut-topnav__brand" href="#">
+      <span class="brut-topnav__mark">B</span>
+      <span>BRUT&nbsp;UI</span>
+    </a>
+    <nav class="brut-topnav__links">
+      <a class="brut-topnav__link brut-topnav__link--active" href="#">Docs</a>
+      <a class="brut-topnav__link" href="#">Components</a>
+      <a class="brut-topnav__link" href="#">Demos</a>
+      <a class="brut-topnav__link" href="#">GitHub</a>
+    </nav>
+    <a class="brut-btn brut-btn--primary brut-btn--sm brut-topnav__cta" href="#">Read the docs &rarr;</a>
+    <button class="brut-topnav__burger" aria-label="Toggle menu" type="button">&equiv;</button>
+  </div>
+</header>
+
+<section class="demo-section">
+  <h2>Topnav</h2>
+  <p>Sticky header with brand + links + CTA. Resize the window below 760px to test the burger menu.</p>
+</section>
+
+<script src="../dist/brut.js"></script>
+</body></html>

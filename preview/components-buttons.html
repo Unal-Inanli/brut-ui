@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Buttons</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: var(--font-display);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 12px 18px;
+    border: 4px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: transform 80ms var(--ease-snap), box-shadow 80ms var(--ease-snap);
+    background: var(--bone);
+    color: var(--ink);
+    line-height: 1;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--ink); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 var(--ink); }
+  .primary { background: var(--primary); }
+  .pink    { background: var(--pop-pink); color: var(--ink); }
+  .lime    { background: var(--pop-lime); }
+  .ink     { background: var(--ink); color: var(--paper); }
+  .ghost   { background: transparent; box-shadow: none; }
+  .ghost:hover { background: var(--ink); color: var(--paper); transform: none;}
+  .sm { padding: 8px 12px; font-size: 12px; border-width: 3px; box-shadow: 3px 3px 0 0 var(--ink);}
+  .lg { padding: 16px 24px; font-size: 18px; box-shadow: var(--shadow-md);}
+</style></head>
+<body>
+<div class="row" style="margin-bottom: 14px;">
+  <button class="btn primary">Primary</button>
+  <button class="btn">Default</button>
+  <button class="btn ink">Ink</button>
+  <button class="btn pink">Pink</button>
+  <button class="btn lime">Lime</button>
+  <button class="btn ghost">Ghost</button>
+</div>
+<div class="row">
+  <button class="btn primary sm">Small</button>
+  <button class="btn primary">Medium</button>
+  <button class="btn primary lg">Large</button>
+</div>
+</body></html>

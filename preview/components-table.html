@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 880px; }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Default</h3>
+  <table class="brut-table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">22</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Striped + Sortable + Select-all</h3>
+  <table class="brut-table brut-table--striped" data-brut="table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell" style="width: 36px;">
+          <span class="brut-cb" data-brut-select-all></span>
+        </th>
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="role">Role</th>
+        <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="alice">Alice</td>
+        <td class="brut-table__cell" data-sort-value="designer">Designer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="14">14</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="bob">Bob</td>
+        <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="7">7</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="carla">Carla</td>
+        <td class="brut-table__cell" data-sort-value="pm">PM</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="22">22</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="dan">Dan</td>
+        <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="3">3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Compact + Bordered</h3>
+  <table class="brut-table brut-table--compact brut-table--bordered">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">SKU</th>
+        <th class="brut-table__cell">Title</th>
+        <th class="brut-table__cell brut-table__cell--num">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row"><td class="brut-table__cell">A-001</td><td class="brut-table__cell">Bone-white tee</td><td class="brut-table__cell brut-table__cell--num">122</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell">A-002</td><td class="brut-table__cell">Hard-shadow cap</td><td class="brut-table__cell brut-table__cell--num">38</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>

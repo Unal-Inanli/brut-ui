@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Spacing scale</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+  .row { display: flex; gap: 16px; align-items: flex-end; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .blk { background: var(--ink); width: 16px; }
+  .lab { font-family: var(--font-mono); font-size: 11px; }
+  .nm { font-family: var(--font-display); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;}
+</style></head>
+<body>
+<div class="row">
+  <div class="col"><div class="blk" style="height:4px"></div><div class="nm">sp-1</div><div class="lab">4</div></div>
+  <div class="col"><div class="blk" style="height:8px"></div><div class="nm">sp-2</div><div class="lab">8</div></div>
+  <div class="col"><div class="blk" style="height:12px"></div><div class="nm">sp-3</div><div class="lab">12</div></div>
+  <div class="col"><div class="blk" style="height:16px"></div><div class="nm">sp-4</div><div class="lab">16</div></div>
+  <div class="col"><div class="blk" style="height:24px"></div><div class="nm">sp-6</div><div class="lab">24</div></div>
+  <div class="col"><div class="blk" style="height:32px"></div><div class="nm">sp-8</div><div class="lab">32</div></div>
+  <div class="col"><div class="blk" style="height:48px"></div><div class="nm">sp-12</div><div class="lab">48</div></div>
+  <div class="col"><div class="blk" style="height:64px"></div><div class="nm">sp-16</div><div class="lab">64</div></div>
+  <div class="col"><div class="blk" style="height:80px"></div><div class="nm">sp-20</div><div class="lab">80</div></div>
+</div>
+</body></html>

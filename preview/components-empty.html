@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Empty state</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Default</h2>
+<div class="brut-empty" style="max-width: 520px;">
+  <div class="brut-empty__shape"></div>
+  <h3 class="brut-h2 brut-empty__title">No items yet.</h3>
+  <p class="brut-body brut-empty__body">When you add something, it'll show up here. Until then this block holds the space.</p>
+  <div class="brut-empty__action">
+    <button class="brut-btn brut-btn--primary" type="button">CREATE ONE</button>
+  </div>
+</div>
+
+<h2>Compact, no shape</h2>
+<div class="brut-empty" style="max-width: 520px; margin-top: 24px;">
+  <h3 class="brut-h2 brut-empty__title">All caught up.</h3>
+  <p class="brut-body brut-empty__body">Inbox is empty. Take a break.</p>
+</div>
+
+</body></html>

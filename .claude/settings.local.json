@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash build.sh)",
+      "Bash(node -e \"var window={Brut:{register:function\\(n,o\\){console.log\\('reg',n\\)}}}; var w=window;\")",
+      "Bash(node --check /Users/spartan/Projects/ui-kit/src/js/components/toast.js)",
+      "Bash(node --check /Users/spartan/Projects/ui-kit/src/js/components/topnav.js)",
+      "Bash(node --check /Users/spartan/Projects/ui-kit/src/js/components/sidebar.js)",
+      "Bash(node --check /Users/spartan/Projects/ui-kit/dist/brut.js)",
+      "Bash(git -C /Users/spartan/Projects/ui-kit status)",
+      "Bash(node -c /Users/spartan/Projects/ui-kit/src/js/components/table.js)",
+      "Bash(node -e ' *)",
+      "Bash(bash /Users/spartan/Projects/ui-kit/build.sh)",
+      "Bash(node -c /Users/spartan/Projects/ui-kit/dist/brut.js)"
+    ]
+  }
+}

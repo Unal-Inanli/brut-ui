@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Toggles + Checkboxes</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 28px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 28px; flex-wrap: wrap; align-items: center; margin-bottom: 18px;}
+  .field { display: flex; gap: 10px; align-items: center; font-size: 14px; font-weight: 500;}
+  /* Checkbox */
+  .cb {
+    width: 22px; height: 22px;
+    border: 3px solid var(--ink);
+    background: var(--bone);
+    box-shadow: 2px 2px 0 0 var(--ink);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 16px; line-height: 1;
+  }
+  .cb.on { background: var(--primary); }
+  .cb.on::after { content: "✕"; color: var(--ink); font-weight: 900;}
+  /* Radio */
+  .rd {
+    width: 22px; height: 22px;
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    background: var(--bone);
+    box-shadow: 2px 2px 0 0 var(--ink);
+    position: relative;
+  }
+  .rd.on::after { content: ""; position: absolute; inset: 4px; background: var(--ink); border-radius: 50%;}
+  /* Toggle */
+  .sw {
+    width: 56px; height: 30px;
+    border: 3px solid var(--ink);
+    background: var(--concrete-100);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    position: relative;
+  }
+  .sw.on { background: var(--pop-lime); }
+  .sw .knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 20px; height: 20px;
+    background: var(--ink);
+    transition: left 100ms var(--ease-snap);
+  }
+  .sw.on .knob { left: 28px; }
+</style></head>
+<body>
+<div class="row">
+  <span class="field"><span class="cb on"></span> Checked</span>
+  <span class="field"><span class="cb"></span> Unchecked</span>
+  <span class="field"><span class="rd on"></span> Selected</span>
+  <span class="field"><span class="rd"></span> Unselected</span>
+</div>
+<div class="row">
+  <span class="field"><span class="sw on"><span class="knob"></span></span> Push to deploy</span>
+  <span class="field"><span class="sw"><span class="knob"></span></span> Email me everything</span>
+</div>
+</body></html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Iconography</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; }
+  .ic {
+    aspect-ratio: 1;
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    background: var(--bone);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ic svg { width: 24px; height: 24px; stroke: var(--ink); fill: none; stroke-width: 2.5; stroke-linecap: square; stroke-linejoin: miter; }
+  .ic.alt { background: var(--primary); }
+  .lab { font-family: var(--font-mono); font-size: 11px; color: var(--concrete-400); margin-top: 14px;}
+</style></head>
+<body>
+<div class="row">
+  <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"/></svg></div>
+  <div class="ic alt"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></div>
+  <div class="ic"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></div>
+  <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></div>
+  <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></div>
+  <div class="ic alt"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div>
+  <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4v12m-5-5l5 5 5-5M4 20h16"/></svg></div>
+  <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h16M9 9v11"/></svg></div>
+</div>
+<div class="lab">Lucide-style: 24px, 2.5 stroke, square caps, miter joins. No fills.</div>
+</body></html>

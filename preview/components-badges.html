@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Badges + Tags</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .badge {
+    font-family: var(--font-display);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 6px 10px;
+    border: 3px solid var(--ink);
+    background: var(--bone);
+    color: var(--ink);
+    line-height: 1;
+  }
+  .badge.shadow { box-shadow: 3px 3px 0 0 var(--ink); }
+  .pill { border-radius: 999px; }
+  .ok    { background: var(--success-bg); }
+  .warn  { background: var(--warning-bg); }
+  .err   { background: var(--danger-bg); }
+  .info  { background: var(--info-bg); }
+  .pop1  { background: var(--pop-lime); }
+  .pop2  { background: var(--pop-pink); }
+  .pop3  { background: var(--primary); }
+  .ink   { background: var(--ink); color: var(--paper); }
+  .dot { width: 8px; height: 8px; background: var(--ink); display: inline-block; margin-right: 6px; }
+</style></head>
+<body>
+<div class="row">
+  <span class="badge ok">Live</span>
+  <span class="badge warn">Pending</span>
+  <span class="badge err">Down</span>
+  <span class="badge info">Beta</span>
+  <span class="badge pop1">New</span>
+  <span class="badge pop2 shadow">Featured</span>
+  <span class="badge pop3 shadow">Pro</span>
+  <span class="badge ink">v2.0</span>
+</div>
+<div class="row">
+  <span class="badge pill"><span class="dot" style="background:#2ECC71"></span>online</span>
+  <span class="badge pill"><span class="dot" style="background:#FF3B30"></span>error</span>
+  <span class="badge pill ink">#design</span>
+  <span class="badge pill">#brutalism</span>
+  <span class="badge pill pop3">#yellow</span>
+</div>
+</body></html>

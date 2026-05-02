@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Skeleton</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .stack { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin-bottom: 24px; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+</style></head>
+<body>
+
+<h2>Variants</h2>
+<div class="row">
+  <span class="brut-skeleton brut-skeleton--circle"></span>
+  <span class="brut-skeleton brut-skeleton--block" style="width: 200px;"></span>
+</div>
+
+<h2>Text lines</h2>
+<div class="stack">
+  <span class="brut-skeleton brut-skeleton--text" style="width: 80%;"></span>
+  <span class="brut-skeleton brut-skeleton--text" style="width: 95%;"></span>
+  <span class="brut-skeleton brut-skeleton--text" style="width: 60%;"></span>
+</div>
+
+<h2>Card placeholder</h2>
+<div class="brut-card" style="max-width: 360px;">
+  <div class="brut-skeleton brut-skeleton--block" style="height: 120px; margin-bottom: 16px;"></div>
+  <span class="brut-skeleton brut-skeleton--text" style="width: 70%; margin-bottom: 8px;"></span>
+  <span class="brut-skeleton brut-skeleton--text" style="width: 90%;"></span>
+</div>
+
+</body></html>
