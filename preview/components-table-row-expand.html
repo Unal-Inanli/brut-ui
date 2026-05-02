@@ -1,0 +1,135 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Row Expand</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 24px 0 8px; }
+  .wrap { max-width: 800px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h2>Expandable rows</h2>
+
+  <table class="brut-table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Location</th>
+        <th class="brut-table__cell brut-table__cell--num">Projects</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-1-tpl">
+        <td class="brut-table__cell">Alice Chen</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell">San Francisco</td>
+        <td class="brut-table__cell brut-table__cell--num">14</td>
+      </tr>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-2-tpl">
+        <td class="brut-table__cell">Bob Müller</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Berlin</td>
+        <td class="brut-table__cell brut-table__cell--num">7</td>
+      </tr>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-3-tpl">
+        <td class="brut-table__cell">Carla Ortiz</td>
+        <td class="brut-table__cell">PM</td>
+        <td class="brut-table__cell">Mexico City</td>
+        <td class="brut-table__cell brut-table__cell--num">22</td>
+      </tr>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-4-tpl">
+        <td class="brut-table__cell">Dan Park</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Seoul</td>
+        <td class="brut-table__cell brut-table__cell--num">9</td>
+      </tr>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-5-tpl">
+        <td class="brut-table__cell">Eva Rossi</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell">Milan</td>
+        <td class="brut-table__cell brut-table__cell--num">11</td>
+      </tr>
+      <tr class="brut-table__row" data-brut="table-row-expand" data-brut-row-detail="row-6-tpl">
+        <td class="brut-table__cell">Frank Sato</td>
+        <td class="brut-table__cell">Data</td>
+        <td class="brut-table__cell">Tokyo</td>
+        <td class="brut-table__cell brut-table__cell--num">18</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Detail templates -->
+<template id="row-1-tpl">
+  <div>
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+      <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">alice@example.com</dd>
+      <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2021-03-15</dd>
+      <dt style="font-weight: 700;">Stack</dt><dd style="margin: 0;">Figma, Framer, CSS</dd>
+      <dt style="font-weight: 700;">Status</dt><dd style="margin: 0;"><span class="brut-badge brut-badge--ok">Active</span></dd>
+    </dl>
+  </div>
+</template>
+
+<template id="row-2-tpl">
+  <div>
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+      <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">bob@example.com</dd>
+      <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2020-11-02</dd>
+      <dt style="font-weight: 700;">Stack</dt><dd style="margin: 0;">Go, Kubernetes, Postgres</dd>
+      <dt style="font-weight: 700;">Status</dt><dd style="margin: 0;"><span class="brut-badge brut-badge--ok">Active</span></dd>
+    </dl>
+  </div>
+</template>
+
+<template id="row-3-tpl">
+  <div>
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+      <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">carla@example.com</dd>
+      <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2019-06-20</dd>
+      <dt style="font-weight: 700;">Bio</dt><dd style="margin: 0;">Leads cross-functional delivery. Certified PMP.</dd>
+      <dt style="font-weight: 700;">Status</dt><dd style="margin: 0;"><span class="brut-badge">On leave</span></dd>
+    </dl>
+  </div>
+</template>
+
+<template id="row-4-tpl">
+  <div>
+    <p style="margin: 0 0 8px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;">Throughput (last 4 sprints)</p>
+    <div style="display: flex; gap: 8px; align-items: flex-end; height: 48px;">
+      <div style="width: 24px; background: var(--ink); height: 60%;"></div>
+      <div style="width: 24px; background: var(--ink); height: 80%;"></div>
+      <div style="width: 24px; background: var(--ink); height: 50%;"></div>
+      <div style="width: 24px; background: var(--ink); height: 100%;"></div>
+    </div>
+  </div>
+</template>
+
+<template id="row-5-tpl">
+  <div>
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+      <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">eva@example.com</dd>
+      <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2022-01-10</dd>
+      <dt style="font-weight: 700;">Portfolio</dt><dd style="margin: 0;"><a href="#">eva-rossi.design</a></dd>
+      <dt style="font-weight: 700;">Status</dt><dd style="margin: 0;"><span class="brut-badge brut-badge--ok">Active</span></dd>
+    </dl>
+  </div>
+</template>
+
+<template id="row-6-tpl">
+  <div>
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: 14px;">
+      <dt style="font-weight: 700;">Email</dt><dd style="margin: 0;">frank@example.com</dd>
+      <dt style="font-weight: 700;">Joined</dt><dd style="margin: 0;">2020-07-08</dd>
+      <dt style="font-weight: 700;">Stack</dt><dd style="margin: 0;">Python, dbt, Snowflake, Looker</dd>
+      <dt style="font-weight: 700;">Status</dt><dd style="margin: 0;"><span class="brut-badge brut-badge--warn">Contractor</span></dd>
+    </dl>
+  </div>
+</template>
+
+<script src="../dist/brut.js"></script>
+</body></html>

@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:54:21Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,50 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — ROW EXPAND
+   Expandable detail rows. Add data-brut="table-row-expand" to
+   a <tr> to get a chevron toggle that reveals a sibling detail
+   row. Content is cloned from a referenced <template>.
+   ============================================================ */
+
+/* Chevron toggle button — 24×24, no chrome, ink glyph. */
+.brut-table__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sp-6);
+  height: var(--sp-6);
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  vertical-align: middle;
+  margin-right: var(--sp-2);
+  transition: transform var(--dur-base) var(--ease-snap);
+}
+.brut-table__chevron:focus-visible {
+  outline: var(--bw-2) solid var(--ink);
+  outline-offset: var(--bw-1);
+}
+
+/* Expanded state — chevron rotates 90° */
+.brut-table__row--expanded .brut-table__chevron {
+  transform: rotate(90deg);
+}
+
+/* Detail row wrapper */
+.brut-table__expansion {
+  background: var(--paper-2);
+}
+
+/* Single spanning cell inside the detail row */
+.brut-table__expansion-cell {
+  padding: var(--sp-4) var(--sp-5);
+  border-top: var(--bw-1) solid var(--ink);
+  vertical-align: top;
+}
