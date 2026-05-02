@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:55:15Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,42 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — INLINE EDIT
+   Click a <td data-brut="table-edit"> to replace text with an
+   <input> or <select>. Enter commits, Escape cancels. Mirrors
+   committed value to a hidden input named cell_<row>_<col>.
+   ============================================================ */
+
+/* Idle editable cell: text cursor to invite editing */
+[data-brut="table-edit"] {
+  cursor: text;
+  position: relative;
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+[data-brut="table-edit"]:hover {
+  background: var(--paper-2);
+}
+
+/* Active editing state: paper-2 bg + ink inset ring */
+.brut-table-edit--editing {
+  background: var(--paper-2);
+  box-shadow: inset 0 0 0 var(--bw-2) var(--ink);
+  padding: 0;
+}
+
+/* The inserted input or select */
+.brut-table-edit__input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--paper-2);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  padding: var(--sp-2) var(--sp-3);
+  outline: none;
+  display: block;
+}

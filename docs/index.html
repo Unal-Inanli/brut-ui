@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-edit">Table — Inline Edit</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,47 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — INLINE EDIT -->
+      <section class="docs-section" id="table-edit">
+        <h2>Table — Inline Edit</h2>
+        <p class="lead">Click any <code>data-brut="table-edit"</code> cell to swap its text for an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>. Enter commits, Escape cancels. Updates <code>data-sort-value</code> and mirrors to a hidden input named <code>cell_&lt;rowKey&gt;_&lt;colKey&gt;</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table brut-table--striped">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row" data-row-key="d1">
+                <td class="brut-table__cell" data-brut="table-edit" data-col="name" data-sort-value="Alice">Alice</td>
+                <td class="brut-table__cell" data-brut="table-edit" data-col="role" data-sort-value="Designer">Designer</td>
+                <td class="brut-table__cell" data-brut="table-edit" data-col="status" data-brut-edit-options="active,paused,archived" data-sort-value="active">active</td>
+              </tr>
+              <tr class="brut-table__row" data-row-key="d2">
+                <td class="brut-table__cell" data-brut="table-edit" data-col="name" data-sort-value="Bob">Bob</td>
+                <td class="brut-table__cell" data-brut="table-edit" data-col="role" data-sort-value="Engineer">Engineer</td>
+                <td class="brut-table__cell" data-brut="table-edit" data-col="status" data-brut-edit-options="active,paused,archived" data-sort-value="paused">paused</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;!-- Free-text cell --&gt;
+&lt;td class="brut-table__cell"
+    data-brut="table-edit"
+    data-col="name"
+    data-sort-value="Alice"&gt;Alice&lt;/td&gt;
+
+&lt;!-- Select cell --&gt;
+&lt;td class="brut-table__cell"
+    data-brut="table-edit"
+    data-col="status"
+    data-brut-edit-options="active,paused,archived"
+    data-sort-value="active"&gt;active&lt;/td&gt;</pre>
       </section>
 
       <!-- ROWS -->
