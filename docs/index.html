@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-export">Table — Export</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,56 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — EXPORT -->
+      <section class="docs-section" id="table-export">
+        <h2>Table — Export</h2>
+        <p class="lead">Download visible table rows as CSV or JSON. Add <code>data-brut="table-export"</code> to any button, point it at a table with <code>data-brut-table="&lt;id&gt;"</code>, and choose <code>data-brut-format="csv"</code> (default) or <code>"json"</code>. Only rows currently visible (not hidden by filter or pagination) are included. Dispatches <code>brut:change { format, rowCount }</code> after download.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table" id="docs-export-demo" style="margin-bottom: var(--sp-4);">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell brut-table__cell--num">Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">22</td></tr>
+            </tbody>
+          </table>
+          <div style="display: flex; gap: var(--sp-3); flex-wrap: wrap;">
+            <button class="brut-btn brut-table-export-btn" data-brut="table-export" data-brut-table="docs-export-demo">Export CSV</button>
+            <button class="brut-btn brut-table-export-btn" data-brut="table-export" data-brut-table="docs-export-demo" data-brut-format="json">Export JSON</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table" id="my-table"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell"&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;Designer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;button class="brut-btn brut-table-export-btn"
+        data-brut="table-export"
+        data-brut-table="my-table"&gt;Export CSV&lt;/button&gt;
+
+&lt;button class="brut-btn brut-table-export-btn"
+        data-brut="table-export"
+        data-brut-table="my-table"
+        data-brut-format="json"
+        data-brut-filename="my-export"&gt;Export JSON&lt;/button&gt;</pre>
       </section>
 
       <!-- ROWS -->
