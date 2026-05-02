@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Column Filter</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  h3 { font-family: var(--font-display); text-transform: uppercase; font-size: var(--fs-sm); letter-spacing: var(--tracking-wider); margin: 32px 0 12px; }
+  .wrap { max-width: 900px; }
+  p { font-size: var(--fs-sm); color: var(--concrete-400); margin: 0 0 12px; }
+</style></head>
+<body>
+<div class="wrap">
+
+  <h3>Column filter — Status &amp; Priority</h3>
+  <p>Click the ▾ buttons on Status or Priority headers to filter rows. Multiple filters AND together.</p>
+
+  <table class="brut-table brut-table--striped" style="overflow: visible;">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Task</th>
+        <th class="brut-table__cell" data-brut="table-col-filter" data-brut-col-key="status">
+          Status
+        </th>
+        <th class="brut-table__cell" data-brut="table-col-filter" data-brut-col-key="priority">
+          Priority
+        </th>
+        <th class="brut-table__cell">Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Design system audit</td>
+        <td class="brut-table__cell">Active</td>
+        <td class="brut-table__cell">High</td>
+        <td class="brut-table__cell">Alice</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Token refresh</td>
+        <td class="brut-table__cell">Done</td>
+        <td class="brut-table__cell">Medium</td>
+        <td class="brut-table__cell">Bob</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Accessibility pass</td>
+        <td class="brut-table__cell">Active</td>
+        <td class="brut-table__cell">High</td>
+        <td class="brut-table__cell">Carla</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Dark mode research</td>
+        <td class="brut-table__cell">Backlog</td>
+        <td class="brut-table__cell">Low</td>
+        <td class="brut-table__cell">Dan</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Component library docs</td>
+        <td class="brut-table__cell">Active</td>
+        <td class="brut-table__cell">Medium</td>
+        <td class="brut-table__cell">Eve</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Icon set expansion</td>
+        <td class="brut-table__cell">Done</td>
+        <td class="brut-table__cell">Low</td>
+        <td class="brut-table__cell">Frank</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Motion system spec</td>
+        <td class="brut-table__cell">Backlog</td>
+        <td class="brut-table__cell">High</td>
+        <td class="brut-table__cell">Grace</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Spacing audit</td>
+        <td class="brut-table__cell">Done</td>
+        <td class="brut-table__cell">Medium</td>
+        <td class="brut-table__cell">Hank</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Typography scale</td>
+        <td class="brut-table__cell">Active</td>
+        <td class="brut-table__cell">Low</td>
+        <td class="brut-table__cell">Iris</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Shadow system</td>
+        <td class="brut-table__cell">Backlog</td>
+        <td class="brut-table__cell">Medium</td>
+        <td class="brut-table__cell">Jack</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Border tokens</td>
+        <td class="brut-table__cell">Done</td>
+        <td class="brut-table__cell">High</td>
+        <td class="brut-table__cell">Kim</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Radius tokens</td>
+        <td class="brut-table__cell">Active</td>
+        <td class="brut-table__cell">Low</td>
+        <td class="brut-table__cell">Leo</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<script src="../dist/brut.js"></script>
+</body></html>
