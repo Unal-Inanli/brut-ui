@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-reorder">Table — Column Reorder</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -632,6 +633,76 @@ border: var(--bw-6) solid var(--ink);</pre>
       &lt;td class="brut-table__cell"&gt;&lt;label class="brut-cb" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
       &lt;td class="brut-table__cell" data-sort-value="alice"&gt;Alice&lt;/td&gt;
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — COLUMN REORDER -->
+      <section class="docs-section" id="table-reorder">
+        <h2>Table — Column Reorder</h2>
+        <p class="lead">Drag table headers to reorder columns. Add <code>data-brut="table-reorder"</code> to the <code>&lt;table&gt;</code>. Each <code>&lt;th&gt;</code> and matching <code>&lt;col&gt;</code> should carry <code>data-col="&lt;key&gt;"</code>. A 4px ink drop indicator shows the insertion point. Emits <code>brut:change</code> with <code>{ source: 'reorder', order }</code> on every commit.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table" data-brut="table-reorder" id="docs-reorder-table">
+            <colgroup>
+              <col data-col="name">
+              <col data-col="role">
+              <col data-col="email">
+              <col data-col="joined">
+              <col data-col="qty">
+            </colgroup>
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell" data-col="name">Name</th>
+                <th class="brut-table__cell" data-col="role">Role</th>
+                <th class="brut-table__cell" data-col="email">Email</th>
+                <th class="brut-table__cell" data-col="joined">Joined</th>
+                <th class="brut-table__cell brut-table__cell--num" data-col="qty">Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Alice</td>
+                <td class="brut-table__cell">Designer</td>
+                <td class="brut-table__cell">alice@example.com</td>
+                <td class="brut-table__cell">2022-03-14</td>
+                <td class="brut-table__cell brut-table__cell--num">14</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Bob</td>
+                <td class="brut-table__cell">Engineer</td>
+                <td class="brut-table__cell">bob@example.com</td>
+                <td class="brut-table__cell">2021-11-02</td>
+                <td class="brut-table__cell brut-table__cell--num">7</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Carla</td>
+                <td class="brut-table__cell">PM</td>
+                <td class="brut-table__cell">carla@example.com</td>
+                <td class="brut-table__cell">2023-01-09</td>
+                <td class="brut-table__cell brut-table__cell--num">22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table" data-brut="table-reorder"&gt;
+  &lt;colgroup&gt;
+    &lt;col data-col="name"&gt;
+    &lt;col data-col="role"&gt;
+    &lt;col data-col="email"&gt;
+  &lt;/colgroup&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell" data-col="name"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell" data-col="role"&gt;Role&lt;/th&gt;
+      &lt;th class="brut-table__cell" data-col="email"&gt;Email&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;Designer&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;alice@example.com&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
