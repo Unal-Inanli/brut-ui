@@ -1,0 +1,97 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Keyboard Nav</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 880px; }
+  .instructions {
+    background: var(--info-bg);
+    border: var(--bw-3) solid var(--ink);
+    padding: var(--sp-3) var(--sp-4);
+    margin-bottom: var(--sp-4);
+    font-size: var(--fs-sm);
+    font-family: var(--font-sans);
+  }
+  .instructions strong { font-weight: var(--fw-bold); }
+  kbd {
+    background: var(--bone);
+    border: var(--bw-1) solid var(--ink);
+    box-shadow: var(--shadow-xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    padding: 2px 6px;
+  }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Keyboard Navigation</h3>
+
+  <div class="instructions">
+    <strong>Instructions:</strong> Click any cell to focus it, then use
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move between cells,
+    <kbd>Home</kbd> / <kbd>End</kbd> to jump to the first or last cell in a row,
+    <kbd>PgUp</kbd> / <kbd>PgDn</kbd> to jump to the first or last row.
+  </div>
+
+  <table class="brut-table" data-brut="table-keys">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell">Location</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Alice</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell">Product</td>
+        <td class="brut-table__cell">New York</td>
+        <td class="brut-table__cell brut-table__cell--num">14</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Bob</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Platform</td>
+        <td class="brut-table__cell">Berlin</td>
+        <td class="brut-table__cell brut-table__cell--num">7</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Carla</td>
+        <td class="brut-table__cell">PM</td>
+        <td class="brut-table__cell">Growth</td>
+        <td class="brut-table__cell">London</td>
+        <td class="brut-table__cell brut-table__cell--num">22</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Dan</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Platform</td>
+        <td class="brut-table__cell">Toronto</td>
+        <td class="brut-table__cell brut-table__cell--num">3</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Eva</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell">Brand</td>
+        <td class="brut-table__cell">Paris</td>
+        <td class="brut-table__cell brut-table__cell--num">19</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Frank</td>
+        <td class="brut-table__cell">Analyst</td>
+        <td class="brut-table__cell">Data</td>
+        <td class="brut-table__cell">Sydney</td>
+        <td class="brut-table__cell brut-table__cell--num">11</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>
