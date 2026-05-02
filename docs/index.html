@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-bulk">Table — Bulk Actions</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -634,6 +635,68 @@ border: var(--bw-6) solid var(--ink);</pre>
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — BULK ACTIONS -->
+      <section class="docs-section" id="table-bulk">
+        <h2>Table — Bulk Actions</h2>
+        <p class="lead">A toolbar that appears when one or more table rows are selected. Wire it to a <code>data-brut="table"</code> table via <code>data-brut-table="&lt;id&gt;"</code>. Each action button dispatches <code>brut:bulk { action, count, rows }</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-table-bulk" id="docs-bulk" data-brut="table-bulk" data-brut-table="docs-table" data-brut-name="selected">
+            <span class="brut-table-bulk__count">0 selected</span>
+            <div class="brut-table-bulk__actions">
+              <button class="brut-btn" data-brut-bulk-action="delete">Delete</button>
+              <button class="brut-btn" data-brut-bulk-action="export">Export</button>
+              <button class="brut-btn" data-brut-bulk-action="archive">Archive</button>
+            </div>
+          </div>
+          <table class="brut-table brut-table--striped" id="docs-table" data-brut="table">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell" style="width: 36px;">
+                  <span class="brut-cb" data-brut-select-all></span>
+                </th>
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row" data-row-key="r1">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell">Alice</td>
+                <td class="brut-table__cell">Designer</td>
+              </tr>
+              <tr class="brut-table__row" data-row-key="r2">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell">Bob</td>
+                <td class="brut-table__cell">Engineer</td>
+              </tr>
+              <tr class="brut-table__row" data-row-key="r3">
+                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell">Carla</td>
+                <td class="brut-table__cell">PM</td>
+              </tr>
+            </tbody>
+          </table>
+          <output id="docs-bulk-log" style="font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--concrete-400);"></output>
+        </div>
+        <script>
+          document.getElementById('docs-bulk').addEventListener('brut:bulk', function (e) {
+            document.getElementById('docs-bulk-log').textContent =
+              'brut:bulk — action: ' + e.detail.action + ', count: ' + e.detail.count;
+          });
+        </script>
+        <pre class="docs-snippet">&lt;div class="brut-table-bulk" data-brut="table-bulk" data-brut-table="my-table"&gt;
+  &lt;span class="brut-table-bulk__count"&gt;0 selected&lt;/span&gt;
+  &lt;div class="brut-table-bulk__actions"&gt;
+    &lt;button class="brut-btn" data-brut-bulk-action="delete"&gt;Delete&lt;/button&gt;
+    &lt;button class="brut-btn" data-brut-bulk-action="export"&gt;Export&lt;/button&gt;
+    &lt;button class="brut-btn" data-brut-bulk-action="archive"&gt;Archive&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;table class="brut-table" id="my-table" data-brut="table"&gt;
+  &lt;!-- thead with data-brut-select-all, tbody rows with data-brut-row-select --&gt;
 &lt;/table&gt;</pre>
       </section>
 

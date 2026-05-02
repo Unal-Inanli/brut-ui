@@ -2329,3 +2329,40 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — BULK ACTIONS
+   Toolbar that appears when one or more table rows are selected.
+   Wire via data-brut="table-bulk" + data-brut-table="<table-id>".
+   ============================================================ */
+
+/* Shell: hidden by default; revealed with --shown modifier. */
+.brut-table-bulk {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--paper);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+}
+.brut-table-bulk--shown {
+  display: flex;
+}
+
+/* Count label — display font, small caps, uppercase. */
+.brut-table-bulk__count {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink);
+}
+
+/* Actions — right-side button group. */
+.brut-table-bulk__actions {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}

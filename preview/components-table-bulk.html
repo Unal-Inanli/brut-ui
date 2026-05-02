@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Bulk Actions</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 880px; }
+  output {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--concrete-400);
+    min-height: 20px;
+  }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Bulk Actions Toolbar</h3>
+
+  <!-- Bulk toolbar — hidden until rows are selected -->
+  <div class="brut-table-bulk" data-brut="table-bulk" data-brut-table="demo" data-brut-name="selected" style="margin-bottom: 12px;">
+    <span class="brut-table-bulk__count">0 selected</span>
+    <div class="brut-table-bulk__actions">
+      <button class="brut-btn" data-brut-bulk-action="delete">Delete</button>
+      <button class="brut-btn" data-brut-bulk-action="export">Export</button>
+      <button class="brut-btn" data-brut-bulk-action="archive">Archive</button>
+    </div>
+  </div>
+
+  <!-- Table with select-all and row checkboxes -->
+  <table class="brut-table brut-table--striped" id="demo" data-brut="table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell" style="width: 36px;">
+          <span class="brut-cb" data-brut-select-all></span>
+        </th>
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="role">Role</th>
+        <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row" data-row-key="row-1">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="alice">Alice</td>
+        <td class="brut-table__cell" data-sort-value="designer">Designer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="14">14</td>
+      </tr>
+      <tr class="brut-table__row" data-row-key="row-2">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="bob">Bob</td>
+        <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="7">7</td>
+      </tr>
+      <tr class="brut-table__row" data-row-key="row-3">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="carla">Carla</td>
+        <td class="brut-table__cell" data-sort-value="pm">PM</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="22">22</td>
+      </tr>
+      <tr class="brut-table__row" data-row-key="row-4">
+        <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+        <td class="brut-table__cell" data-sort-value="dan">Dan</td>
+        <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
+        <td class="brut-table__cell brut-table__cell--num" data-sort-value="3">3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <output id="log">No action yet.</output>
+</div>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.querySelector('[data-brut="table-bulk"]').addEventListener('brut:bulk', function (e) {
+    document.getElementById('log').textContent =
+      e.detail.action + ' (count: ' + e.detail.count + ')';
+  });
+</script>
+</body></html>
