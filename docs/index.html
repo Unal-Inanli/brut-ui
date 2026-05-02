@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-density">Table — Density</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -634,6 +635,63 @@ border: var(--bw-6) solid var(--ink);</pre>
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — DENSITY -->
+      <section class="docs-section" id="table-density">
+        <h2>Table — Density</h2>
+        <p class="lead">3-state segmented toggle that swaps the density modifier on a target table. Link the toggle to a table via <code>data-brut-table="&lt;id&gt;"</code>. States: <code>compact</code>, <code>regular</code>, <code>comfy</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="margin-bottom: var(--sp-4); display: flex; align-items: center; gap: var(--sp-4);">
+            <span style="font-family: var(--font-sans); font-size: var(--fs-xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--tracking-widest); color: var(--concrete-400);">Density:</span>
+            <div class="brut-table-density"
+                 data-brut="table-density"
+                 data-brut-table="docs-density-demo"
+                 data-brut-default="regular">
+              <button class="brut-table-density__btn" data-density="compact">Compact</button>
+              <button class="brut-table-density__btn" data-density="regular">Regular</button>
+              <button class="brut-table-density__btn" data-density="comfy">Comfy</button>
+            </div>
+          </div>
+          <table class="brut-table" id="docs-density-demo">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell brut-table__cell--num">Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Alice</td>
+                <td class="brut-table__cell">Designer</td>
+                <td class="brut-table__cell brut-table__cell--num">14</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Bob</td>
+                <td class="brut-table__cell">Engineer</td>
+                <td class="brut-table__cell brut-table__cell--num">7</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Carla</td>
+                <td class="brut-table__cell">PM</td>
+                <td class="brut-table__cell brut-table__cell--num">22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-table-density"
+     data-brut="table-density"
+     data-brut-table="my-table"
+     data-brut-default="regular"&gt;
+  &lt;button class="brut-table-density__btn" data-density="compact"&gt;Compact&lt;/button&gt;
+  &lt;button class="brut-table-density__btn" data-density="regular"&gt;Regular&lt;/button&gt;
+  &lt;button class="brut-table-density__btn" data-density="comfy"&gt;Comfy&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;table class="brut-table" id="my-table"&gt;
+  &lt;!-- thead + tbody --&gt;
 &lt;/table&gt;</pre>
       </section>
 

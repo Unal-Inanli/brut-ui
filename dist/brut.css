@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:52:42Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,47 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — DENSITY
+   3-state segmented toggle (compact / regular / comfy) that
+   swaps a density modifier on a target <table>. Hook:
+   data-brut="table-density". Linked table: data-brut-table="<id>".
+   ============================================================ */
+
+/* TABLE — DENSITY toggle wrapper */
+.brut-table-density {
+  display: inline-flex;
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  background: var(--bone);
+}
+
+/* individual density button */
+.brut-table-density__btn {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wider);
+  padding: var(--sp-2) var(--sp-4);
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-right: var(--bw-2) solid var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+}
+.brut-table-density__btn:last-child {
+  border-right: 0;
+}
+.brut-table-density__btn--active {
+  background: var(--paper-2);
+  box-shadow: inset var(--shadow-xs);
+}
+
+/* comfy modifier — wide cell padding */
+.brut-table--comfy .brut-table__cell,
+.brut-table--comfy .brut-table__head .brut-table__cell {
+  padding: var(--sp-4) var(--sp-5);
+}
