@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:53:21Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,28 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — PAGINATION (extensions)
+   New modifiers on top of the existing .brut-pager shell.
+   Do NOT redefine .brut-pager, .brut-pager__btn, etc.
+   ============================================================ */
+
+/* Prev/next arrow buttons — slightly wider to breathe around ‹ › */
+.brut-pager__btn--prev,
+.brut-pager__btn--next {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+}
+
+/* "1–10 of 47" info label */
+.brut-pager__info {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--fg-2);
+  white-space: nowrap;
+  padding: 0 var(--sp-2);
+  line-height: 1;
+  align-self: center;
+}
