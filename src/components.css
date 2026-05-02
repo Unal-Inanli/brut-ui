@@ -10,7 +10,7 @@
 /* DISPLAY — only for hero / poster moments. ALL CAPS. */
 .brut-display-1 {
   font-family: var(--font-display);
-  font-size: clamp(64px, 11vw, 128px);
+  font-size: clamp(var(--fs-4xl), 11vw, var(--fs-6xl));
   line-height: 0.9;
   letter-spacing: var(--tracking-tightest);
   text-transform: uppercase;
@@ -19,7 +19,7 @@
 }
 .brut-display-2 {
   font-family: var(--font-display);
-  font-size: clamp(48px, 8vw, 88px);
+  font-size: clamp(var(--fs-3xl), 8vw, var(--fs-5xl));
   line-height: 0.92;
   letter-spacing: var(--tracking-tightest);
   text-transform: uppercase;
@@ -135,7 +135,7 @@
   background: var(--primary);
   color: var(--ink);
   border: 3px solid var(--ink);
-  padding: 4px 8px;
+  padding: var(--sp-1) var(--sp-2);
 }
 .brut-overline {
   font-family: var(--font-sans);
@@ -153,7 +153,7 @@
   font-size: var(--fs-md);
   line-height: var(--lh-normal);
   border-left: 4px solid var(--ink);
-  padding: 6px 16px;
+  padding: 6px var(--sp-4);
   margin: 0;
 }
 /* Pull-quote — display-weight, with thick top + bottom rules. */
@@ -165,7 +165,7 @@
   text-transform: uppercase;
   border-top: 4px solid var(--ink);
   border-bottom: 4px solid var(--ink);
-  padding: 16px 0;
+  padding: var(--sp-4) 0;
   margin: 0;
   text-wrap: balance;
 }
@@ -219,7 +219,7 @@
   line-height: 1.5;
   background: var(--ink);
   color: var(--paper);
-  padding: 16px;
+  padding: var(--sp-4);
   border: 4px solid var(--ink);
   box-shadow: var(--shadow-sm);
   overflow: auto;
@@ -253,7 +253,7 @@
   position: absolute; left: 0; top: 0;
   width: 20px; height: 20px;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   background: var(--primary);
   border: 2px solid var(--ink);
   display: inline-flex;
@@ -265,13 +265,13 @@
 /* DROP CAP — first letter as a hard ink block. */
 .brut-drop-cap::first-letter {
   font-family: var(--font-display);
-  font-size: 64px;
+  font-size: var(--fs-4xl);
   line-height: 0.9;
   float: left;
   background: var(--ink);
   color: var(--paper);
-  padding: 6px 10px 4px;
-  margin: 4px 10px 0 0;
+  padding: 6px 10px var(--sp-1);
+  margin: var(--sp-1) 10px 0 0;
   text-transform: uppercase;
 }
 
@@ -279,7 +279,7 @@
 .brut-mark {
   background: var(--primary);
   color: var(--ink);
-  padding: 1px 4px;
+  padding: 1px var(--sp-1);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -319,10 +319,10 @@
 /* BUTTON */
 .brut-btn {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 12px 18px;
+  padding: var(--sp-3) 18px;
   border: 4px solid var(--ink);
   box-shadow: 4px 4px 0 0 var(--ink);
   cursor: pointer;
@@ -338,9 +338,9 @@
 .brut-btn--ink     { background: var(--ink);      color: var(--paper); }
 .brut-btn--pink    { background: var(--pop-pink); color: var(--ink); }
 .brut-btn--lime    { background: var(--pop-lime); color: var(--ink); }
-.brut-btn--sm { padding: 8px 12px;  font-size: 12px; border-width: 3px;
+.brut-btn--sm { padding: 8px 12px;  font-size: var(--fs-xs); border-width: 3px;
                 box-shadow: 3px 3px 0 0 var(--ink); }
-.brut-btn--lg { padding: 16px 24px; font-size: 18px;
+.brut-btn--lg { padding: 16px 24px; font-size: var(--fs-md);
                 box-shadow: 6px 6px 0 0 var(--ink); }
 
 /* BADGE */
@@ -366,7 +366,7 @@
   background: var(--bone);
   border: 4px solid var(--ink);
   box-shadow: 6px 6px 0 0 var(--ink);
-  padding: 20px;
+  padding: var(--sp-5);
 }
 
 /* ============================================================
@@ -423,7 +423,7 @@
 .brut-table__cell--sortable::after {
   content: "";
   position: absolute;
-  right: 12px;
+  right: var(--sp-3);
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-display);
@@ -487,7 +487,7 @@
 .brut-input {
   font-family: var(--font-sans);
   font-size: 15px;
-  padding: 12px 14px;
+  padding: var(--sp-3) 14px;
   background: var(--bone);
   border: 4px solid var(--ink);
   box-shadow: 2px 2px 0 0 var(--ink);
@@ -532,7 +532,7 @@
 .brut-cb--on::after {
   content: "\2715";
   font-family: var(--font-display);
-  font-size: 16px; font-weight: 900;
+  font-size: var(--fs-base); font-weight: 900;
   line-height: 1;
 }
 
@@ -540,13 +540,13 @@
 .brut-alert {
   border: 4px solid var(--ink);
   box-shadow: 4px 4px 0 0 var(--ink);
-  padding: 12px 16px;
+  padding: var(--sp-3) var(--sp-4);
   display: flex; gap: 14px; align-items: flex-start;
 }
 .brut-alert__icon {
   width: 36px; height: 36px;
   border: 3px solid var(--ink);
-  font-family: var(--font-display); font-size: 22px;
+  font-family: var(--font-display); font-size: var(--fs-lg);
   display: flex; align-items: center; justify-content: center;
   flex: none;
 }
@@ -784,9 +784,9 @@
 .brut-seg__btn {
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.06em;
-  padding: 10px 16px;
+  padding: 10px var(--sp-4);
   background: transparent;
   border: 0;
   border-right: 3px solid var(--ink);
@@ -804,7 +804,7 @@
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: 13px;
-  padding: 10px 16px;
+  padding: 10px var(--sp-4);
   background: var(--bone);
   border: 4px solid var(--ink);
   border-bottom: none;
@@ -874,7 +874,7 @@
   display: inline-flex;
   align-items: center; justify-content: center;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: var(--fs-base);
   text-transform: uppercase;
 }
 .brut-avatar-group {
@@ -901,7 +901,7 @@
 }
 .brut-dialog__head {
   background: var(--ink); color: var(--paper);
-  padding: 8px 12px;
+  padding: var(--sp-2) var(--sp-3);
   display: flex; justify-content: space-between; align-items: center;
 }
 .brut-dialog__x {
@@ -999,7 +999,7 @@
 .brut-menu__item {
   display: block;
   width: 100%;
-  padding: 8px 14px;
+  padding: var(--sp-2) 14px;
   text-align: left;
   background: transparent;
   border: 0;
@@ -1053,9 +1053,9 @@
   letter-spacing: var(--tracking-wider);
   color: var(--ink);
 }
-.brut-field__hint  { font-size: 12px; color: var(--concrete-400); }
+.brut-field__hint  { font-size: var(--fs-xs); color: var(--concrete-400); }
 .brut-field__error {
-  font-size: 12px;
+  font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--danger);
 }
@@ -1075,11 +1075,11 @@
 
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
-  padding: 8px 10px; font-size: 13px;
+  padding: var(--sp-2) 10px; font-size: 13px;
   border-width: var(--bw-2);
   box-shadow: var(--shadow-xs);
 }
-.brut-input--lg { padding: 16px 18px; font-size: 18px; box-shadow: var(--shadow-sm); }
+.brut-input--lg { padding: 16px 18px; font-size: var(--fs-md); box-shadow: var(--shadow-sm); }
 .brut-input--err {
   border-color: var(--danger);
   background: var(--danger-bg);
@@ -1139,7 +1139,7 @@
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: var(--lh-normal);
-  padding: 12px 14px;
+  padding: var(--sp-3) 14px;
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-xs);
@@ -1159,7 +1159,7 @@
 .brut-select {
   font-family: var(--font-sans);
   font-size: 15px;
-  padding: 12px 38px 12px 14px;
+  padding: var(--sp-3) 38px var(--sp-3) 14px;
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-xs);
@@ -1199,7 +1199,7 @@
 .brut-radio--on::after {
   content: "";
   position: absolute;
-  inset: 4px;
+  inset: var(--sp-1);
   background: var(--ink);
   border-radius: 50%;
 }
@@ -1213,7 +1213,7 @@
   background: transparent;
   outline: none;
   padding: 0;
-  margin: 8px 0;
+  margin: var(--sp-2) 0;
 }
 .brut-range::-webkit-slider-runnable-track {
   height: 14px;
@@ -1250,7 +1250,7 @@
   position: relative;
   width: 100%;
   height: 26px;
-  margin: 8px 0;
+  margin: var(--sp-2) 0;
   user-select: none;
   touch-action: none;
 }
@@ -1297,7 +1297,7 @@
   align-items: center;
   gap: var(--sp-3);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   cursor: pointer;
   position: relative;
 }
@@ -1309,7 +1309,7 @@
 }
 .brut-file__btn {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 10px 14px;
@@ -1322,7 +1322,7 @@
 }
 .brut-file:hover  .brut-file__btn { transform: translate(-2px, -2px); box-shadow: var(--shadow-sm); }
 .brut-file:active .brut-file__btn { transform: translate(2px, 2px);   box-shadow: 0 0 0 0 var(--ink); }
-.brut-file__name  { color: var(--concrete-400); font-family: var(--font-mono); font-size: 12px; }
+.brut-file__name  { color: var(--concrete-400); font-family: var(--font-mono); font-size: var(--fs-xs); }
 
 /* COLOR INPUT — styled native swatch. */
 .brut-color {
@@ -1348,12 +1348,12 @@
 }
 .brut-fieldset__legend {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
   background: var(--ink);
   color: var(--paper);
-  padding: 4px 10px;
+  padding: var(--sp-1) 10px;
 }
 
 /* STEPPER — number input with -/+ buttons. JS does the math. */
@@ -1366,7 +1366,7 @@
 }
 .brut-stepper__btn {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: var(--fs-md);
   width: 36px;
   background: var(--bone);
   border: 0;
@@ -1404,7 +1404,7 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 4px 8px;
+  padding: var(--sp-1) var(--sp-2);
   cursor: pointer;
   line-height: 1;
 }
@@ -1415,13 +1415,13 @@
 .brut-search > .brut-input { padding-right: 38px; }
 .brut-search__clear {
   position: absolute;
-  right: 8px; top: 50%;
+  right: var(--sp-2); top: 50%;
   transform: translateY(-50%);
   width: 22px; height: 22px;
   background: var(--ink); color: var(--paper);
   border: 0;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   display: none;
   align-items: center; justify-content: center;
   cursor: pointer;
@@ -1435,7 +1435,7 @@
   width: 44px; height: 52px;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 22px;
+  font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
@@ -1459,7 +1459,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 4px 8px;
+  padding: var(--sp-1) var(--sp-2);
   background: var(--primary);
   border: var(--bw-2) solid var(--ink);
   box-shadow: var(--shadow-xs);
@@ -1478,7 +1478,7 @@
   background: transparent;
   border: 0;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   cursor: pointer;
   padding: 0;
   color: inherit;
@@ -1491,7 +1491,7 @@
   flex-wrap: wrap;
   gap: var(--sp-2);
   align-items: center;
-  padding: 8px 10px;
+  padding: var(--sp-2) 10px;
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-xs);
@@ -1507,10 +1507,10 @@
   outline: none;
   background: transparent;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   flex: 1;
   min-width: 100px;
-  padding: 4px 0;
+  padding: var(--sp-1) 0;
   color: var(--ink);
 }
 
@@ -1533,9 +1533,9 @@
 }
 .brut-combobox--open .brut-combobox__list { display: block; }
 .brut-combobox__opt {
-  padding: 8px 12px;
+  padding: var(--sp-2) var(--sp-3);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   cursor: pointer;
   border-bottom: 1px solid var(--concrete-100);
 }
@@ -1543,7 +1543,7 @@
 .brut-combobox__opt:hover,
 .brut-combobox__opt[aria-selected="true"] { background: var(--primary); }
 .brut-combobox__empty {
-  padding: 8px 12px;
+  padding: var(--sp-2) var(--sp-3);
   font-family: var(--font-sans);
   font-size: 13px;
   color: var(--concrete-400);
@@ -1557,7 +1557,7 @@
   flex-wrap: wrap;
   gap: var(--sp-2);
   align-items: center;
-  padding: 8px 10px;
+  padding: var(--sp-2) 10px;
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-xs);
@@ -1581,10 +1581,10 @@
   outline: none;
   background: transparent;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   flex: 1;
   min-width: 100px;
-  padding: 4px 0;
+  padding: var(--sp-1) 0;
   color: var(--ink);
 }
 .brut-multiselect__list {
@@ -1604,9 +1604,9 @@
 }
 .brut-multiselect--open .brut-multiselect__list { display: block; }
 .brut-multiselect__opt {
-  padding: 8px 12px;
+  padding: var(--sp-2) var(--sp-3);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   cursor: pointer;
   border-bottom: 1px solid var(--concrete-100);
   display: flex;
@@ -1619,7 +1619,7 @@
 .brut-multiselect__opt--selected::before {
   content: "✓";
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   color: var(--ink);
 }
 .brut-multiselect__opt:not(.brut-multiselect__opt--selected)::before {
@@ -1628,7 +1628,7 @@
   width: 10px;
 }
 .brut-multiselect__empty {
-  padding: 8px 12px;
+  padding: var(--sp-2) var(--sp-3);
   font-family: var(--font-sans);
   font-size: 13px;
   color: var(--concrete-400);
@@ -1649,7 +1649,7 @@
   text-align: center;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
 }
 .brut-dropzone--drag {
   background: var(--primary-soft);
@@ -1659,10 +1659,10 @@
 .brut-dropzone__hint {
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   letter-spacing: var(--tracking-wider);
 }
-.brut-dropzone__sub { font-size: 12px; color: var(--concrete-400); }
+.brut-dropzone__sub { font-size: var(--fs-xs); color: var(--concrete-400); }
 .brut-dropzone > input[type="file"] {
   position: absolute;
   width: 1px; height: 1px;
@@ -1681,7 +1681,7 @@
   display: inline-flex;
   align-items: center; justify-content: center;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: var(--fs-base);
   line-height: 1;
   padding: 0;
   color: var(--ink);
@@ -1727,7 +1727,7 @@
   border: var(--bw-2) solid var(--ink);
   box-shadow: var(--shadow-xs);
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -1738,7 +1738,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
-  margin-bottom: 4px;
+  margin-bottom: var(--sp-1);
 }
 .brut-date__dow {
   font-family: var(--font-display);
@@ -1747,7 +1747,7 @@
   letter-spacing: var(--tracking-wider);
   color: var(--concrete-400);
   text-align: center;
-  padding: 4px 0;
+  padding: var(--sp-1) 0;
 }
 .brut-date__grid {
   display: grid;
@@ -1775,7 +1775,7 @@
   content: "";
   position: absolute;
   left: 6px; right: 6px;
-  bottom: 4px;
+  bottom: var(--sp-1);
   height: 3px;
   background: var(--ink);
 }
@@ -1880,7 +1880,7 @@
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
-  padding: 4px 2px;
+  padding: var(--sp-1) 2px;
   transition: background var(--dur-fast) var(--ease-snap);
 }
 .brut-topnav__link:hover { background: var(--primary); }
@@ -1979,7 +1979,7 @@ button.brut-sidebar__group-title::after {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: 8px 10px;
+  padding: var(--sp-2) 10px;
   font-family: var(--font-display);
   font-size: var(--fs-sm);
   text-transform: uppercase;
@@ -2076,7 +2076,7 @@ button.brut-sidebar__group-title::after {
 .brut-crumbs__link {
   color: var(--ink);
   text-decoration: none;
-  padding: 2px 4px;
+  padding: 2px var(--sp-1);
   transition: background var(--dur-fast) var(--ease-snap);
 }
 .brut-crumbs__link:hover { background: var(--primary); }
@@ -2087,7 +2087,7 @@ button.brut-sidebar__group-title::after {
 .brut-crumbs__current {
   color: var(--ink);
   font-weight: var(--fw-bold);
-  padding: 2px 4px;
+  padding: 2px var(--sp-1);
 }
 
 /* PAGER — page navigation buttons. CSS-only; consumer wires links. */

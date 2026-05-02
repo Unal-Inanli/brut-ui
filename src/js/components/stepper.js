@@ -5,7 +5,11 @@
        <input class="brut-stepper__input" type="number" min="0" max="99" step="1" value="0">
        <button class="brut-stepper__btn" data-brut-step="up">+</button>
      </div>
-   Reads min / max / step from the inner input. */
+   Reads min / max / step from the inner input.
+
+   Keyboard (on the inner input):
+     ArrowUp / ArrowDown — ±step
+     PageUp / PageDown   — ±step×10 */
 (function () {
   if (!window.Brut) return;
   Brut.register('stepper', {
@@ -19,6 +23,10 @@
         return v === null || v === '' ? fallback : parseFloat(v);
       }
 
+      function syncAria() {
+        el.setAttribute('aria-valuenow', input.value);
+      }
+
       function clampAndDispatch(v) {
         var step = read('step', 1) || 1;
         var min  = read('min', -Infinity);
@@ -29,15 +37,16 @@
         // Clean float fuzz.
         v = parseFloat(v.toFixed(10));
         input.value = v;
+        syncAria();
         input.dispatchEvent(new Event('input',  { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
       }
 
-      function bump(dir) {
+      function bump(mult) {
         var step = read('step', 1) || 1;
         var v = parseFloat(input.value);
         if (isNaN(v)) v = read('min', 0);
-        clampAndDispatch(v + dir * step);
+        clampAndDispatch(v + mult * step);
       }
 
       var btns = el.querySelectorAll('.brut-stepper__btn');
@@ -48,6 +57,28 @@
                 : dirAttr === 'up'   ?  1
                 : (i === 0 ? -1 : 1);
         b.addEventListener('click', function () { bump(dir); });
+      });
+
+      // ARIA: spinbutton wrapper with current/min/max.
+      el.setAttribute('role', 'spinbutton');
+      var minAttr = input.getAttribute('min');
+      var maxAttr = input.getAttribute('max');
+      if (minAttr !== null) el.setAttribute('aria-valuemin', minAttr);
+      if (maxAttr !== null) el.setAttribute('aria-valuemax', maxAttr);
+      syncAria();
+      input.addEventListener('input', syncAria);
+
+      input.addEventListener('keydown', function (e) {
+        var mult = 0;
+        switch (e.key) {
+          case 'ArrowUp':   mult =  1;  break;
+          case 'ArrowDown': mult = -1;  break;
+          case 'PageUp':    mult =  10; break;
+          case 'PageDown':  mult = -10; break;
+          default: return;
+        }
+        e.preventDefault();
+        bump(mult);
       });
     }
   });
