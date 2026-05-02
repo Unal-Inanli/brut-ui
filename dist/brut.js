@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — runtime
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:56:17Z
  * Bundle: src/js/core.js + src/js/components/*.js
  */
 
@@ -2019,6 +2019,164 @@
 
       if (input) input.addEventListener('change', function () { sync(); emit(); });
       sync();
+    }
+  });
+})();
+
+
+/* --- table-columns.js --- */
+/* table-columns — column show/hide menu for .brut-table.
+   Add data-brut="table-columns" data-brut-table="<id>" to a <button>.
+   Every <th> and <td> must carry data-col="<key>".
+   Injects per-key CSS attribute-selector rules; hides cells by writing
+   data-col-hidden="key1 key2 …" on the <table>. */
+(function () {
+  if (!window.Brut) return;
+  Brut.register('table-columns', {
+    selector: '[data-brut="table-columns"]',
+    init: function (el) {
+      var tableId = el.getAttribute('data-brut-table');
+      var table = tableId ? document.getElementById(tableId) : null;
+      if (!table) return;
+      var name = el.getAttribute('data-brut-name') || 'visible_cols';
+
+      var hidden = el.parentNode.querySelector('input[type="hidden"][data-brut-cols-state]');
+      if (!hidden) {
+        hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.setAttribute('data-brut-cols-state', '');
+        hidden.name = name;
+        el.parentNode.insertBefore(hidden, el.nextSibling);
+      }
+
+      var ths = Array.prototype.slice.call(table.querySelectorAll('thead th[data-col]'));
+      var menuId = 'brut-cols-menu-' + Math.random().toString(36).slice(2, 9);
+      el.setAttribute('type', 'button');
+      el.setAttribute('data-brut-menu-open', menuId);
+
+      /* Inject one CSS rule per column key so hiding is pure CSS, no cell mutation. */
+      var styleEl = document.createElement('style');
+      styleEl.textContent = ths.map(function (th) {
+        var safe = th.getAttribute('data-col').replace(/["\\]/g, '\\$&');
+        return '.brut-table[data-col-hidden~="' + safe + '"] [data-col="' + safe + '"] { display: none; }';
+      }).join('\n');
+      document.head.appendChild(styleEl);
+
+      var menu = document.createElement('div');
+      menu.className = 'brut-menu';
+      menu.setAttribute('data-brut', 'menu');
+      menu.id = menuId;
+      menu.setAttribute('role', 'menu');
+
+      var hiddenCols = {};
+
+      function apply() {
+        var hideList = Object.keys(hiddenCols).filter(function (k) { return hiddenCols[k]; });
+        if (hideList.length) table.setAttribute('data-col-hidden', hideList.join(' '));
+        else table.removeAttribute('data-col-hidden');
+        var visible = ths.map(function (h) { return h.getAttribute('data-col'); }).filter(function (k) { return !hiddenCols[k]; });
+        hidden.value = visible.join(',');
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { visible: visible }, bubbles: true }));
+      }
+
+      ths.forEach(function (th) {
+        var key = th.getAttribute('data-col');
+        var label = th.getAttribute('data-brut-col-label') || (th.textContent || key).trim();
+        var item = document.createElement('label');
+        item.className = 'brut-menu__item brut-table-columns-menu__item';
+        item.setAttribute('role', 'menuitemcheckbox');
+        item.setAttribute('aria-checked', 'true');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = true;
+        cb.addEventListener('change', function () {
+          hiddenCols[key] = !cb.checked;
+          item.setAttribute('aria-checked', cb.checked ? 'true' : 'false');
+          apply();
+        });
+        item.appendChild(cb);
+        var span = document.createElement('span');
+        span.textContent = label;
+        item.appendChild(span);
+        menu.appendChild(item);
+      });
+
+      el.parentNode.insertBefore(menu, el.nextSibling);
+
+      /* menu.js wires the menu element only on Brut.init — re-run on the parent so
+         the dynamically inserted menu div gets picked up by menu.js. */
+      Brut.init(el.parentNode);
+
+      apply();
+    }
+  });
+})();
+
+
+/* --- table-filter.js --- */
+/* table-filter — global text filter for a brut-table.
+   Filters tbody rows by combined visible cell text.
+   Case-insensitive; AND across whitespace-separated tokens.
+   Markup:
+     <div class="brut-table-filter" data-brut="table-filter" data-brut-table="<table-id>">
+       <label class="brut-field__label" for="q">Search</label>
+       <input id="q" class="brut-input" type="search" placeholder="Filter rows…">
+       <span class="brut-table-filter__count"></span>
+     </div> */
+(function () {
+  Brut.register('table-filter', {
+    selector: '[data-brut="table-filter"]',
+    init: function (el) {
+      var tableId = el.getAttribute('data-brut-table');
+      var table = tableId ? document.getElementById(tableId) : null;
+      if (!table) return;
+      var input = el.querySelector('input');
+      if (!input) return;
+      var name = el.getAttribute('data-brut-name') || 'q';
+      var hidden = el.querySelector('input[type="hidden"][data-brut-filter-state]');
+      if (!hidden) {
+        hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.setAttribute('data-brut-filter-state', '');
+        hidden.name = name;
+        el.appendChild(hidden);
+      }
+      var countEl = el.querySelector('.brut-table-filter__count');
+
+      function apply() {
+        var q = input.value.trim().toLowerCase();
+        var tokens = q ? q.split(/\s+/) : [];
+        var rows = table.querySelectorAll('tbody tr');
+        var visible = 0, total = rows.length;
+        rows.forEach(function (r) {
+          if (r.hasAttribute('data-brut-row-expansion')) return; // skip expansion rows from unit T11
+          var text = (r.textContent || '').toLowerCase();
+          var match = tokens.every(function (t) { return text.indexOf(t) !== -1; });
+          if (match) {
+            r.removeAttribute('data-brut-filter-hidden');
+            // Only un-hide if no OTHER decorator hid it
+            if (r.getAttribute('data-brut-hidden-by') === 'filter') {
+              r.removeAttribute('data-brut-hidden-by');
+              r.removeAttribute('hidden');
+            } else if (!r.hasAttribute('data-brut-hidden-by')) {
+              r.removeAttribute('hidden');
+            }
+            visible++;
+          } else {
+            r.setAttribute('data-brut-filter-hidden', '');
+            r.setAttribute('data-brut-hidden-by', 'filter');
+            r.setAttribute('hidden', '');
+          }
+        });
+        hidden.value = q;
+        if (countEl) countEl.textContent = visible + ' of ' + total;
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { query: q, visible: visible, total: total }, bubbles: true }));
+        // Notify table listeners (pagination etc.) to re-render
+        table.dispatchEvent(new CustomEvent('brut:change', { detail: { source: 'filter' }, bubbles: true }));
+      }
+
+      input.addEventListener('input', apply);
+      apply();
     }
   });
 })();

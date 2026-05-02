@@ -221,6 +221,11 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-sticky">Table — Sticky</a>
+      <a href="#table-toolbar">Table — Toolbar</a>
+      <a href="#table-global-filter">Table — Global Filter</a>
+      <a href="#table-columns">Table — Columns</a>
+      <a href="#table-responsive">Table — Responsive</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -632,6 +637,264 @@ border: var(--bw-6) solid var(--ink);</pre>
       &lt;td class="brut-table__cell"&gt;&lt;label class="brut-cb" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
       &lt;td class="brut-table__cell" data-sort-value="alice"&gt;Alice&lt;/td&gt;
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE STICKY -->
+      <section class="docs-section" id="table-sticky">
+        <h2>Table — Sticky</h2>
+        <p class="lead">Wrap any <code>.brut-table</code> in <code>.brut-table-wrap</code> to get an overflow scroll container with an ink border and hard shadow. Add <code>--sticky-head</code> to pin the header row, <code>--sticky-col</code> to pin the first column, or combine both. Set a <code>max-height</code> on the wrapper to trigger vertical scroll.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-table-wrap" style="max-height: 260px; max-width: 720px;">
+            <table class="brut-table brut-table--sticky-head brut-table--sticky-col" style="min-width: 900px;">
+              <thead class="brut-table__head">
+                <tr class="brut-table__row">
+                  <th class="brut-table__cell">Name</th>
+                  <th class="brut-table__cell">Role</th>
+                  <th class="brut-table__cell">Department</th>
+                  <th class="brut-table__cell">Location</th>
+                  <th class="brut-table__cell">Manager</th>
+                  <th class="brut-table__cell brut-table__cell--num">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Product</td><td class="brut-table__cell">New York</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell brut-table__cell--num">91</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">San Francisco</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell brut-table__cell--num">74</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell">Growth</td><td class="brut-table__cell">Austin</td><td class="brut-table__cell">Dana L.</td><td class="brut-table__cell brut-table__cell--num">88</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Infrastructure</td><td class="brut-table__cell">Remote</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell brut-table__cell--num">65</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Eve</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Marketing</td><td class="brut-table__cell">Chicago</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell brut-table__cell--num">79</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Frank</td><td class="brut-table__cell">QA</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">Remote</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell brut-table__cell--num">83</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-table-wrap" style="max-height: 260px;"&gt;
+  &lt;table class="brut-table brut-table--sticky-head brut-table--sticky-col"&gt;
+    &lt;thead class="brut-table__head"&gt;
+      &lt;tr class="brut-table__row"&gt;
+        &lt;th class="brut-table__cell"&gt;Name&lt;/th&gt;
+        &lt;th class="brut-table__cell"&gt;Role&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr class="brut-table__row"&gt;
+        &lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;
+        &lt;td class="brut-table__cell"&gt;Designer&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- TABLE TOOLBAR -->
+      <section class="docs-section" id="table-toolbar">
+        <h2>Table — Toolbar</h2>
+        <p class="lead">Header row that sits above a <code>.brut-table</code>. Three slots: title, search, actions. Use <code>--bare</code> when the toolbar sits inside a card (removes border and shadow).</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-table-toolbar" style="max-width: 720px;">
+            <div class="brut-table-toolbar__title">Customers <span>(1,284)</span></div>
+            <div class="brut-table-toolbar__search">
+              <input class="brut-input" type="search" placeholder="Search customers…"/>
+            </div>
+            <div class="brut-table-toolbar__actions">
+              <button class="brut-btn brut-btn--sm" type="button">EXPORT</button>
+              <button class="brut-btn brut-btn--sm brut-btn--primary" type="button">+ ADD ROW</button>
+            </div>
+          </div>
+          <table class="brut-table brut-table--striped" style="max-width: 720px;">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell brut-table__cell--num">Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Alice</td>
+                <td class="brut-table__cell">Designer</td>
+                <td class="brut-table__cell brut-table__cell--num">14</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Bob</td>
+                <td class="brut-table__cell">Engineer</td>
+                <td class="brut-table__cell brut-table__cell--num">7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-table-toolbar"&gt;
+  &lt;div class="brut-table-toolbar__title"&gt;Customers &lt;span&gt;(1,284)&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="brut-table-toolbar__search"&gt;
+    &lt;input class="brut-input" type="search" placeholder="Search…"/&gt;
+  &lt;/div&gt;
+  &lt;div class="brut-table-toolbar__actions"&gt;
+    &lt;button class="brut-btn brut-btn--sm" type="button"&gt;EXPORT&lt;/button&gt;
+    &lt;button class="brut-btn brut-btn--sm brut-btn--primary" type="button"&gt;+ ADD ROW&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;table class="brut-table"&gt; … &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE GLOBAL FILTER -->
+      <section class="docs-section" id="table-global-filter">
+        <h2>Table — Global Filter</h2>
+        <p class="lead">Text input that filters <code>&lt;tbody&gt;</code> rows by combined cell text. Case-insensitive; AND across whitespace tokens. Add <code>data-brut="table-filter"</code> and point <code>data-brut-table</code> at the table's <code>id</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="display: flex; flex-direction: column; gap: var(--sp-4); max-width: 720px;">
+            <div class="brut-table-filter" data-brut="table-filter" data-brut-table="docs-filter-demo">
+              <label class="brut-field__label" for="docs-filter-q">Search</label>
+              <input id="docs-filter-q" class="brut-input" type="search" placeholder="Filter rows…" autocomplete="off"/>
+              <span class="brut-table-filter__count"></span>
+            </div>
+            <table id="docs-filter-demo" class="brut-table brut-table--striped">
+              <thead class="brut-table__head">
+                <tr class="brut-table__row">
+                  <th class="brut-table__cell">Name</th>
+                  <th class="brut-table__cell">Role</th>
+                  <th class="brut-table__cell brut-table__cell--num">Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="brut-table__row"><td class="brut-table__cell">Alice Chen</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Bob Marsh</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Carla Nunes</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">22</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Dan Okafor</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">9</td></tr>
+                <tr class="brut-table__row"><td class="brut-table__cell">Elena Park</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-table-filter" data-brut="table-filter" data-brut-table="my-table"&gt;
+  &lt;label class="brut-field__label" for="q"&gt;Search&lt;/label&gt;
+  &lt;input id="q" class="brut-input" type="search" placeholder="Filter rows…"&gt;
+  &lt;span class="brut-table-filter__count"&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;table id="my-table" class="brut-table"&gt;
+  &lt;thead class="brut-table__head"&gt;…&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;&lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE COLUMNS -->
+      <section class="docs-section" id="table-columns">
+        <h2>Table — Columns</h2>
+        <p class="lead">A <strong>Columns</strong> button that opens a menu listing every column. Each item is a checkbox; unchecking hides that column header and all its body cells. Requires <code>data-brut="table-columns"</code> on the trigger and <code>data-col="&lt;key&gt;"</code> on every <code>&lt;th&gt;</code> and <code>&lt;td&gt;</code>. Visible keys are mirrored to a hidden <code>&lt;input&gt;</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="position: relative; margin-bottom: var(--sp-4);">
+            <button class="brut-btn brut-btn--sm brut-table-columns-btn"
+                    data-brut="table-columns"
+                    data-brut-table="docs-cols-demo">&#x229E; COLUMNS</button>
+          </div>
+          <table id="docs-cols-demo" class="brut-table brut-table--striped" style="max-width: 640px;">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell" data-col="name">Name</th>
+                <th class="brut-table__cell" data-col="role">Role</th>
+                <th class="brut-table__cell" data-col="status">Status</th>
+                <th class="brut-table__cell brut-table__cell--num" data-col="qty">Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-col="name">Alice</td>
+                <td class="brut-table__cell" data-col="role">Designer</td>
+                <td class="brut-table__cell" data-col="status">Active</td>
+                <td class="brut-table__cell brut-table__cell--num" data-col="qty">14</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-col="name">Bob</td>
+                <td class="brut-table__cell" data-col="role">Engineer</td>
+                <td class="brut-table__cell" data-col="status">Active</td>
+                <td class="brut-table__cell brut-table__cell--num" data-col="qty">7</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-col="name">Carla</td>
+                <td class="brut-table__cell" data-col="role">PM</td>
+                <td class="brut-table__cell" data-col="status">Inactive</td>
+                <td class="brut-table__cell brut-table__cell--num" data-col="qty">22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;!-- trigger (position:relative parent required for menu positioning) --&gt;
+&lt;div style="position:relative"&gt;
+  &lt;button class="brut-btn brut-btn--sm brut-table-columns-btn"
+          data-brut="table-columns"
+          data-brut-table="my-table"
+          data-brut-name="visible_cols"&gt;&amp;#x229E; COLUMNS&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- table: every th and td carries data-col="key" --&gt;
+&lt;table id="my-table" class="brut-table"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell" data-col="name"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell" data-col="role"&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell" data-col="name"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell" data-col="role"&gt;Designer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE RESPONSIVE -->
+      <section class="docs-section" id="table-responsive">
+        <h2>Table — Responsive</h2>
+        <p class="lead">Add <code>.brut-table--responsive</code> to collapse the table into stacked cards below 640 px. <code>&lt;thead&gt;</code> hides; each <code>&lt;tr&gt;</code> becomes a bordered card; each <code>&lt;td&gt;</code> renders its column label via <code>data-brut-col-label="…"</code>. Pure CSS — no JS required.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table brut-table--responsive" style="max-width: 640px;">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Role</th>
+                <th class="brut-table__cell">Location</th>
+                <th class="brut-table__cell brut-table__cell--num">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-brut-col-label="Name">Alice Chen</td>
+                <td class="brut-table__cell" data-brut-col-label="Role">Designer</td>
+                <td class="brut-table__cell" data-brut-col-label="Location">New York</td>
+                <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">91</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-brut-col-label="Name">Bob Marsh</td>
+                <td class="brut-table__cell" data-brut-col-label="Role">Engineer</td>
+                <td class="brut-table__cell" data-brut-col-label="Location">San Francisco</td>
+                <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">74</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-brut-col-label="Name">Carla Nunes</td>
+                <td class="brut-table__cell" data-brut-col-label="Role">PM</td>
+                <td class="brut-table__cell" data-brut-col-label="Location">Austin</td>
+                <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">88</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table brut-table--responsive"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell"&gt;Role&lt;/th&gt;
+      &lt;th class="brut-table__cell brut-table__cell--num"&gt;Score&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell" data-brut-col-label="Name"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell" data-brut-col-label="Role"&gt;Designer&lt;/td&gt;
+      &lt;td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score"&gt;91&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>

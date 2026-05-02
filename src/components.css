@@ -437,6 +437,50 @@
 .brut-table--compact .brut-table__cell,
 .brut-table--compact .brut-table__head .brut-table__cell { padding: 6px 10px; }
 
+/* ============================================================
+   TABLE — STICKY
+   Scroll wrapper + sticky-head / sticky-col modifiers.
+   Pure CSS — no JS required.
+   ============================================================ */
+
+/* Scroll wrapper — opaque ink border + hard shadow. */
+.brut-table-wrap {
+  overflow: auto;
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  background: var(--paper);
+}
+
+/* Remove the table's own outer border when inside a wrap (the wrap provides it). */
+.brut-table-wrap .brut-table {
+  border: 0;
+}
+
+/* Sticky header — thead th cells pin to the top of the scroll container. */
+.brut-table--sticky-head thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--ink);
+  border-bottom: var(--bw-3) solid var(--ink);
+}
+
+/* Sticky first column — first td/th in every row pins to the left. */
+.brut-table--sticky-col td:first-child,
+.brut-table--sticky-col th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper-2);
+  border-right: var(--bw-3) solid var(--ink);
+}
+
+/* Sticky-head thead th already has ink bg; keep it opaque over column content. */
+.brut-table--sticky-head.brut-table--sticky-col thead th:first-child {
+  z-index: 3;
+  background: var(--ink);
+}
+
 /* ROWS — settings-style list: lead / title+sub / trail. */
 .brut-rows {
   list-style: none;
@@ -2329,3 +2373,157 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — TOOLBAR
+   Horizontal shell that sits above a .brut-table. Three slots:
+   title (left), search (middle, flex-1), actions (right).
+   ============================================================ */
+.brut-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--paper);
+  border: var(--bw-3) solid var(--ink);
+  border-bottom: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.brut-table-toolbar__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.brut-table-toolbar__title span {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  text-transform: none;
+  letter-spacing: var(--tracking-normal);
+  color: var(--concrete-300);
+  margin-left: var(--sp-2);
+}
+
+.brut-table-toolbar__search {
+  flex: 1;
+}
+
+.brut-table-toolbar__search .brut-input {
+  width: 100%;
+}
+
+.brut-table-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+.brut-table-toolbar--bare {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ============================================================
+   TABLE — COLUMN VISIBILITY
+   "Columns" button + per-column checkbox menu. Toggling sets
+   data-col-hidden (space-separated keys) on the <table>; CSS
+   hides every [data-col="<key>"] cell via attribute selector.
+   JS: src/js/components/table-columns.js
+   ============================================================ */
+
+/* Trigger button — inherits .brut-btn; no extra overrides needed. */
+.brut-table-columns-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* Menu item: adds flex layout + checkbox sizing on top of .brut-menu__item base. */
+.brut-table-columns-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  user-select: none;
+}
+.brut-table-columns-menu__item input[type="checkbox"] {
+  flex-shrink: 0;
+  width: var(--sp-4);
+  height: var(--sp-4);
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+/* Hide rule — JS injects per-instance <style> rules of this pattern:
+   .brut-table[data-col-hidden~="key"] [data-col="key"] { display: none }
+   The selector uses ~= (whitespace-separated word match) so multiple
+   hidden columns work additively from one data-col-hidden attribute. */
+
+/* ============================================================
+   TABLE — GLOBAL FILTER
+   Text input that filters tbody rows by combined cell text.
+   Case-insensitive, AND across whitespace-separated tokens.
+   Pairs with data-brut="table-filter".
+   ============================================================ */
+
+/* TABLE — GLOBAL FILTER */
+.brut-table-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.brut-table-filter__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--concrete-400);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   TABLE — RESPONSIVE
+   Stacked-card layout below 640px viewport width.
+   Add .brut-table--responsive to <table>; every <td> must
+   carry data-brut-col-label="…" for the cell prefix label.
+   Pure CSS — no JS required.
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .brut-table--responsive thead { display: none; }
+  .brut-table--responsive,
+  .brut-table--responsive tbody,
+  .brut-table--responsive tr,
+  .brut-table--responsive td { display: block; width: 100%; }
+  .brut-table--responsive tr {
+    border: var(--bw-3) solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    background: var(--paper);
+    margin-bottom: var(--sp-3);
+  }
+  .brut-table--responsive td {
+    padding: var(--sp-3) var(--sp-4);
+    border: 0;
+    border-top: var(--bw-1) solid var(--concrete-200);
+  }
+  .brut-table--responsive td:first-child { border-top: 0; }
+  .brut-table--responsive td::before {
+    content: attr(data-brut-col-label) ":\00a0";
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--concrete-400);
+    display: inline-block;
+    margin-right: var(--sp-2);
+  }
+}

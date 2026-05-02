@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Column Visibility</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    font-size: var(--fs-sm);
+    margin: var(--sp-8) 0 var(--sp-3);
+  }
+  .wrap { max-width: 900px; }
+  .toolbar { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); position: relative; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1 style="font-family: var(--font-display); font-size: var(--fs-2xl); text-transform: uppercase; margin: 0 0 var(--sp-8) 0;">Table — Column Visibility</h1>
+
+  <h3>Show / Hide columns via the Columns button</h3>
+  <p style="margin: 0 0 var(--sp-4) 0; font-size: var(--fs-sm); color: var(--concrete-400);">
+    Click <strong>&#x229E; Columns</strong> to open the menu. Uncheck a column to hide it. The hidden input below reflects visible column keys.
+  </p>
+
+  <div class="toolbar">
+    <button class="brut-btn brut-btn--sm brut-table-columns-btn"
+            data-brut="table-columns"
+            data-brut-table="demo"
+            data-brut-name="visible_cols">&#x229E; COLUMNS</button>
+  </div>
+
+  <table id="demo" class="brut-table brut-table--striped">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell" data-col="name">Name</th>
+        <th class="brut-table__cell" data-col="role">Role</th>
+        <th class="brut-table__cell" data-col="email">Email</th>
+        <th class="brut-table__cell" data-col="status">Status</th>
+        <th class="brut-table__cell brut-table__cell--num" data-col="qty">Qty</th>
+        <th class="brut-table__cell" data-col="date">Joined</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Alice</td>
+        <td class="brut-table__cell" data-col="role">Designer</td>
+        <td class="brut-table__cell" data-col="email">alice@example.com</td>
+        <td class="brut-table__cell" data-col="status">Active</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">14</td>
+        <td class="brut-table__cell" data-col="date">2022-03-11</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Bob</td>
+        <td class="brut-table__cell" data-col="role">Engineer</td>
+        <td class="brut-table__cell" data-col="email">bob@example.com</td>
+        <td class="brut-table__cell" data-col="status">Inactive</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">7</td>
+        <td class="brut-table__cell" data-col="date">2021-09-04</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Carla</td>
+        <td class="brut-table__cell" data-col="role">PM</td>
+        <td class="brut-table__cell" data-col="email">carla@example.com</td>
+        <td class="brut-table__cell" data-col="status">Active</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">22</td>
+        <td class="brut-table__cell" data-col="date">2023-01-17</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Dan</td>
+        <td class="brut-table__cell" data-col="role">Engineer</td>
+        <td class="brut-table__cell" data-col="email">dan@example.com</td>
+        <td class="brut-table__cell" data-col="status">Active</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">3</td>
+        <td class="brut-table__cell" data-col="date">2020-11-30</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Eva</td>
+        <td class="brut-table__cell" data-col="role">Designer</td>
+        <td class="brut-table__cell" data-col="email">eva@example.com</td>
+        <td class="brut-table__cell" data-col="status">Active</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">19</td>
+        <td class="brut-table__cell" data-col="date">2024-06-08</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: var(--sp-4); font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--concrete-400);">
+    Hidden input value: <code id="state-display">—</code>
+  </p>
+</div>
+
+<script src="../dist/brut.js"></script>
+<script>
+  /* Show hidden input value live in the UI. */
+  var btn = document.querySelector('[data-brut="table-columns"]');
+  if (btn) {
+    btn.addEventListener('brut:change', function (e) {
+      var inp = btn.parentNode.querySelector('[data-brut-cols-state]');
+      var display = document.getElementById('state-display');
+      if (inp && display) display.textContent = inp.value || '(all hidden)';
+    });
+    /* Trigger once to populate initial state. */
+    btn.dispatchEvent(new CustomEvent('brut:change', { bubbles: true }));
+  }
+</script>
+</body></html>
