@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-col-filter">Table — Column Filter</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,36 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — COLUMN FILTER -->
+      <section class="docs-section" id="table-col-filter">
+        <h2>Table — Column Filter</h2>
+        <p class="lead">Per-column filter via popover. Add <code>data-brut="table-col-filter"</code> and <code>data-brut-col-key="&lt;key&gt;"</code> to any <code>&lt;th&gt;</code>. Clicking the ▾ button opens a checkbox list of unique column values; unchecking hides matching rows. Multiple column filters AND together via <code>data-brut-hidden-by</code>.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table brut-table--striped" style="overflow: visible;">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Task</th>
+                <th class="brut-table__cell" data-brut="table-col-filter" data-brut-col-key="status">Status</th>
+                <th class="brut-table__cell" data-brut="table-col-filter" data-brut-col-key="priority">Priority</th>
+                <th class="brut-table__cell">Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row"><td class="brut-table__cell">Design audit</td><td class="brut-table__cell">Active</td><td class="brut-table__cell">High</td><td class="brut-table__cell">Alice</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">Token refresh</td><td class="brut-table__cell">Done</td><td class="brut-table__cell">Medium</td><td class="brut-table__cell">Bob</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">A11y pass</td><td class="brut-table__cell">Active</td><td class="brut-table__cell">High</td><td class="brut-table__cell">Carla</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">Dark mode</td><td class="brut-table__cell">Backlog</td><td class="brut-table__cell">Low</td><td class="brut-table__cell">Dan</td></tr>
+              <tr class="brut-table__row"><td class="brut-table__cell">Docs update</td><td class="brut-table__cell">Done</td><td class="brut-table__cell">Medium</td><td class="brut-table__cell">Eve</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;th class="brut-table__cell"
+    data-brut="table-col-filter"
+    data-brut-col-key="status"&gt;
+  Status
+&lt;/th&gt;</pre>
       </section>
 
       <!-- ROWS -->

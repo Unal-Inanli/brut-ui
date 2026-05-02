@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:54:09Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,78 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — COLUMN FILTER
+   Per-column filter button inside <th>. Clicking opens a
+   popover (reuses brut-popover) with a checkbox list of unique
+   column values. Checked = row visible; deselected = row hidden.
+   Multiple column filters AND together via data-brut-hidden-by.
+   ============================================================ */
+
+/* Filter toggle button inside a header cell */
+.brut-table-col-filter__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-1);
+  border: var(--bw-2) solid var(--paper);
+  background: transparent;
+  color: var(--paper);
+  font-size: var(--fs-xs);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  vertical-align: middle;
+  margin-left: var(--sp-2);
+  transition: background var(--dur-fast) var(--ease-snap);
+}
+.brut-table-col-filter__btn:hover,
+.brut-table-col-filter__btn:focus-visible {
+  background: var(--concrete-500);
+  outline: none;
+}
+
+/* Active modifier — 3px ink bar across the bottom of the header cell */
+.brut-table-col-filter--active {
+  position: relative;
+}
+.brut-table-col-filter--active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bw-2);
+  background: var(--primary);
+}
+
+/* Popover content: scrollable list of checkboxes */
+.brut-table-col-filter-pop {
+  min-width: calc(var(--sp-10) * 4);
+  max-height: calc(var(--sp-10) * 6);
+  overflow-y: auto;
+}
+
+/* One row in the popover: checkbox + label + count */
+.brut-table-col-filter-pop__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  font-family: var(--font-sans);
+  color: var(--ink);
+  cursor: pointer;
+  border-bottom: var(--bw-1) solid var(--concrete-100);
+}
+.brut-table-col-filter-pop__item:last-child {
+  border-bottom: 0;
+}
+.brut-table-col-filter-pop__item:hover {
+  background: var(--paper-2);
+}
+.brut-table-col-filter-pop__item input[type="checkbox"] {
+  flex-shrink: 0;
+  cursor: pointer;
+}
