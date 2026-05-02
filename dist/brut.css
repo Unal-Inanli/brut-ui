@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:55:39Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,16 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — KEYBOARD NAV
+   Focus-ring visual for cell-level keyboard navigation.
+   Applied by JS (table-keys.js) when data-brut="table-keys".
+   ============================================================ */
+.brut-table--keys .brut-table__cell:focus {
+  outline: var(--bw-2) solid var(--ink);
+  outline-offset: calc(-1 * var(--bw-2));
+  box-shadow: inset var(--shadow-xs);
+  position: relative;
+  z-index: 1;
+}
