@@ -1,44 +1,59 @@
-# Task batch — generated 2026-05-02
+# Advanced Table — task batch
 
-Findings from a Workflow B (scan & optimize) pass on the BRUT codebase, packaged as atomic task briefs. Each file is self-contained — hand to a subagent without needing this README.
+20 self-contained units that build out an advanced data-table component on top of the existing `[data-brut="table"]` (which already does click-to-sort + select-all).
 
-## How to use
-1. Pick a task. Read the file end-to-end.
-2. Brief a subagent with the file path. Subagent reads `AGENTS.md`, `SKILL.md`, and the listed analogue file before editing.
-3. Subagent edits **only** the listed file. No collateral changes.
-4. Run the verification block from the task file.
-5. Move the file to `tasks/done/` once merged.
+## How to hand off
 
-## Tasks
+Each `T##-*.md` file is **self-contained** — pass it verbatim to a subagent (or paste into a fresh chat). No file depends on another file landing first. Workers should be spawned in their own git worktree off `master` and produce a single PR each.
 
-| ID | Title | Severity | Files | Effort | Dependencies |
-|---|---|---|---|---|---|
-| [T01](T01-rename-toast-module.md) | Rename `toast.js` → `toast-host.js` | DRIFT | `src/js/components/toast.js` | XS | — |
-| [T02](T02-tabs-arrow-key-nav.md) | Arrow-key nav for tabs | A11Y | `src/js/components/tabs.js` | S | — |
-| [T03](T03-segmented-arrow-key-nav.md) | Arrow-key nav for segmented | A11Y | `src/js/components/segmented.js` | S | — |
-| [T04](T04-stepper-keyboard-increment.md) | Up/Down keys for stepper | A11Y | `src/js/components/stepper.js` | XS | — |
-| [T05](T05-rating-arrow-key-nav.md) | Arrow-key nav for rating | A11Y | `src/js/components/rating.js` | XS | — |
-| [T06](T06-dropzone-keyboard-access.md) | Keyboard-accessible dropzone | A11Y | `src/js/components/dropzone.js` | XS | — |
-| [T07](T07-tokenize-spacing-values.md) | Tokenize spacing literals → `--sp-*` | POLISH | `src/components.css` | M | — |
-| [T08](T08-tokenize-font-size-values.md) | Tokenize font-size literals → `--fs-*` | POLISH | `src/components.css` | S | — |
-| [T09](T09-audit-non-token-pixel-values.md) | Audit non-token pixel values | POLISH (analysis) | writes `tasks/TOKENIZATION-DEFER.md` | M | T07, T08 |
-| [T10](T10-document-or-remove-unreferenced-classes.md) | Document or remove 13 unreferenced classes | POLISH | `docs/index.html` and/or `src/components.css` | S–M | — |
+```
+# example handoff — one worker per unit
+cat tasks/T05-table-pagination.md   # full brief
+# spawn an agent with that as its prompt; isolation: worktree, run in background
+```
 
-## Parallelization
-- T01–T08 are independent — fan out in parallel, one subagent per task.
-- T09 must run **after** T07 + T08 land (it audits what they leave behind).
-- T10 is independent of all others.
+Each task ends with the same "worker instructions" block — simplify, build, e2e via chrome MCP, push, `gh pr create`, report `PR: <url>`.
 
-## What was checked but produced no task
-- **Hard-constraint scans (gradients, rgba shadows, long transitions, ease curves)** — only sanctioned exceptions found (`.brut-select` chevron via `linear-gradient`; `.brut-scrim` overlay carries an inline comment marking it the only sanctioned use of transparency; the only transition over 80ms is 100ms, well under the 140ms cap).
-- **Duplicate selector blocks** — none.
-- **External JS deps** — none in any `src/js/components/*.js`.
-- **Bundle hygiene** — `dist/brut.css` 73 KB, `dist/brut.js` 99 KB. Healthy for a no-minifier ship.
-- **Orphan preview / docs sections** — none.
-- **Naming convention drift in JS modules** — only `toast.js` (T01); all others align filename ↔ register name.
+## Strategy
 
-## Out of scope for this batch
-- Visual redesign or token-value changes.
-- New components.
-- Build-system changes (the concat build is intentional — see AGENTS.md).
-- Touching `dist/`.
+- **Existing `table.js` is never edited.** Every unit creates a NEW JS module on its own `data-brut="…"` hook, or is pure CSS.
+- **Existing `.brut-table*` block at [src/components.css:380-438](../src/components.css) is never edited.** Every unit appends a NEW banner block to the END of that file.
+- **Cross-unit linkage**: decorator components find their target table via `data-brut-table="<table-id>"`. The `<table>` carries `id="<table-id>"`. No worker-to-worker coupling.
+- **Merge conflicts** are expected only in `src/components.css` (append-only, easy 3-way merge) and `docs/index.html` (sidebar + section appends). Both resolve by accepting both blocks.
+
+## Units
+
+| # | File | Hook / classes | JS? |
+|---|---|---|---|
+| 1 | [T01-table-toolbar.md](T01-table-toolbar.md) | `.brut-table-toolbar` | — |
+| 2 | [T02-table-caption.md](T02-table-caption.md) | `.brut-table__caption` | — |
+| 3 | [T03-table-density.md](T03-table-density.md) | `data-brut="table-density"` | yes |
+| 4 | [T04-table-sticky.md](T04-table-sticky.md) | `.brut-table-wrap`, `--sticky-head`, `--sticky-col` | — |
+| 5 | [T05-table-pagination.md](T05-table-pagination.md) | `data-brut="table-pagination"` | yes |
+| 6 | [T06-table-global-filter.md](T06-table-global-filter.md) | `data-brut="table-filter"` | yes |
+| 7 | [T07-table-column-filter.md](T07-table-column-filter.md) | `data-brut="table-col-filter"` | yes |
+| 8 | [T08-table-column-visibility.md](T08-table-column-visibility.md) | `data-brut="table-columns"` | yes |
+| 9 | [T09-table-column-resize.md](T09-table-column-resize.md) | `data-brut="table-resize"` | yes |
+| 10 | [T10-table-column-reorder.md](T10-table-column-reorder.md) | `data-brut="table-reorder"` | yes |
+| 11 | [T11-table-row-expand.md](T11-table-row-expand.md) | `data-brut="table-row-expand"` | yes |
+| 12 | [T12-table-row-actions.md](T12-table-row-actions.md) | `[data-brut-row-actions]` | yes |
+| 13 | [T13-table-bulk-actions.md](T13-table-bulk-actions.md) | `data-brut="table-bulk"` | yes |
+| 14 | [T14-table-empty.md](T14-table-empty.md) | `.brut-table__empty` | — |
+| 15 | [T15-table-loading.md](T15-table-loading.md) | `.brut-table--loading`, `.brut-table__skel` | — |
+| 16 | [T16-table-totals.md](T16-table-totals.md) | `.brut-table__foot`, `--sticky-foot` | — |
+| 17 | [T17-table-inline-edit.md](T17-table-inline-edit.md) | `data-brut="table-edit"` | yes |
+| 18 | [T18-table-export.md](T18-table-export.md) | `data-brut="table-export"` | yes |
+| 19 | [T19-table-responsive.md](T19-table-responsive.md) | `.brut-table--responsive` | — |
+| 20 | [T20-table-keyboard-nav.md](T20-table-keyboard-nav.md) | `data-brut="table-keys"` | yes |
+
+## Reference (read, don't modify)
+
+- [AGENTS.md](../AGENTS.md) — hard constraints, JS conventions
+- [SKILL.md](../SKILL.md) — tokens
+- [src/tokens.css](../src/tokens.css) — full token catalog
+- [src/components.css:380-438](../src/components.css) — existing `.brut-table` block
+- [src/js/components/table.js](../src/js/components/table.js) — existing sort + select-all
+- [src/js/core.js](../src/js/core.js) — `Brut.register` API
+- [src/js/components/menu.js](../src/js/components/menu.js), [popover.js](../src/js/components/popover.js), [dialog.js](../src/js/components/dialog.js) — reusable for filters / row-actions
+- [preview/components-table.html](../preview/components-table.html) — existing preview shape
+- [docs/index.html](../docs/index.html) — existing docs section + sidebar pattern
