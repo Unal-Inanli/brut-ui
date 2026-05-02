@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-totals">Table — Totals</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -635,6 +636,75 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — TOTALS -->
+      <section class="docs-section" id="table-totals">
+        <h2>Table — Totals</h2>
+        <p class="lead">Footer row(s) showing column sums, averages, or counts. Add <code>.brut-table__foot</code> to <code>&lt;tfoot&gt;</code>. Use <code>.brut-table--sticky-foot</code> on the table to pin the footer while scrolling a long list inside an overflow container.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Product</th>
+                <th class="brut-table__cell brut-table__cell--num">Units</th>
+                <th class="brut-table__cell brut-table__cell--num">Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Widget Alpha</td>
+                <td class="brut-table__cell brut-table__cell--num">142</td>
+                <td class="brut-table__cell brut-table__cell--num">$1,278</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Widget Beta</td>
+                <td class="brut-table__cell brut-table__cell--num">88</td>
+                <td class="brut-table__cell brut-table__cell--num">$792</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Widget Gamma</td>
+                <td class="brut-table__cell brut-table__cell--num">201</td>
+                <td class="brut-table__cell brut-table__cell--num">$1,809</td>
+              </tr>
+            </tbody>
+            <tfoot class="brut-table__foot">
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Total</td>
+                <td class="brut-table__cell brut-table__cell--num">431</td>
+                <td class="brut-table__cell brut-table__cell--num">$3,879</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;Product&lt;/th&gt;
+      &lt;th class="brut-table__cell brut-table__cell--num"&gt;Revenue&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;Widget Alpha&lt;/td&gt;
+      &lt;td class="brut-table__cell brut-table__cell--num"&gt;$1,278&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot class="brut-table__foot"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;Total&lt;/td&gt;
+      &lt;td class="brut-table__cell brut-table__cell--num"&gt;$1,278&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+
+&lt;!-- sticky footer: wrap in overflow container + add modifier --&gt;
+&lt;div style="max-height: 40vh; overflow: auto;"&gt;
+  &lt;table class="brut-table brut-table--sticky-foot"&gt;
+    ...
+    &lt;tfoot class="brut-table__foot"&gt;...&lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
       </section>
 
       <!-- ROWS -->
