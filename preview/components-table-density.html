@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Table — Density</title>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+    .wrap { max-width: 880px; }
+    .toolbar { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+    h3 {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      font-size: var(--fs-sm);
+      margin: var(--sp-6) 0 var(--sp-3);
+    }
+    h3:first-child { margin-top: 0; }
+    .label-sm {
+      font-family: var(--font-sans);
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      color: var(--concrete-400);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <h3>Density toggle</h3>
+  <div class="toolbar">
+    <span class="label-sm">Density:</span>
+    <div class="brut-table-density"
+         data-brut="table-density"
+         data-brut-table="demo"
+         data-brut-default="regular">
+      <button class="brut-table-density__btn" data-density="compact">Compact</button>
+      <button class="brut-table-density__btn" data-density="regular">Regular</button>
+      <button class="brut-table-density__btn" data-density="comfy">Comfy</button>
+    </div>
+  </div>
+
+  <table class="brut-table brut-table--striped" id="demo">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Alice Aoki</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell">Product</td>
+        <td class="brut-table__cell brut-table__cell--num">14</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Bob Bauer</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Platform</td>
+        <td class="brut-table__cell brut-table__cell--num">7</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Carla Cruz</td>
+        <td class="brut-table__cell">PM</td>
+        <td class="brut-table__cell">Growth</td>
+        <td class="brut-table__cell brut-table__cell--num">22</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Dan Devlin</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell">Platform</td>
+        <td class="brut-table__cell brut-table__cell--num">3</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Eva Epstein</td>
+        <td class="brut-table__cell">Data</td>
+        <td class="brut-table__cell">Analytics</td>
+        <td class="brut-table__cell brut-table__cell--num">18</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<script src="../dist/brut.js"></script>
+</body>
+</html>
