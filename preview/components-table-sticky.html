@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Sticky</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-8) 0 var(--sp-3); }
+  .wrap { max-width: 880px; }
+</style></head>
+<body>
+<div class="wrap">
+
+  <h3>Sticky Head Only (tall, narrow — scroll vertically)</h3>
+  <div class="brut-table-wrap" style="max-height: 40vh;">
+    <table class="brut-table brut-table--sticky-head">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Name</th>
+          <th class="brut-table__cell">Role</th>
+          <th class="brut-table__cell brut-table__cell--num">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">91</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">74</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">88</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">65</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Eve</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">79</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Frank</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">83</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Grace</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">95</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Hank</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">70</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Iris</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">87</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Jake</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">62</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Kim</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">90</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Leo</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">77</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Sticky First Column Only (wide, short — scroll horizontally)</h3>
+  <div class="brut-table-wrap" style="max-height: 40vh;">
+    <table class="brut-table brut-table--sticky-col" style="min-width: 1100px;">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Name</th>
+          <th class="brut-table__cell">Role</th>
+          <th class="brut-table__cell">Department</th>
+          <th class="brut-table__cell">Location</th>
+          <th class="brut-table__cell">Manager</th>
+          <th class="brut-table__cell">Start Date</th>
+          <th class="brut-table__cell brut-table__cell--num">Score</th>
+          <th class="brut-table__cell brut-table__cell--num">Reviews</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Product</td><td class="brut-table__cell">New York</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell">2019-03-12</td><td class="brut-table__cell brut-table__cell--num">91</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">San Francisco</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2021-07-01</td><td class="brut-table__cell brut-table__cell--num">74</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell">Growth</td><td class="brut-table__cell">Austin</td><td class="brut-table__cell">Dana L.</td><td class="brut-table__cell">2020-11-20</td><td class="brut-table__cell brut-table__cell--num">88</td><td class="brut-table__cell brut-table__cell--num">22</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Infrastructure</td><td class="brut-table__cell">Remote</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2022-01-15</td><td class="brut-table__cell brut-table__cell--num">65</td><td class="brut-table__cell brut-table__cell--num">3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Sticky Head + First Column (tall + wide — scroll both directions)</h3>
+  <div class="brut-table-wrap" style="max-height: 40vh;">
+    <table class="brut-table brut-table--sticky-head brut-table--sticky-col" style="min-width: 1100px;">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Name</th>
+          <th class="brut-table__cell">Role</th>
+          <th class="brut-table__cell">Department</th>
+          <th class="brut-table__cell">Location</th>
+          <th class="brut-table__cell">Manager</th>
+          <th class="brut-table__cell">Start Date</th>
+          <th class="brut-table__cell brut-table__cell--num">Score</th>
+          <th class="brut-table__cell brut-table__cell--num">Reviews</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Product</td><td class="brut-table__cell">New York</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell">2019-03-12</td><td class="brut-table__cell brut-table__cell--num">91</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">San Francisco</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2021-07-01</td><td class="brut-table__cell brut-table__cell--num">74</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell">Growth</td><td class="brut-table__cell">Austin</td><td class="brut-table__cell">Dana L.</td><td class="brut-table__cell">2020-11-20</td><td class="brut-table__cell brut-table__cell--num">88</td><td class="brut-table__cell brut-table__cell--num">22</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Infrastructure</td><td class="brut-table__cell">Remote</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2022-01-15</td><td class="brut-table__cell brut-table__cell--num">65</td><td class="brut-table__cell brut-table__cell--num">3</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Eve</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Marketing</td><td class="brut-table__cell">Chicago</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell">2018-09-05</td><td class="brut-table__cell brut-table__cell--num">79</td><td class="brut-table__cell brut-table__cell--num">11</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Frank</td><td class="brut-table__cell">QA</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">Remote</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2023-02-28</td><td class="brut-table__cell brut-table__cell--num">83</td><td class="brut-table__cell brut-table__cell--num">5</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Grace</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Infrastructure</td><td class="brut-table__cell">New York</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2020-04-14</td><td class="brut-table__cell brut-table__cell--num">95</td><td class="brut-table__cell brut-table__cell--num">19</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Hank</td><td class="brut-table__cell">PM</td><td class="brut-table__cell">Growth</td><td class="brut-table__cell">Boston</td><td class="brut-table__cell">Dana L.</td><td class="brut-table__cell">2021-10-10</td><td class="brut-table__cell brut-table__cell--num">70</td><td class="brut-table__cell brut-table__cell--num">9</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Iris</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell">Product</td><td class="brut-table__cell">San Francisco</td><td class="brut-table__cell">Maria K.</td><td class="brut-table__cell">2017-06-20</td><td class="brut-table__cell brut-table__cell--num">87</td><td class="brut-table__cell brut-table__cell--num">16</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">Jake</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell">Platform</td><td class="brut-table__cell">Austin</td><td class="brut-table__cell">James T.</td><td class="brut-table__cell">2022-08-01</td><td class="brut-table__cell brut-table__cell--num">62</td><td class="brut-table__cell brut-table__cell--num">2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script src="../dist/brut.js"></script>
+</body></html>

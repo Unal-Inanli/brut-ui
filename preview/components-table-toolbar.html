@@ -1,0 +1,130 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Toolbar</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<script src="../dist/brut.js" defer></script>
+<style>
+  .variant-label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    margin: 0 0 var(--sp-3) 0;
+  }
+</style></head>
+<body style="padding: var(--sp-6);">
+  <h1 style="font-family: var(--font-display); font-size: var(--fs-2xl); text-transform: uppercase; margin: 0 0 var(--sp-8) 0;">Table — Toolbar</h1>
+
+  <!-- Variant A: full toolbar with title, search, and action buttons -->
+  <h2 class="variant-label">Full toolbar</h2>
+  <div style="margin-bottom: var(--sp-8); max-width: 860px;">
+    <div class="brut-table-toolbar">
+      <div class="brut-table-toolbar__title">
+        Customers <span>(1,284)</span>
+      </div>
+      <div class="brut-table-toolbar__search">
+        <input class="brut-input" type="search" placeholder="Search customers…"/>
+      </div>
+      <div class="brut-table-toolbar__actions">
+        <button class="brut-btn brut-btn--sm" type="button">EXPORT</button>
+        <button class="brut-btn brut-btn--sm brut-btn--primary" type="button">+ ADD ROW</button>
+      </div>
+    </div>
+    <table class="brut-table brut-table--striped">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Name</th>
+          <th class="brut-table__cell">Role</th>
+          <th class="brut-table__cell brut-table__cell--num">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">Alice</td>
+          <td class="brut-table__cell">Designer</td>
+          <td class="brut-table__cell brut-table__cell--num">$1,240</td>
+        </tr>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">Bob</td>
+          <td class="brut-table__cell">Engineer</td>
+          <td class="brut-table__cell brut-table__cell--num">$780</td>
+        </tr>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">Carla</td>
+          <td class="brut-table__cell">PM</td>
+          <td class="brut-table__cell brut-table__cell--num">$2,050</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Variant B: title-only toolbar -->
+  <h2 class="variant-label">Title only</h2>
+  <div style="margin-bottom: var(--sp-8); max-width: 860px;">
+    <div class="brut-table-toolbar">
+      <div class="brut-table-toolbar__title">
+        Orders <span>(342)</span>
+      </div>
+    </div>
+    <table class="brut-table">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Order ID</th>
+          <th class="brut-table__cell">Status</th>
+          <th class="brut-table__cell brut-table__cell--num">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">#10042</td>
+          <td class="brut-table__cell">Shipped</td>
+          <td class="brut-table__cell brut-table__cell--num">$199</td>
+        </tr>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">#10043</td>
+          <td class="brut-table__cell">Pending</td>
+          <td class="brut-table__cell brut-table__cell--num">$49</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Variant C: bare modifier (no border/shadow) -->
+  <h2 class="variant-label">Bare modifier (inside a card)</h2>
+  <div style="margin-bottom: var(--sp-8); max-width: 860px; border: var(--bw-3) solid var(--ink); box-shadow: var(--shadow-md); padding: var(--sp-4);">
+    <div class="brut-table-toolbar brut-table-toolbar--bare">
+      <div class="brut-table-toolbar__title">
+        Products <span>(88)</span>
+      </div>
+      <div class="brut-table-toolbar__search">
+        <input class="brut-input" type="search" placeholder="Search products…"/>
+      </div>
+      <div class="brut-table-toolbar__actions">
+        <button class="brut-btn brut-btn--sm" type="button">FILTER</button>
+      </div>
+    </div>
+    <table class="brut-table">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">Product</th>
+          <th class="brut-table__cell">Category</th>
+          <th class="brut-table__cell brut-table__cell--num">Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">Notebook</td>
+          <td class="brut-table__cell">Stationery</td>
+          <td class="brut-table__cell brut-table__cell--num">140</td>
+        </tr>
+        <tr class="brut-table__row">
+          <td class="brut-table__cell">Pen Set</td>
+          <td class="brut-table__cell">Stationery</td>
+          <td class="brut-table__cell brut-table__cell--num">56</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body></html>

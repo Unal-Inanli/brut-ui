@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Table — Responsive</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-8) 0 var(--sp-3); }
+  .wrap { max-width: 880px; }
+  .hint { font-size: var(--fs-sm); color: var(--concrete-400); margin-bottom: var(--sp-4); }
+</style></head>
+<body>
+<div class="wrap">
+
+  <h3>Responsive — stacked cards below 640 px (resize to test)</h3>
+  <p class="hint">Above 640 px: normal table. Below 640 px: thead hides, each row becomes a bordered card with labelled cells.</p>
+
+  <table class="brut-table brut-table--responsive">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell">Location</th>
+        <th class="brut-table__cell brut-table__cell--num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Alice Chen</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">Designer</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Product</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">New York</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">91</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Bob Marsh</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">Engineer</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Platform</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">San Francisco</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">74</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Carla Nunes</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">PM</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Growth</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">Austin</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">88</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Dan Okafor</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">Engineer</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Infrastructure</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">Remote</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">65</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Elena Park</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">Designer</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Marketing</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">Chicago</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">79</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Frank Liu</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">QA</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Platform</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">Remote</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">83</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Grace Kim</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">Engineer</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Infrastructure</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">New York</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">95</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-brut-col-label="Name">Hank Davis</td>
+        <td class="brut-table__cell" data-brut-col-label="Role">PM</td>
+        <td class="brut-table__cell" data-brut-col-label="Department">Growth</td>
+        <td class="brut-table__cell" data-brut-col-label="Location">Boston</td>
+        <td class="brut-table__cell brut-table__cell--num" data-brut-col-label="Score">70</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</body></html>
