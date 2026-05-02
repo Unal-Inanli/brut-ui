@@ -221,6 +221,7 @@
 
       <h2>Data</h2>
       <a href="#table">Table</a>
+      <a href="#table-resize">Table — Column Resize</a>
       <a href="#rows">Rows</a>
 
       <h2>Forms</h2>
@@ -632,6 +633,64 @@ border: var(--bw-6) solid var(--ink);</pre>
       &lt;td class="brut-table__cell"&gt;&lt;label class="brut-cb" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
       &lt;td class="brut-table__cell" data-sort-value="alice"&gt;Alice&lt;/td&gt;
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      </section>
+
+      <!-- TABLE — COLUMN RESIZE -->
+      <section class="docs-section" id="table-resize">
+        <h2>Table — Column Resize</h2>
+        <p class="lead">Add <code>data-brut="table-resize"</code> to any <code>.brut-table</code> to enable pointer-drag column resize handles. Drag the right edge of any header cell to widen or narrow that column. Widths snap to a 4px grid with a 60px minimum. A <code>&lt;colgroup&gt;</code> is generated automatically if absent.</p>
+        <div class="docs-preview docs-preview--block">
+          <table class="brut-table" data-brut="table-resize">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell">Name</th>
+                <th class="brut-table__cell">Department</th>
+                <th class="brut-table__cell">Location</th>
+                <th class="brut-table__cell brut-table__cell--num">Score</th>
+                <th class="brut-table__cell">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Alice</td>
+                <td class="brut-table__cell">Design</td>
+                <td class="brut-table__cell">Berlin</td>
+                <td class="brut-table__cell brut-table__cell--num">92</td>
+                <td class="brut-table__cell">Active</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Bob</td>
+                <td class="brut-table__cell">Engineering</td>
+                <td class="brut-table__cell">New York</td>
+                <td class="brut-table__cell brut-table__cell--num">78</td>
+                <td class="brut-table__cell">Active</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell">Carla</td>
+                <td class="brut-table__cell">Product</td>
+                <td class="brut-table__cell">São Paulo</td>
+                <td class="brut-table__cell brut-table__cell--num">85</td>
+                <td class="brut-table__cell">On leave</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="docs-snippet">&lt;table class="brut-table" data-brut="table-resize"&gt;
+  &lt;thead class="brut-table__head"&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;th class="brut-table__cell"&gt;Name&lt;/th&gt;
+      &lt;th class="brut-table__cell"&gt;Department&lt;/th&gt;
+      &lt;th class="brut-table__cell brut-table__cell--num"&gt;Score&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="brut-table__row"&gt;
+      &lt;td class="brut-table__cell"&gt;Alice&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;Design&lt;/td&gt;
+      &lt;td class="brut-table__cell brut-table__cell--num"&gt;92&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>

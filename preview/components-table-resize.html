@@ -1,0 +1,106 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Column Resize</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-6) 0 var(--sp-2); }
+  .wrap { max-width: 900px; }
+  .note { font-size: var(--fs-sm); color: var(--concrete-400); margin-bottom: var(--sp-4); }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Resizable columns</h3>
+  <p class="note">Drag the right edge of any column header to resize it. Min width 60px, snaps to 4px grid.</p>
+
+  <table class="brut-table" data-brut="table-resize">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Department</th>
+        <th class="brut-table__cell">Location</th>
+        <th class="brut-table__cell brut-table__cell--num">Score</th>
+        <th class="brut-table__cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Alice</td>
+        <td class="brut-table__cell">Design</td>
+        <td class="brut-table__cell">Berlin</td>
+        <td class="brut-table__cell brut-table__cell--num">92</td>
+        <td class="brut-table__cell"><span class="brut-badge brut-badge--ok">Active</span></td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Bob</td>
+        <td class="brut-table__cell">Engineering</td>
+        <td class="brut-table__cell">New York</td>
+        <td class="brut-table__cell brut-table__cell--num">78</td>
+        <td class="brut-table__cell"><span class="brut-badge brut-badge--ok">Active</span></td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Carla</td>
+        <td class="brut-table__cell">Product</td>
+        <td class="brut-table__cell">São Paulo</td>
+        <td class="brut-table__cell brut-table__cell--num">85</td>
+        <td class="brut-table__cell"><span class="brut-badge brut-badge--warn">On leave</span></td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Dan</td>
+        <td class="brut-table__cell">Engineering</td>
+        <td class="brut-table__cell">Tokyo</td>
+        <td class="brut-table__cell brut-table__cell--num">91</td>
+        <td class="brut-table__cell"><span class="brut-badge brut-badge--ok">Active</span></td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Eva</td>
+        <td class="brut-table__cell">Marketing</td>
+        <td class="brut-table__cell">London</td>
+        <td class="brut-table__cell brut-table__cell--num">66</td>
+        <td class="brut-table__cell"><span class="brut-badge brut-badge--err">Inactive</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Resizable + Striped</h3>
+  <p class="note">Column resize works alongside <code>--striped</code> and <code>--bordered</code> modifiers.</p>
+
+  <table class="brut-table brut-table--striped brut-table--bordered" data-brut="table-resize">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">SKU</th>
+        <th class="brut-table__cell">Product</th>
+        <th class="brut-table__cell">Category</th>
+        <th class="brut-table__cell brut-table__cell--num">Price</th>
+        <th class="brut-table__cell brut-table__cell--num">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">A-001</td>
+        <td class="brut-table__cell">Bone-white tee</td>
+        <td class="brut-table__cell">Apparel</td>
+        <td class="brut-table__cell brut-table__cell--num">29.00</td>
+        <td class="brut-table__cell brut-table__cell--num">122</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">A-002</td>
+        <td class="brut-table__cell">Hard-shadow cap</td>
+        <td class="brut-table__cell">Accessories</td>
+        <td class="brut-table__cell brut-table__cell--num">18.00</td>
+        <td class="brut-table__cell brut-table__cell--num">38</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">B-003</td>
+        <td class="brut-table__cell">Ink mug</td>
+        <td class="brut-table__cell">Home</td>
+        <td class="brut-table__cell brut-table__cell--num">14.00</td>
+        <td class="brut-table__cell brut-table__cell--num">74</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>
