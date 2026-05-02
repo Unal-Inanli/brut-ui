@@ -32,6 +32,19 @@
         if (e.target !== input) input.click();
       });
 
+      // Keyboard access: focusable, button-like.
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      if (!el.hasAttribute('role'))     el.setAttribute('role', 'button');
+      if (!el.hasAttribute('aria-label')) {
+        var hint = el.querySelector('.brut-dropzone__hint');
+        el.setAttribute('aria-label', (hint && hint.textContent.trim()) || 'Choose files');
+      }
+      el.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        input.click();
+      });
+
       ['dragenter', 'dragover'].forEach(function (ev) {
         el.addEventListener(ev, function (e) {
           e.preventDefault(); e.stopPropagation();

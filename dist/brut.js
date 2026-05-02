@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — runtime
- * Built 2026-05-02T07:40:48Z
+ * Built 2026-05-02T19:15:18Z
  * Bundle: src/js/core.js + src/js/components/*.js
  */
 
@@ -799,6 +799,19 @@
 
       el.addEventListener('click', function (e) {
         if (e.target !== input) input.click();
+      });
+
+      // Keyboard access: focusable, button-like.
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      if (!el.hasAttribute('role'))     el.setAttribute('role', 'button');
+      if (!el.hasAttribute('aria-label')) {
+        var hint = el.querySelector('.brut-dropzone__hint');
+        el.setAttribute('aria-label', (hint && hint.textContent.trim()) || 'Choose files');
+      }
+      el.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        input.click();
       });
 
       ['dragenter', 'dragover'].forEach(function (ev) {
@@ -1618,7 +1631,13 @@
        <button class="brut-rating__star"></button>
      </div>
    A hidden <input type="hidden" name="…"> is created automatically
-   when data-brut-name is set. Hover previews the score; click locks it. */
+   when data-brut-name is set. Hover previews the score; click locks it.
+
+   Keyboard (on the wrapper):
+     ArrowRight / ArrowUp   — +1 (cap at max)
+     ArrowLeft  / ArrowDown — −1 (floor at 0)
+     Home                   — 0
+     End                    — max */
 (function () {
   if (!window.Brut) return;
   Brut.register('rating', {
@@ -1626,6 +1645,7 @@
     init: function (el) {
       var stars = el.querySelectorAll('.brut-rating__star');
       if (!stars.length) return;
+      var max = stars.length;
 
       var hidden = el.querySelector('input[type="hidden"]');
       if (!hidden && el.getAttribute('data-brut-name')) {
@@ -1639,11 +1659,29 @@
       var current = isFinite(initial) ? initial : 0;
       if (hidden) hidden.value = String(current);
 
+      // Wrapper a11y: slider, focusable.
+      el.setAttribute('role', 'slider');
+      el.setAttribute('aria-valuemin', '0');
+      el.setAttribute('aria-valuemax', String(max));
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
       function paint(n) {
         stars.forEach(function (s, i) {
           s.classList.toggle('brut-rating__star--on', i < n);
           s.setAttribute('aria-checked', i + 1 === n ? 'true' : 'false');
         });
+        el.setAttribute('aria-valuenow', String(n));
+      }
+
+      function set(n) {
+        n = Math.max(0, Math.min(max, n));
+        current = n;
+        if (hidden) {
+          hidden.value = String(current);
+          hidden.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        paint(current);
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current } }));
       }
 
       stars.forEach(function (star, i) {
@@ -1652,14 +1690,23 @@
         star.addEventListener('mouseenter', function () { paint(i + 1); });
         star.addEventListener('focus',      function () { paint(i + 1); });
         star.addEventListener('click', function () {
-          current = (current === i + 1) ? 0 : i + 1;
-          if (hidden) {
-            hidden.value = String(current);
-            hidden.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-          paint(current);
-          el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current } }));
+          set(current === i + 1 ? 0 : i + 1);
         });
+      });
+
+      el.addEventListener('keydown', function (e) {
+        var next = null;
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'ArrowUp':    next = current + 1; break;
+          case 'ArrowLeft':
+          case 'ArrowDown':  next = current - 1; break;
+          case 'Home':       next = 0; break;
+          case 'End':        next = max; break;
+          default: return;
+        }
+        e.preventDefault();
+        set(next);
       });
 
       el.addEventListener('mouseleave', function () { paint(current); });
@@ -1713,7 +1760,12 @@
        <button class="brut-seg__btn" data-value="week">WEEK</button>
      </div>
    Mirror to a form by setting data-brut-name="<input-name>" on the wrapper —
-   a hidden <input type="hidden"> is created automatically. */
+   a hidden <input type="hidden"> is created automatically.
+
+   Keyboard (roving tabindex):
+     ArrowLeft / ArrowUp    — previous (wrap)
+     ArrowRight / ArrowDown — next (wrap)
+     Home / End             — first / last */
 (function () {
   if (!window.Brut) return;
   Brut.register('segmented', {
@@ -1730,27 +1782,56 @@
 
       el.setAttribute('role', 'tablist');
 
-      var btns = el.querySelectorAll('.brut-seg__btn');
+      var btns = Array.prototype.slice.call(el.querySelectorAll('.brut-seg__btn'));
+
+      function select(btn, focusIt) {
+        btns.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('brut-seg__btn--on', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          b.setAttribute('tabindex', on ? '0' : '-1');
+        });
+        var value = btn.getAttribute('data-value') || btn.textContent.trim();
+        if (hidden) hidden.value = value;
+        if (focusIt) btn.focus();
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: value } }));
+      }
+
       btns.forEach(function (btn) {
         btn.setAttribute('type', 'button');
         btn.setAttribute('role', 'tab');
-        btn.addEventListener('click', function () {
-          btns.forEach(function (b) {
-            b.classList.remove('brut-seg__btn--on');
-            b.setAttribute('aria-selected', 'false');
-          });
-          btn.classList.add('brut-seg__btn--on');
-          btn.setAttribute('aria-selected', 'true');
-
-          var value = btn.getAttribute('data-value') || btn.textContent.trim();
-          if (hidden) hidden.value = value;
-          el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: value } }));
-        });
+        btn.addEventListener('click', function () { select(btn); });
       });
 
-      var initial = el.querySelector('.brut-seg__btn--on');
-      if (initial && hidden && !hidden.value) {
-        hidden.value = initial.getAttribute('data-value') || initial.textContent.trim();
+      el.addEventListener('keydown', function (e) {
+        var t = e.target;
+        if (!t || !t.classList || !t.classList.contains('brut-seg__btn')) return;
+        var i = btns.indexOf(t);
+        if (i < 0) return;
+        var next = null;
+        switch (e.key) {
+          case 'ArrowLeft':
+          case 'ArrowUp':    next = btns[(i - 1 + btns.length) % btns.length]; break;
+          case 'ArrowRight':
+          case 'ArrowDown':  next = btns[(i + 1) % btns.length]; break;
+          case 'Home':       next = btns[0]; break;
+          case 'End':        next = btns[btns.length - 1]; break;
+          default: return;
+        }
+        e.preventDefault();
+        select(next, true);
+      });
+
+      var initial = el.querySelector('.brut-seg__btn--on') || btns[0];
+      if (initial) {
+        // Set roving tabindex on initial render without firing brut:change.
+        btns.forEach(function (b) {
+          b.setAttribute('tabindex', b === initial ? '0' : '-1');
+          b.setAttribute('aria-selected', b === initial ? 'true' : 'false');
+        });
+        if (hidden && !hidden.value) {
+          hidden.value = initial.getAttribute('data-value') || initial.textContent.trim();
+        }
       }
     }
   });
@@ -1808,7 +1889,11 @@
        <input class="brut-stepper__input" type="number" min="0" max="99" step="1" value="0">
        <button class="brut-stepper__btn" data-brut-step="up">+</button>
      </div>
-   Reads min / max / step from the inner input. */
+   Reads min / max / step from the inner input.
+
+   Keyboard (on the inner input):
+     ArrowUp / ArrowDown — ±step
+     PageUp / PageDown   — ±step×10 */
 (function () {
   if (!window.Brut) return;
   Brut.register('stepper', {
@@ -1822,6 +1907,10 @@
         return v === null || v === '' ? fallback : parseFloat(v);
       }
 
+      function syncAria() {
+        el.setAttribute('aria-valuenow', input.value);
+      }
+
       function clampAndDispatch(v) {
         var step = read('step', 1) || 1;
         var min  = read('min', -Infinity);
@@ -1832,15 +1921,16 @@
         // Clean float fuzz.
         v = parseFloat(v.toFixed(10));
         input.value = v;
+        syncAria();
         input.dispatchEvent(new Event('input',  { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
       }
 
-      function bump(dir) {
+      function bump(mult) {
         var step = read('step', 1) || 1;
         var v = parseFloat(input.value);
         if (isNaN(v)) v = read('min', 0);
-        clampAndDispatch(v + dir * step);
+        clampAndDispatch(v + mult * step);
       }
 
       var btns = el.querySelectorAll('.brut-stepper__btn');
@@ -1851,6 +1941,28 @@
                 : dirAttr === 'up'   ?  1
                 : (i === 0 ? -1 : 1);
         b.addEventListener('click', function () { bump(dir); });
+      });
+
+      // ARIA: spinbutton wrapper with current/min/max.
+      el.setAttribute('role', 'spinbutton');
+      var minAttr = input.getAttribute('min');
+      var maxAttr = input.getAttribute('max');
+      if (minAttr !== null) el.setAttribute('aria-valuemin', minAttr);
+      if (maxAttr !== null) el.setAttribute('aria-valuemax', maxAttr);
+      syncAria();
+      input.addEventListener('input', syncAria);
+
+      input.addEventListener('keydown', function (e) {
+        var mult = 0;
+        switch (e.key) {
+          case 'ArrowUp':   mult =  1;  break;
+          case 'ArrowDown': mult = -1;  break;
+          case 'PageUp':    mult =  10; break;
+          case 'PageDown':  mult = -10; break;
+          default: return;
+        }
+        e.preventDefault();
+        bump(mult);
       });
     }
   });
@@ -2087,7 +2199,11 @@
      <div data-brut-panel="overview">…</div>
      <div data-brut-panel="logs" hidden>…</div>
    By default panels are looked up in the tablist's parent. Pass a
-   selector via data-brut-panels="#some-root" to scope elsewhere. */
+   selector via data-brut-panels="#some-root" to scope elsewhere.
+
+   Keyboard (WAI-ARIA tabs pattern, roving tabindex):
+     ArrowLeft / ArrowRight  — focus & activate prev / next (wrap)
+     Home / End              — focus & activate first / last */
 (function () {
   if (!window.Brut) return;
   Brut.register('tabs', {
@@ -2102,22 +2218,48 @@
         });
       }
 
-      function activate(btn) {
-        el.querySelectorAll('.brut-tab').forEach(function (b) {
-          b.classList.remove('brut-tab--on');
-          b.setAttribute('aria-selected', 'false');
+      el.setAttribute('role', 'tablist');
+
+      function tabs() {
+        return Array.prototype.slice.call(el.querySelectorAll('.brut-tab'));
+      }
+
+      function activate(btn, focusIt) {
+        var all = tabs();
+        all.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('brut-tab--on', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          b.setAttribute('tabindex', on ? '0' : '-1');
         });
-        btn.classList.add('brut-tab--on');
-        btn.setAttribute('aria-selected', 'true');
         var key = btn.getAttribute('data-brut-tab');
         Object.keys(panels).forEach(function (k) { panels[k].hidden = k !== key; });
+        if (focusIt) btn.focus();
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: key } }));
       }
 
-      el.querySelectorAll('.brut-tab').forEach(function (btn) {
+      tabs().forEach(function (btn) {
         btn.setAttribute('type', 'button');
         btn.setAttribute('role', 'tab');
         btn.addEventListener('click', function () { activate(btn); });
+      });
+
+      el.addEventListener('keydown', function (e) {
+        var t = e.target;
+        if (!t || !t.classList || !t.classList.contains('brut-tab')) return;
+        var all = tabs();
+        var i = all.indexOf(t);
+        if (i < 0) return;
+        var next = null;
+        switch (e.key) {
+          case 'ArrowLeft':  next = all[(i - 1 + all.length) % all.length]; break;
+          case 'ArrowRight': next = all[(i + 1) % all.length]; break;
+          case 'Home':       next = all[0]; break;
+          case 'End':        next = all[all.length - 1]; break;
+          default: return;
+        }
+        e.preventDefault();
+        activate(next, true);
       });
 
       var initial = el.querySelector('.brut-tab--on') || el.querySelector('.brut-tab');
@@ -2460,7 +2602,7 @@
 })();
 
 
-/* --- toast.js --- */
+/* --- toast-host.js --- */
 /* toast — non-blocking transient notifications.
    Markup (host):
      <div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"></div>

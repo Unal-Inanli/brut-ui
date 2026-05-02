@@ -7,7 +7,11 @@
      <div data-brut-panel="overview">…</div>
      <div data-brut-panel="logs" hidden>…</div>
    By default panels are looked up in the tablist's parent. Pass a
-   selector via data-brut-panels="#some-root" to scope elsewhere. */
+   selector via data-brut-panels="#some-root" to scope elsewhere.
+
+   Keyboard (WAI-ARIA tabs pattern, roving tabindex):
+     ArrowLeft / ArrowRight  — focus & activate prev / next (wrap)
+     Home / End              — focus & activate first / last */
 (function () {
   if (!window.Brut) return;
   Brut.register('tabs', {
@@ -22,22 +26,48 @@
         });
       }
 
-      function activate(btn) {
-        el.querySelectorAll('.brut-tab').forEach(function (b) {
-          b.classList.remove('brut-tab--on');
-          b.setAttribute('aria-selected', 'false');
+      el.setAttribute('role', 'tablist');
+
+      function tabs() {
+        return Array.prototype.slice.call(el.querySelectorAll('.brut-tab'));
+      }
+
+      function activate(btn, focusIt) {
+        var all = tabs();
+        all.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('brut-tab--on', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          b.setAttribute('tabindex', on ? '0' : '-1');
         });
-        btn.classList.add('brut-tab--on');
-        btn.setAttribute('aria-selected', 'true');
         var key = btn.getAttribute('data-brut-tab');
         Object.keys(panels).forEach(function (k) { panels[k].hidden = k !== key; });
+        if (focusIt) btn.focus();
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: key } }));
       }
 
-      el.querySelectorAll('.brut-tab').forEach(function (btn) {
+      tabs().forEach(function (btn) {
         btn.setAttribute('type', 'button');
         btn.setAttribute('role', 'tab');
         btn.addEventListener('click', function () { activate(btn); });
+      });
+
+      el.addEventListener('keydown', function (e) {
+        var t = e.target;
+        if (!t || !t.classList || !t.classList.contains('brut-tab')) return;
+        var all = tabs();
+        var i = all.indexOf(t);
+        if (i < 0) return;
+        var next = null;
+        switch (e.key) {
+          case 'ArrowLeft':  next = all[(i - 1 + all.length) % all.length]; break;
+          case 'ArrowRight': next = all[(i + 1) % all.length]; break;
+          case 'Home':       next = all[0]; break;
+          case 'End':        next = all[all.length - 1]; break;
+          default: return;
+        }
+        e.preventDefault();
+        activate(next, true);
       });
 
       var initial = el.querySelector('.brut-tab--on') || el.querySelector('.brut-tab');

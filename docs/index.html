@@ -208,6 +208,7 @@
       <h2>Foundations</h2>
       <a href="#colors">Colors</a>
       <a href="#typography">Typography</a>
+      <a href="#typography-primitives">Typography primitives</a>
       <a href="#spacing">Spacing</a>
       <a href="#shadows">Shadows</a>
       <a href="#borders">Borders</a>
@@ -278,6 +279,7 @@
       <a href="#layout-stack">Stack / Cluster / Bar</a>
       <a href="#layout-grid">Grid / Split</a>
       <a href="#layout-misc">Rule / Aspect / Shape</a>
+      <a href="#layout-spacer">Spacer</a>
     </nav>
 
     <!-- ───────────── MAIN ───────────── -->
@@ -370,6 +372,49 @@ background: var(--primary);</pre>
 &lt;p class="brut-lead"&gt;A lead paragraph sets the tone.&lt;/p&gt;
 &lt;p class="brut-body"&gt;Body copy.&lt;/p&gt;
 &lt;code class="brut-code"&gt;const x = 1;&lt;/code&gt;</pre>
+      </section>
+
+      <!-- TYPOGRAPHY PRIMITIVES -->
+      <section class="docs-section" id="typography-primitives">
+        <h2>Typography primitives</h2>
+        <p class="lead">The full heading scale plus inline and block primitives. All listed in <code>SKILL.md</code> — use them anywhere you need semantic typography without the display-tier weight.</p>
+        <div class="docs-preview docs-preview--block">
+          <h4 class="brut-h4">Heading 4</h4>
+          <h5 class="brut-h5">Heading 5</h5>
+          <h6 class="brut-h6">Heading 6</h6>
+          <p class="brut-overline">Overline</p>
+          <p>Press <kbd class="brut-kbd">Ctrl</kbd> + <kbd class="brut-kbd">K</kbd> to search.</p>
+          <pre class="brut-pre">$ npm run build</pre>
+          <ul class="brut-list">
+            <li>Bulleted item one.</li>
+            <li>Bulleted item two.</li>
+          </ul>
+          <ol class="brut-list brut-list--ord">
+            <li>Ordered item one.</li>
+            <li>Ordered item two.</li>
+          </ol>
+          <p class="brut-prose">
+            <span class="brut-drop-cap">A</span>drop cap kicks off a long-form passage. Inside <code>.brut-prose</code> you also get rhythm — sibling spacing tuned for reading.
+            Highlight key text with <mark class="brut-mark">a brut mark</mark> mid-sentence.
+            Tabular numerals: <span class="brut-num">1,234,567</span>.
+          </p>
+          <label class="brut-label" for="primitives-input">Form label</label>
+          <input id="primitives-input" class="brut-input" type="text" placeholder="An input with a brut-label">
+        </div>
+        <pre class="docs-snippet">&lt;h4 class="brut-h4"&gt;Heading 4&lt;/h4&gt;
+&lt;h5 class="brut-h5"&gt;Heading 5&lt;/h5&gt;
+&lt;h6 class="brut-h6"&gt;Heading 6&lt;/h6&gt;
+&lt;p class="brut-overline"&gt;Overline&lt;/p&gt;
+&lt;kbd class="brut-kbd"&gt;Ctrl&lt;/kbd&gt;
+&lt;pre class="brut-pre"&gt;$ npm run build&lt;/pre&gt;
+&lt;ul class="brut-list"&gt;...&lt;/ul&gt;
+&lt;ol class="brut-list brut-list--ord"&gt;...&lt;/ol&gt;
+&lt;p class="brut-prose"&gt;
+  &lt;span class="brut-drop-cap"&gt;A&lt;/span&gt;...
+  &lt;mark class="brut-mark"&gt;highlight&lt;/mark&gt;
+  &lt;span class="brut-num"&gt;1,234&lt;/span&gt;
+&lt;/p&gt;
+&lt;label class="brut-label"&gt;Form label&lt;/label&gt;</pre>
       </section>
 
       <!-- SPACING -->
@@ -1850,6 +1895,24 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;hr class="brut-rule"&gt;
 &lt;div class="brut-aspect brut-aspect--video"&gt; … &lt;/div&gt;
 &lt;div class="brut-shape brut-shape--rot-r"&gt;&lt;/div&gt;</pre>
+      </section>
+
+      <!-- SPACER -->
+      <section class="docs-section" id="layout-spacer">
+        <h2>Spacer</h2>
+        <p class="lead"><code>.brut-spacer</code> is a flex-grow pusher. Drop it into a flex container to shove the next sibling to the far end without writing custom alignment CSS.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="display: flex; align-items: center; gap: var(--sp-3); border: 4px solid var(--ink); padding: var(--sp-3); background: var(--bone);">
+            <span style="font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em;">LEFT</span>
+            <span class="brut-spacer"></span>
+            <button type="button" class="brut-btn brut-btn--sm">RIGHT</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-bar"&gt;
+  &lt;span&gt;LEFT&lt;/span&gt;
+  &lt;span class="brut-spacer"&gt;&lt;/span&gt;
+  &lt;button class="brut-btn brut-btn--sm"&gt;RIGHT&lt;/button&gt;
+&lt;/div&gt;</pre>
       </section>
 
     </main>
