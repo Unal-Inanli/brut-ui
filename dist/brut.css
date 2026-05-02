@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:53:34Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -2666,3 +2666,24 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — COLUMN RESIZE
+   Pointer-drag resize handles on <th> right edges. Add
+   data-brut="table-resize" to a .brut-table to enable. JS
+   generates .brut-table__resizer handles and a <colgroup> if
+   absent, then writes inline width: on each <col>.
+   ============================================================ */
+.brut-table--resizable { table-layout: fixed; }
+.brut-table--resizable thead th { position: relative; }
+.brut-table__resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--sp-2);
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+}
+.brut-table__resizer:hover { background: var(--concrete-300); }
+.brut-table__resizer--active { background: var(--ink); }
