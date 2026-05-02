@@ -2329,3 +2329,36 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — ROW ACTIONS
+   Small kebab button placed in any cell of a table row.
+   Clicking opens a shared brut-menu positioned at the trigger.
+   ============================================================ */
+
+/* TABLE ROW ACTIONS — kebab trigger button */
+.brut-table__row-actions-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sp-6);
+  height: var(--sp-6);
+  padding: 0;
+  background: var(--paper);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: 1;
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+}
+.brut-table__row-actions-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-sm);
+}
+.brut-table__row-actions-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--ink);
+}
