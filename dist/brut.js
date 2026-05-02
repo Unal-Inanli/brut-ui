@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — runtime
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:53:13Z
  * Bundle: src/js/core.js + src/js/components/*.js
  */
 

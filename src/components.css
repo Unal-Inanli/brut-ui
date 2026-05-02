@@ -2329,3 +2329,34 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — EMPTY
+   Empty-state row for .brut-table. Place a single
+   <tr class="brut-table__empty"> inside <tbody>; toggle the
+   hidden attribute to show/hide it when no data rows exist.
+   ============================================================ */
+
+.brut-table__empty[hidden] { display: none; }
+
+.brut-table__empty-cell {
+  text-align: center;
+  padding: var(--sp-12) var(--sp-6);
+  background: var(--paper-2);
+  border-top: var(--bw-3) solid var(--ink);
+}
+
+.brut-table__empty-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 var(--sp-2);
+}
+
+.brut-table__empty-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--concrete-400);
+  margin: 0 0 var(--sp-4);
+}
