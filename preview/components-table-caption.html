@@ -1,0 +1,101 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Caption</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<script src="../dist/brut.js" defer></script>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-8) 0 var(--sp-3); }
+  h3:first-child { margin-top: 0; }
+  .wrap { max-width: 720px; }
+</style></head>
+<body>
+<div class="wrap">
+  <h1>Table — Caption</h1>
+
+  <h3>Title only</h3>
+  <table class="brut-table">
+    <caption class="brut-table__caption">
+      <span class="brut-table__caption-title">Team Members</span>
+    </caption>
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell">Role</th>
+        <th class="brut-table__cell brut-table__cell--num">Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Alice</td>
+        <td class="brut-table__cell">Designer</td>
+        <td class="brut-table__cell brut-table__cell--num">14</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">Bob</td>
+        <td class="brut-table__cell">Engineer</td>
+        <td class="brut-table__cell brut-table__cell--num">7</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Title + Subtitle</h3>
+  <table class="brut-table brut-table--striped">
+    <caption class="brut-table__caption">
+      <span class="brut-table__caption-title">Q2 Inventory</span>
+      <span class="brut-table__caption-subtitle">Last updated 2026-05-01 &middot; 3 SKUs</span>
+    </caption>
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">SKU</th>
+        <th class="brut-table__cell">Title</th>
+        <th class="brut-table__cell brut-table__cell--num">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">A-001</td>
+        <td class="brut-table__cell">Bone-white tee</td>
+        <td class="brut-table__cell brut-table__cell--num">122</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">A-002</td>
+        <td class="brut-table__cell">Hard-shadow cap</td>
+        <td class="brut-table__cell brut-table__cell--num">38</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">A-003</td>
+        <td class="brut-table__cell">Offset tote</td>
+        <td class="brut-table__cell brut-table__cell--num">5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Centered (--center modifier)</h3>
+  <table class="brut-table">
+    <caption class="brut-table__caption brut-table__caption--center">
+      <span class="brut-table__caption-title">Top Performers</span>
+      <span class="brut-table__caption-subtitle">Ranked by score &middot; May 2026</span>
+    </caption>
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell">#</th>
+        <th class="brut-table__cell">Name</th>
+        <th class="brut-table__cell brut-table__cell--num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">1</td>
+        <td class="brut-table__cell">Carla</td>
+        <td class="brut-table__cell brut-table__cell--num">98</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell">2</td>
+        <td class="brut-table__cell">Dan</td>
+        <td class="brut-table__cell brut-table__cell--num">91</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body></html>

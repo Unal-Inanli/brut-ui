@@ -2329,3 +2329,29 @@ button.brut-sidebar__group-title::after {
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
+
+/* ============================================================
+   TABLE — CAPTION
+   Title row inside a <table> above <thead> via <caption>.
+   ============================================================ */
+.brut-table__caption {
+  background: var(--paper);
+  border-bottom: var(--bw-3) solid var(--ink);
+  padding: var(--sp-4) var(--sp-5);
+  text-align: left;
+}
+.brut-table__caption-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  display: block;
+}
+.brut-table__caption-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--concrete-400);
+  display: block;
+  margin-top: var(--sp-1);
+}
+.brut-table__caption--center { text-align: center; }
