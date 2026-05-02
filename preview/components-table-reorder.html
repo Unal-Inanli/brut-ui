@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table — Column Reorder</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: 24px 0 8px; }
+  .wrap { max-width: 880px; }
+  #event-log { margin-top: 16px; font-family: var(--font-mono); font-size: var(--fs-xs); border: var(--bw-2) solid var(--ink); padding: var(--sp-3); background: var(--paper-2); min-height: 48px; white-space: pre-wrap; }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Drag-to-reorder columns</h3>
+  <p style="margin-bottom: 16px; font-size: var(--fs-sm);">Drag any header to reorder columns. The drop indicator (4px ink bar) shows where the column will land.</p>
+
+  <table class="brut-table" data-brut="table-reorder" id="demo-table">
+    <colgroup>
+      <col data-col="name">
+      <col data-col="role">
+      <col data-col="email">
+      <col data-col="joined">
+      <col data-col="qty">
+    </colgroup>
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell" data-col="name">Name</th>
+        <th class="brut-table__cell" data-col="role">Role</th>
+        <th class="brut-table__cell" data-col="email">Email</th>
+        <th class="brut-table__cell" data-col="joined">Joined</th>
+        <th class="brut-table__cell brut-table__cell--num" data-col="qty">Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Alice</td>
+        <td class="brut-table__cell" data-col="role">Designer</td>
+        <td class="brut-table__cell" data-col="email">alice@example.com</td>
+        <td class="brut-table__cell" data-col="joined">2022-03-14</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">14</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Bob</td>
+        <td class="brut-table__cell" data-col="role">Engineer</td>
+        <td class="brut-table__cell" data-col="email">bob@example.com</td>
+        <td class="brut-table__cell" data-col="joined">2021-11-02</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">7</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Carla</td>
+        <td class="brut-table__cell" data-col="role">PM</td>
+        <td class="brut-table__cell" data-col="email">carla@example.com</td>
+        <td class="brut-table__cell" data-col="joined">2023-01-09</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">22</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Dan</td>
+        <td class="brut-table__cell" data-col="role">Engineer</td>
+        <td class="brut-table__cell" data-col="email">dan@example.com</td>
+        <td class="brut-table__cell" data-col="joined">2020-07-30</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">3</td>
+      </tr>
+      <tr class="brut-table__row">
+        <td class="brut-table__cell" data-col="name">Eva</td>
+        <td class="brut-table__cell" data-col="role">Data</td>
+        <td class="brut-table__cell" data-col="email">eva@example.com</td>
+        <td class="brut-table__cell" data-col="joined">2023-06-18</td>
+        <td class="brut-table__cell brut-table__cell--num" data-col="qty">41</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>brut:change event log</h3>
+  <div id="event-log">Drag a column header to see reorder events here.</div>
+</div>
+
+<script src="../dist/brut.js"></script>
+<script>
+  document.getElementById('demo-table').addEventListener('brut:change', function (e) {
+    var log = document.getElementById('event-log');
+    log.textContent = JSON.stringify(e.detail, null, 2);
+  });
+</script>
+</body></html>

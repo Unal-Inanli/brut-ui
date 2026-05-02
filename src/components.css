@@ -437,6 +437,13 @@
 .brut-table--compact .brut-table__cell,
 .brut-table--compact .brut-table__head .brut-table__cell { padding: 6px 10px; }
 
+/* TABLE — COLUMN REORDER */
+.brut-table--reorderable thead { position: relative; }
+.brut-table--reorderable thead th { cursor: grab; }
+.brut-table--reorderable thead th:active { cursor: grabbing; }
+.brut-table__th--dragging { background: var(--concrete-100); }
+.brut-table__drop-indicator { position: absolute; top: 0; height: 100%; width: var(--bw-3); background: var(--ink); pointer-events: none; }
+
 /* ROWS — settings-style list: lead / title+sub / trail. */
 .brut-rows {
   list-style: none;

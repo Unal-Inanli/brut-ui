@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:15:18Z
+ * Built 2026-05-02T19:53:44Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -773,6 +773,13 @@ pre code {
 .brut-table--bordered .brut-table__cell + .brut-table__cell { border-left: var(--bw-2) solid var(--ink); }
 .brut-table--compact .brut-table__cell,
 .brut-table--compact .brut-table__head .brut-table__cell { padding: 6px 10px; }
+
+/* TABLE — COLUMN REORDER */
+.brut-table--reorderable thead { position: relative; }
+.brut-table--reorderable thead th { cursor: grab; }
+.brut-table--reorderable thead th:active { cursor: grabbing; }
+.brut-table__th--dragging { background: var(--concrete-100); }
+.brut-table__drop-indicator { position: absolute; top: 0; height: 100%; width: var(--bw-3); background: var(--ink); pointer-events: none; }
 
 /* ROWS — settings-style list: lead / title+sub / trail. */
 .brut-rows {
