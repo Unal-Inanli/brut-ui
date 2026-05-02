@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Table Pagination</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: var(--sp-6); background: var(--paper); font-family: var(--font-sans); }
+  h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wider); font-size: var(--fs-sm); margin: var(--sp-6) 0 var(--sp-2); }
+  .wrap { max-width: 720px; }
+  .stack { display: flex; flex-direction: column; gap: var(--sp-4); }
+</style></head>
+<body>
+
+<div class="wrap">
+  <h3>Table Pagination — 25 rows, 10 per page</h3>
+
+  <div class="stack">
+    <table class="brut-table" id="demo">
+      <thead class="brut-table__head">
+        <tr class="brut-table__row">
+          <th class="brut-table__cell">#</th>
+          <th class="brut-table__cell">Name</th>
+          <th class="brut-table__cell">Role</th>
+          <th class="brut-table__cell brut-table__cell--num">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="brut-table__row"><td class="brut-table__cell">1</td><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">92</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">2</td><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">88</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">3</td><td class="brut-table__cell">Carla</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">75</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">4</td><td class="brut-table__cell">Dan</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">81</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">5</td><td class="brut-table__cell">Eve</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">95</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">6</td><td class="brut-table__cell">Frank</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">67</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">7</td><td class="brut-table__cell">Grace</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">79</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">8</td><td class="brut-table__cell">Hank</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">84</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">9</td><td class="brut-table__cell">Iris</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">91</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">10</td><td class="brut-table__cell">Jack</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">73</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">11</td><td class="brut-table__cell">Kate</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">86</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">12</td><td class="brut-table__cell">Leo</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">90</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">13</td><td class="brut-table__cell">Mia</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">77</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">14</td><td class="brut-table__cell">Ned</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">70</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">15</td><td class="brut-table__cell">Ora</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">83</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">16</td><td class="brut-table__cell">Pat</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">89</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">17</td><td class="brut-table__cell">Quinn</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">76</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">18</td><td class="brut-table__cell">Rosa</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">87</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">19</td><td class="brut-table__cell">Sam</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">68</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">20</td><td class="brut-table__cell">Tara</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">93</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">21</td><td class="brut-table__cell">Uma</td><td class="brut-table__cell">PM</td><td class="brut-table__cell brut-table__cell--num">78</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">22</td><td class="brut-table__cell">Vic</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">85</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">23</td><td class="brut-table__cell">Wren</td><td class="brut-table__cell">QA</td><td class="brut-table__cell brut-table__cell--num">71</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">24</td><td class="brut-table__cell">Xia</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">94</td></tr>
+        <tr class="brut-table__row"><td class="brut-table__cell">25</td><td class="brut-table__cell">Yuri</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">82</td></tr>
+      </tbody>
+    </table>
+
+    <nav class="brut-pager"
+         aria-label="Table pagination"
+         data-brut="table-pagination"
+         data-brut-table="demo"
+         data-brut-page-size="10">
+    </nav>
+  </div>
+</div>
+
+<script src="../dist/brut.js"></script>
+</body></html>
