@@ -1,0 +1,54 @@
+/* ============================================
+   BRUT — Design Tokens: Semantic
+   Role-based aliases that reference primitives.
+   This is the layer themes override (M4).
+   ============================================ */
+
+:root {
+  /* ---------- FOREGROUND / BACKGROUND ---------- */
+
+  --bg-1:       var(--paper);
+  --bg-2:       var(--paper-2);
+  --bg-3:       var(--bone);
+  --fg-1:       var(--ink);
+  --fg-2:       var(--concrete-400);
+  --fg-3:       var(--concrete-300);
+  --border:     var(--ink);
+
+  /* ---------- STATE ALIASES ---------- */
+
+  /* Semantic state aliases — pair these for form validation, alerts, badges.
+     Components use these instead of reaching for raw --success / --danger. */
+  --bg-success:     var(--success-bg);
+  --text-success:   var(--success);
+  --border-success: var(--success);
+  --bg-error:       var(--danger-bg);
+  --text-error:     var(--danger);
+  --border-error:   var(--danger);
+  --bg-warning:     var(--warning-bg);
+  --text-warning:   var(--warning);
+  --border-warning: var(--warning);
+  --bg-info:        var(--info-bg);
+  --text-info:      var(--info);
+  --border-info:    var(--info);
+
+  /* ---------- SCRIM ---------- */
+
+  /* Scrim — the ONLY sanctioned use of rgba in the kit.
+     Use --scrim-bg for modal/drawer backdrops; --scrim-bg-soft for the
+     striped diagonal scrim accent on disabled states. Components must
+     reference these tokens; raw rgba() in components.css is forbidden. */
+  --scrim-bg:      rgba(0, 0, 0, 0.4);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.06);
+
+  /* ---------- SHADOW SYSTEM ---------- */
+
+  /* Shadow system — HARD-EDGED OFFSET. No blur, no soft drop shadows. */
+  --shadow-xs:  2px 2px 0 0 var(--ink);
+  --shadow-sm:  4px 4px 0 0 var(--ink);
+  --shadow-md:  6px 6px 0 0 var(--ink);
+  --shadow-lg:  8px 8px 0 0 var(--ink);
+  --shadow-xl:  12px 12px 0 0 var(--ink);
+  --shadow-2xl: 16px 16px 0 0 var(--ink);
+  --shadow-2xs: 3px 3px 0 0 var(--ink);
+}

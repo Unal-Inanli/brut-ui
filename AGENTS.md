@@ -10,7 +10,11 @@
 
 ```
 src/                  # source — edit these
-  tokens.css          # design tokens (colors, type, spacing, shadows, borders, motion)
+  tokens/             # design tokens — 3-layer architecture
+    01-primitives.css # raw values (hex, px, font stacks, motion)
+    02-semantic.css   # role aliases (bg/fg, state, scrim, shadows)
+    03-intent.css     # component sizing + layout dimensions
+    index.css         # base element styles + type utilities
   components.css      # component classes + layout primitives
   js/
     core.js           # Brut runtime (registry + init + ready)
@@ -32,7 +36,7 @@ src/                  # source — edit these
       rating.js
       dialog.js
 dist/                 # built bundles — DO NOT hand-edit
-  brut.css            # tokens.css + components.css concatenated
+  brut.css            # tokens/*.css + components.css concatenated
   brut.js             # core.js + every components/*.js concatenated
 docs/index.html       # static Bootstrap-style docs page — links ../dist/brut.css and ../dist/brut.js
 preview/*.html        # per-component playground demos — each links the dist bundles it needs
@@ -51,11 +55,11 @@ After **any** edit to `src/`, rebuild:
 npm run build      # or: bash build.sh
 ```
 
-The build is intentionally trivial — it concatenates `tokens.css + components.css` into `dist/brut.css`, and `core.js + components/*.js` (alphabetical) into `dist/brut.js`, with a version banner on each. There are no preprocessors, no minifiers, no bundlers, no transpilers. If you find yourself wanting one, stop and ask the user first.
+The build is intentionally trivial — it concatenates `tokens/*.css + components.css` into `dist/brut.css`, and `core.js + components/*.js` (alphabetical) into `dist/brut.js`, with a version banner on each. There are no preprocessors, no minifiers, no bundlers, no transpilers. If you find yourself wanting one, stop and ask the user first.
 
 ## How to add a new component
 
-1. **Add the CSS** to `src/components.css` under the `FORMS — extended` banner (or the right component-group banner). Use only tokens from `src/tokens.css` (`var(--ink)`, `var(--sp-3)`, `var(--shadow-sm)`, …) — never hardcode hex/px/rgb.
+1. **Add the CSS** to `src/components.css` under the `FORMS — extended` banner (or the right component-group banner). Use only tokens from `src/tokens/` (`var(--ink)`, `var(--sp-3)`, `var(--shadow-sm)`, …) — never hardcode hex/px/rgb.
 2. **If the component needs interactivity**, add a JS file at `src/js/components/<name>.js` following the conventions in the next section.
 3. **Create a preview page** at `preview/components-<name>.html` mirroring the existing pattern: `<link rel="stylesheet" href="../dist/brut.css"/>`, optional `<script src="../dist/brut.js"></script>` if the component is JS-bound, plus a minimal `<body>` that renders every variant. Use `preview/components-forms.html` as the template for form components, `preview/components-buttons.html` for static visual components.
 4. **Add a docs section** to `docs/index.html` with:
@@ -73,7 +77,7 @@ The build is intentionally trivial — it concatenates `tokens.css + components.
 
 ## How to add a new design token
 
-1. Add the variable to `src/tokens.css` under the right `:root` section (color / type / spacing / shadow / border / motion).
+1. Add the variable to the right layer file in `src/tokens/`: primitives in `01-primitives.css` (raw values), semantic in `02-semantic.css` (aliases), intent in `03-intent.css` (component sizing).
 2. If it deserves to be visible in the docs, add a row to the relevant Foundations section in `docs/index.html` (e.g. a swatch, a shadow card, a scale row).
 3. Rebuild.
 - When adding a token that fits an existing scale (z-index, semantic state, scrim), match the naming pattern of that scale. Prefer extending the existing semantic alias layer (`--bg-*`, `--text-*`, `--border-*`) over exposing raw scales to consumers.
@@ -170,7 +174,7 @@ A "non-form component" (dialog, popover, tooltip, drawer, topnav, sidebar, toast
 
 The hard rules above have a small, explicit set of carve-outs. These are the ONLY exceptions; do not invent new ones.
 
-- **`rgba()`** is allowed only via the `--scrim-bg` and `--scrim-bg-soft` tokens in `src/tokens.css`. Components must reference those tokens — raw `rgba()` literals in `src/components.css` are forbidden.
+- **`rgba()`** is allowed only via the `--scrim-bg` and `--scrim-bg-soft` tokens in `src/tokens/02-semantic.css`. Components must reference those tokens — raw `rgba()` literals in `src/components.css` are forbidden.
 - **Animations longer than 140ms** are allowed only for *loaders* (skeleton sweep, spinner). The 140ms cap applies to **transitions**, not loops. New loaders must be commented `/* Sanctioned exception: loader animations may exceed --dur-base */` so the carve-out is visible.
 - **Gradients** are allowed only for the checkbox checkmark glyph until a 24px stroke-based SVG sprite ships (TODO.md Tier 6.1). Do not use gradients anywhere else; new gradients require user approval.
 

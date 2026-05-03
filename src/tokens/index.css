@@ -1,0 +1,190 @@
+/* ============================================
+   BRUT — Token barrel + base element styles
+   Layer imports (resolved by Vite in M3; ignored by cat-build):
+   @import './01-primitives.css';
+   @import './02-semantic.css';
+   @import './03-intent.css';
+   ============================================ */
+
+/* ---------- SEMANTIC ELEMENT STYLES ---------- */
+
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* All headings reset margins — let the layout decide rhythm. */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { margin: 0; }
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+
+h5, .h5 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+h6, .h6 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+p, .p {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+
+small, .small {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+strong, b { font-weight: var(--fw-bold); }
+em, i    { font-style: italic; }
+
+.eyebrow,
+.label {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+}
+
+/* Anchors — chunky underlines, never thin. */
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+  font-weight: var(--fw-medium);
+}
+a:hover { background: var(--primary); }
+
+/* Lists — square bullets, hard counters. */
+ul, ol {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  padding-left: 1.4em;
+  margin: 0;
+}
+ul { list-style: square; }
+ol { list-style: decimal; }
+li::marker {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+}
+li + li { margin-top: 4px; }
+
+/* Blockquote — left ink rule, body-weight, no italic by default. */
+blockquote {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  border-left: var(--bw-3) solid var(--ink);
+  padding: var(--sp-2) var(--sp-4);
+  margin: 0;
+}
+
+/* Horizontal rule — 4px ink line, the only divider we ship. */
+hr {
+  border: 0;
+  border-top: var(--bw-3) solid var(--ink);
+  margin: var(--sp-6) 0;
+}
+
+/* Inline code, kbd, samp — chunky chip with hard border. */
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  font-weight: var(--fw-medium);
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border: var(--bw-1) solid var(--ink);
+}
+kbd {
+  background: var(--bone);
+  box-shadow: 2px 2px 0 0 var(--ink);
+  font-size: 0.85em;
+}
+
+/* Block code. */
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--sp-4);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  overflow: auto;
+  margin: 0;
+}
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ---------- TYPE UTILITY CLASSES ---------- */
+.t-display    { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-tight); line-height: var(--lh-tight); }
+.t-sans       { font-family: var(--font-sans); }
+.t-mono       { font-family: var(--font-mono); }
+.t-uppercase  { text-transform: uppercase; letter-spacing: var(--tracking-widest); }
+.t-tabular    { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--num-tabular); }
+.t-tight      { letter-spacing: var(--tracking-tight); }
+.t-tightest   { letter-spacing: var(--tracking-tightest); }
+.t-wide       { letter-spacing: var(--tracking-wide); }
+.t-wider      { letter-spacing: var(--tracking-wider); }
+.t-widest     { letter-spacing: var(--tracking-widest); }
+.t-balance    { text-wrap: balance; }
+.t-pretty     { text-wrap: pretty; }
+
+/* Selection: high contrast, no gradient */
+::selection { background: var(--primary); color: var(--ink); }
