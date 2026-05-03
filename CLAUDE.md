@@ -14,6 +14,27 @@
 
 Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `tokens.css`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
 
+> **Note for milestone work:** the "no build-time tool" and "no dependency" constraints above are scheduled to relax at milestone **M3** (Vite migration) and milestone **M6** (config + CLI). They remain in force for any task NOT explicitly tagged with one of those milestones. The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See "1.0 Roadmap" below.
+
+---
+
+## 1.0 Roadmap
+
+BRUT is mid-evolution from a hand-built kit to a publishable, themeable, configurable, AI-native framework. The locked direction is **modern toolchain inside, vanilla output outside** — Vite drives the build but consumers still drop in a script tag. See memory entries `project_brut_philosophy`, `project_brut_build`, `project_brut_themes`, `project_brut_config`, `project_brut_ai_surfaces`, `project_brut_versioning` for the locked decisions and rationale behind each.
+
+| # | Milestone | Goal | Acceptance gate |
+|---|---|---|---|
+| **M1** | Token cleanup | Wrap 152 hardcoded px/% in `components.css` with intent tokens | Workflow B S1 returns zero findings; preview pages render unchanged |
+| **M2** | 3-layer token reorg | Split `tokens.css` into `src/tokens/{01-primitives,02-semantic,03-intent,index}.css` | No hex in `03-intent.css`; build bytes stable |
+| **M3** | Vite migration | Replace `bash build.sh` with `vite build`; emit same `dist/` contract + ESM entry | `pnpm build` produces matching bundles; `pnpm dev` HMR works |
+| **M4** | Themes (3 default) | Runtime `[data-theme]` swap with `brutalist` (default) + `corporate` + `minimal` | Attribute swap flips visuals across every preview page |
+| **M5** | Utilities + Bootstrap CSS parity | `src/utilities.css` (mt-3, d-flex, …) + 12-col grid + validation states + responsive navbar + progress + breadcrumb refresh | All new components have 4 surfaces in sync; tree-shake test passes |
+| **M6** | Configuration + CLI | `brut.config.js` Vite plugin + `npx brut init/add/theme/migrate/doctor/build` | `prefix: 'ui'` rename produces zero `brut-` substrings; `doctor` flags planted issues |
+| **M7** | Manifest + MCP + JS parity | `dist/components.json` + `@brut/mcp` server + carousel/pagination-JS/breadcrumb-JS/navbar-JS | MCP `list_components` enumerates; agent test scaffolds working page via MCP only |
+| **M8** | VitePress docs + 1.0 launch | New `docs-site/` (`preview/` retained as fixtures); npm publish; CDN URLs documented | `npm view @brut/ui` resolves; jsdelivr URL resolves; site deployed |
+
+When picking up a milestone, read the milestone's row, the relevant memory entries, and Workflows C–G below. Don't widen scope — milestones are independently shippable on purpose.
+
 ---
 
 ## Orchestration rules
@@ -120,6 +141,121 @@ grep -rE "ui_kits|jsx|text/babel|React|require\(|import .* from " src/ docs/ pre
 wc -c dist/brut.css dist/brut.js
 ```
 Plus browser smoke: `docs/index.html` and any `preview/*.html` for components touched.
+
+---
+
+## Workflow C — Add a theme
+
+**Trigger:** "make a `<name>` theme", "scaffold theme X", "I want a [vibe] aesthetic".
+
+**Activates after M4.** Until M4 lands, themes have no infrastructure to slot into.
+
+### Phase 1 — Scope (no delegation)
+- Read `src/themes/brutalist.css` (the default) for the full list of overridable semantic tokens.
+- Decide which semantic tokens diverge for this theme (color accent, shadow style, border widths, radii). Reuse the rest.
+- If a needed override has no semantic token yet, **stop** and run Workflow E to add the token first. Do not patch primitives.
+
+### Phase 2 — Atomic tasks
+
+| # | Task | Subagent | Files | Verify |
+|---|---|---|---|---|
+| 1 | Create `src/themes/<name>.css` with `[data-theme="<name>"] { … }` overriding only divergent semantic tokens | general-purpose | `src/themes/<name>.css` | file is single selector block; no primitive token names appear |
+| 2 | Add the theme to docs-site switcher | general-purpose | `docs-site/.vitepress/config.ts` (or equivalent) | switcher renders the new option |
+| 3 | Add the theme to manifest's `themes[]` field | general-purpose | manifest emitter config | rebuild emits manifest containing the theme |
+| 4 | Add a docs page describing the vibe + a snapshot under each top-level component | general-purpose | `docs-site/themes/<name>.md` | live preview renders |
+
+### Phase 3 — Gate
+```bash
+pnpm build
+grep -E "color-(yellow|blue|pink|lime|orange|purple|mint)|--paper|--ink" src/themes/<name>.css   # must be empty — no primitives
+```
+Visual diff: every preview page renders correctly under `<html data-theme="<name>">`.
+
+---
+
+## Workflow D — Add a utility class set
+
+**Trigger:** "add spacing utilities", "add display utilities", "extend utilities.css".
+
+**Activates after M5.**
+
+### Phase 1 — Scope
+- Identify the scale token driving this set (`--sp-*` for spacing, `--fs-*` for type, `--bp-*` for breakpoints).
+- Decide responsive variants: `sm` / `md` / `lg` only. Never add `xs`/`xl`/`2xl` without a documented need.
+
+### Phase 2 — Atomic tasks
+1. Append the utility set to `src/utilities.css` under a banner.
+2. Generate responsive variants via the Vite plugin's utility helper (or by hand for one-off sets).
+3. Document under "Utilities" in `docs-site/`.
+4. Add to manifest's `utilities` section if applicable.
+
+### Phase 3 — Gate
+- Regex match against expected count: `grep -cE "^\.[a-z]+-(0|1|2|3|4|5)\b" src/utilities.css`.
+- Tree-shake test: build with `config.utilities: false` → utilities absent from `dist/brut.css`.
+
+---
+
+## Workflow E — Bump a token without breaking consumers
+
+**Trigger:** "rename `--btn-bg`", "deprecate token X", "the token name doesn't match the new convention".
+
+### Phase 1 — Scope
+- Grep for the token across `src/`, `dist/`, `themes/`, `docs/`, `docs-site/`, `preview/`, `README.md`. Report all references.
+- Classify: rename only (same value, new name) or semantic shift (different value, new name). The latter is always major.
+
+### Phase 2 — Atomic tasks
+1. Add the new token in the appropriate layer (semantic or intent).
+2. Make the old token an alias: `--old-name: var(--new-name);` in the same layer, with a comment `/* @deprecated since 1.x, remove in 2.0 */`.
+3. Update CHANGELOG with the rename and the removal version.
+4. Add a migrate rule to `npx brut migrate` so consumer projects auto-rewrite.
+5. Update all in-repo consumers to the new name (bulk find/replace, then rebuild).
+
+### Phase 3 — Gate
+- Build passes. Both `var(--old-name)` and `var(--new-name)` resolve to the same value.
+- `npx brut doctor --token-deprecations` warns about the old name.
+- The alias has a removal-version comment.
+
+---
+
+## Workflow F — Add a component variant
+
+**Trigger:** "add a `--brand` button", "add a `large` switch", "add color variants for badge".
+
+### Phase 1 — Scope
+- Decide: pure CSS variant (no new tokens) or theme-extending variant (new intent tokens)?
+- Identify the parent component's intent tokens that the variant patches (`--btn-bg`, `--btn-fg`, `--btn-border-w`, …).
+
+### Phase 2 — Atomic tasks
+1. Add the variant to `src/components.css` as `.brut-<component>--<variant>` overriding only the relevant intent tokens. NEVER hardcode values; if a primitive is needed, route through a new intent token.
+2. Update the component's manifest entry — append to `modifiers[]`.
+3. Add the variant to the preview page and the docs section.
+4. If the variant fits a config-time pattern (e.g. brand colors), document it in `brut.config.js` reference under `variants.<component>`.
+
+### Phase 3 — Gate
+- Manifest contains the new modifier.
+- Preview page renders the variant.
+- Removing the modifier class returns the component to default appearance pixel-for-pixel.
+
+---
+
+## Workflow G — Generate manifest entry for a component
+
+**Trigger:** new component lands without manifest, or a component's events/props/modifiers changed.
+
+**Activates after M7.**
+
+### Phase 1 — Scope
+Read the component's JS file (or `*.meta.js` for static-only). Identify: kind (interactive/static), selector, class, modifiers, data-attributes, events, form-state, a11y, examples.
+
+### Phase 2 — Atomic tasks
+1. Add a frontmatter comment block at the top of the component file (or its `.meta.js`) following the manifest schema.
+2. Run the manifest generator (`pnpm build` re-emits `dist/components.json`).
+3. Verify the entry appears in the rebuilt manifest with all required fields.
+
+### Phase 3 — Gate
+- `dist/components.json` contains the component with all required fields.
+- `npx brut doctor` does NOT flag this component as missing manifest data.
+- MCP `get_component(<name>)` returns the populated record.
 
 ---
 
