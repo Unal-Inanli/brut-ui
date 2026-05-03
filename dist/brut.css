@@ -151,6 +151,7 @@
   --z-sticky:   100;   /* sticky headers, sticky table headers */
   --z-dropdown: 200;   /* combobox menus, select dropdowns */
   --z-popover:  300;   /* popovers, tooltips */
+  --z-scrim:    350;   /* backdrop for drawers + modals — sits below them */
   --z-overlay:  400;   /* drawers, partial-screen overlays */
   --z-modal:    500;   /* modal dialogs */
   --z-toast:    600;   /* transient notifications — always on top */
@@ -251,6 +252,7 @@
   --sidebar-w:      240px;
   --split-side-w:   220px;
   --drawer-w:       420px;
+  --dialog-max-w:   560px;
   --popover-min-w:  220px;
   --popover-max-w:  360px;
   --dropdown-max-h: 240px;
@@ -1008,7 +1010,7 @@ pre code {
 /* TOAST — non-blocking transient notifications. Stacked in a corner host. */
 .brut-toast-host {
   position: fixed;
-  z-index: 60;
+  z-index: var(--z-toast);
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
@@ -1076,7 +1078,7 @@ pre code {
 /* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
 .brut-tip {
   position: absolute;
-  z-index: 70;
+  z-index: var(--z-popover);
   background: var(--ink);
   color: var(--paper);
   border: var(--bw-2) solid var(--ink);
@@ -1092,7 +1094,7 @@ pre code {
 /* POPOVER — anchored card opened by trigger. JS positions + toggles. */
 .brut-popover {
   position: absolute;
-  z-index: 65;
+  z-index: var(--z-popover);
   min-width: var(--popover-min-w);
   max-width: var(--popover-max-w);
   background: var(--bone);
@@ -1376,10 +1378,19 @@ pre code {
 }
 /* DIALOG */
 .brut-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-modal);
+  max-width: min(var(--dialog-max-w), calc(100vw - var(--sp-8)));
+  max-height: calc(100vh - var(--sp-8));
+  overflow: auto;
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-xl);
 }
+.brut-dialog[hidden] { display: none; }
 .brut-dialog__head {
   background: var(--ink); color: var(--paper);
   padding: var(--sp-2) var(--sp-3);
@@ -1396,7 +1407,7 @@ pre code {
 /* DRAWER — side sheet. Slides in from any edge. JS toggles --open. */
 .brut-drawer {
   position: fixed;
-  z-index: 80;
+  z-index: var(--z-overlay);
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   display: flex;
@@ -1467,7 +1478,7 @@ pre code {
 /* MENU — context / overflow menu. JS opens, positions, and closes. */
 .brut-menu {
   position: absolute;
-  z-index: 65;
+  z-index: var(--z-dropdown);
   min-width: var(--menu-min-w);
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
@@ -2009,7 +2020,7 @@ pre code {
 .brut-combobox { position: relative; display: block; }
 .brut-combobox__list {
   position: absolute;
-  z-index: 50;
+  z-index: var(--z-dropdown);
   top: calc(100% + var(--sp-1));
   left: 0; right: 0;
   background: var(--bone);
@@ -2079,7 +2090,7 @@ pre code {
 }
 .brut-multiselect__list {
   position: absolute;
-  z-index: 50;
+  z-index: var(--z-dropdown);
   top: calc(100% + var(--sp-1));
   left: 0; right: 0;
   background: var(--bone);
@@ -2182,7 +2193,7 @@ pre code {
 .brut-date__field { width: 100%; box-sizing: border-box; cursor: pointer; }
 .brut-date__pop {
   position: absolute;
-  z-index: 55;
+  z-index: var(--z-dropdown);
   top: calc(100% + var(--sp-1));
   left: 0;
   display: none;
@@ -2274,7 +2285,7 @@ pre code {
 .brut-time__field { width: 100%; box-sizing: border-box; cursor: pointer; }
 .brut-time__pop {
   position: absolute;
-  z-index: 55;
+  z-index: var(--z-dropdown);
   top: calc(100% + var(--sp-1));
   left: 0;
   display: none;
@@ -2872,7 +2883,7 @@ button.brut-sidebar__group-title::after {
       var(--scrim-bg-soft) 0 var(--sp-px),
       transparent var(--sp-px) var(--sp-2)),
     var(--scrim-bg);
-  z-index: 100;
+  z-index: var(--z-scrim);
   display: flex;
   align-items: center;
   justify-content: center;
