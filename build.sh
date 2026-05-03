@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # build.sh — concatenate sources into dist/.
-#   dist/brut.css = src/tokens.css + src/components.css
+#   dist/brut.css = src/tokens/*.css + src/components.css
 #   dist/brut.js  = src/js/core.js + src/js/components/*.js (alphabetical)
 set -euo pipefail
 
@@ -17,8 +17,14 @@ DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
 # ---- CSS bundle -------------------------------------------------
 {
-  printf "/*!\n * BRUT v%s — neo-brutalist HTML+CSS UI kit\n * Built %s\n * Bundle: src/tokens.css + src/components.css\n */\n\n" "$VERSION" "$DATE"
-  cat "$SRC/tokens.css"
+  printf "/*!\n * BRUT v%s — neo-brutalist HTML+CSS UI kit\n * Built %s\n * Bundle: src/tokens/*.css + src/components.css\n */\n\n" "$VERSION" "$DATE"
+  cat "$SRC/tokens/01-primitives.css"
+  printf "\n"
+  cat "$SRC/tokens/02-semantic.css"
+  printf "\n"
+  cat "$SRC/tokens/03-intent.css"
+  printf "\n"
+  cat "$SRC/tokens/index.css"
   printf "\n\n"
   cat "$SRC/components.css"
 } > "$CSS_OUT"

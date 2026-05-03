@@ -1,0 +1,44 @@
+/* ============================================
+   BRUT — Design Tokens: Intent
+   Component-specific sizing and layout.
+   Acceptance gate: NO hex values in this file.
+   ============================================ */
+
+:root {
+  /* ---------- CONTROL SIZING ---------- */
+  --control-sm:   20px;
+  --control-icon: 22px;
+  --control-md:   28px;
+  --control-lg:   36px;
+  --control-xl:   44px;
+
+  /* ---------- COMPONENT INTENT ---------- */
+  --switch-track-w:   56px;
+  --switch-track-h:   30px;
+  --switch-knob-on:   28px;
+  --range-track-h:    14px;
+  --range-dual-h:     26px;
+  --range-dual-thumb: 18px;
+  --otp-cell-h:       52px;
+  --textarea-min-h:   88px;
+  --field-label-w:    160px;
+  --field-min-w:      100px;
+  --search-pad-r:     38px;
+  --badge-pad-v:      5px;
+  --skeleton-h:       96px;
+  --shape-size:       120px;
+
+  /* ---------- LAYOUT ---------- */
+  --container-w:    1200px;
+  --container-sm:   720px;
+  --container-md:   960px;
+  --container-xl:   1440px;
+  --sidebar-w:      240px;
+  --split-side-w:   220px;
+  --drawer-w:       420px;
+  --popover-min-w:  220px;
+  --popover-max-w:  360px;
+  --dropdown-max-h: 240px;
+  --date-w:         280px;
+  --menu-min-w:     200px;
+}
