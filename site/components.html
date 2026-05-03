@@ -64,23 +64,48 @@
       color: var(--concrete-400); margin: 0 0 var(--sp-3);
     }
     .sidebar-heading + .sidebar-heading { margin-top: var(--sp-5); }
-    .filter-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 6px 0; border-bottom: 1px dashed var(--concrete-100);
-      cursor: pointer; gap: var(--sp-2);
+
+    /* ---- CATEGORY PILLS ---- */
+    .filter-pills {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
     }
-    .filter-item label {
-      display: flex; align-items: center; gap: var(--sp-2);
-      cursor: pointer; font-size: var(--fs-sm); flex: 1;
+    .cat-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-2);
+      font-family: var(--font-display);
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: var(--sp-2) var(--sp-3);
+      transition: background var(--dur-fast) var(--ease-snap),
+                  border-color var(--dur-fast) var(--ease-snap),
+                  box-shadow var(--dur-fast) var(--ease-snap),
+                  color var(--dur-fast) var(--ease-snap);
     }
-    .filter-item input[type="checkbox"] {
-      width: 16px; height: 16px; border: 2px solid var(--ink);
-      accent-color: var(--primary); cursor: pointer; flex: none;
+    .cat-pill[aria-pressed="true"] {
+      background: var(--primary);
+      border: 3px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      color: var(--ink);
     }
-    .filter-count {
-      font-family: var(--font-mono); font-size: var(--fs-xs);
-      color: var(--concrete-400); flex: none;
+    .cat-pill[aria-pressed="false"] {
+      background: var(--paper-2);
+      border: 2px solid var(--concrete-300);
+      color: var(--concrete-400);
+      box-shadow: none;
     }
+    .cat-pill:hover { background: var(--primary-soft); }
+    .cat-pill__count {
+      font-family: var(--font-mono);
+      font-size: var(--fs-xs);
+      color: inherit;
+    }
+
     .sidebar-reset {
       width: 100%; margin-top: var(--sp-4); padding: var(--sp-2) var(--sp-3);
       background: var(--paper); border: 3px solid var(--ink);
@@ -120,6 +145,33 @@
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: var(--sp-5);
     }
+
+    /* ---- SECTION HEADERS ---- */
+    .comp-section-header {
+      grid-column: 1 / -1;
+      padding-bottom: var(--sp-3);
+      border-bottom: 4px solid var(--ink);
+      margin-bottom: var(--sp-2);
+    }
+    .comp-section-header__inner {
+      display: flex; align-items: baseline; gap: var(--sp-3); margin-bottom: var(--sp-2);
+    }
+    .comp-section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+    }
+    .comp-section-count {
+      font-family: var(--font-mono);
+      font-size: var(--fs-sm);
+      color: var(--concrete-400);
+    }
+    .comp-section-accent {
+      height: 6px;
+      width: 48px;
+    }
+
     .comp-card {
       border: 4px solid var(--ink); box-shadow: var(--shadow-sm);
       background: var(--bone); display: flex; flex-direction: column;
@@ -145,6 +197,22 @@
       text-transform: uppercase; letter-spacing: var(--tracking-wide);
     }
     .comp-card__meta { display: flex; align-items: center; gap: var(--sp-2); }
+
+    /* ---- COPY BUTTON ---- */
+    .comp-card__copy {
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      font-family: var(--font-mono);
+      font-size: var(--fs-xs);
+      cursor: pointer;
+      padding: 4px 8px;
+      box-shadow: var(--shadow-xs);
+      flex: none;
+      transition: background var(--dur-fast) var(--ease-snap),
+                  border-color var(--dur-fast) var(--ease-snap);
+    }
+    .comp-card__copy:hover { background: var(--primary); }
+    .comp-card__copy.is-copied { background: var(--pop-lime); border-color: var(--ink); }
 
     /* ---- EMPTY STATE ---- */
     .comp-empty {
@@ -176,7 +244,28 @@
 
     @media (max-width: 680px) {
       .gallery-shell { grid-template-columns: 1fr; }
-      .gallery-sidebar { position: static; height: auto; border-right: 0; border-bottom: 4px solid var(--ink); }
+      .gallery-sidebar {
+        position: sticky;
+        top: 64px;
+        z-index: 40;
+        height: auto;
+        border-right: none;
+        border-bottom: 4px solid var(--ink);
+        padding: var(--sp-3) var(--sp-4);
+        overflow-x: auto;
+        overflow-y: hidden;
+        background: var(--paper-2);
+      }
+      .sidebar-heading { display: none; }
+      .filter-pills {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: var(--sp-2);
+        white-space: nowrap;
+      }
+      .sidebar-reset { width: auto; margin-top: 0; }
+      .sidebar-links { display: none; }
     }
   </style>
 </head>
@@ -208,36 +297,22 @@
   <aside class="gallery-sidebar" aria-label="Filter components">
     <p class="sidebar-heading">Filter by category</p>
 
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="form" checked/> Forms</label>
-      <span class="filter-count" data-count="form"></span>
-    </div>
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="interactive" checked/> Interactive</label>
-      <span class="filter-count" data-count="interactive"></span>
-    </div>
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="layout" checked/> Layout</label>
-      <span class="filter-count" data-count="layout"></span>
-    </div>
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="display" checked/> Display</label>
-      <span class="filter-count" data-count="display"></span>
-    </div>
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="type" checked/> Typography</label>
-      <span class="filter-count" data-count="type"></span>
-    </div>
-    <div class="filter-item">
-      <label><input type="checkbox" data-cat="table" checked/> Tables</label>
-      <span class="filter-count" data-count="table"></span>
+    <div class="filter-pills">
+      <button type="button" class="cat-pill" data-cat="form" aria-pressed="true">Forms <span class="cat-pill__count">10</span></button>
+      <button type="button" class="cat-pill" data-cat="interactive" aria-pressed="true">Interactive <span class="cat-pill__count">5</span></button>
+      <button type="button" class="cat-pill" data-cat="layout" aria-pressed="true">Layout <span class="cat-pill__count">2</span></button>
+      <button type="button" class="cat-pill" data-cat="display" aria-pressed="true">Display <span class="cat-pill__count">6</span></button>
+      <button type="button" class="cat-pill" data-cat="type" aria-pressed="true">Typography <span class="cat-pill__count">3</span></button>
+      <button type="button" class="cat-pill" data-cat="table" aria-pressed="true">Tables <span class="cat-pill__count">2</span></button>
     </div>
 
     <button type="button" class="sidebar-reset" onclick="resetFilters()">Reset filters</button>
 
-    <p class="sidebar-heading" style="margin-top: var(--sp-6);">Quick links</p>
-    <a href="../docs/index.html" style="display:block; font-size: var(--fs-sm); color: var(--ink); padding: 4px 0;">Full documentation →</a>
-    <a href="get-started.html" style="display:block; font-size: var(--fs-sm); color: var(--ink); padding: 4px 0;">Get started guide →</a>
+    <div class="sidebar-links">
+      <p class="sidebar-heading" style="margin-top: var(--sp-6);">Quick links</p>
+      <a href="../docs/index.html" style="display:block; font-size: var(--fs-sm); color: var(--ink); padding: 4px 0;">Full documentation →</a>
+      <a href="get-started.html" style="display:block; font-size: var(--fs-sm); color: var(--ink); padding: 4px 0;">Get started guide →</a>
+    </div>
   </aside>
 
   <!-- MAIN CONTENT -->
@@ -257,8 +332,16 @@
 
     <div class="comp-grid" id="comp-grid">
 
-      <!-- ===== FORMS ===== -->
-      <div class="comp-card" data-category="form" data-name="button">
+      <!-- ===== FORMS SECTION ===== -->
+      <div class="comp-section-header" data-section="form">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Forms</span>
+          <span class="comp-section-count" data-section-count="form">10</span>
+        </div>
+        <div class="comp-section-accent" style="background: var(--pop-lime);"></div>
+      </div>
+
+      <div class="comp-card" data-category="form" data-name="button" data-snippet="&lt;button type=&quot;button&quot; class=&quot;brut-btn brut-btn--primary&quot;&gt;Label&lt;/button&gt;">
         <div class="comp-card__preview">
           <button type="button" class="brut-btn brut-btn--primary">Primary</button>
           <button type="button" class="brut-btn">Default</button>
@@ -267,12 +350,13 @@
           <span class="comp-card__name">Button</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#button" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="input">
+      <div class="comp-card" data-category="form" data-name="input" data-snippet="&lt;div class=&quot;brut-field&quot;&gt;&lt;label class=&quot;brut-field__label&quot; for=&quot;my-input&quot;&gt;Label&lt;/label&gt;&lt;input id=&quot;my-input&quot; class=&quot;brut-input&quot; type=&quot;text&quot; placeholder=&quot;Placeholder…&quot;/&gt;&lt;/div&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <div class="brut-field">
             <label class="brut-field__label" for="gc-input">Label</label>
@@ -283,12 +367,13 @@
           <span class="comp-card__name">Input</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#input" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="textarea">
+      <div class="comp-card" data-category="form" data-name="textarea" data-snippet="&lt;textarea class=&quot;brut-input&quot; rows=&quot;3&quot; placeholder=&quot;Text…&quot;&gt;&lt;/textarea&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <textarea class="brut-input" rows="3" placeholder="Write something loud…" style="resize: vertical; width: 100%;"></textarea>
         </div>
@@ -296,12 +381,13 @@
           <span class="comp-card__name">Textarea</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#textarea" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="switch">
+      <div class="comp-card" data-category="form" data-name="switch" data-snippet="&lt;label class=&quot;brut-switch&quot;&gt;&lt;input type=&quot;checkbox&quot; data-brut=&quot;switch&quot;/&gt;&lt;span&gt;&lt;/span&gt;&lt;/label&gt;">
         <div class="comp-card__preview">
           <span class="brut-switch brut-switch--on" data-brut="switch" tabindex="0">
             <input type="checkbox" hidden checked/>
@@ -316,12 +402,13 @@
           <span class="comp-card__name">Switch</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#switch" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="checkbox">
+      <div class="comp-card" data-category="form" data-name="checkbox" data-snippet="&lt;label class=&quot;brut-checkbox&quot;&gt;&lt;input type=&quot;checkbox&quot;/&gt; Label&lt;/label&gt;">
         <div class="comp-card__preview">
           <label class="brut-cb brut-cb--on" data-brut="checkbox" tabindex="0">
             <input type="checkbox" hidden checked/>
@@ -334,12 +421,13 @@
           <span class="comp-card__name">Checkbox</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#checkbox" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="radio">
+      <div class="comp-card" data-category="form" data-name="radio" data-snippet="&lt;label class=&quot;brut-radio&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;group&quot;/&gt; Option&lt;/label&gt;">
         <div class="comp-card__preview">
           <label class="brut-radio brut-radio--on" data-brut="radio">
             <input type="radio" name="gc-radio" hidden checked/>
@@ -352,12 +440,13 @@
           <span class="comp-card__name">Radio</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#radio" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="stepper">
+      <div class="comp-card" data-category="form" data-name="stepper" data-snippet="&lt;div class=&quot;brut-stepper&quot; data-brut=&quot;stepper&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;decrement&quot;&gt;−&lt;/button&gt;&lt;input type=&quot;number&quot; value=&quot;0&quot;/&gt;&lt;button type=&quot;button&quot; data-action=&quot;increment&quot;&gt;+&lt;/button&gt;&lt;/div&gt;">
         <div class="comp-card__preview">
           <div class="brut-stepper" data-brut="stepper" data-min="0" data-max="10">
             <button type="button" class="brut-stepper__btn" aria-label="Decrease">−</button>
@@ -369,12 +458,13 @@
           <span class="comp-card__name">Stepper</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#stepper" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="select">
+      <div class="comp-card" data-category="form" data-name="select" data-snippet="&lt;select class=&quot;brut-select&quot;&gt;&lt;option&gt;Option 1&lt;/option&gt;&lt;/select&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <select class="brut-input">
             <option>Option A</option>
@@ -386,12 +476,13 @@
           <span class="comp-card__name">Select</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#select" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="tag input">
+      <div class="comp-card" data-category="form" data-name="tag input" data-snippet="&lt;div class=&quot;brut-tag-input&quot; data-brut=&quot;tag-input&quot;&gt;&lt;input type=&quot;text&quot; placeholder=&quot;Add tag…&quot;/&gt;&lt;/div&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <div class="brut-tag-input" data-brut="tag-input">
             <div class="brut-tag-input__tags">
@@ -409,12 +500,13 @@
           <span class="comp-card__name">Tag Input</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#tag-input" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="form" data-name="otp">
+      <div class="comp-card" data-category="form" data-name="otp" data-snippet="&lt;div class=&quot;brut-otp&quot; data-brut=&quot;otp&quot;&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;input maxlength=&quot;1&quot;/&gt;&lt;/div&gt;">
         <div class="comp-card__preview">
           <div class="brut-otp" data-brut="otp">
             <input class="brut-otp__cell" type="text" maxlength="1" inputmode="numeric" value="4"/>
@@ -427,13 +519,22 @@
           <span class="comp-card__name">OTP</span>
           <div class="comp-card__meta">
             <span class="brut-badge" style="background: var(--pop-lime)">Form</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#otp" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <!-- ===== INTERACTIVE ===== -->
-      <div class="comp-card" data-category="interactive" data-name="tabs">
+      <!-- ===== INTERACTIVE SECTION ===== -->
+      <div class="comp-section-header" data-section="interactive">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Interactive</span>
+          <span class="comp-section-count" data-section-count="interactive">5</span>
+        </div>
+        <div class="comp-section-accent" style="background: var(--pop-blue);"></div>
+      </div>
+
+      <div class="comp-card" data-category="interactive" data-name="tabs" data-snippet="&lt;div class=&quot;brut-tabs&quot; data-brut=&quot;tabs&quot;&gt;&lt;div class=&quot;brut-tabs__list&quot;&gt;&lt;button type=&quot;button&quot; data-tab=&quot;a&quot;&gt;Tab A&lt;/button&gt;&lt;button type=&quot;button&quot; data-tab=&quot;b&quot;&gt;Tab B&lt;/button&gt;&lt;/div&gt;&lt;div data-panel=&quot;a&quot;&gt;Content A&lt;/div&gt;&lt;div data-panel=&quot;b&quot; hidden&gt;Content B&lt;/div&gt;&lt;/div&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <div class="brut-tabs" data-brut="tabs">
             <div class="brut-tabs__list" role="tablist">
@@ -447,13 +548,14 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Tabs</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-blue); color: var(--paper)">Interactive</span>
+            <span class="brut-badge" style="background: var(--pop-blue)">Interactive</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#tabs" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="interactive" data-name="accordion">
+      <div class="comp-card" data-category="interactive" data-name="accordion" data-snippet="&lt;div class=&quot;brut-accordion&quot; data-brut=&quot;accordion&quot;&gt;&lt;details&gt;&lt;summary&gt;Title&lt;/summary&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/details&gt;&lt;/div&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <div class="brut-accordion" data-brut="accordion">
             <div class="brut-accordion__item brut-accordion__item--open">
@@ -470,13 +572,14 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Accordion</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-blue); color: var(--paper)">Interactive</span>
+            <span class="brut-badge" style="background: var(--pop-blue)">Interactive</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#accordion" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="interactive" data-name="dialog modal">
+      <div class="comp-card" data-category="interactive" data-name="dialog modal" data-snippet="&lt;dialog class=&quot;brut-dialog&quot; id=&quot;my-dialog&quot;&gt;&lt;p&gt;Content&lt;/p&gt;&lt;form method=&quot;dialog&quot;&gt;&lt;button&gt;Close&lt;/button&gt;&lt;/form&gt;&lt;/dialog&gt;">
         <div class="comp-card__preview">
           <button type="button" class="brut-btn" onclick="document.getElementById('gc-dialog').showModal()">Open dialog</button>
           <dialog id="gc-dialog" class="brut-dialog" style="max-width: 260px;">
@@ -494,26 +597,28 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Dialog</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-blue); color: var(--paper)">Interactive</span>
+            <span class="brut-badge" style="background: var(--pop-blue)">Interactive</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#dialog" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="interactive" data-name="tooltip">
+      <div class="comp-card" data-category="interactive" data-name="tooltip" data-snippet="&lt;span class=&quot;brut-tooltip&quot; data-tip=&quot;Tip text&quot;&gt;Hover me&lt;/span&gt;">
         <div class="comp-card__preview">
           <button type="button" class="brut-btn" data-brut="tooltip" data-brut-tip="Hard shadows only." data-brut-tip-side="top">Hover me</button>
         </div>
         <div class="comp-card__footer">
           <span class="comp-card__name">Tooltip</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-blue); color: var(--paper)">Interactive</span>
+            <span class="brut-badge" style="background: var(--pop-blue)">Interactive</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#tooltip" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="interactive" data-name="menu dropdown">
+      <div class="comp-card" data-category="interactive" data-name="menu dropdown" data-snippet="&lt;div class=&quot;brut-menu&quot; data-brut=&quot;menu&quot;&gt;&lt;button type=&quot;button&quot; data-trigger&gt;Open&lt;/button&gt;&lt;ul class=&quot;brut-menu__list&quot;&gt;&lt;li&gt;&lt;button type=&quot;button&quot;&gt;Item&lt;/button&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;">
         <div class="comp-card__preview">
           <button type="button" class="brut-btn brut-btn--sm" data-brut-menu-open="gc-menu">Menu ▾</button>
           <div class="brut-menu" id="gc-menu" data-brut="menu" hidden>
@@ -526,167 +631,23 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Menu</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-blue); color: var(--paper)">Interactive</span>
+            <span class="brut-badge" style="background: var(--pop-blue)">Interactive</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#menu" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <!-- ===== DISPLAY ===== -->
-      <div class="comp-card" data-category="display" data-name="badge">
-        <div class="comp-card__preview" style="flex-wrap: wrap; gap: var(--sp-2);">
-          <span class="brut-badge">Default</span>
-          <span class="brut-badge brut-badge--ok">OK</span>
-          <span class="brut-badge brut-badge--warn">Warn</span>
-          <span class="brut-badge brut-badge--err">Error</span>
+      <!-- ===== LAYOUT SECTION ===== -->
+      <div class="comp-section-header" data-section="layout">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Layout</span>
+          <span class="comp-section-count" data-section-count="layout">2</span>
         </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Badge</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#badge" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
+        <div class="comp-section-accent" style="background: var(--pop-orange);"></div>
       </div>
 
-      <div class="comp-card" data-category="display" data-name="alert">
-        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
-          <div class="brut-alert brut-alert--ok" style="margin-bottom: 8px;">
-            <span class="brut-alert__icon">✓</span>
-            <div>Changes saved.</div>
-          </div>
-          <div class="brut-alert brut-alert--err">
-            <span class="brut-alert__icon">!</span>
-            <div>Permission denied.</div>
-          </div>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Alert</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#alert" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="display" data-name="avatar">
-        <div class="comp-card__preview">
-          <div class="brut-avatar-group">
-            <span class="brut-avatar" style="background: var(--primary)">RX</span>
-            <span class="brut-avatar" style="background: var(--pop-pink)">AB</span>
-            <span class="brut-avatar" style="background: var(--pop-lime)">CD</span>
-            <span class="brut-avatar-group__more">+4</span>
-          </div>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Avatar</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#avatar" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="display" data-name="spinner skeleton loading">
-        <div class="comp-card__preview" style="gap: var(--sp-4);">
-          <span class="brut-spinner" aria-label="Loading"></span>
-          <div class="brut-skeleton" style="width: 80px; height: 16px;"></div>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Spinner / Skeleton</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#spinner" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="display" data-name="card">
-        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
-          <div class="brut-card" style="padding: var(--sp-3);">
-            <p class="brut-eyebrow">Category</p>
-            <h4 class="brut-h4">Card title</h4>
-            <p class="brut-small">Card body text goes here.</p>
-          </div>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Card</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#card" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="display" data-name="breadcrumbs navigation">
-        <div class="comp-card__preview">
-          <ol class="brut-crumbs" aria-label="Breadcrumb">
-            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
-            <li class="brut-crumbs__sep" aria-hidden="true">/</li>
-            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Components</a></li>
-            <li class="brut-crumbs__sep" aria-hidden="true">/</li>
-            <li class="brut-crumbs__item brut-crumbs__current" aria-current="page">Badge</li>
-          </ol>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Breadcrumbs</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-orange)">Display</span>
-            <a href="../docs/index.html#breadcrumbs" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== TYPOGRAPHY ===== -->
-      <div class="comp-card" data-category="type" data-name="display heading typography">
-        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
-          <div class="brut-stack brut-stack--xs">
-            <p class="brut-display-3" style="font-size: var(--fs-xl);">Display</p>
-            <h2 class="brut-h2">Heading H2</h2>
-            <p class="brut-lead" style="font-size: var(--fs-sm);">Lead paragraph.</p>
-          </div>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Type Scale</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-purple); color: var(--paper)">Type</span>
-            <a href="../docs/index.html#typography" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="type" data-name="code pre kbd monospace">
-        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
-          <code class="brut-code">brut-btn--primary</code>
-          <br/><br/>
-          <kbd class="brut-kbd">⌘ K</kbd>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Code / Kbd</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-purple); color: var(--paper)">Type</span>
-            <a href="../docs/index.html#code" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="comp-card" data-category="type" data-name="badge eyebrow kicker label overline">
-        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
-          <p class="brut-eyebrow">Eyebrow label</p>
-          <p class="brut-kicker">★ Kicker text</p>
-          <p class="brut-overline">Overline text</p>
-        </div>
-        <div class="comp-card__footer">
-          <span class="comp-card__name">Labels</span>
-          <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-purple); color: var(--paper)">Type</span>
-            <a href="../docs/index.html#typography" class="brut-btn brut-btn--sm">Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== LAYOUT ===== -->
-      <div class="comp-card" data-category="layout" data-name="stack cluster grid layout">
+      <div class="comp-card" data-category="layout" data-name="stack cluster grid layout" data-snippet="&lt;div class=&quot;brut-stack&quot;&gt;&lt;div&gt;Item 1&lt;/div&gt;&lt;div&gt;Item 2&lt;/div&gt;&lt;/div&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
           <div class="brut-cluster brut-cluster--sm" style="margin-bottom: var(--sp-2);">
             <span class="brut-badge">A</span>
@@ -701,13 +662,14 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Stack / Cluster</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-mint)">Layout</span>
+            <span class="brut-badge" style="background: var(--pop-orange)">Layout</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#layout" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="layout" data-name="topnav header navigation">
+      <div class="comp-card" data-category="layout" data-name="topnav header navigation" data-snippet="&lt;nav class=&quot;brut-topnav&quot;&gt;&lt;a class=&quot;brut-topnav__brand&quot; href=&quot;#&quot;&gt;Brand&lt;/a&gt;&lt;/nav&gt;">
         <div class="comp-card__preview" style="display:block; padding: 0;">
           <div style="background: var(--paper); border-bottom: 3px solid var(--ink); padding: 8px 12px; display: flex; align-items: center; gap: 8px;">
             <span style="width: 24px; height: 24px; background: var(--primary); border: 2px solid var(--ink); display:grid; place-items:center; font-family: var(--font-display); font-size: 12px;">B</span>
@@ -721,14 +683,201 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Topnav</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--pop-mint)">Layout</span>
+            <span class="brut-badge" style="background: var(--pop-orange)">Layout</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#topnav" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <!-- ===== TABLES ===== -->
-      <div class="comp-card" data-category="table" data-name="table rows data grid">
+      <!-- ===== DISPLAY SECTION ===== -->
+      <div class="comp-section-header" data-section="display">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Display</span>
+          <span class="comp-section-count" data-section-count="display">6</span>
+        </div>
+        <div class="comp-section-accent" style="background: var(--pop-pink);"></div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="badge" data-snippet="&lt;span class=&quot;brut-badge&quot;&gt;Badge&lt;/span&gt;">
+        <div class="comp-card__preview" style="flex-wrap: wrap; gap: var(--sp-2);">
+          <span class="brut-badge">Default</span>
+          <span class="brut-badge brut-badge--ok">OK</span>
+          <span class="brut-badge brut-badge--warn">Warn</span>
+          <span class="brut-badge brut-badge--err">Error</span>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Badge</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#badge" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="alert" data-snippet="&lt;div class=&quot;brut-alert&quot;&gt;Alert message&lt;/div&gt;">
+        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
+          <div class="brut-alert brut-alert--ok" style="margin-bottom: 8px;">
+            <span class="brut-alert__icon">✓</span>
+            <div>Changes saved.</div>
+          </div>
+          <div class="brut-alert brut-alert--err">
+            <span class="brut-alert__icon">!</span>
+            <div>Permission denied.</div>
+          </div>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Alert</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#alert" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="avatar" data-snippet="&lt;span class=&quot;brut-avatar&quot;&gt;AB&lt;/span&gt;">
+        <div class="comp-card__preview">
+          <div class="brut-avatar-group">
+            <span class="brut-avatar" style="background: var(--primary)">RX</span>
+            <span class="brut-avatar" style="background: var(--pop-pink)">AB</span>
+            <span class="brut-avatar" style="background: var(--pop-lime)">CD</span>
+            <span class="brut-avatar-group__more">+4</span>
+          </div>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Avatar</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#avatar" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="spinner skeleton loading" data-snippet="&lt;span class=&quot;brut-spinner&quot; aria-label=&quot;Loading&quot;&gt;&lt;/span&gt;">
+        <div class="comp-card__preview" style="gap: var(--sp-4);">
+          <span class="brut-spinner" aria-label="Loading"></span>
+          <div class="brut-skeleton" style="width: 80px; height: 16px;"></div>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Spinner / Skeleton</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#spinner" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="card" data-snippet="&lt;div class=&quot;brut-card&quot;&gt;&lt;div class=&quot;brut-card__body&quot;&gt;Content&lt;/div&gt;&lt;/div&gt;">
+        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
+          <div class="brut-card" style="padding: var(--sp-3);">
+            <p class="brut-eyebrow">Category</p>
+            <h4 class="brut-h4">Card title</h4>
+            <p class="brut-small">Card body text goes here.</p>
+          </div>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Card</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#card" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="display" data-name="breadcrumbs navigation" data-snippet="&lt;nav class=&quot;brut-breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Current&lt;/li&gt;&lt;/ol&gt;&lt;/nav&gt;">
+        <div class="comp-card__preview">
+          <ol class="brut-crumbs" aria-label="Breadcrumb">
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
+            <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+            <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Components</a></li>
+            <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+            <li class="brut-crumbs__item brut-crumbs__current" aria-current="page">Badge</li>
+          </ol>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Breadcrumbs</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-pink)">Display</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#breadcrumbs" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TYPOGRAPHY SECTION ===== -->
+      <div class="comp-section-header" data-section="type">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Typography</span>
+          <span class="comp-section-count" data-section-count="type">3</span>
+        </div>
+        <div class="comp-section-accent" style="background: var(--pop-purple);"></div>
+      </div>
+
+      <div class="comp-card" data-category="type" data-name="display heading typography" data-snippet="&lt;h1 class=&quot;brut-display&quot;&gt;Display Heading&lt;/h1&gt;">
+        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
+          <div class="brut-stack brut-stack--xs">
+            <p class="brut-display-3" style="font-size: var(--fs-xl);">Display</p>
+            <h2 class="brut-h2">Heading H2</h2>
+            <p class="brut-lead" style="font-size: var(--fs-sm);">Lead paragraph.</p>
+          </div>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Type Scale</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-purple)">Type</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#typography" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="type" data-name="code pre kbd monospace" data-snippet="&lt;code class=&quot;brut-code&quot;&gt;code here&lt;/code&gt;">
+        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
+          <code class="brut-code">brut-btn--primary</code>
+          <br/><br/>
+          <kbd class="brut-kbd">⌘ K</kbd>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Code / Kbd</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-purple)">Type</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#code" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card" data-category="type" data-name="badge eyebrow kicker label overline" data-snippet="&lt;span class=&quot;brut-label&quot;&gt;Label Text&lt;/span&gt;">
+        <div class="comp-card__preview" style="display:block; padding: var(--sp-3);">
+          <p class="brut-eyebrow">Eyebrow label</p>
+          <p class="brut-kicker">★ Kicker text</p>
+          <p class="brut-overline">Overline text</p>
+        </div>
+        <div class="comp-card__footer">
+          <span class="comp-card__name">Labels</span>
+          <div class="comp-card__meta">
+            <span class="brut-badge" style="background: var(--pop-purple)">Type</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
+            <a href="../docs/index.html#typography" class="brut-btn brut-btn--sm">Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TABLES SECTION ===== -->
+      <div class="comp-section-header" data-section="table">
+        <div class="comp-section-header__inner">
+          <span class="comp-section-title">Tables</span>
+          <span class="comp-section-count" data-section-count="table">2</span>
+        </div>
+        <div class="comp-section-accent" style="background: var(--pop-mint);"></div>
+      </div>
+
+      <div class="comp-card" data-category="table" data-name="table rows data grid" data-snippet="&lt;table class=&quot;brut-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Col&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Cell&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-2); overflow-x: auto;">
           <table class="brut-table" style="font-size: var(--fs-xs); min-width: 200px;">
             <thead>
@@ -752,13 +901,14 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Table</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--concrete-200)">Table</span>
+            <span class="brut-badge" style="background: var(--pop-mint)">Table</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#table" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
       </div>
 
-      <div class="comp-card" data-category="table" data-name="rows list item">
+      <div class="comp-card" data-category="table" data-name="rows list item" data-snippet="&lt;ul class=&quot;brut-rows&quot;&gt;&lt;li class=&quot;brut-row&quot;&gt;Row item&lt;/li&gt;&lt;/ul&gt;">
         <div class="comp-card__preview" style="display:block; padding: var(--sp-2);">
           <ul class="brut-rows brut-rows--bordered" style="font-size: var(--fs-xs);">
             <li class="brut-rows__item">
@@ -779,7 +929,8 @@
         <div class="comp-card__footer">
           <span class="comp-card__name">Rows</span>
           <div class="comp-card__meta">
-            <span class="brut-badge" style="background: var(--concrete-200)">Table</span>
+            <span class="brut-badge" style="background: var(--pop-mint)">Table</span>
+            <button type="button" class="comp-card__copy" aria-label="Copy HTML snippet" onclick="copySnippet(this)">&lt;/&gt;</button>
             <a href="../docs/index.html#rows" class="brut-btn brut-btn--sm">Docs</a>
           </div>
         </div>
@@ -788,7 +939,7 @@
       <!-- EMPTY STATE -->
       <div class="comp-empty" id="comp-empty" hidden>
         <p class="brut-h3" style="margin: 0 0 var(--sp-3);">No components found.</p>
-        <p class="brut-body">Try a different search term or reset the category filters.</p>
+        <p class="brut-body">No components match <span id="empty-query">selected filters</span>. Try a different search term or reset the category filters.</p>
         <button type="button" class="brut-btn brut-btn--sm" style="margin-top: var(--sp-4);" onclick="resetFilters()">Reset filters</button>
       </div>
 
@@ -818,57 +969,120 @@
 
 <script src="../dist/brut.js"></script>
 <script>
-  var allCards = Array.from(document.querySelectorAll('[data-component], .comp-card'));
-  var searchInput = document.getElementById('comp-search');
-  var emptyState = document.getElementById('comp-empty');
-  var countEl = document.getElementById('visible-count');
-
-  // Initialize category counts
-  var categories = ['form','interactive','layout','display','type','table'];
-  categories.forEach(function(cat) {
-    var count = document.querySelectorAll('.comp-card[data-category="' + cat + '"]').length;
-    var el = document.querySelector('[data-count="' + cat + '"]');
-    if (el) el.textContent = count;
+(function() {
+  // Category pill toggle
+  var pills = document.querySelectorAll('.cat-pill');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      var pressed = this.getAttribute('aria-pressed') === 'true';
+      this.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+      this.classList.toggle('is-active', !pressed);
+      filterComponents();
+    });
   });
 
+  // Search
+  var searchInput = document.getElementById('comp-search');
+  searchInput.addEventListener('input', filterComponents);
+
   function getActiveCategories() {
-    return Array.from(document.querySelectorAll('[data-cat]:checked')).map(function(cb) {
-      return cb.dataset.cat;
+    var active = [];
+    pills.forEach(function(pill) {
+      if (pill.getAttribute('aria-pressed') === 'true') {
+        active.push(pill.dataset.cat);
+      }
     });
+    return active;
   }
 
   function filterComponents() {
     var active = getActiveCategories();
-    var q = searchInput.value.toLowerCase().trim();
-    var visible = 0;
+    var query = searchInput.value.trim().toLowerCase();
+    var cards = document.querySelectorAll('.comp-card');
+    var visibleByCategory = {};
+    var totalVisible = 0;
 
-    document.querySelectorAll('.comp-card').forEach(function(card) {
+    cards.forEach(function(card) {
       var cat = card.dataset.category;
-      var name = (card.dataset.name || '').toLowerCase();
-      var catMatch = active.length === 0 || active.includes(cat);
-      var searchMatch = !q || name.includes(q);
+      var name = card.dataset.name || '';
+      var catMatch = active.length === 0 ? false : active.indexOf(cat) !== -1;
+      var searchMatch = !query || name.toLowerCase().indexOf(query) !== -1;
       var show = catMatch && searchMatch;
       card.hidden = !show;
-      if (show) visible++;
+      if (show) {
+        visibleByCategory[cat] = (visibleByCategory[cat] || 0) + 1;
+        totalVisible++;
+      }
     });
 
-    emptyState.hidden = visible > 0;
-    if (countEl) countEl.textContent = visible;
+    // Update section headers
+    var headers = document.querySelectorAll('.comp-section-header');
+    headers.forEach(function(header) {
+      var sec = header.dataset.section;
+      var count = visibleByCategory[sec] || 0;
+      var countEl = header.querySelector('[data-section-count]');
+      if (countEl) countEl.textContent = count;
+      header.hidden = count === 0;
+    });
+
+    // Update cat pill counts
+    pills.forEach(function(pill) {
+      var cat = pill.dataset.cat;
+      var countEl = pill.querySelector('.cat-pill__count');
+      if (countEl) {
+        // total count for this category (always show total, not filtered)
+        var total = document.querySelectorAll('.comp-card[data-category="' + cat + '"]').length;
+        countEl.textContent = total;
+      }
+    });
+
+    // Update visible count
+    var visibleCountEl = document.getElementById('visible-count');
+    if (visibleCountEl) visibleCountEl.textContent = totalVisible;
+
+    // Empty state
+    var emptyEl = document.getElementById('comp-empty');
+    if (emptyEl) {
+      emptyEl.hidden = totalVisible > 0;
+      var queryEl = document.getElementById('empty-query');
+      if (queryEl) queryEl.textContent = query ? '"' + query + '"' : 'selected filters';
+    }
   }
 
-  document.querySelectorAll('[data-cat]').forEach(function(cb) {
-    cb.addEventListener('change', filterComponents);
-  });
-  searchInput.addEventListener('input', filterComponents);
+  // Copy snippet
+  window.copySnippet = function(btn) {
+    var card = btn.closest('.comp-card');
+    var snippet = card ? card.dataset.snippet : '';
+    if (!snippet) return;
+    navigator.clipboard.writeText(snippet).then(function() {
+      var orig = btn.innerHTML;
+      btn.innerHTML = '&#10003;';
+      btn.classList.add('is-copied');
+      btn.setAttribute('aria-label', 'Copied!');
+      setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.classList.remove('is-copied');
+        btn.setAttribute('aria-label', 'Copy HTML snippet');
+      }, 2000);
+    });
+  };
 
-  function resetFilters() {
-    document.querySelectorAll('[data-cat]').forEach(function(cb) { cb.checked = true; });
+  // Reset filters
+  window.resetFilters = function() {
+    pills.forEach(function(pill) {
+      pill.setAttribute('aria-pressed', 'true');
+      pill.classList.add('is-active');
+    });
     searchInput.value = '';
     filterComponents();
-  }
+  };
 
-  // Init count
+  // Init: set pill active class + counts on load
+  pills.forEach(function(pill) {
+    pill.classList.add('is-active');
+  });
   filterComponents();
+})();
 </script>
 </body>
 </html>
