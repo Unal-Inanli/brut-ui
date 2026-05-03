@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Dashboard — BRUT Demo</title>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      font-family: var(--font-sans);
+      color: var(--ink);
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh;
+    }
+    .dashboard .brut-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .dashboard__main {
+      padding: var(--sp-6) var(--sp-8);
+      overflow-y: auto;
+      min-width: 0;
+    }
+    .dashboard__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-6);
+    }
+
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .stat-card__trend {
+      font-family: var(--font-mono);
+      font-size: var(--fs-xs);
+    }
+    .stat-card__trend--up { color: var(--success); }
+    .stat-card__trend--down { color: var(--danger); }
+
+    .dashboard__stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-8);
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard__stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .dashboard .brut-sidebar {
+        position: static;
+        height: auto;
+        width: 100%;
+        border-right: 0;
+        border-bottom: var(--bw-3) solid var(--ink);
+      }
+      .dashboard__main { padding: var(--sp-4); }
+      .dashboard__stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="brut-sidebar" data-brut="sidebar">
+    <a class="brut-sidebar__brand" href="index.html">
+      <span style="width:28px;height:28px;background:var(--primary);border:var(--bw-2) solid var(--ink);display:grid;place-items:center;font-family:var(--font-display);font-size:14px;color:var(--ink);">B</span>
+      <span>BRUT ADMIN</span>
+    </a>
+
+    <div class="brut-sidebar__group">
+      <button class="brut-sidebar__group-title" type="button">Main</button>
+      <a class="brut-sidebar__item brut-sidebar__item--active" href="#">
+        <span class="brut-sidebar__icon">&#9670;</span> Dashboard
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9636;</span> Analytics
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9776;</span> Reports
+      </a>
+    </div>
+
+    <div class="brut-sidebar__group">
+      <button class="brut-sidebar__group-title" type="button">Commerce</button>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9744;</span> Orders
+        <span class="brut-badge" style="margin-left:auto;">12</span>
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9679;</span> Products
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9734;</span> Customers
+      </a>
+    </div>
+
+    <div class="brut-sidebar__group brut-sidebar__group--closed">
+      <button class="brut-sidebar__group-title" type="button">Settings</button>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9881;</span> Team
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#9638;</span> Billing
+      </a>
+      <a class="brut-sidebar__item" href="#">
+        <span class="brut-sidebar__icon">&#8644;</span> Integrations
+      </a>
+    </div>
+
+    <div style="margin-top:auto;padding:var(--sp-4);border-top:var(--bw-2) solid var(--ink);">
+      <div class="d-flex align-items-center gap-2">
+        <span class="brut-avatar" style="width:32px;height:32px;font-size:var(--fs-xs);background:var(--pop-lime);">JD</span>
+        <span class="fs-sm fw-medium">Jane Doe</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="dashboard__main">
+
+    <!-- Breadcrumbs -->
+    <nav class="brut-crumbs" aria-label="Breadcrumb" style="margin-bottom:var(--sp-4);">
+      <span class="brut-crumbs__item"><a class="brut-crumbs__link" href="index.html">Home</a></span>
+      <span class="brut-crumbs__sep">/</span>
+      <span class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Admin</a></span>
+      <span class="brut-crumbs__sep">/</span>
+      <span class="brut-crumbs__item" aria-current="page"><span class="brut-crumbs__current">Dashboard</span></span>
+    </nav>
+
+    <!-- Page header -->
+    <div class="dashboard__header">
+      <div>
+        <p class="brut-eyebrow" style="margin:0 0 var(--sp-1) 0;">Overview</p>
+        <h1 class="brut-h1" style="margin:0;">Dashboard</h1>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="brut-badge brut-badge--ok">Live</span>
+        <button class="brut-btn brut-btn--sm" type="button" data-brut-open="notif-drawer">Notifications</button>
+        <button class="brut-btn brut-btn--primary brut-btn--sm" type="button">+ New Report</button>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <section class="dashboard__stats">
+      <div class="brut-card stat-card">
+        <span class="brut-eyebrow">Revenue</span>
+        <span class="brut-num">$84.2k</span>
+        <span class="stat-card__trend stat-card__trend--up">+12.4% vs last month</span>
+      </div>
+      <div class="brut-card stat-card">
+        <span class="brut-eyebrow">Users</span>
+        <span class="brut-num">2,847</span>
+        <span class="stat-card__trend stat-card__trend--up">+8.1%</span>
+      </div>
+      <div class="brut-card stat-card">
+        <span class="brut-eyebrow">Orders</span>
+        <span class="brut-num">1,024</span>
+        <span class="stat-card__trend stat-card__trend--down">-3.2%</span>
+      </div>
+      <div class="brut-card stat-card">
+        <span class="brut-eyebrow">Conversion</span>
+        <span class="brut-num">4.6%</span>
+        <span class="stat-card__trend stat-card__trend--up">+0.8pt</span>
+      </div>
+    </section>
+
+    <!-- Alert -->
+    <div class="brut-alert brut-alert--info" style="margin-bottom:var(--sp-6);">
+      <span class="brut-alert__icon">i</span>
+      <div><strong>System update scheduled.</strong> Maintenance window: Sunday 02:00–04:00 UTC.</div>
+    </div>
+
+    <!-- Progress / Goals -->
+    <div class="brut-card" style="margin-bottom:var(--sp-8);">
+      <div class="d-flex align-items-center justify-content-between" style="margin-bottom:var(--sp-5);">
+        <h2 class="brut-h4" style="margin:0;">Monthly Goals</h2>
+        <span class="brut-caption text-muted">May 2026</span>
+      </div>
+
+      <div class="brut-stack" style="--stack-gap:var(--sp-5);">
+        <div>
+          <div class="d-flex align-items-center justify-content-between" style="margin-bottom:var(--sp-1);">
+            <span class="fs-sm fw-medium">Revenue Target</span>
+            <span class="font-mono fs-sm">$84.2k / $100k</span>
+          </div>
+          <div class="brut-progress brut-progress--success" style="--progress:84;" aria-label="84%">
+            <div class="brut-progress__bar"></div>
+            <span class="brut-progress__label">84%</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="d-flex align-items-center justify-content-between" style="margin-bottom:var(--sp-1);">
+            <span class="fs-sm fw-medium">New Signups</span>
+            <span class="font-mono fs-sm">2,847 / 3,000</span>
+          </div>
+          <div class="brut-progress" style="--progress:95;" aria-label="95%">
+            <div class="brut-progress__bar"></div>
+            <span class="brut-progress__label">95%</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="d-flex align-items-center justify-content-between" style="margin-bottom:var(--sp-1);">
+            <span class="fs-sm fw-medium">Retention Rate</span>
+            <span class="font-mono fs-sm">62% / 80%</span>
+          </div>
+          <div class="brut-progress brut-progress--warning" style="--progress:62;" aria-label="62%">
+            <div class="brut-progress__bar"></div>
+            <span class="brut-progress__label">62%</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="d-flex align-items-center justify-content-between" style="margin-bottom:var(--sp-1);">
+            <span class="fs-sm fw-medium">Support Tickets Closed</span>
+            <span class="font-mono fs-sm">34 / 120</span>
+          </div>
+          <div class="brut-progress brut-progress--danger" style="--progress:28;" aria-label="28%">
+            <div class="brut-progress__bar"></div>
+            <span class="brut-progress__label">28%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs + Table section -->
+    <section>
+      <div class="brut-tabs" data-brut="tabs">
+        <button class="brut-tab brut-tab--on" type="button" data-brut-tab="orders">Orders</button>
+        <button class="brut-tab" type="button" data-brut-tab="products">Products</button>
+        <button class="brut-tab" type="button" data-brut-tab="customers">Customers</button>
+      </div>
+
+      <!-- Orders panel -->
+      <div data-brut-panel="orders">
+        <div class="brut-table-toolbar">
+          <div class="brut-table-toolbar__title">Recent Orders <span>(248)</span></div>
+          <div class="brut-table-toolbar__search">
+            <input class="brut-input" type="search" placeholder="Search orders…" autocomplete="off"/>
+          </div>
+          <div class="brut-table-toolbar__actions">
+            <button class="brut-btn brut-btn--sm" type="button">Export</button>
+          </div>
+        </div>
+
+        <div class="brut-table-filter" data-brut="table-filter" data-brut-table="orders-table">
+          <label class="brut-field__label" for="q-orders" style="margin:0;">Filter</label>
+          <input id="q-orders" class="brut-input" type="search" placeholder="Filter rows…" autocomplete="off"/>
+          <span class="brut-table-filter__count"></span>
+        </div>
+
+        <div class="brut-table-wrap">
+          <table class="brut-table brut-table--striped" id="orders-table" data-brut="table">
+            <thead class="brut-table__head">
+              <tr class="brut-table__row">
+                <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="id">Order</th>
+                <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="customer">Customer</th>
+                <th class="brut-table__cell" data-sort-key="status">Status</th>
+                <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="total">Total</th>
+                <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="date">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4021">#4021</td>
+                <td class="brut-table__cell" data-sort-value="alice">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;background:var(--pop-pink);">AM</span>
+                    Alice M.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag brut-tag--ok">Shipped</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="249">$249.00</td>
+                <td class="brut-table__cell" data-sort-value="20260502">2 May 2026</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4020">#4020</td>
+                <td class="brut-table__cell" data-sort-value="bob">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;background:var(--pop-blue);color:var(--paper);">BK</span>
+                    Bob K.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag brut-tag--warn">Processing</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="89">$89.00</td>
+                <td class="brut-table__cell" data-sort-value="20260501">1 May 2026</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4019">#4019</td>
+                <td class="brut-table__cell" data-sort-value="carla">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;background:var(--pop-lime);">CR</span>
+                    Carla R.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag brut-tag--ok">Shipped</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="412">$412.00</td>
+                <td class="brut-table__cell" data-sort-value="20260430">30 Apr 2026</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4018">#4018</td>
+                <td class="brut-table__cell" data-sort-value="dan">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;">DL</span>
+                    Dan L.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag">Pending</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="67">$67.50</td>
+                <td class="brut-table__cell" data-sort-value="20260429">29 Apr 2026</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4017">#4017</td>
+                <td class="brut-table__cell" data-sort-value="elena">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;background:var(--pop-orange);">EV</span>
+                    Elena V.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag brut-tag--err">Refunded</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="185">$185.00</td>
+                <td class="brut-table__cell" data-sort-value="20260428">28 Apr 2026</td>
+              </tr>
+              <tr class="brut-table__row">
+                <td class="brut-table__cell" data-sort-value="4016">#4016</td>
+                <td class="brut-table__cell" data-sort-value="frank">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="brut-avatar" style="width:24px;height:24px;font-size:10px;background:var(--pop-purple);color:var(--paper);">FN</span>
+                    Frank N.
+                  </span>
+                </td>
+                <td class="brut-table__cell"><span class="brut-tag brut-tag--ok">Shipped</span></td>
+                <td class="brut-table__cell brut-table__cell--num" data-sort-value="320">$320.00</td>
+                <td class="brut-table__cell" data-sort-value="20260427">27 Apr 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="padding:var(--sp-3) var(--sp-4);border:var(--bw-3) solid var(--ink);border-top:0;display:flex;align-items:center;justify-content:space-between;">
+          <span class="brut-caption text-muted">Showing 1–6 of 248</span>
+          <nav class="brut-pager" aria-label="Pagination">
+            <button class="brut-pager__btn" type="button" disabled aria-label="Previous">&#8592;</button>
+            <button class="brut-pager__btn brut-pager__btn--active" type="button">1</button>
+            <button class="brut-pager__btn" type="button">2</button>
+            <button class="brut-pager__btn" type="button">3</button>
+            <span class="brut-pager__gap">…</span>
+            <button class="brut-pager__btn" type="button">42</button>
+            <button class="brut-pager__btn" type="button" aria-label="Next">&#8594;</button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Products panel -->
+      <div data-brut-panel="products" hidden>
+        <div class="brut-card" style="margin-top:var(--sp-4);">
+          <h3 class="brut-h4" style="margin:0 0 var(--sp-3) 0;">Top Products</h3>
+          <div class="brut-stack" style="--stack-gap:var(--sp-3);">
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="fw-medium">BRUT Pro License</span>
+              <span class="brut-tag brut-tag--ok">412 sold</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="fw-medium">Team Bundle</span>
+              <span class="brut-tag brut-tag--ok">287 sold</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="fw-medium">Starter Pack</span>
+              <span class="brut-tag">156 sold</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers panel -->
+      <div data-brut-panel="customers" hidden>
+        <div class="brut-card" style="margin-top:var(--sp-4);">
+          <h3 class="brut-h4" style="margin:0 0 var(--sp-4) 0;">Recent Customers</h3>
+          <div class="brut-avatar-group" style="margin-bottom:var(--sp-4);">
+            <span class="brut-avatar" style="background:var(--pop-pink);">A</span>
+            <span class="brut-avatar" style="background:var(--pop-lime);">B</span>
+            <span class="brut-avatar" style="background:var(--pop-blue);color:var(--paper);">C</span>
+            <span class="brut-avatar" style="background:var(--pop-orange);">D</span>
+            <span class="brut-avatar" style="background:var(--pop-purple);color:var(--paper);">E</span>
+            <span class="brut-avatar brut-avatar-group__more">+42</span>
+          </div>
+          <p class="brut-body text-muted">47 new customers this month. Growth rate: +8.1% MoM.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Notifications drawer -->
+<div class="brut-scrim" id="notif-scrim" hidden></div>
+<div class="brut-drawer" id="notif-drawer" data-brut="drawer" data-brut-side="right"
+     data-brut-scrim="notif-scrim" hidden role="dialog" aria-label="Notifications">
+  <div class="brut-drawer__head">
+    <span>Notifications</span>
+    <button class="brut-drawer__x" type="button" data-brut-close aria-label="Close">&times;</button>
+  </div>
+  <div class="brut-drawer__body" style="padding:var(--sp-4);">
+    <div class="brut-stack" style="--stack-gap:var(--sp-3);">
+      <div class="brut-alert brut-alert--ok">
+        <span class="brut-alert__icon">&#10003;</span>
+        <div><strong>Deploy succeeded.</strong> v2.4.1 is live.</div>
+      </div>
+      <div class="brut-alert brut-alert--warn">
+        <span class="brut-alert__icon">!</span>
+        <div><strong>High CPU.</strong> Server-03 at 92%.</div>
+      </div>
+      <div class="brut-alert brut-alert--info">
+        <span class="brut-alert__icon">i</span>
+        <div><strong>New signup.</strong> rex@brut.dev just joined.</div>
+      </div>
+      <div class="brut-alert">
+        <span class="brut-alert__icon">&#9679;</span>
+        <div><strong>Comment.</strong> Dan left a note on Order #4018.</div>
+      </div>
+    </div>
+
+    <hr class="brut-rule mt-4 mb-4"/>
+
+    <div class="brut-stack" style="--stack-gap:var(--sp-3);">
+      <label class="d-flex align-items-center gap-2">
+        <span class="brut-switch" data-brut="switch">
+          <input type="checkbox" hidden checked/>
+          <span class="brut-switch__knob"></span>
+        </span>
+        <span class="fs-sm">Email notifications</span>
+      </label>
+      <label class="d-flex align-items-center gap-2">
+        <span class="brut-switch" data-brut="switch">
+          <input type="checkbox" hidden/>
+          <span class="brut-switch__knob"></span>
+        </span>
+        <span class="fs-sm">Push notifications</span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<div data-brut="theme-switcher"></div>
+<script src="../dist/brut.js"></script>
+<script>
+  setTimeout(function() {
+    if (window.Brut && Brut.toast) {
+      Brut.toast({ kind: 'ok', message: 'Dashboard loaded successfully.', timeout: 4000 });
+    }
+  }, 800);
+</script>
+</body>
+</html>
