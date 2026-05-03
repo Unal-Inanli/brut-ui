@@ -1,0 +1,74 @@
+/* ============================================
+   BRUT — Theme: Corporate
+   Clean, professional aesthetic. Blue accent,
+   soft shadows, rounded corners, system fonts.
+   ============================================ */
+
+[data-theme="corporate"] {
+  /* ---------- COLOR ---------- */
+  --ink:          #1F2937;
+  --paper:        #FFFFFF;
+  --paper-2:      #F9FAFB;
+  --bone:         #FFFFFF;
+
+  --primary:      #2563EB;
+  --primary-soft: #DBEAFE;
+  --primary-deep: #1D4ED8;
+
+  --concrete-50:  #F9FAFB;
+  --concrete-100: #E5E7EB;
+  --concrete-200: #D1D5DB;
+  --concrete-300: #9CA3AF;
+  --concrete-400: #6B7280;
+  --concrete-500: #374151;
+
+  --pop-pink:   #EC4899;
+  --pop-lime:   #84CC16;
+  --pop-blue:   #3B82F6;
+  --pop-orange: #F97316;
+  --pop-purple: #8B5CF6;
+  --pop-mint:   #14B8A6;
+
+  --success:    #059669;
+  --success-bg: #D1FAE5;
+  --warning:    #D97706;
+  --warning-bg: #FEF3C7;
+  --danger:     #DC2626;
+  --danger-bg:  #FEE2E2;
+  --info:       #2563EB;
+  --info-bg:    #DBEAFE;
+
+  /* ---------- SEMANTIC ---------- */
+  --bg-1:       var(--paper);
+  --bg-2:       var(--paper-2);
+  --bg-3:       var(--bone);
+  --fg-1:       var(--ink);
+  --fg-2:       var(--concrete-400);
+  --fg-3:       var(--concrete-300);
+  --border:     var(--concrete-200);
+  --accent:      var(--primary);
+  --accent-soft: var(--primary-soft);
+  --accent-deep: var(--primary-deep);
+  --scrim-bg:      rgba(0, 0, 0, 0.3);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.04);
+
+  /* ---------- SHADOW ---------- */
+  --shadow-2xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-xs:  0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm:  0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ---------- TYPE ---------- */
+  --font-display: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-sans:    'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---------- SHAPE ---------- */
+  --bw-3: 2px;
+  --r-0:  6px;
+  --r-1:  6px;
+  --r-2:  8px;
+  --r-3:  12px;
+}

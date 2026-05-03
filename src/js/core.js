@@ -13,6 +13,7 @@
      Brut.register(name, { selector, init })  — declare a component
      Brut.init(root = document)               — wire components
      Brut.ready(fn)                           — DOM-ready helper
+     Brut.theme(name?)                        — get/set active theme
 
    Conventions for component authors — see AGENTS.md "JavaScript
    components" section. Briefly:
@@ -65,12 +66,35 @@
     }
   }
 
+  var THEME_KEY = 'brut-theme';
+  var DEFAULT_THEME = 'brutalist';
+
+  function theme(name) {
+    if (typeof name === 'string') {
+      document.documentElement.setAttribute('data-theme', name);
+      try { localStorage.setItem(THEME_KEY, name); } catch (e) { /* noop */ }
+      return name;
+    }
+    return document.documentElement.getAttribute('data-theme') || DEFAULT_THEME;
+  }
+
+  function restoreTheme() {
+    try {
+      var saved = localStorage.getItem(THEME_KEY);
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    } catch (e) { /* noop */ }
+  }
+
   var Brut = global.Brut = global.Brut || {};
   Brut.register = register;
   Brut.init = init;
   Brut.ready = ready;
+  Brut.theme = theme;
   Brut._components = registered;
   Brut.version = __BRUT_VERSION__;
+
+  // Restore persisted theme as early as possible to avoid flash
+  restoreTheme();
 
   // Auto-init. We must run AFTER every component IIFE further down in the
   // bundle has had a chance to call register(). When the DOM is still
