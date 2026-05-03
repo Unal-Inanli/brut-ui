@@ -3,4 +3,5 @@
 @import './tokens/03-intent.css';
 @import './tokens/index.css';
 @import './components.css';
+@import './utilities.css';
 @import './themes/index.css';

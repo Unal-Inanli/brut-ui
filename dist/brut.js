@@ -1138,6 +1138,42 @@ var Brut = (function() {
 		});
 	})();
 	//#endregion
+	//#region src/js/components/progress.js
+	(function() {
+		if (!window.Brut) return;
+		Brut.register("progress", {
+			selector: "[data-brut=\"progress\"]",
+			init: function(el) {
+				var label = el.querySelector(".brut-progress__label");
+				var initial = parseFloat(el.getAttribute("data-brut-value")) || 0;
+				var current = initial;
+				function setValue(v) {
+					v = Math.max(0, Math.min(100, parseFloat(v) || 0));
+					current = v;
+					el.style.setProperty("--progress", v);
+					el.setAttribute("data-brut-value", v);
+					el.setAttribute("aria-valuenow", Math.round(v));
+					if (label) label.textContent = Math.round(v) + "%";
+					el.dispatchEvent(new CustomEvent("brut:change", {
+						bubbles: true,
+						detail: { value: v }
+					}));
+				}
+				function getValue() {
+					return current;
+				}
+				el.setAttribute("role", "progressbar");
+				el.setAttribute("aria-valuemin", "0");
+				el.setAttribute("aria-valuemax", "100");
+				setValue(initial);
+				el.brutProgress = {
+					setValue,
+					getValue
+				};
+			}
+		});
+	})();
+	//#endregion
 	//#region src/js/components/radio.js
 	(function() {
 		if (!window.Brut) return;
@@ -2605,6 +2641,9 @@ var Brut = (function() {
 				if (burger.tagName === "BUTTON") burger.setAttribute("type", "button");
 				if (!burger.hasAttribute("aria-expanded")) burger.setAttribute("aria-expanded", "false");
 				if (!burger.hasAttribute("aria-label")) burger.setAttribute("aria-label", "Toggle menu");
+				var links = el.querySelector(".brut-topnav__links");
+				if (links && !links.id) links.id = "brut-topnav-nav";
+				if (links) burger.setAttribute("aria-controls", links.id);
 				function isOpen() {
 					return el.classList.contains("brut-topnav--open");
 				}

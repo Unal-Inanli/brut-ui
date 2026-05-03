@@ -733,6 +733,50 @@
   cursor: pointer;
 }
 
+/* PROGRESS — determinate horizontal bar. Set --progress (0–100) on the
+   wrapper or use data-brut="progress" for JS-driven updates. */
+.brut-progress {
+  width: 100%;
+  height: var(--progress-h);
+  background: var(--concrete-100);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+  overflow: hidden;
+}
+.brut-progress__bar {
+  height: 100%;
+  background: var(--primary);
+  width: calc(var(--progress, 0) * 1%);
+  transition: width var(--dur-base) var(--ease-snap);
+}
+.brut-progress__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+  pointer-events: none;
+}
+.brut-progress--sm { height: var(--progress-h-sm); }
+.brut-progress--lg { height: var(--progress-h-lg); }
+.brut-progress--success .brut-progress__bar { background: var(--success); }
+.brut-progress--danger  .brut-progress__bar { background: var(--danger); }
+.brut-progress--info    .brut-progress__bar { background: var(--info); }
+.brut-progress--warning .brut-progress__bar { background: var(--warning); }
+.brut-progress--indeterminate .brut-progress__bar {
+  width: 30%;
+  animation: brut-progress-slide 1.4s linear infinite; /* loader animation — may exceed --dur-base */
+}
+@keyframes brut-progress-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(433%); }
+}
+
 /* SKELETON — placeholder block with a hard ink stripe sweep. */
 .brut-skeleton {
   position: relative;
@@ -1105,6 +1149,11 @@
   font-weight: var(--fw-bold);
   color: var(--danger);
 }
+.brut-field__success {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--success);
+}
 .brut-field__counter {
   font-family: var(--font-mono);
   font-size: var(--fs-badge);
@@ -1118,6 +1167,20 @@
   align-items: center;
   gap: var(--sp-3);
 }
+.brut-field--invalid .brut-input,
+.brut-field--invalid .brut-textarea,
+.brut-field--invalid .brut-select {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-field--invalid .brut-field__label { color: var(--danger); }
+.brut-field--valid .brut-input,
+.brut-field--valid .brut-textarea,
+.brut-field--valid .brut-select {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+.brut-field--valid .brut-field__label { color: var(--success); }
 
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
@@ -1132,6 +1195,18 @@
 }
 .brut-input--err:focus { background: var(--danger-bg); }
 .brut-input--ok {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+.brut-input:user-invalid,
+.brut-textarea:user-invalid,
+.brut-select:user-invalid {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-input:user-valid,
+.brut-textarea:user-valid,
+.brut-select:user-valid {
   border-color: var(--success);
   background: var(--success-bg);
 }
@@ -1882,7 +1957,7 @@
 
 /* TOPNAV — sticky page header with brand + links + CTA + mobile burger. */
 .brut-topnav {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: var(--z-sticky);
   background: var(--paper);
   border-bottom: var(--bw-3) solid var(--ink);
 }
@@ -1949,7 +2024,7 @@
   padding: 0;
   line-height: 1;
 }
-@media (max-width: 760px) { /* var(--bp-md) */
+@media (max-width: 768px) { /* var(--bp-md) */
   .brut-topnav__links {
     display: none;
     position: absolute;
@@ -2136,6 +2211,34 @@ button.brut-sidebar__group-title::after {
   font-weight: var(--fw-bold);
   padding: var(--bw-1) var(--sp-1);
 }
+.brut-crumbs__item[aria-current="page"] {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+  padding: var(--bw-1) var(--sp-1);
+}
+.brut-crumbs--sm {
+  font-size: var(--fs-2xs);
+  gap: var(--sp-1);
+  letter-spacing: var(--tracking-wide);
+}
+.brut-crumbs--sm .brut-crumbs__link { padding: var(--sp-px) var(--sp-1); }
+@media (max-width: 640px) { /* --bp-sm */
+  .brut-crumbs--responsive .brut-crumbs__item {
+    display: none;
+  }
+  .brut-crumbs--responsive .brut-crumbs__item:first-child,
+  .brut-crumbs--responsive .brut-crumbs__item:last-child {
+    display: inline-flex;
+  }
+  .brut-crumbs--responsive .brut-crumbs__sep {
+    display: none;
+  }
+  .brut-crumbs--responsive .brut-crumbs__item:last-child::before {
+    content: "…";
+    color: var(--concrete-300);
+    margin-right: var(--sp-2);
+  }
+}
 
 /* PAGER — page navigation buttons. CSS-only; consumer wires links. */
 .brut-pager {
@@ -2280,6 +2383,97 @@ button.brut-sidebar__group-title::after {
 .brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .brut-grid--tight { gap: var(--sp-2); }
 .brut-grid--loose { gap: var(--sp-10); }
+
+/* 12-COLUMN GRID — Bootstrap-parity. Use .brut-row as parent,
+   .brut-col-{1-12} for explicit widths, .brut-col for equal-width auto. */
+.brut-row {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+}
+.brut-row--tight { gap: var(--sp-2); }
+.brut-row--loose { gap: var(--sp-10); }
+.brut-row--no-gutter { gap: 0; }
+.brut-col    { grid-column: span 1; }
+.brut-col-1  { grid-column: span 1; }
+.brut-col-2  { grid-column: span 2; }
+.brut-col-3  { grid-column: span 3; }
+.brut-col-4  { grid-column: span 4; }
+.brut-col-5  { grid-column: span 5; }
+.brut-col-6  { grid-column: span 6; }
+.brut-col-7  { grid-column: span 7; }
+.brut-col-8  { grid-column: span 8; }
+.brut-col-9  { grid-column: span 9; }
+.brut-col-10 { grid-column: span 10; }
+.brut-col-11 { grid-column: span 11; }
+.brut-col-12 { grid-column: span 12; }
+
+.brut-col-offset-1  { grid-column-start: 2; }
+.brut-col-offset-2  { grid-column-start: 3; }
+.brut-col-offset-3  { grid-column-start: 4; }
+.brut-col-offset-4  { grid-column-start: 5; }
+.brut-col-offset-5  { grid-column-start: 6; }
+.brut-col-offset-6  { grid-column-start: 7; }
+.brut-col-offset-7  { grid-column-start: 8; }
+.brut-col-offset-8  { grid-column-start: 9; }
+.brut-col-offset-9  { grid-column-start: 10; }
+.brut-col-offset-10 { grid-column-start: 11; }
+.brut-col-offset-11 { grid-column-start: 12; }
+
+/* Default: stack below sm */
+@media (max-width: 639px) {
+  .brut-row:not(.brut-row--no-stack) > [class*="brut-col"] {
+    grid-column: 1 / -1;
+  }
+}
+
+/* sm (≥ 640px) */
+@media (min-width: 640px) { /* --bp-sm */
+  .brut-col-sm-1  { grid-column: span 1; }
+  .brut-col-sm-2  { grid-column: span 2; }
+  .brut-col-sm-3  { grid-column: span 3; }
+  .brut-col-sm-4  { grid-column: span 4; }
+  .brut-col-sm-5  { grid-column: span 5; }
+  .brut-col-sm-6  { grid-column: span 6; }
+  .brut-col-sm-7  { grid-column: span 7; }
+  .brut-col-sm-8  { grid-column: span 8; }
+  .brut-col-sm-9  { grid-column: span 9; }
+  .brut-col-sm-10 { grid-column: span 10; }
+  .brut-col-sm-11 { grid-column: span 11; }
+  .brut-col-sm-12 { grid-column: span 12; }
+}
+
+/* md (≥ 768px) */
+@media (min-width: 768px) { /* --bp-md */
+  .brut-col-md-1  { grid-column: span 1; }
+  .brut-col-md-2  { grid-column: span 2; }
+  .brut-col-md-3  { grid-column: span 3; }
+  .brut-col-md-4  { grid-column: span 4; }
+  .brut-col-md-5  { grid-column: span 5; }
+  .brut-col-md-6  { grid-column: span 6; }
+  .brut-col-md-7  { grid-column: span 7; }
+  .brut-col-md-8  { grid-column: span 8; }
+  .brut-col-md-9  { grid-column: span 9; }
+  .brut-col-md-10 { grid-column: span 10; }
+  .brut-col-md-11 { grid-column: span 11; }
+  .brut-col-md-12 { grid-column: span 12; }
+}
+
+/* lg (≥ 1024px) */
+@media (min-width: 1024px) { /* --bp-lg */
+  .brut-col-lg-1  { grid-column: span 1; }
+  .brut-col-lg-2  { grid-column: span 2; }
+  .brut-col-lg-3  { grid-column: span 3; }
+  .brut-col-lg-4  { grid-column: span 4; }
+  .brut-col-lg-5  { grid-column: span 5; }
+  .brut-col-lg-6  { grid-column: span 6; }
+  .brut-col-lg-7  { grid-column: span 7; }
+  .brut-col-lg-8  { grid-column: span 8; }
+  .brut-col-lg-9  { grid-column: span 9; }
+  .brut-col-lg-10 { grid-column: span 10; }
+  .brut-col-lg-11 { grid-column: span 11; }
+  .brut-col-lg-12 { grid-column: span 12; }
+}
 
 /* SPLIT — sidebar + main two-column. The docs page itself uses this. */
 .brut-split {

@@ -41,4 +41,10 @@
   --dropdown-max-h: 240px;
   --date-w:         280px;
   --menu-min-w:     200px;
+  --grid-columns:   12;
+  --grid-gutter:    var(--sp-6);
+
+  --progress-h:    var(--sp-6);
+  --progress-h-sm: var(--sp-3);
+  --progress-h-lg: var(--sp-8);
 }

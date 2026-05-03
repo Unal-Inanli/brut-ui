@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Utilities — BRUT UI Kit</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; background: var(--paper); font-family: var(--font-sans); }
+  .demo-section { padding: var(--sp-6) var(--sp-6) 0; max-width: 900px; }
+  .demo-section:last-child { padding-bottom: var(--sp-7); }
+  h1 { font-family: var(--font-display); font-size: 28px; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 var(--sp-2); padding: var(--sp-6) var(--sp-6) 0; }
+  h2 { font-family: var(--font-display); font-size: 18px; text-transform: uppercase; letter-spacing: 0.06em; margin: var(--sp-6) 0 var(--sp-3); border-top: 4px solid var(--ink); padding-top: var(--sp-4); }
+  h2:first-of-type { border-top: 0; margin-top: 0; }
+  .demo-box { background: var(--primary); border: 3px solid var(--ink); padding: var(--sp-3); font-family: var(--font-mono); font-size: 12px; text-align: center; }
+  .demo-box--ink { background: var(--ink); color: var(--paper); }
+  .demo-box--lime { background: var(--pop-lime); }
+  .demo-box--pink { background: var(--pop-pink); }
+  .demo-box--mint { background: var(--pop-mint); }
+  .demo-box--blue { background: var(--pop-blue); color: var(--paper); }
+  .demo-box--paper2 { background: var(--paper-2); }
+  .demo-frame { border: 3px dashed var(--concrete-300); padding: var(--sp-4); background: var(--paper-2); margin-bottom: var(--sp-4); }
+  p.note { font-size: 13px; color: var(--concrete-400); font-family: var(--font-mono); margin: 0 0 var(--sp-3); }
+</style></head>
+<body>
+
+<h1>Utilities</h1>
+<p style="padding: 0 var(--sp-6) var(--sp-4); font-family: var(--font-mono); font-size: 13px; color: var(--concrete-400); max-width: 60ch;">
+  Bootstrap-compatible utility classes backed by design tokens. Responsive variants at <code>-sm-</code> (640px), <code>-md-</code> (768px), <code>-lg-</code> (1024px).
+</p>
+
+<!-- ─── 1. DISPLAY ─── -->
+<section class="demo-section">
+  <h2>Display</h2>
+  <p class="note">d-flex · d-block · d-none · d-grid · d-inline-block · d-inline · d-inline-flex</p>
+
+  <div class="d-flex gap-3 mb-5" style="flex-wrap: wrap;">
+    <div class="demo-box">.d-flex (this row)</div>
+    <div class="demo-box demo-box--ink" style="display: inline-block;">.d-inline-block</div>
+    <div class="demo-box demo-box--lime" style="display: block; max-width: 160px;">.d-block (full width)</div>
+  </div>
+
+  <p class="note">d-none hides the element completely (screen reader accessible variant: visually-hidden)</p>
+  <div class="demo-frame">
+    <span style="display: none;">[hidden with d-none — not visible]</span>
+    <span class="demo-box demo-box--paper2" style="display: inline-block;">.d-none sibling (visible)</span>
+  </div>
+</section>
+
+<!-- ─── 2. FLEX ─── -->
+<section class="demo-section">
+  <h2>Flex</h2>
+  <p class="note">flex-row · flex-column · flex-wrap · justify-content-{start,end,center,between,around,evenly} · align-items-{start,end,center}</p>
+
+  <p class="note">justify-content-between + align-items-center</p>
+  <div class="d-flex justify-content-between align-items-center demo-frame mb-4">
+    <div class="demo-box">Start</div>
+    <div class="demo-box demo-box--pink">Middle</div>
+    <div class="demo-box demo-box--lime">End</div>
+  </div>
+
+  <p class="note">flex-column + align-items-start</p>
+  <div class="d-flex flex-column align-items-start demo-frame mb-4" style="gap: var(--sp-2);">
+    <div class="demo-box">Row 1</div>
+    <div class="demo-box demo-box--ink">Row 2</div>
+    <div class="demo-box demo-box--lime">Row 3</div>
+  </div>
+
+  <p class="note">flex-wrap</p>
+  <div class="d-flex flex-wrap demo-frame" style="gap: var(--sp-2);">
+    <div class="demo-box" style="width: 120px;">Item 1</div>
+    <div class="demo-box demo-box--pink" style="width: 120px;">Item 2</div>
+    <div class="demo-box demo-box--lime" style="width: 120px;">Item 3</div>
+    <div class="demo-box demo-box--mint" style="width: 120px;">Item 4</div>
+    <div class="demo-box demo-box--blue" style="width: 120px;">Item 5</div>
+  </div>
+</section>
+
+<!-- ─── 3. SPACING ─── -->
+<section class="demo-section">
+  <h2>Spacing</h2>
+  <p class="note">m-{0–8} · mt-* · mr-* · mb-* · ml-* · mx-* · my-* · p-{0–8} · pt-* · pr-* · pb-* · pl-* · px-* · py-* · m-auto · mx-auto</p>
+
+  <p class="note">Padding scale (p-1 through p-5)</p>
+  <div class="d-flex align-items-end demo-frame" style="gap: var(--sp-3); flex-wrap: wrap;">
+    <div class="demo-box" style="padding: var(--sp-1);">p-1</div>
+    <div class="demo-box demo-box--ink" style="padding: var(--sp-2);">p-2</div>
+    <div class="demo-box demo-box--lime" style="padding: var(--sp-3);">p-3</div>
+    <div class="demo-box demo-box--pink" style="padding: var(--sp-4);">p-4</div>
+    <div class="demo-box demo-box--mint" style="padding: var(--sp-5);">p-5</div>
+  </div>
+
+  <p class="note" style="margin-top: var(--sp-4);">Margin demo — mb-4 between rows</p>
+  <div class="demo-frame">
+    <div class="demo-box" style="margin-bottom: var(--sp-4);">Row — mb-4 below</div>
+    <div class="demo-box demo-box--lime" style="margin-bottom: var(--sp-4);">Row — mb-4 below</div>
+    <div class="demo-box demo-box--ink">Last row — no margin</div>
+  </div>
+
+  <p class="note" style="margin-top: var(--sp-4);">mx-auto centers a fixed-width element</p>
+  <div class="demo-frame">
+    <div class="demo-box" style="width: 200px; margin: 0 auto;">mx-auto</div>
+  </div>
+</section>
+
+<!-- ─── 4. GAP ─── -->
+<section class="demo-section">
+  <h2>Gap</h2>
+  <p class="note">gap-{0–6} · gap-x-* · gap-y-* (applied to flex/grid containers)</p>
+
+  <div class="d-flex flex-column" style="gap: var(--sp-3);">
+    <div class="d-flex" style="gap: var(--sp-1);">
+      <div class="demo-box">gap-1</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+    <div class="d-flex" style="gap: var(--sp-2);">
+      <div class="demo-box">gap-2</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+    <div class="d-flex" style="gap: var(--sp-3);">
+      <div class="demo-box">gap-3</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+    <div class="d-flex" style="gap: var(--sp-4);">
+      <div class="demo-box">gap-4</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+    <div class="d-flex" style="gap: var(--sp-5);">
+      <div class="demo-box">gap-5</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+    <div class="d-flex" style="gap: var(--sp-6);">
+      <div class="demo-box">gap-6</div><div class="demo-box demo-box--ink">B</div><div class="demo-box demo-box--lime">C</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 5. TEXT ─── -->
+<section class="demo-section">
+  <h2>Text</h2>
+  <p class="note">text-start · text-center · text-end · text-truncate · text-uppercase · fw-normal · fw-bold · fs-sm · fs-md · fs-lg</p>
+
+  <div class="demo-frame">
+    <p style="text-align: left; margin: 0 0 var(--sp-2);">.text-start — left aligned</p>
+    <p style="text-align: center; margin: 0 0 var(--sp-2);">.text-center — centered</p>
+    <p style="text-align: right; margin: 0;">.text-end — right aligned</p>
+  </div>
+
+  <div class="demo-frame" style="margin-top: var(--sp-3);">
+    <p style="text-transform: uppercase; margin: 0 0 var(--sp-2); letter-spacing: 0.05em;">.text-uppercase — ALL CAPS</p>
+    <p style="font-weight: bold; margin: 0 0 var(--sp-2);">.fw-bold — bold weight</p>
+    <p style="font-weight: normal; margin: 0 0 var(--sp-2);">.fw-normal — normal weight</p>
+    <p style="font-size: var(--fs-sm); margin: 0 0 var(--sp-2);">.fs-sm — small text</p>
+    <p style="font-size: var(--fs-lg); margin: 0;">.fs-lg — large text</p>
+  </div>
+
+  <div class="demo-frame" style="margin-top: var(--sp-3); max-width: 300px;">
+    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">.text-truncate — This text is very long and will be clipped with an ellipsis at the end</p>
+  </div>
+</section>
+
+<!-- ─── 6. SIZING ─── -->
+<section class="demo-section">
+  <h2>Sizing</h2>
+  <p class="note">w-25 · w-50 · w-75 · w-100 · h-25 · h-50 · h-75 · h-100 · mw-100 · vh-100</p>
+
+  <div class="demo-frame">
+    <div class="demo-box" style="width: 25%; margin-bottom: var(--sp-2);">w-25</div>
+    <div class="demo-box demo-box--lime" style="width: 50%; margin-bottom: var(--sp-2);">w-50</div>
+    <div class="demo-box demo-box--pink" style="width: 75%; margin-bottom: var(--sp-2);">w-75</div>
+    <div class="demo-box demo-box--ink" style="width: 100%;">w-100</div>
+  </div>
+</section>
+
+<!-- ─── 7. COLORS ─── -->
+<section class="demo-section">
+  <h2>Colors</h2>
+  <p class="note">text-{ink,muted,success,danger,warning,info} · bg-{primary,success,danger,warning,info,paper,paper-2}</p>
+
+  <p class="note">Text color utilities</p>
+  <div class="demo-frame d-flex flex-wrap" style="gap: var(--sp-4);">
+    <span style="color: var(--ink); font-family: var(--font-mono);">.text-ink</span>
+    <span style="color: var(--concrete-400); font-family: var(--font-mono);">.text-muted</span>
+    <span style="color: var(--c-success); font-family: var(--font-mono); font-weight: bold;">.text-success</span>
+    <span style="color: var(--c-danger); font-family: var(--font-mono); font-weight: bold;">.text-danger</span>
+    <span style="color: var(--c-warning); font-family: var(--font-mono); font-weight: bold;">.text-warning</span>
+    <span style="color: var(--c-info); font-family: var(--font-mono); font-weight: bold;">.text-info</span>
+  </div>
+
+  <p class="note" style="margin-top: var(--sp-4);">Background color utilities</p>
+  <div class="d-flex flex-wrap" style="gap: var(--sp-3);">
+    <div class="demo-box" style="background: var(--primary);">bg-primary</div>
+    <div class="demo-box" style="background: var(--success-soft); border-color: var(--c-success);">bg-success</div>
+    <div class="demo-box" style="background: var(--danger-soft); border-color: var(--c-danger);">bg-danger</div>
+    <div class="demo-box" style="background: var(--warning-soft); border-color: var(--c-warning);">bg-warning</div>
+    <div class="demo-box" style="background: var(--info-soft); border-color: var(--c-info);">bg-info</div>
+    <div class="demo-box demo-box--paper2">bg-paper-2</div>
+  </div>
+</section>
+
+<!-- ─── 8. BORDERS ─── -->
+<section class="demo-section">
+  <h2>Borders</h2>
+  <p class="note">border · border-top · border-bottom · border-left · border-right · border-0</p>
+
+  <div class="d-flex flex-wrap" style="gap: var(--sp-4);">
+    <div style="padding: var(--sp-4); font-family: var(--font-mono); font-size: 12px; border: var(--bw-2) solid var(--ink);">.border</div>
+    <div style="padding: var(--sp-4); font-family: var(--font-mono); font-size: 12px; border-top: var(--bw-2) solid var(--ink);">.border-top</div>
+    <div style="padding: var(--sp-4); font-family: var(--font-mono); font-size: 12px; border-bottom: var(--bw-2) solid var(--ink);">.border-bottom</div>
+    <div style="padding: var(--sp-4); font-family: var(--font-mono); font-size: 12px; border-left: var(--bw-2) solid var(--ink);">.border-left</div>
+    <div style="padding: var(--sp-4); font-family: var(--font-mono); font-size: 12px; border-right: var(--bw-2) solid var(--ink);">.border-right</div>
+  </div>
+</section>
+
+<!-- ─── 9. POSITION ─── -->
+<section class="demo-section">
+  <h2>Position</h2>
+  <p class="note">position-relative · position-absolute · position-sticky · position-fixed</p>
+
+  <div class="demo-frame" style="position: relative; height: 120px; overflow: hidden;">
+    <span style="font-family: var(--font-mono); font-size: 12px; color: var(--concrete-400);">.position-relative (this frame)</span>
+    <div class="demo-box demo-box--pink" style="position: absolute; top: var(--sp-3); right: var(--sp-3); padding: var(--sp-2) var(--sp-3);">.position-absolute — top right</div>
+    <div class="demo-box demo-box--lime" style="position: absolute; bottom: var(--sp-3); left: var(--sp-3); padding: var(--sp-2) var(--sp-3);">.position-absolute — bottom left</div>
+  </div>
+</section>
+
+<!-- ─── 10. VISIBILITY ─── -->
+<section class="demo-section">
+  <h2>Visibility</h2>
+  <p class="note">visible · invisible · visually-hidden (screen-reader accessible hidden)</p>
+
+  <div class="d-flex" style="gap: var(--sp-4); align-items: center;">
+    <div class="demo-box" style="visibility: visible;">visible</div>
+    <div class="demo-box demo-box--ink" style="visibility: hidden;">.invisible (space preserved)</div>
+    <div class="demo-box demo-box--lime">next to invisible box</div>
+  </div>
+</section>
+
+<!-- ─── 11. RESPONSIVE ─── -->
+<section class="demo-section">
+  <h2>Responsive variants</h2>
+  <p class="note">Append -sm-, -md-, or -lg- for mobile-first responsive behavior (min-width breakpoints).</p>
+
+  <div class="demo-frame">
+    <p style="font-family: var(--font-mono); font-size: 13px; margin: 0 0 var(--sp-3);">Examples:</p>
+    <ul style="font-family: var(--font-mono); font-size: 12px; line-height: 1.8; margin: 0; padding-left: var(--sp-5);">
+      <li><code>d-none d-md-flex</code> — hidden on mobile, flex on md+</li>
+      <li><code>flex-column flex-md-row</code> — stacks on mobile, row on md+</li>
+      <li><code>p-3 p-md-5 p-lg-7</code> — padding increases at each breakpoint</li>
+      <li><code>mt-4 mt-md-0</code> — top margin on mobile, none on md+</li>
+      <li><code>text-center text-md-start</code> — centered on mobile, left on md+</li>
+      <li><code>w-100 w-md-50 w-lg-25</code> — width narrows as viewport grows</li>
+    </ul>
+  </div>
+
+  <div class="demo-frame" style="margin-top: var(--sp-3);">
+    <p style="font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concrete-400); margin: 0 0 var(--sp-3);">Breakpoints</p>
+    <div class="d-flex" style="gap: var(--sp-3); flex-wrap: wrap;">
+      <div class="demo-box demo-box--paper2">sm ≥ 640px</div>
+      <div class="demo-box demo-box--paper2">md ≥ 768px</div>
+      <div class="demo-box demo-box--paper2">lg ≥ 1024px</div>
+    </div>
+  </div>
+</section>
+
+<script src="../dist/brut.js"></script>
+<div data-brut="theme-switcher"></div>
+</body></html>
