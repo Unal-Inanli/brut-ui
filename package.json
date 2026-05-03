@@ -1,15 +1,31 @@
 {
   "name": "brut",
   "version": "0.2.0",
+  "type": "module",
   "description": "Neo-brutalist UI kit. One CSS file + one optional JS runtime for interactive form components.",
-  "main": "dist/brut.css",
-  "browser": "dist/brut.js",
+  "main": "dist/brut.js",
+  "module": "dist/brut.esm.js",
+  "style": "dist/brut.css",
+  "exports": {
+    ".": {
+      "import": "./dist/brut.esm.js",
+      "require": "./dist/brut.js",
+      "style": "./dist/brut.css"
+    },
+    "./css": "./dist/brut.css"
+  },
+  "sideEffects": true,
   "files": [
     "dist/",
     "src/"
   ],
   "scripts": {
-    "build": "bash build.sh"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
 }

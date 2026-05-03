@@ -70,7 +70,7 @@
   Brut.init = init;
   Brut.ready = ready;
   Brut._components = registered;
-  Brut.version = '__BRUT_VERSION__';
+  Brut.version = __BRUT_VERSION__;
 
   // Auto-init. We must run AFTER every component IIFE further down in the
   // bundle has had a chance to call register(). When the DOM is still
