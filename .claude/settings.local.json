@@ -22,7 +22,11 @@
       "Bash(awk -F: '{print $1}')",
       "Bash(python3 /tmp/final_audit.py)",
       "Bash(echo \"\\(exit=$?\\)\")",
-      "Bash(grep -nE \"brut-cb|brut-seg\\([^a-z-m]|$\\)\" /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/SKILL.md)"
+      "Bash(grep -nE \"brut-cb|brut-seg\\([^a-z-m]|$\\)\" /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/SKILL.md)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm build *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

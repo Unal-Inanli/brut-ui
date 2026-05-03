@@ -151,6 +151,7 @@
   --z-sticky:   100;   /* sticky headers, sticky table headers */
   --z-dropdown: 200;   /* combobox menus, select dropdowns */
   --z-popover:  300;   /* popovers, tooltips */
+  --z-scrim:    350;   /* backdrop for drawers + modals — sits below them */
   --z-overlay:  400;   /* drawers, partial-screen overlays */
   --z-modal:    500;   /* modal dialogs */
   --z-toast:    600;   /* transient notifications — always on top */
