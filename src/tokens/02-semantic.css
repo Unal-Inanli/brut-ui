@@ -32,6 +32,12 @@
   --text-info:      var(--info);
   --border-info:    var(--info);
 
+  /* ---------- ACCENT ---------- */
+
+  --accent:      var(--primary);
+  --accent-soft: var(--primary-soft);
+  --accent-deep: var(--primary-deep);
+
   /* ---------- SCRIM ---------- */
 
   /* Scrim — the ONLY sanctioned use of rgba in the kit.

@@ -2530,3 +2530,41 @@ button.brut-sidebar__group-title::after {
     margin-right: var(--sp-2);
   }
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   THEME SWITCHER
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.brut-theme-switcher {
+  display: inline-flex;
+  gap: 0;
+  border: var(--bw-3) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-xs);
+  position: fixed;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  z-index: var(--z-toast);
+}
+
+.brut-theme-switcher__btn {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: var(--sp-1h) var(--sp-3);
+  border: none;
+  border-right: var(--bw-1) solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-snap),
+              color var(--dur-fast) var(--ease-snap);
+  line-height: var(--lh-normal);
+}
+
+.brut-theme-switcher__btn:last-child { border-right: none; }
+.brut-theme-switcher__btn:hover { background: var(--concrete-50); }
+.brut-theme-switcher__btn--on { background: var(--ink); color: var(--paper); }
+.brut-theme-switcher__btn--on:hover { background: var(--ink); color: var(--paper); }

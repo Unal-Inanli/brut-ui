@@ -1,0 +1,78 @@
+/* ============================================
+   BRUT — Theme: Minimal
+   Ultra-clean, monochrome. No shadows, hairline
+   borders, generous whitespace, quiet palette.
+   ============================================ */
+
+[data-theme="minimal"] {
+  /* ---------- COLOR ---------- */
+  --ink:          #171717;
+  --paper:        #FFFFFF;
+  --paper-2:      #FAFAFA;
+  --bone:         #FFFFFF;
+
+  --primary:      #171717;
+  --primary-soft: #F5F5F5;
+  --primary-deep: #000000;
+
+  --concrete-50:  #FAFAFA;
+  --concrete-100: #F5F5F5;
+  --concrete-200: #E5E5E5;
+  --concrete-300: #A3A3A3;
+  --concrete-400: #737373;
+  --concrete-500: #262626;
+
+  --pop-pink:   #F472B6;
+  --pop-lime:   #A3E635;
+  --pop-blue:   #60A5FA;
+  --pop-orange: #FB923C;
+  --pop-purple: #A78BFA;
+  --pop-mint:   #5EEAD4;
+
+  --success:    #16A34A;
+  --success-bg: #F0FDF4;
+  --warning:    #CA8A04;
+  --warning-bg: #FEFCE8;
+  --danger:     #DC2626;
+  --danger-bg:  #FEF2F2;
+  --info:       #2563EB;
+  --info-bg:    #EFF6FF;
+
+  /* ---------- SEMANTIC ---------- */
+  --bg-1:       var(--paper);
+  --bg-2:       var(--paper-2);
+  --bg-3:       var(--bone);
+  --fg-1:       var(--ink);
+  --fg-2:       var(--concrete-400);
+  --fg-3:       var(--concrete-300);
+  --border:     var(--concrete-200);
+  --accent:      var(--primary);
+  --accent-soft: var(--primary-soft);
+  --accent-deep: var(--primary-deep);
+  --scrim-bg:      rgba(0, 0, 0, 0.2);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.03);
+
+  /* ---------- SHADOW ---------- */
+  --shadow-2xs: none;
+  --shadow-xs:  none;
+  --shadow-sm:  none;
+  --shadow-md:  none;
+  --shadow-lg:  none;
+  --shadow-xl:  none;
+  --shadow-2xl: none;
+
+  /* ---------- TYPE ---------- */
+  --font-display: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-sans:    'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---------- SHAPE ---------- */
+  --bw-3: 1px;
+  --bw-1: 1px;
+  --bw-2: 1px;
+  --bw-4: 1px;
+  --bw-5: 2px;
+  --r-0:  4px;
+  --r-1:  4px;
+  --r-2:  6px;
+  --r-3:  8px;
+}

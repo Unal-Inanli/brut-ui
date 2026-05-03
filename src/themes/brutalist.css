@@ -1,0 +1,72 @@
+/* ============================================
+   BRUT — Theme: Brutalist (default)
+   Re-declares the default identity tokens.
+   Functionally a no-op — serves as the living
+   reference for theme authors.
+   ============================================ */
+
+[data-theme="brutalist"] {
+  /* ---------- COLOR ---------- */
+  --ink:          #000000;
+  --paper:        #FAF7F0;
+  --paper-2:      #F2EEE3;
+  --bone:         #FFFFFF;
+
+  --primary:      #FFD23F;
+  --primary-soft: #FFE680;
+  --primary-deep: #E0B400;
+
+  --concrete-50:  #ECEAE3;
+  --concrete-100: #DCD8CC;
+  --concrete-200: #BFB9A8;
+  --concrete-300: #8A8576;
+  --concrete-400: #4F4D45;
+  --concrete-500: #1F1E1A;
+
+  --pop-pink:   #FF6B9D;
+  --pop-lime:   #C6F432;
+  --pop-blue:   #4D7CFF;
+  --pop-orange: #FF7A2E;
+  --pop-purple: #B57BFF;
+  --pop-mint:   #7FE3C4;
+
+  --success:    #2ECC71;
+  --success-bg: #D9F7E5;
+  --warning:    #FFB020;
+  --warning-bg: #FFF1CC;
+  --danger:     #FF3B30;
+  --danger-bg:  #FFD9D6;
+  --info:       #4D7CFF;
+  --info-bg:    #DDE6FF;
+
+  /* ---------- SEMANTIC ---------- */
+  --bg-1:       var(--paper);
+  --bg-2:       var(--paper-2);
+  --bg-3:       var(--bone);
+  --fg-1:       var(--ink);
+  --fg-2:       var(--concrete-400);
+  --fg-3:       var(--concrete-300);
+  --border:     var(--ink);
+  --accent:      var(--primary);
+  --accent-soft: var(--primary-soft);
+  --accent-deep: var(--primary-deep);
+  --scrim-bg:      rgba(0, 0, 0, 0.4);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.06);
+
+  /* ---------- SHADOW ---------- */
+  --shadow-2xs: 3px 3px 0 0 var(--ink);
+  --shadow-xs:  2px 2px 0 0 var(--ink);
+  --shadow-sm:  4px 4px 0 0 var(--ink);
+  --shadow-md:  6px 6px 0 0 var(--ink);
+  --shadow-lg:  8px 8px 0 0 var(--ink);
+  --shadow-xl:  12px 12px 0 0 var(--ink);
+  --shadow-2xl: 16px 16px 0 0 var(--ink);
+
+  /* ---------- TYPE ---------- */
+  --font-display: 'Archivo Black', 'Helvetica Neue', Impact, sans-serif;
+  --font-sans:    'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ---------- SHAPE ---------- */
+  --bw-3: 4px;
+  --r-0:  0px;
+}
