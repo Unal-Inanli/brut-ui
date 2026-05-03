@@ -6,13 +6,13 @@
 
 - Vanilla HTML/CSS/JS UI kit. **No** frameworks, transpilers, preprocessors, deps.
 - Edit `src/`, never `dist/`. Build = `npm run build` (concat only).
-- `src/tokens.css` → CSS variables. `src/components.css` → `.brut-*` classes. `src/js/core.js` + `src/js/components/<name>.js` → optional runtime per component.
+- `src/tokens/` → CSS variables (3 layers: primitives, semantic, intent + base styles). `src/components.css` → `.brut-*` classes. `src/js/core.js` + `src/js/components/<name>.js` → optional runtime per component.
 - Every JS component is a single IIFE registered with `Brut.register(name, { selector: '[data-brut="<name>"]', init })`.
 - Each component has 3 surfaces that must stay in sync: **CSS class block**, **`preview/components-<name>.html`**, **section in `docs/index.html`**.
 
 ## Hard constraints (orchestrator-level guardrails)
 
-Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `tokens.css`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
+Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
 
 > **Note for milestone work:** the "no build-time tool" and "no dependency" constraints above are scheduled to relax at milestone **M3** (Vite migration) and milestone **M6** (config + CLI). They remain in force for any task NOT explicitly tagged with one of those milestones. The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See "1.0 Roadmap" below.
 
@@ -65,7 +65,7 @@ Decide before fanning out:
 
 | # | Task | Subagent | Files written | Depends on | Verify |
 |---|---|---|---|---|---|
-| 0 | Add tokens (only if new design values are required) | general-purpose | `src/tokens.css` | — | grep new var name appears once in `tokens.css` |
+| 0 | Add tokens (only if new design values are required) | general-purpose | `src/tokens/` (appropriate layer file) | — | grep new var name appears once in the layer file |
 | 1 | Add CSS class block under the matching banner | general-purpose | `src/components.css` | 0 | `grep -n "\.brut-<name>" src/components.css` returns the new block; no hex/px/rem outside tokens |
 | 2 | Add JS module (interactive only) | general-purpose | `src/js/components/<name>.js` | — | file is a single IIFE, registers on `data-brut="<name>"`, no imports, no external libs |
 | 3 | Create preview page | general-purpose | `preview/components-<name>.html` | 1, 2 | links `../dist/brut.css` (and `../dist/brut.js` if interactive); renders every variant |
@@ -78,7 +78,7 @@ Decide before fanning out:
 Goal: {one sentence}.
 Edit only: {single file path}.
 Read for reference: AGENTS.md (sections “How to add a new component” and “JavaScript components”), SKILL.md, and {analogue file path}.
-Constraints: no new deps, no frameworks, no transpilers, no hardcoded colors/px/rem (use tokens from src/tokens.css), no animations >140ms, no rgba shadows, no gradients, no rounded corners beyond existing radii.
+Constraints: no new deps, no frameworks, no transpilers, no hardcoded colors/px/rem (use tokens from src/tokens/), no animations >140ms, no rgba shadows, no gradients, no rounded corners beyond existing radii.
 Output: the diff only. Do not run the build. Do not edit any other file.
 Verify locally before reporting done: {grep or syntax check that proves the change landed}.
 ```
@@ -104,8 +104,8 @@ Each scan returns a list of `path:line — finding — proposed fix`. No edits.
 
 | # | Scan | Command/heuristic | Files |
 |---|---|---|---|
-| S1 | Untokenized values in CSS | `grep -nE "#[0-9a-fA-F]{3,8}\|[0-9]+px\|[0-9.]+rem" src/components.css` then exclude lines whose value matches a token in `src/tokens.css` | `src/components.css` |
-| S2 | Forbidden visual patterns | grep for `linear-gradient`, `radial-gradient`, `rgba(` (in components.css — must be ZERO; the only sanctioned use lives in `--scrim-bg`/`--scrim-bg-soft` in tokens.css), `border-radius:` (flag values >12px outside `--radius-pill`), transitions >140ms, `ease-out`/`ease-in-out` durations >140ms. Loader `animation` durations are exempt — flag only those without a `Sanctioned exception` comment nearby. | `src/components.css`, `src/tokens.css` |
+| S1 | Untokenized values in CSS | `grep -nE "#[0-9a-fA-F]{3,8}\|[0-9]+px\|[0-9.]+rem" src/components.css` then exclude lines whose value matches a token in `src/tokens/` | `src/components.css` |
+| S2 | Forbidden visual patterns | grep for `linear-gradient`, `radial-gradient`, `rgba(` (in components.css — must be ZERO; the only sanctioned use lives in `--scrim-bg`/`--scrim-bg-soft` in `src/tokens/02-semantic.css`), `border-radius:` (flag values >12px outside `--radius-pill`), transitions >140ms, `ease-out`/`ease-in-out` durations >140ms. Loader `animation` durations are exempt — flag only those without a `Sanctioned exception` comment nearby. | `src/components.css`, `src/tokens/` |
 | S3 | Dead/duplicate classes | for each `.brut-*` selector in `src/components.css`, grep `preview/`, `docs/index.html`, `demos/`, `README.md` — flag classes with 0 references | `src/components.css` + all consumers |
 | S4 | Convention drift in JS | for each `src/js/components/*.js` confirm: single IIFE, registers on `data-brut="<name>"`, sets `type="button"` on wired buttons, dispatches `brut:change` with `event.detail.value` always present, mirrors to a hidden input (or relies on a real form input like stepper/password), no `import`/`require`/CDN. Flag any dispatch missing `value` in `detail`. | `src/js/components/*.js` |
 | S5 | Sync drift between surfaces | for every `.brut-<name>` in `components.css`, confirm `preview/components-<name>.html` exists AND there is a `<section id="<name>">` in `docs/index.html`; flag mismatches | `src/components.css`, `preview/`, `docs/index.html` |

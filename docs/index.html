@@ -306,13 +306,13 @@
       <!-- BUILD -->
       <section class="docs-section" id="build">
         <h2>Build</h2>
-        <p class="lead">Source lives in <code>src/tokens.css</code>, <code>src/components.css</code>, and <code>src/js/</code>. Run the build to produce both bundles.</p>
+        <p class="lead">Source lives in <code>src/tokens/</code>, <code>src/components.css</code>, and <code>src/js/</code>. Run the build to produce both bundles.</p>
         <pre class="docs-snippet">npm run build
 # or
 bash build.sh
 
 # outputs:
-#   dist/brut.css   ← tokens.css + components.css
+#   dist/brut.css   ← tokens/*.css + components.css
 #   dist/brut.js    ← src/js/core.js + src/js/components/*.js</pre>
       </section>
 

@@ -12,7 +12,7 @@ The kit ships as **two flat bundles**: `dist/brut.css` for the visual system, an
 
 BRUT is four things, in order:
 
-1. **Tokens** (`src/tokens.css`) — every color, type step, space, shadow, border, radius, motion, z-index, and semantic state alias is a CSS variable. If you reach for a hex or px that isn't a token, add a token first.
+1. **Tokens** (`src/tokens/`) — every color, type step, space, shadow, border, radius, motion, z-index, and semantic state alias is a CSS variable split across three layers: primitives, semantic, and intent. If you reach for a hex or px that isn't a token, add a token first.
 2. **Classes** (`src/components.css`) — `.brut-<name>` blocks compose tokens into the visual system. No class hardcodes a value. Modifiers are BEM: `.brut-btn--primary`, `.brut-switch--on`.
 3. **Optional JS hook** (`src/js/components/<name>.js`) — interactivity opts in via `data-brut="<name>"`. The runtime auto-inits on `DOMContentLoaded`. Static visuals and CSS-only form controls (textarea, select, range, color, fieldset) need no JS.
 4. **Custom event + hidden input** — every form-state component dispatches `brut:change` with `event.detail.value` and mirrors its value to a hidden `<input>` so `<form>` submission just works.
@@ -29,11 +29,11 @@ This project is generated from scratch — no codebase, Figma, or attached mater
 
 | Path | What it is |
 | --- | --- |
-| `src/tokens.css` | Design tokens — colors, type, spacing, shadows, borders, motion |
+| `src/tokens/` | Design tokens — primitives, semantic aliases, component intent, base element styles |
 | `src/components.css` | Component + layout classes — `.brut-btn`, `.brut-card`, `.brut-input`, … plus layout primitives `.brut-container`, `.brut-section`, `.brut-stack`, `.brut-cluster`, `.brut-bar`, `.brut-grid`, `.brut-split`, `.brut-rule`, `.brut-aspect`, `.brut-scrim`, `.brut-shape` |
 | `src/js/core.js` | Runtime — `Brut.register`, `Brut.init`, `Brut.ready`. Auto-inits on `DOMContentLoaded`. |
 | `src/js/components/*.js` | One file per JS-bound component. Hooks on `data-brut="<name>"`. |
-| `dist/brut.css` | Built CSS bundle — `tokens.css` + `components.css` concatenated. **Always ship this.** |
+| `dist/brut.css` | Built CSS bundle — `tokens/*.css` + `components.css` concatenated. **Always ship this.** |
 | `dist/brut.js` | Built JS bundle — `core.js` + every `components/*.js`. **Ship this when you use any `data-brut="…"` component.** |
 | `build.sh` / `package.json` | Trivial concatenation build. Run `npm run build` or `bash build.sh`. |
 | `docs/index.html` | Static Bootstrap-style docs page — every class with a live preview and copy-paste HTML snippet. Open it directly in a browser. |
@@ -130,7 +130,7 @@ I used Google Fonts as the source for all three families because no font files w
 | Body / UI | **Space Grotesk** | Google Fonts | Could swap for a more idiosyncratic grotesk (e.g. PP Neue Montreal, Söhne) |
 | Mono | **JetBrains Mono** | Google Fonts | Solid default — no urgent need to replace |
 
-**👉 If you have webfont files (`.woff2` / `.ttf`) for any of these roles, drop them into `fonts/` and update `src/tokens.css` — currently it imports from Google Fonts CDN.**
+**👉 If you have webfont files (`.woff2` / `.ttf`) for any of these roles, drop them into `fonts/` and update `src/tokens/01-primitives.css` — currently it imports from Google Fonts CDN.**
 
 ---
 
@@ -194,7 +194,11 @@ This produces `dist/brut.css` and `dist/brut.js`. Re-run after any edit under `s
 
 ```
 src/                  # source — edit these
-  tokens.css          # design tokens (colors, type, spacing, shadows, borders, motion)
+  tokens/             # design tokens — 3-layer architecture
+    01-primitives.css # raw values (hex, px, font stacks, motion)
+    02-semantic.css   # role aliases (bg/fg, state, scrim, shadows)
+    03-intent.css     # component sizing + layout dimensions
+    index.css         # base element styles + type utilities
   components.css      # component classes + layout primitives
   js/
     core.js           # Brut runtime (registry + init + ready)
