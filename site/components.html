@@ -116,7 +116,12 @@
     .sidebar-reset:hover { background: var(--primary); }
 
     /* ---- MAIN ---- */
-    .gallery-main { padding: var(--sp-6); }
+    .gallery-main {
+      padding: var(--sp-6);
+      min-width: 0;
+      max-width: 1600px;
+      width: 100%;
+    }
     .gallery-header {
       display: flex; align-items: center; justify-content: space-between;
       gap: var(--sp-4); flex-wrap: wrap; margin-bottom: var(--sp-6);
@@ -142,8 +147,8 @@
     /* ---- COMPONENT GRID ---- */
     .comp-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: var(--sp-5);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--sp-6);
     }
 
     /* ---- SECTION HEADERS ---- */
@@ -174,7 +179,7 @@
 
     .comp-card {
       border: 4px solid var(--ink); box-shadow: var(--shadow-sm);
-      background: var(--bone); display: flex; flex-direction: column;
+      background: var(--bone); display: flex; flex-direction: column; min-width: 0;
       transition: box-shadow var(--dur-fast) var(--ease-snap),
                   transform var(--dur-fast) var(--ease-snap);
     }
@@ -183,10 +188,11 @@
       transform: translate(-2px, -2px);
     }
     .comp-card__preview {
-      min-height: 120px; padding: var(--sp-4);
+      min-height: 180px; padding: var(--sp-5);
       background: var(--paper); border-bottom: 3px solid var(--ink);
       display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: var(--sp-2);
+      flex-wrap: wrap; gap: var(--sp-3);
+      overflow: hidden;
     }
     .comp-card__footer {
       padding: var(--sp-3) var(--sp-4);
