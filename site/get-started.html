@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Get Started — BRUT UI Kit</title>
+  <meta name="description" content="Add BRUT to your project in 30 seconds. No build step, no npm, no config."/>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+
+    /* ---- NAV ---- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--paper); border-bottom: 4px solid var(--ink);
+    }
+    .nav__inner {
+      max-width: 1200px; margin: 0 auto; padding: 14px var(--sp-6);
+      display: flex; align-items: center; gap: var(--sp-6);
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: var(--sp-3);
+      font-family: var(--font-display); text-transform: uppercase;
+      font-size: var(--fs-md); letter-spacing: var(--tracking-wide);
+      color: var(--ink); text-decoration: none;
+    }
+    .nav__mark {
+      width: 36px; height: 36px; background: var(--primary);
+      border: 3px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink);
+      display: grid; place-items: center;
+      font-family: var(--font-display); font-size: 16px;
+    }
+    .nav__links { display: flex; gap: var(--sp-6); margin-left: var(--sp-8); }
+    .nav__link {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      color: var(--ink); text-decoration: none; padding: 4px 2px;
+    }
+    .nav__link:hover { background: var(--primary); }
+    .nav__link--active { background: var(--primary); }
+    .nav__cta { margin-left: auto; }
+    @media (max-width: 760px) { .nav__links { display: none; } }
+
+    /* ---- LAYOUT ---- */
+    .page-wrap {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 0; min-height: calc(100vh - 64px);
+    }
+    @media (max-width: 760px) { .page-wrap { grid-template-columns: 1fr; } }
+
+    /* ---- TOC SIDEBAR ---- */
+    .toc {
+      position: sticky; top: 64px; align-self: start;
+      height: calc(100vh - 64px); overflow-y: auto;
+      border-right: 4px solid var(--ink);
+      background: var(--paper-2); padding: var(--sp-5);
+    }
+    .toc__heading {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-widest); text-transform: uppercase;
+      color: var(--concrete-400); margin: 0 0 var(--sp-3);
+    }
+    .toc__link {
+      display: block; padding: 6px 0;
+      font-size: var(--fs-sm); color: var(--ink); text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    .toc__link:hover { border-bottom-color: var(--ink); }
+    .toc__link--active { font-weight: var(--fw-bold); }
+    @media (max-width: 760px) { .toc { position: static; height: auto; border-right: 0; border-bottom: 4px solid var(--ink); } }
+
+    /* ---- CONTENT ---- */
+    .content { padding: var(--sp-10) var(--sp-8); max-width: 780px; }
+
+    .page-hero { margin-bottom: var(--sp-10); padding-bottom: var(--sp-8); border-bottom: 4px solid var(--ink); }
+
+    /* ---- STEPS ---- */
+    .step {
+      display: grid; grid-template-columns: 64px 1fr;
+      gap: var(--sp-6); margin-bottom: var(--sp-10);
+      padding-bottom: var(--sp-10); border-bottom: 4px solid var(--concrete-100);
+    }
+    .step:last-of-type { border-bottom: 0; }
+
+    .step__num {
+      width: 64px; height: 64px; flex: none;
+      background: var(--primary); border: 4px solid var(--ink);
+      box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: var(--fs-2xl);
+    }
+
+    .step__body h2 {
+      font-family: var(--font-display); font-size: var(--fs-xl);
+      text-transform: uppercase; margin: 0 0 var(--sp-3);
+    }
+
+    /* ---- CODE BLOCKS ---- */
+    .codeblock {
+      background: var(--ink); color: var(--paper);
+      border: 4px solid var(--ink); box-shadow: var(--shadow-md);
+      padding: var(--sp-5); font-family: var(--font-mono);
+      font-size: var(--fs-sm); line-height: 1.6; margin: var(--sp-4) 0;
+      overflow-x: auto; position: relative;
+    }
+    .codeblock .tk-tag  { color: var(--pop-pink); }
+    .codeblock .tk-attr { color: var(--pop-lime); }
+    .codeblock .tk-str  { color: var(--primary); }
+    .codeblock .tk-com  { color: var(--concrete-300); }
+    .codeblock .tk-kw   { color: var(--pop-blue); }
+    .codeblock .tk-val  { color: var(--pop-orange); }
+
+    .codeblock__copy {
+      position: absolute; top: var(--sp-3); right: var(--sp-3);
+      background: var(--concrete-500); color: var(--paper);
+      border: 2px solid var(--concrete-300); padding: 4px 10px;
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      cursor: pointer;
+    }
+    .codeblock__copy:hover { background: var(--primary); color: var(--ink); border-color: var(--ink); }
+
+    /* ---- LIVE RESULT ---- */
+    .live-result {
+      border: 4px solid var(--ink); box-shadow: var(--shadow-sm);
+      padding: var(--sp-5); margin: var(--sp-4) 0;
+      background: var(--bone);
+    }
+    .live-result__label {
+      font-family: var(--font-mono); font-size: var(--fs-xs);
+      color: var(--concrete-400); margin: 0 0 var(--sp-3);
+      text-transform: uppercase; letter-spacing: var(--tracking-wider);
+    }
+    .live-result__preview {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--sp-3);
+    }
+
+    /* ---- TOKEN OVERRIDE DEMO ---- */
+    .token-demo {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4);
+      margin: var(--sp-4) 0;
+    }
+    @media (max-width: 600px) { .token-demo { grid-template-columns: 1fr; } }
+
+    /* ---- NEXT STEPS ---- */
+    .next-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5);
+      margin-top: var(--sp-6);
+    }
+    @media (max-width: 760px) { .next-grid { grid-template-columns: 1fr; } }
+
+    .next-card {
+      border: 4px solid var(--ink); box-shadow: var(--shadow-sm);
+      padding: var(--sp-5); background: var(--paper-2);
+      display: flex; flex-direction: column; gap: var(--sp-3);
+      transition: box-shadow var(--dur-fast) var(--ease-snap),
+                  transform var(--dur-fast) var(--ease-snap);
+      text-decoration: none; color: var(--ink);
+    }
+    .next-card:hover {
+      box-shadow: var(--shadow-md); transform: translate(-2px, -2px);
+    }
+    .next-card__eyebrow {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      color: var(--concrete-400);
+    }
+    .next-card h3 {
+      font-family: var(--font-display); font-size: var(--fs-md);
+      text-transform: uppercase; margin: 0;
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      background: var(--ink); color: var(--paper);
+      padding: var(--sp-8) var(--sp-6);
+    }
+    .footer__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: var(--sp-6); align-items: center;
+    }
+    .footer__links { display: flex; gap: var(--sp-6); flex-wrap: wrap; }
+    .footer__link {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      color: var(--paper); text-decoration: none;
+    }
+    .footer__link:hover { color: var(--primary); }
+    .footer__legal {
+      margin-left: auto; font-family: var(--font-mono);
+      font-size: var(--fs-xs); color: var(--concrete-200);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">
+      <span class="nav__mark">B</span>
+      <span>BRUT UI</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary navigation">
+      <a class="nav__link" href="components.html">Components</a>
+      <a class="nav__link" href="examples.html">Examples</a>
+      <a class="nav__link nav__link--active" href="get-started.html">Get Started</a>
+      <a class="nav__link" href="../docs/index.html">Docs</a>
+    </nav>
+    <a class="brut-btn brut-btn--primary brut-btn--sm nav__cta" href="https://github.com/" target="_blank" rel="noopener">
+      GitHub ↗
+    </a>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <!-- TABLE OF CONTENTS -->
+  <aside class="toc" aria-label="Page contents">
+    <p class="toc__heading">On this page</p>
+    <a class="toc__link" href="#step-1">1. Add the files</a>
+    <a class="toc__link" href="#step-2">2. Your first component</a>
+    <a class="toc__link" href="#step-3">3. Customize tokens</a>
+    <a class="toc__link" href="#next">4. What's next</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="page-hero">
+      <div class="brut-cluster brut-cluster--sm" style="margin-bottom: var(--sp-4);">
+        <span class="brut-kicker">Quick start</span>
+        <span class="brut-badge brut-badge--ok">~30 seconds</span>
+      </div>
+      <h1 class="brut-display-2" style="margin: 0 0 var(--sp-4);">Get started.</h1>
+      <p class="brut-lead" style="margin: 0; max-width: 60ch;">
+        BRUT ships as two flat files. No npm, no build step, no config.
+        Drop them in, compose with classes.
+      </p>
+    </div>
+
+    <!-- STEP 1 -->
+    <section class="step" id="step-1">
+      <div class="step__num" aria-hidden="true">01</div>
+      <div class="step__body">
+        <h2>Add the files</h2>
+        <p class="brut-body">
+          Download both files from the latest release and add them to your
+          <code class="brut-code">&lt;head&gt;</code>. Or link directly to the CDN.
+        </p>
+
+        <div class="codeblock" role="region" aria-label="HTML install snippet">
+          <button type="button" class="codeblock__copy" onclick="copyBlock(this, 'cb1')" aria-label="Copy code">Copy</button>
+          <code id="cb1"><span class="tk-com">&lt;!-- In your &lt;head&gt; --&gt;</span>
+<span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-str">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-str">"brut.css"</span> <span class="tk-tag">/&gt;</span>
+<span class="tk-tag">&lt;script</span> <span class="tk-attr">src</span>=<span class="tk-str">"brut.js"</span> <span class="tk-attr">defer</span><span class="tk-tag">&gt;&lt;/script&gt;</span></code>
+        </div>
+
+        <div class="brut-alert brut-alert--info" style="margin: var(--sp-4) 0;">
+          <span class="brut-alert__icon">i</span>
+          <div>
+            <strong>JS is optional.</strong> Interactive components (switch, tabs, dialog, etc.)
+            need <code class="brut-code">brut.js</code>. Pure CSS components work without it.
+          </div>
+        </div>
+
+        <div class="brut-cluster brut-cluster--sm">
+          <a class="brut-btn brut-btn--sm brut-btn--ink" href="../dist/brut.css" download>
+            Download brut.css
+          </a>
+          <a class="brut-btn brut-btn--sm" href="../dist/brut.js" download>
+            Download brut.js
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step" id="step-2">
+      <div class="step__num" aria-hidden="true">02</div>
+      <div class="step__body">
+        <h2>Your first component</h2>
+        <p class="brut-body">
+          Every BRUT component is an HTML element with a <code class="brut-code">.brut-*</code> class.
+          Interactive components also get a <code class="brut-code">data-brut</code> attribute so the
+          JS runtime can wire them up.
+        </p>
+
+        <p class="brut-eyebrow" style="margin-top: var(--sp-5);">A button</p>
+        <div class="codeblock">
+          <button type="button" class="codeblock__copy" onclick="copyBlock(this, 'cb2')" aria-label="Copy code">Copy</button>
+          <code id="cb2"><span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-str">"button"</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-btn brut-btn--primary"</span><span class="tk-tag">&gt;</span>
+  Get loud
+<span class="tk-tag">&lt;/button&gt;</span></code>
+        </div>
+        <div class="live-result">
+          <p class="live-result__label">Result</p>
+          <div class="live-result__preview">
+            <button type="button" class="brut-btn brut-btn--primary">Get loud</button>
+            <button type="button" class="brut-btn">Default</button>
+            <button type="button" class="brut-btn brut-btn--ink">Ink</button>
+          </div>
+        </div>
+
+        <p class="brut-eyebrow" style="margin-top: var(--sp-6);">A toggle switch (interactive)</p>
+        <div class="codeblock">
+          <button type="button" class="codeblock__copy" onclick="copyBlock(this, 'cb3')" aria-label="Copy code">Copy</button>
+          <code id="cb3"><span class="tk-tag">&lt;label</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-cluster brut-cluster--sm"</span> <span class="tk-attr">style</span>=<span class="tk-str">"cursor:pointer"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-switch"</span> <span class="tk-attr">data-brut</span>=<span class="tk-str">"switch"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-str">"checkbox"</span> <span class="tk-attr">hidden</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-switch__knob"</span><span class="tk-tag">&gt;&lt;/span&gt;</span>
+  <span class="tk-tag">&lt;/span&gt;</span>
+  Enable notifications
+<span class="tk-tag">&lt;/label&gt;</span></code>
+        </div>
+        <div class="live-result">
+          <p class="live-result__label">Result</p>
+          <div class="live-result__preview">
+            <label class="brut-cluster brut-cluster--sm" style="cursor:pointer">
+              <span class="brut-switch brut-switch--on" data-brut="switch">
+                <input type="checkbox" hidden checked/>
+                <span class="brut-switch__knob"></span>
+              </span>
+              Enable notifications
+            </label>
+          </div>
+        </div>
+
+        <p class="brut-eyebrow" style="margin-top: var(--sp-6);">A form field</p>
+        <div class="codeblock">
+          <button type="button" class="codeblock__copy" onclick="copyBlock(this, 'cb4')" aria-label="Copy code">Copy</button>
+          <code id="cb4"><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-field"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-field__label"</span> <span class="tk-attr">for</span>=<span class="tk-str">"email"</span><span class="tk-tag">&gt;</span>Email<span class="tk-tag">&lt;/label&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-str">"email"</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-input"</span> <span class="tk-attr">type</span>=<span class="tk-str">"email"</span><span class="tk-tag">/&gt;</span>
+  <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-str">"brut-field__hint"</span><span class="tk-tag">&gt;</span>We never share your email.<span class="tk-tag">&lt;/span&gt;</span>
+<span class="tk-tag">&lt;/div&gt;</span></code>
+        </div>
+        <div class="live-result">
+          <p class="live-result__label">Result</p>
+          <div class="live-result__preview" style="display:block;">
+            <div class="brut-field" style="max-width: 320px;">
+              <label class="brut-field__label" for="gs-email">Email</label>
+              <input id="gs-email" class="brut-input" type="email" placeholder="rex@brut.dev"/>
+              <span class="brut-field__hint">We never share your email.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step" id="step-3">
+      <div class="step__num" aria-hidden="true">03</div>
+      <div class="step__body">
+        <h2>Customize tokens</h2>
+        <p class="brut-body">
+          Every value in BRUT is a CSS variable. Override the ones you want in your own stylesheet —
+          no recompiling, no rebasing, no source maps.
+        </p>
+
+        <div class="codeblock">
+          <button type="button" class="codeblock__copy" onclick="copyBlock(this, 'cb5')" aria-label="Copy code">Copy</button>
+          <code id="cb5"><span class="tk-com">/* your-theme.css — override after brut.css */</span>
+<span class="tk-kw">:root</span> {
+  <span class="tk-attr">--primary</span>:      <span class="tk-val">#FF6B9D</span>; <span class="tk-com">/* swap yellow → pink */</span>
+  <span class="tk-attr">--font-display</span>: <span class="tk-val">'Arial Black', sans-serif</span>;
+  <span class="tk-attr">--shadow-md</span>:    <span class="tk-val">6px 6px 0 0 #FF6B9D</span>; <span class="tk-com">/* colored shadows */</span>
+}</code>
+        </div>
+
+        <div class="token-demo">
+          <!-- Default -->
+          <div>
+            <p class="brut-eyebrow" style="margin: 0 0 var(--sp-2);">Default (yellow)</p>
+            <button type="button" class="brut-btn brut-btn--primary">Primary button</button>
+          </div>
+          <!-- Overridden -->
+          <div style="--primary: var(--pop-pink); --primary-deep: #e0506e;">
+            <p class="brut-eyebrow" style="margin: 0 0 var(--sp-2);">Overridden (pink)</p>
+            <button type="button" class="brut-btn brut-btn--primary">Primary button</button>
+          </div>
+        </div>
+
+        <div class="brut-alert brut-alert--ok" style="margin-top: var(--sp-4);">
+          <span class="brut-alert__icon">✓</span>
+          <div>
+            <strong>That's it.</strong> One <code class="brut-code">:root</code> block changes your
+            entire UI instantly — colors, spacing, shadows, motion.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section id="next">
+      <h2 class="brut-h2" style="margin: 0 0 var(--sp-6);">What's next?</h2>
+      <div class="next-grid">
+
+        <a class="next-card" href="../docs/index.html">
+          <span class="next-card__eyebrow">Reference</span>
+          <h3>Full docs →</h3>
+          <p class="brut-small">Every component, every modifier, every token — fully documented with live examples.</p>
+        </a>
+
+        <a class="next-card" href="components.html">
+          <span class="next-card__eyebrow">Browse</span>
+          <h3>Components →</h3>
+          <p class="brut-small">150+ components organized by category. Filter and search to find what you need.</p>
+        </a>
+
+        <a class="next-card" href="examples.html">
+          <span class="next-card__eyebrow">Inspiration</span>
+          <h3>Examples →</h3>
+          <p class="brut-small">Full-page templates built with BRUT. Fork and customize.</p>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <a class="nav__brand" href="index.html" style="color: var(--paper);">
+      <span class="nav__mark">B</span>
+      <span>BRUT UI</span>
+    </a>
+    <nav class="footer__links" aria-label="Footer navigation">
+      <a class="footer__link" href="components.html">Components</a>
+      <a class="footer__link" href="examples.html">Examples</a>
+      <a class="footer__link" href="get-started.html">Get Started</a>
+      <a class="footer__link" href="changelog.html">Changelog</a>
+      <a class="footer__link" href="../docs/index.html">Docs</a>
+      <a class="footer__link" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <span class="footer__legal">MIT License · Built with BRUT.</span>
+  </div>
+</footer>
+
+<script src="../dist/brut.js"></script>
+<script>
+  function copyBlock(btn, id) {
+    var el = document.getElementById(id);
+    var text = el ? el.innerText : '';
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>

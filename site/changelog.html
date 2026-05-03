@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Changelog — BRUT UI Kit</title>
+  <meta name="description" content="BRUT UI Kit release history and version notes."/>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+
+    /* ---- NAV ---- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--paper); border-bottom: 4px solid var(--ink);
+    }
+    .nav__inner {
+      max-width: 1200px; margin: 0 auto; padding: 14px var(--sp-6);
+      display: flex; align-items: center; gap: var(--sp-6);
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: var(--sp-3);
+      font-family: var(--font-display); text-transform: uppercase;
+      font-size: var(--fs-md); letter-spacing: var(--tracking-wide);
+      color: var(--ink); text-decoration: none;
+    }
+    .nav__mark {
+      width: 36px; height: 36px; background: var(--primary);
+      border: 3px solid var(--ink); box-shadow: 3px 3px 0 0 var(--ink);
+      display: grid; place-items: center;
+      font-family: var(--font-display); font-size: 16px;
+    }
+    .nav__links { display: flex; gap: var(--sp-6); margin-left: var(--sp-8); }
+    .nav__link {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      color: var(--ink); text-decoration: none; padding: 4px 2px;
+    }
+    .nav__link:hover { background: var(--primary); }
+    .nav__link--active { background: var(--primary); }
+    .nav__cta { margin-left: auto; }
+    @media (max-width: 760px) { .nav__links { display: none; } }
+
+    /* ---- LAYOUT ---- */
+    .wrap { max-width: 860px; margin: 0 auto; padding: var(--sp-10) var(--sp-6); }
+
+    .page-hero {
+      margin-bottom: var(--sp-10); padding-bottom: var(--sp-8);
+      border-bottom: 4px solid var(--ink);
+    }
+
+    /* ---- CHANGELOG ENTRIES ---- */
+    .log-entries { display: flex; flex-direction: column; gap: 0; }
+
+    .log-entry {
+      border: 4px solid var(--ink);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--sp-6);
+      background: var(--bone);
+    }
+
+    .log-entry__header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--sp-3);
+      padding: var(--sp-4) var(--sp-6);
+      background: var(--paper-2);
+      border-bottom: 4px solid var(--ink);
+    }
+
+    .log-entry__version-group { display: flex; align-items: center; gap: var(--sp-3); }
+
+    .version-badge {
+      font-family: var(--font-display); font-size: var(--fs-lg);
+      text-transform: uppercase; letter-spacing: var(--tracking-wide);
+    }
+
+    .log-entry__date {
+      font-family: var(--font-mono); font-size: var(--fs-xs);
+      color: var(--concrete-400);
+    }
+
+    .log-entry__body { padding: var(--sp-5) var(--sp-6); }
+
+    .log-section {
+      margin-bottom: var(--sp-5);
+    }
+    .log-section:last-child { margin-bottom: 0; }
+
+    .log-section__title {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      text-transform: uppercase; letter-spacing: var(--tracking-widest);
+      margin: 0 0 var(--sp-3);
+      display: flex; align-items: center; gap: var(--sp-2);
+    }
+
+    .log-dot {
+      width: 10px; height: 10px;
+      border: 2px solid var(--ink); flex: none;
+    }
+    .log-dot--new     { background: var(--success); }
+    .log-dot--changed { background: var(--primary); }
+    .log-dot--fixed   { background: var(--info); }
+    .log-dot--removed { background: var(--danger); }
+
+    .log-list {
+      margin: 0; padding: 0; list-style: none;
+      display: flex; flex-direction: column; gap: var(--sp-1);
+    }
+    .log-list li {
+      padding: var(--sp-2) var(--sp-3);
+      font-size: var(--fs-sm); line-height: 1.5;
+      border-left: 3px solid var(--ink);
+    }
+    .log-list li code {
+      font-family: var(--font-mono); font-size: var(--fs-xs);
+      background: var(--concrete-50); padding: 1px 5px;
+    }
+    .log-list--new     li { border-left-color: var(--success); background: var(--success-bg); }
+    .log-list--changed li { border-left-color: var(--primary-deep); background: var(--warning-bg); }
+    .log-list--fixed   li { border-left-color: var(--info); background: var(--info-bg); }
+
+    /* ---- SUBSCRIBE STRIP ---- */
+    .subscribe-strip {
+      background: var(--paper-2); border: 4px solid var(--ink);
+      box-shadow: var(--shadow-md); padding: var(--sp-6);
+      margin: var(--sp-10) 0;
+      display: flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap;
+    }
+    .subscribe-strip__text { flex: 1; min-width: 200px; }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      background: var(--ink); color: var(--paper);
+      padding: var(--sp-8) var(--sp-6);
+    }
+    .footer__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: var(--sp-6); align-items: center;
+    }
+    .footer__links { display: flex; gap: var(--sp-6); flex-wrap: wrap; }
+    .footer__link {
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider); text-transform: uppercase;
+      color: var(--paper); text-decoration: none;
+    }
+    .footer__link:hover { color: var(--primary); }
+    .footer__legal {
+      margin-left: auto; font-family: var(--font-mono);
+      font-size: var(--fs-xs); color: var(--concrete-200);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">
+      <span class="nav__mark">B</span>
+      <span>BRUT UI</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary navigation">
+      <a class="nav__link" href="components.html">Components</a>
+      <a class="nav__link" href="examples.html">Examples</a>
+      <a class="nav__link" href="get-started.html">Get Started</a>
+      <a class="nav__link" href="../docs/index.html">Docs</a>
+    </nav>
+    <a class="brut-btn brut-btn--primary brut-btn--sm nav__cta" href="https://github.com/" target="_blank" rel="noopener">
+      GitHub ↗
+    </a>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<div class="wrap">
+
+  <div class="page-hero">
+    <div class="brut-cluster brut-cluster--sm" style="margin-bottom: var(--sp-4);">
+      <span class="brut-kicker">Version history</span>
+    </div>
+    <h1 class="brut-display-2" style="margin: 0 0 var(--sp-4);">Changelog.</h1>
+    <p class="brut-lead" style="margin: 0; max-width: 58ch;">
+      Every release, every breaking change, every fix.
+      Follow on <a class="brut-link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a> for release notifications.
+    </p>
+  </div>
+
+  <div class="log-entries">
+
+    <!-- v0.1.0 — INITIAL RELEASE -->
+    <article class="log-entry" id="v0.1.0">
+      <div class="log-entry__header">
+        <div class="log-entry__version-group">
+          <span class="version-badge">v0.1.0</span>
+          <span class="brut-badge brut-badge--ok">Initial release</span>
+          <span class="brut-badge" style="background: var(--primary)">Latest</span>
+        </div>
+        <time class="log-entry__date" datetime="2026-05-03">May 3, 2026</time>
+      </div>
+      <div class="log-entry__body">
+
+        <p class="brut-body" style="margin: 0 0 var(--sp-5);">
+          The first public release of BRUT. Everything you need to build hard-edged,
+          neo-brutalist interfaces — shipped as two flat files with zero dependencies.
+        </p>
+
+        <div class="log-section">
+          <p class="log-section__title">
+            <span class="log-dot log-dot--new"></span>
+            New — Components
+          </p>
+          <ul class="log-list log-list--new">
+            <li><strong>150+ components</strong> across Forms, Interactive, Layout, Display, Typography, and Tables</li>
+            <li>Form controls: <code>input</code>, <code>textarea</code>, <code>select</code>, <code>checkbox</code>, <code>radio</code>, <code>switch</code>, <code>stepper</code>, <code>range</code>, <code>range-dual</code>, <code>otp</code>, <code>tag-input</code>, <code>file</code>, <code>dropzone</code>, <code>rating</code>, <code>combobox</code>, <code>multiselect</code>, <code>password</code>, <code>date</code>, <code>time</code>, <code>color</code>, <code>search</code></li>
+            <li>Interactive: <code>accordion</code>, <code>dialog</code>, <code>drawer</code>, <code>menu</code>, <code>popover</code>, <code>tabs</code>, <code>toast</code>, <code>tooltip</code>, <code>sidebar</code></li>
+            <li>Layout: <code>stack</code>, <code>cluster</code>, <code>bar</code>, <code>grid</code>, <code>split</code>, <code>section</code>, <code>container</code>, <code>field</code>, <code>fieldset</code>, <code>topnav</code>, <code>footer</code></li>
+            <li>Display: <code>badge</code>, <code>alert</code>, <code>card</code>, <code>tag</code>, <code>avatar</code>, <code>avatar-group</code>, <code>skeleton</code>, <code>spinner</code>, <code>empty</code>, <code>breadcrumbs</code>, <code>pagination</code>, <code>rows</code></li>
+            <li>Typography: full type scale from <code>display-1</code> through <code>caption</code>, plus <code>eyebrow</code>, <code>kicker</code>, <code>overline</code>, <code>code</code>, <code>pre</code>, <code>kbd</code>, <code>mark</code>, <code>quote</code>, <code>prose</code></li>
+            <li>Tables: <code>table</code>, <code>table-wrap</code>, <code>table-toolbar</code>, <code>table-filter</code>, <code>table-columns</code> with sticky head and sticky column support</li>
+          </ul>
+        </div>
+
+        <div class="log-section">
+          <p class="log-section__title">
+            <span class="log-dot log-dot--new"></span>
+            New — Design System
+          </p>
+          <ul class="log-list log-list--new">
+            <li><strong>80+ CSS variables</strong> for color, typography, spacing, shadows, borders, and motion</li>
+            <li>Hard-edge shadow system: 6 sizes from <code>--shadow-xs</code> (2px) to <code>--shadow-2xl</code> (16px), never blurred</li>
+            <li>6 pop colors: pink, lime, blue, orange, purple, mint — plus semantic signal colors</li>
+            <li>Snap motion tokens: <code>--dur-fast</code> 80ms, <code>--dur-base</code> 140ms, <code>--ease-snap</code> cubic-bezier</li>
+            <li>Three font families: Archivo Black (display), Space Grotesk (UI), JetBrains Mono (code)</li>
+            <li>4px base spacing grid from <code>--sp-1</code> (4px) to <code>--sp-20</code> (80px)</li>
+          </ul>
+        </div>
+
+        <div class="log-section">
+          <p class="log-section__title">
+            <span class="log-dot log-dot--new"></span>
+            New — JS Runtime
+          </p>
+          <ul class="log-list log-list--new">
+            <li>32 interactive components auto-initialized via <code>data-brut</code> attribute hooks</li>
+            <li>All components dispatch <code>brut:change</code> and <code>brut:complete</code> custom events</li>
+            <li>All interactive components mirror state to a hidden <code>&lt;input&gt;</code> for form compatibility</li>
+            <li>Full keyboard support: Space/Enter to activate, Arrow keys for navigation, Escape to close</li>
+            <li>Idempotent initialization — safe to call multiple times, works with dynamic DOM</li>
+          </ul>
+        </div>
+
+        <div class="log-section">
+          <p class="log-section__title">
+            <span class="log-dot log-dot--new"></span>
+            New — Site &amp; Docs
+          </p>
+          <ul class="log-list log-list--new">
+            <li>Marketing site (<code>site/</code>) with landing, component gallery, examples, get started, and changelog pages</li>
+            <li>Full documentation (<code>docs/index.html</code>) with live component previews and code snippets</li>
+            <li>52 standalone preview pages for isolated component testing</li>
+            <li>2 full-page demo compositions: landing page and login form</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 3px solid var(--concrete-100);">
+          <a class="brut-btn brut-btn--sm" href="https://github.com/" target="_blank" rel="noopener">
+            View release on GitHub ↗
+          </a>
+        </div>
+
+      </div>
+    </article>
+
+  </div><!-- /log-entries -->
+
+  <!-- SUBSCRIBE / FOLLOW STRIP -->
+  <div class="subscribe-strip">
+    <div class="subscribe-strip__text">
+      <h3 class="brut-h3" style="margin: 0 0 var(--sp-1);">Stay up to date.</h3>
+      <p class="brut-small">Watch the GitHub repo to get notified of new releases and breaking changes.</p>
+    </div>
+    <a class="brut-btn brut-btn--ink" href="https://github.com/" target="_blank" rel="noopener">
+      Watch on GitHub ↗
+    </a>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <a class="nav__brand" href="index.html" style="color: var(--paper);">
+      <span class="nav__mark">B</span>
+      <span>BRUT UI</span>
+    </a>
+    <nav class="footer__links" aria-label="Footer navigation">
+      <a class="footer__link" href="components.html">Components</a>
+      <a class="footer__link" href="examples.html">Examples</a>
+      <a class="footer__link" href="get-started.html">Get Started</a>
+      <a class="footer__link" href="changelog.html">Changelog</a>
+      <a class="footer__link" href="../docs/index.html">Docs</a>
+      <a class="footer__link" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <span class="footer__legal">MIT License · Built with BRUT.</span>
+  </div>
+</footer>
+
+<script src="../dist/brut.js"></script>
+</body>
+</html>
