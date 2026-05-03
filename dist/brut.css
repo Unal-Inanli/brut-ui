@@ -1,17 +1,11 @@
-/*!
- * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-03T18:17:25Z
- * Bundle: src/tokens/*.css + src/components.css
- */
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 
 /* ============================================
    BRUT — Design Tokens: Primitives
    Raw values — hex, px, font stacks, motion.
    No var() references. Every other layer builds on these.
    ============================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
 :root {
   /* ---------- COLOR ---------- */
 
@@ -155,13 +149,11 @@
   --z-modal:    500;   /* modal dialogs */
   --z-toast:    600;   /* transient notifications — always on top */
 }
-
 /* ============================================
    BRUT — Design Tokens: Semantic
    Role-based aliases that reference primitives.
    This is the layer themes override (M4).
    ============================================ */
-
 :root {
   /* ---------- FOREGROUND / BACKGROUND ---------- */
 
@@ -210,13 +202,11 @@
   --shadow-2xl: 16px 16px 0 0 var(--ink);
   --shadow-2xs: 3px 3px 0 0 var(--ink);
 }
-
 /* ============================================
    BRUT — Design Tokens: Intent
    Component-specific sizing and layout.
    Acceptance gate: NO hex values in this file.
    ============================================ */
-
 :root {
   /* ---------- CONTROL SIZING ---------- */
   --control-sm:   20px;
@@ -255,7 +245,6 @@
   --date-w:         280px;
   --menu-min-w:     200px;
 }
-
 /* ============================================
    BRUT — Token barrel + base element styles
    Layer imports (resolved by Vite in M3; ignored by cat-build):
@@ -263,9 +252,7 @@
    @import './02-semantic.css';
    @import './03-intent.css';
    ============================================ */
-
 /* ---------- SEMANTIC ELEMENT STYLES ---------- */
-
 html, body {
   background: var(--bg-1);
   color: var(--fg-1);
@@ -275,10 +262,8 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
 /* All headings reset margins — let the layout decide rhythm. */
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { margin: 0; }
-
 h1, .h1 {
   font-family: var(--font-display);
   font-size: var(--fs-4xl);
@@ -286,7 +271,6 @@ h1, .h1 {
   letter-spacing: var(--tracking-tight);
   text-transform: uppercase;
 }
-
 h2, .h2 {
   font-family: var(--font-display);
   font-size: var(--fs-3xl);
@@ -294,7 +278,6 @@ h2, .h2 {
   letter-spacing: var(--tracking-tight);
   text-transform: uppercase;
 }
-
 h3, .h3 {
   font-family: var(--font-sans);
   font-weight: var(--fw-bold);
@@ -302,21 +285,18 @@ h3, .h3 {
   line-height: var(--lh-snug);
   letter-spacing: var(--tracking-tight);
 }
-
 h4, .h4 {
   font-family: var(--font-sans);
   font-weight: var(--fw-bold);
   font-size: var(--fs-xl);
   line-height: var(--lh-snug);
 }
-
 h5, .h5 {
   font-family: var(--font-sans);
   font-weight: var(--fw-bold);
   font-size: var(--fs-lg);
   line-height: var(--lh-snug);
 }
-
 h6, .h6 {
   font-family: var(--font-sans);
   font-weight: var(--fw-bold);
@@ -325,22 +305,18 @@ h6, .h6 {
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
 }
-
 p, .p {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
   line-height: var(--lh-normal);
   margin: 0;
 }
-
 small, .small {
   font-size: var(--fs-sm);
   line-height: var(--lh-normal);
 }
-
 strong, b { font-weight: var(--fw-bold); }
 em, i    { font-style: italic; }
-
 .eyebrow,
 .label {
   font-family: var(--font-sans);
@@ -349,7 +325,6 @@ em, i    { font-style: italic; }
   text-transform: uppercase;
   letter-spacing: var(--tracking-widest);
 }
-
 /* Anchors — chunky underlines, never thin. */
 a {
   color: var(--ink);
@@ -360,7 +335,6 @@ a {
   font-weight: var(--fw-medium);
 }
 a:hover { background: var(--primary); }
-
 /* Lists — square bullets, hard counters. */
 ul, ol {
   font-family: var(--font-sans);
@@ -376,7 +350,6 @@ li::marker {
   font-weight: var(--fw-bold);
 }
 li + li { margin-top: 4px; }
-
 /* Blockquote — left ink rule, body-weight, no italic by default. */
 blockquote {
   font-family: var(--font-sans);
@@ -386,14 +359,12 @@ blockquote {
   padding: var(--sp-2) var(--sp-4);
   margin: 0;
 }
-
 /* Horizontal rule — 4px ink line, the only divider we ship. */
 hr {
   border: 0;
   border-top: var(--bw-3) solid var(--ink);
   margin: var(--sp-6) 0;
 }
-
 /* Inline code, kbd, samp — chunky chip with hard border. */
 code, kbd, samp {
   font-family: var(--font-mono);
@@ -408,7 +379,6 @@ kbd {
   box-shadow: 2px 2px 0 0 var(--ink);
   font-size: 0.85em;
 }
-
 /* Block code. */
 pre {
   font-family: var(--font-mono);
@@ -429,7 +399,6 @@ pre code {
   font-size: inherit;
   color: inherit;
 }
-
 /* ---------- TYPE UTILITY CLASSES ---------- */
 .t-display    { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-tight); line-height: var(--lh-tight); }
 .t-sans       { font-family: var(--font-sans); }
@@ -443,20 +412,15 @@ pre code {
 .t-widest     { letter-spacing: var(--tracking-widest); }
 .t-balance    { text-wrap: balance; }
 .t-pretty     { text-wrap: pretty; }
-
 /* Selection: high contrast, no gradient */
 ::selection { background: var(--primary); color: var(--ink); }
-
-
 /* Shared component styles for docs page — these classes are referenced
    by the inline previews AND by the code snippets the user copies. */
-
 /* ============================================================
    TYPOGRAPHY
    Component-level classes that compose the type tokens into
    ready-made styles. Use these instead of hand-rolling sizes.
    ============================================================ */
-
 /* DISPLAY — only for hero / poster moments. ALL CAPS. */
 .brut-display-1 {
   font-family: var(--font-display);
@@ -485,7 +449,6 @@ pre code {
   margin: 0;
   text-wrap: balance;
 }
-
 /* HEADINGS — H1 through H6, in semantic order. */
 .brut-h1 {
   font-family: var(--font-display);
@@ -534,7 +497,6 @@ pre code {
   letter-spacing: var(--tracking-wide);
   margin: 0;
 }
-
 /* BODY copy — three densities. */
 .brut-lead {
   font-family: var(--font-sans);
@@ -565,7 +527,6 @@ pre code {
   color: var(--concrete-400);
   margin: 0;
 }
-
 /* EYEBROW / KICKER / OVERLINE — short, chunky, ALL CAPS. */
 .brut-eyebrow {
   font-family: var(--font-display);
@@ -596,7 +557,6 @@ pre code {
   color: var(--concrete-400);
   margin: 0;
 }
-
 /* QUOTE — left rule, no italic. */
 .brut-quote {
   font-family: var(--font-sans);
@@ -629,7 +589,6 @@ pre code {
   color: var(--concrete-400);
   margin-top: var(--sp-2h);
 }
-
 /* LINK — chunky underline. Yellow on hover. */
 .brut-link {
   color: var(--ink);
@@ -643,7 +602,6 @@ pre code {
 }
 .brut-link:hover  { background: var(--primary); }
 .brut-link:active { background: var(--primary-deep); color: var(--paper); }
-
 /* CODE — inline + kbd + block. */
 .brut-code {
   font-family: var(--font-mono);
@@ -679,7 +637,6 @@ pre code {
 .brut-pre .tok-keyword { color: var(--pop-pink); }
 .brut-pre .tok-string  { color: var(--pop-lime); }
 .brut-pre .tok-num     { color: var(--primary); }
-
 /* LISTS — square bullets, hard counters, optional check. */
 .brut-list {
   font-family: var(--font-sans);
@@ -711,7 +668,6 @@ pre code {
   line-height: 1;
 }
 .brut-list li + li { margin-top: var(--sp-1); }
-
 /* DROP CAP — first letter as a hard ink block. */
 .brut-drop-cap::first-letter {
   font-family: var(--font-display);
@@ -724,7 +680,6 @@ pre code {
   margin: var(--sp-1) var(--sp-2h) 0 0;
   text-transform: uppercase;
 }
-
 /* HIGHLIGHT — yellow text marker. */
 .brut-mark {
   background: var(--primary);
@@ -733,7 +688,6 @@ pre code {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-
 /* NUM — display-style figure for stats. Tabular by default. */
 .brut-num {
   font-family: var(--font-display);
@@ -744,7 +698,6 @@ pre code {
   font-feature-settings: var(--num-tabular);
   margin: 0;
 }
-
 /* TEXT-LINK INLINE in body copy — works inside <p> without breaking rhythm. */
 .brut-prose {
   font-family: var(--font-sans);
@@ -763,9 +716,6 @@ pre code {
   padding: var(--sp-px) var(--sp-1h);
   border: var(--bw-1) solid var(--ink);
 }
-
-
-
 /* BUTTON */
 .brut-btn {
   font-family: var(--font-display);
@@ -792,7 +742,6 @@ pre code {
                 box-shadow: var(--shadow-2xs); }
 .brut-btn--lg { padding: var(--sp-4) var(--sp-6); font-size: var(--fs-md);
                 box-shadow: var(--shadow-md); }
-
 /* BADGE */
 .brut-badge {
   font-family: var(--font-display);
@@ -810,7 +759,6 @@ pre code {
 .brut-badge--warn { background: var(--warning-bg); }
 .brut-badge--err  { background: var(--danger-bg); }
 .brut-badge--info { background: var(--info-bg); }
-
 /* CARD */
 .brut-card {
   background: var(--bone);
@@ -818,14 +766,12 @@ pre code {
   box-shadow: var(--shadow-md);
   padding: var(--sp-5);
 }
-
 /* ============================================================
    DATA
    Tables and settings-style row lists. Static structure; the
    table picks up sortable / select-all behavior when wrapped in
    data-brut="table" (see src/js/components/table.js).
    ============================================================ */
-
 /* TABLE — full-width data grid. Sortable + select-all when JS-bound. */
 .brut-table {
   border-collapse: collapse;
@@ -886,13 +832,11 @@ pre code {
 .brut-table--bordered .brut-table__cell + .brut-table__cell { border-left: var(--bw-2) solid var(--ink); }
 .brut-table--compact .brut-table__cell,
 .brut-table--compact .brut-table__head .brut-table__cell { padding: var(--sp-1h) var(--sp-2h); }
-
 /* ============================================================
    TABLE — STICKY
    Scroll wrapper + sticky-head / sticky-col modifiers.
    Pure CSS — no JS required.
    ============================================================ */
-
 /* Scroll wrapper — opaque ink border + hard shadow. */
 .brut-table-wrap {
   overflow: auto;
@@ -900,12 +844,10 @@ pre code {
   box-shadow: var(--shadow-md);
   background: var(--paper);
 }
-
 /* Remove the table's own outer border when inside a wrap (the wrap provides it). */
 .brut-table-wrap .brut-table {
   border: 0;
 }
-
 /* Sticky header — thead th cells pin to the top of the scroll container. */
 .brut-table--sticky-head thead th {
   position: sticky;
@@ -914,7 +856,6 @@ pre code {
   background: var(--ink);
   border-bottom: var(--bw-3) solid var(--ink);
 }
-
 /* Sticky first column — first td/th in every row pins to the left. */
 .brut-table--sticky-col td:first-child,
 .brut-table--sticky-col th:first-child {
@@ -924,13 +865,11 @@ pre code {
   background: var(--paper-2);
   border-right: var(--bw-3) solid var(--ink);
 }
-
 /* Sticky-head thead th already has ink bg; keep it opaque over column content. */
 .brut-table--sticky-head.brut-table--sticky-col thead th:first-child {
   z-index: 3;
   background: var(--ink);
 }
-
 /* ROWS — settings-style list: lead / title+sub / trail. */
 .brut-rows {
   list-style: none;
@@ -970,7 +909,6 @@ pre code {
   transition: background var(--dur-fast) var(--ease-snap);
 }
 .brut-rows--clickable .brut-rows__item:hover { background: var(--primary); }
-
 /* INPUT */
 .brut-label {
   font-family: var(--font-display);
@@ -994,7 +932,6 @@ pre code {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
-
 /* TOGGLE / SWITCH */
 .brut-switch {
   width: var(--switch-track-w); height: var(--switch-track-h);
@@ -1012,7 +949,6 @@ pre code {
   transition: left 100ms cubic-bezier(.2,.8,.2,1);
 }
 .brut-switch--on .brut-switch__knob { left: var(--switch-knob-on); }
-
 /* CHECKBOX */
 .brut-checkbox {
   width: var(--control-icon); height: var(--control-icon);
@@ -1029,7 +965,6 @@ pre code {
   font-size: var(--fs-base); font-weight: 900;
   line-height: 1;
 }
-
 /* ALERT */
 .brut-alert {
   border: var(--bw-3) solid var(--ink);
@@ -1052,7 +987,6 @@ pre code {
 .brut-alert--err  .brut-alert__icon { background: var(--danger);  color: var(--paper); }
 .brut-alert--info { background: var(--info-bg); }
 .brut-alert--info .brut-alert__icon { background: var(--info);    color: var(--paper); }
-
 /* TOAST — non-blocking transient notifications. Stacked in a corner host. */
 .brut-toast-host {
   position: fixed;
@@ -1121,7 +1055,6 @@ pre code {
 .brut-toast--err  .brut-toast__icon { background: var(--danger);  color: var(--paper); }
 .brut-toast--info { background: var(--info-bg); }
 .brut-toast--info .brut-toast__icon { background: var(--info);    color: var(--paper); }
-
 /* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
 .brut-tip {
   position: absolute;
@@ -1138,7 +1071,6 @@ pre code {
   white-space: nowrap;
   pointer-events: none;
 }
-
 /* POPOVER — anchored card opened by trigger. JS positions + toggles. */
 .brut-popover {
   position: absolute;
@@ -1182,7 +1114,6 @@ pre code {
   padding: 0;
   cursor: pointer;
 }
-
 /* SKELETON — placeholder block with a hard ink stripe sweep. */
 .brut-skeleton {
   position: relative;
@@ -1220,7 +1151,6 @@ pre code {
   width: var(--sp-12);
   height: var(--sp-12);
 }
-
 /* SPINNER — square with one side colored, rotates 360deg. No border-radius. */
 .brut-spinner {
   display: inline-block;
@@ -1239,7 +1169,6 @@ pre code {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-
 /* EMPTY — dashed-border placeholder card for "nothing here yet" states. */
 .brut-empty {
   text-align: center;
@@ -1269,7 +1198,6 @@ pre code {
 .brut-empty__action {
   margin-top: var(--sp-3);
 }
-
 /* SEGMENTED */
 .brut-segmented {
   display: inline-flex;
@@ -1290,7 +1218,6 @@ pre code {
 }
 .brut-segmented__btn:last-child { border-right: 0; }
 .brut-segmented__btn--on { background: var(--ink); color: var(--paper); }
-
 /* TABS */
 .brut-tabs {
   display: flex;
@@ -1309,7 +1236,6 @@ pre code {
   position: relative;
 }
 .brut-tab--on { background: var(--primary); z-index: 2; }
-
 /* ACCORDION — stacked disclosure panels. JS toggles --open on items. */
 .brut-accordion {
   display: block;
@@ -1361,7 +1287,6 @@ pre code {
 .brut-accordion__item--open > .brut-accordion__body {
   display: block;
 }
-
 /* AVATAR */
 .brut-avatar {
   width: var(--control-xl); height: var(--control-xl);
@@ -1388,7 +1313,6 @@ pre code {
   color: var(--paper);
   font-family: var(--font-display);
 }
-
 /* DIALOG */
 .brut-dialog {
   background: var(--bone);
@@ -1408,7 +1332,6 @@ pre code {
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer;
 }
-
 /* DRAWER — side sheet. Slides in from any edge. JS toggles --open. */
 .brut-drawer {
   position: fixed;
@@ -1480,7 +1403,6 @@ pre code {
   padding: 0;
   cursor: pointer;
 }
-
 /* MENU — context / overflow menu. JS opens, positions, and closes. */
 .brut-menu {
   position: absolute;
@@ -1523,7 +1445,6 @@ pre code {
   border-top: var(--bw-2) solid var(--ink);
   margin: var(--sp-1) 0;
 }
-
 /* ============================================================
    FORMS — extended
    Field wrappers, input variants, native-styled controls, and
@@ -1534,12 +1455,10 @@ pre code {
    not need JS (textarea, select, range, fieldset, etc.) work with
    no script attached.
    ============================================================ */
-
 /* FORM container — vertical stack of fields. */
 .brut-form        { display: flex; flex-direction: column; gap: var(--sp-5); }
 .brut-form--tight { gap: var(--sp-3); }
 .brut-form--loose { gap: var(--sp-8); }
-
 /* FIELD — label + control + hint/error/counter wrapper. */
 .brut-field       { display: flex; flex-direction: column; gap: var(--sp-1); }
 .brut-field__label {
@@ -1568,7 +1487,6 @@ pre code {
   align-items: center;
   gap: var(--sp-3);
 }
-
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
   padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
@@ -1592,7 +1510,6 @@ pre code {
   cursor: not-allowed;
 }
 .brut-input::placeholder { color: var(--concrete-300); }
-
 /* INPUT GROUP — prefix/suffix addons. Wraps an input + addon spans. */
 .brut-input-group {
   display: inline-flex;
@@ -1629,7 +1546,6 @@ pre code {
   border-right: 0;
   border-left: var(--bw-2) solid var(--ink);
 }
-
 /* TEXTAREA — same skin as .brut-input, vertical resize only. */
 .brut-textarea {
   font-family: var(--font-sans);
@@ -1650,7 +1566,6 @@ pre code {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
-
 /* SELECT — styled native, hard chevron (no SVG, no font icon). */
 .brut-select {
   font-family: var(--font-sans);
@@ -1680,7 +1595,6 @@ pre code {
   background-color: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
-
 /* RADIO — round companion to .brut-checkbox. JS toggles --on. */
 .brut-radio {
   width: var(--control-icon); height: var(--control-icon);
@@ -1700,7 +1614,6 @@ pre code {
   background: var(--ink);
   border-radius: 50%;
 }
-
 /* RANGE / SLIDER — native, restyled. */
 .brut-range {
   -webkit-appearance: none;
@@ -1741,7 +1654,6 @@ pre code {
   box-shadow: var(--shadow-xs);
   cursor: pointer;
 }
-
 /* RANGE DUAL — two-thumb range. JS owns drag + keyboard; this is just chrome. */
 .brut-range-dual {
   position: relative;
@@ -1787,7 +1699,6 @@ pre code {
 }
 .brut-range-dual__thumb:focus { background: var(--ink); box-shadow: var(--shadow-sm); }
 .brut-range-dual__thumb:active { cursor: grabbing; }
-
 /* FILE INPUT — chunky button + filename label. */
 .brut-file {
   display: inline-flex;
@@ -1820,7 +1731,6 @@ pre code {
 .brut-file:hover  .brut-file__btn { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--shadow-sm); }
 .brut-file:active .brut-file__btn { transform: translate(var(--bw-1), var(--bw-1));   box-shadow: 0 0 0 0 var(--ink); }
 .brut-file__name  { color: var(--concrete-400); font-family: var(--font-mono); font-size: var(--fs-xs); }
-
 /* COLOR INPUT — styled native swatch. */
 .brut-color {
   width: var(--control-xl); height: var(--control-xl);
@@ -1834,7 +1744,6 @@ pre code {
 .brut-color::-webkit-color-swatch-wrapper { padding: var(--sp-1); }
 .brut-color::-webkit-color-swatch { border: 0; }
 .brut-color::-moz-color-swatch    { border: 0; }
-
 /* FIELDSET — bordered group with hard ink legend chip. */
 .brut-fieldset {
   border: var(--bw-3) solid var(--ink);
@@ -1852,7 +1761,6 @@ pre code {
   color: var(--paper);
   padding: var(--sp-1) var(--sp-2h);
 }
-
 /* STEPPER — number input with -/+ buttons. JS does the math. */
 .brut-stepper {
   display: inline-flex;
@@ -1887,7 +1795,6 @@ pre code {
 }
 .brut-stepper__input::-webkit-outer-spin-button,
 .brut-stepper__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-
 /* PASSWORD — input with SHOW/HIDE toggle. JS swaps input.type. */
 .brut-password { position: relative; display: block; }
 .brut-password > .brut-input { padding-right: var(--sp-16); }
@@ -1906,7 +1813,6 @@ pre code {
   line-height: 1;
 }
 .brut-password__toggle:hover { background: var(--primary); }
-
 /* SEARCH — input with × clear button (only shown when value present). */
 .brut-search { position: relative; display: block; }
 .brut-search > .brut-input { padding-right: var(--search-pad-r); }
@@ -1925,7 +1831,6 @@ pre code {
   line-height: 1;
 }
 .brut-search--has-value .brut-search__clear { display: inline-flex; }
-
 /* OTP / PIN — fixed-width cells with auto-advance. */
 .brut-otp { display: inline-flex; gap: var(--sp-2); }
 .brut-otp__cell {
@@ -1945,7 +1850,6 @@ pre code {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
-
 /* TAGS / CHIPS — read-only display badges, with optional × button. */
 .brut-tags { display: inline-flex; flex-wrap: wrap; gap: var(--sp-2); }
 .brut-tag {
@@ -1981,7 +1885,6 @@ pre code {
   color: inherit;
   line-height: 1;
 }
-
 /* TAG INPUT — chip entry field. JS adds tags on Enter or comma. */
 .brut-tag-input {
   display: flex;
@@ -2010,7 +1913,6 @@ pre code {
   padding: var(--sp-1) 0;
   color: var(--ink);
 }
-
 /* COMBOBOX — searchable select. JS filters + opens the option list. */
 .brut-combobox { position: relative; display: block; }
 .brut-combobox__list {
@@ -2046,7 +1948,6 @@ pre code {
   color: var(--concrete-400);
   display: none;
 }
-
 /* MULTISELECT — chips inside a combobox-style field. JS toggles selection. */
 .brut-multiselect { position: relative; display: block; }
 .brut-multiselect__field {
@@ -2131,7 +2032,6 @@ pre code {
   color: var(--concrete-400);
   display: none;
 }
-
 /* DROPZONE — drag-and-drop file area. JS handles dragover + drop. */
 .brut-dropzone {
   position: relative;
@@ -2166,7 +2066,6 @@ pre code {
   opacity: 0;
   pointer-events: none;
 }
-
 /* RATING — star row. JS toggles --on per star, hover preview. */
 .brut-rating { display: inline-flex; gap: var(--sp-1); }
 .brut-rating__star {
@@ -2186,7 +2085,6 @@ pre code {
 .brut-rating__star::before { content: "★"; opacity: 0.18; }
 .brut-rating__star--on { background: var(--primary); }
 .brut-rating__star--on::before { opacity: 1; }
-
 /* DATE — text field + popover calendar. JS owns the grid + keyboard nav. */
 .brut-date { position: relative; display: block; }
 .brut-date__field { width: 100%; box-sizing: border-box; cursor: pointer; }
@@ -2279,7 +2177,6 @@ pre code {
 .brut-date__day--selected { background: var(--ink); color: var(--paper); }
 .brut-date__day--selected::after { background: var(--paper); }
 .brut-date__day:focus { outline: var(--bw-2) solid var(--ink); outline-offset: calc(var(--bw-1) * -1); }
-
 /* TIME — hour / minute steppers (reuses .brut-stepper) + optional 12/24 segmented. */
 .brut-time { position: relative; display: block; }
 .brut-time__field { width: 100%; box-sizing: border-box; cursor: pointer; }
@@ -2321,15 +2218,12 @@ pre code {
   padding-top: var(--sp-3h);
 }
 .brut-time__meridian { margin-top: var(--sp-3); }
-
-
 /* ============================================================
    NAVIGATION
    App-shell scaffolding — topnav, sidebar, footer, breadcrumbs.
    These are the chrome that wraps every page; layout primitives
    below sit inside them.
    ============================================================ */
-
 /* TOPNAV — sticky page header with brand + links + CTA + mobile burger. */
 .brut-topnav {
   position: sticky; top: 0; z-index: 50;
@@ -2419,7 +2313,6 @@ pre code {
   .brut-topnav__burger { display: inline-flex; align-items: center; justify-content: center; }
   .brut-topnav--open .brut-topnav__links { display: flex; }
 }
-
 /* SIDEBAR — vertical app nav for dashboards. */
 .brut-sidebar {
   width: var(--sidebar-w);
@@ -2501,7 +2394,6 @@ button.brut-sidebar__group-title::after {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
 }
-
 /* FOOTER — page bottom slab. */
 .brut-footer {
   background: var(--ink);
@@ -2549,7 +2441,6 @@ button.brut-sidebar__group-title::after {
   font-size: var(--fs-xs);
   color: var(--concrete-200);
 }
-
 /* BREADCRUMBS — flat, hard-edged path nav. */
 .brut-crumbs {
   display: flex;
@@ -2586,7 +2477,6 @@ button.brut-sidebar__group-title::after {
   font-weight: var(--fw-bold);
   padding: var(--bw-1) var(--sp-1);
 }
-
 /* PAGER — page navigation buttons. CSS-only; consumer wires links. */
 .brut-pager {
   display: flex;
@@ -2635,15 +2525,12 @@ button.brut-sidebar__group-title::after {
   color: var(--concrete-300);
   user-select: none;
 }
-
-
 /* ============================================================
    LAYOUT
    Primitives for composing pages — container, section, stack,
    cluster, bar, grid, split, rule, aspect, scrim, shape, spacer.
    All compose tokens from colors_and_type.css. No utility soup.
    ============================================================ */
-
 /* CONTAINER — max-width centered wrapper with gutter padding. */
 .brut-container {
   width: 100%;
@@ -2657,7 +2544,6 @@ button.brut-sidebar__group-title::after {
 .brut-container--lg   { max-width: var(--container-w); }
 .brut-container--xl   { max-width: var(--container-xl); }
 .brut-container--full { max-width: none; }
-
 /* SECTION — full-bleed page band. Ships the var(--bw-3) ink bottom rule
    by default — opt out with --flush. */
 .brut-section {
@@ -2676,7 +2562,6 @@ button.brut-sidebar__group-title::after {
 .brut-section--primary { background: var(--primary); }
 .brut-section--lime    { background: var(--pop-lime); }
 .brut-section--pink    { background: var(--pop-pink); }
-
 /* STACK — vertical flex column with token-sized gap. */
 .brut-stack {
   display: flex;
@@ -2689,7 +2574,6 @@ button.brut-sidebar__group-title::after {
 .brut-stack--lg  { gap: var(--sp-6); }
 .brut-stack--xl  { gap: var(--sp-10); }
 .brut-stack--2xl { gap: var(--sp-16); }
-
 /* CLUSTER — horizontal flex with wrap. For badges, button rows,
    tag bags. Wraps onto new lines naturally. */
 .brut-cluster {
@@ -2706,7 +2590,6 @@ button.brut-sidebar__group-title::after {
 .brut-cluster--end     { justify-content: flex-end; }
 .brut-cluster--center  { justify-content: center; }
 .brut-cluster--between { justify-content: space-between; }
-
 /* BAR — header / CTA / footer strip. justify-content: space-between
    with wrap. Use a .brut-spacer to push children apart. */
 .brut-bar {
@@ -2716,7 +2599,6 @@ button.brut-sidebar__group-title::after {
   flex-wrap: wrap;
   gap: var(--sp-6);
 }
-
 /* GRID — CSS grid. Default auto-fit responsive; explicit-col variants
    for fixed layouts. */
 .brut-grid {
@@ -2730,7 +2612,6 @@ button.brut-sidebar__group-title::after {
 .brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .brut-grid--tight { gap: var(--sp-2); }
 .brut-grid--loose { gap: var(--sp-10); }
-
 /* SPLIT — sidebar + main two-column. The docs page itself uses this. */
 .brut-split {
   display: flex;
@@ -2740,7 +2621,6 @@ button.brut-sidebar__group-title::after {
 .brut-split__main { flex: 1; min-width: 0; }
 .brut-split__side { flex: none; width: var(--split-side-w); }
 .brut-split--reverse { flex-direction: row-reverse; }
-
 /* RULE — var(--bw-3) ink divider. Replaces hand-rolled <hr>s. */
 .brut-rule {
   border: 0;
@@ -2757,7 +2637,6 @@ button.brut-sidebar__group-title::after {
   width: 0;
   margin-inline: var(--sp-2);
 }
-
 /* ASPECT — aspect-ratio box for images, embeds, media tiles. */
 .brut-aspect {
   position: relative;
@@ -2778,7 +2657,6 @@ button.brut-sidebar__group-title::after {
   object-fit: cover;
   display: block;
 }
-
 /* SCRIM — diagonal-striped overlay for modals. The only sanctioned
    use of transparency in the kit. */
 .brut-scrim {
@@ -2795,7 +2673,6 @@ button.brut-sidebar__group-title::after {
   justify-content: center;
 }
 .brut-scrim[hidden] { display: none; }
-
 /* SHAPE — rotated, offset decorative rectangle. Drop these inside a
    relative-positioned parent to add brutalist hero decoration. Always
    has its own border + offset shadow. Position via the --offset-* mods
@@ -2822,11 +2699,9 @@ button.brut-sidebar__group-title::after {
 .brut-shape--offset-tl { top: calc(var(--sp-6) * -1);    left: calc(var(--sp-6) * -1);   }
 .brut-shape--offset-br { bottom: calc(var(--sp-6) * -1); right: calc(var(--sp-6) * -1);  }
 .brut-shape--offset-bl { bottom: calc(var(--sp-6) * -1); left: calc(var(--sp-6) * -1);   }
-
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
 .brut-spacer { flex: 1; }
-
 /* ============================================================
    TABLE — TOOLBAR
    Horizontal shell that sits above a .brut-table. Three slots:
@@ -2842,7 +2717,6 @@ button.brut-sidebar__group-title::after {
   border-bottom: none;
   box-shadow: var(--shadow-sm);
 }
-
 .brut-table-toolbar__title {
   font-family: var(--font-display);
   font-size: var(--fs-md);
@@ -2853,7 +2727,6 @@ button.brut-sidebar__group-title::after {
   color: var(--ink);
   white-space: nowrap;
 }
-
 .brut-table-toolbar__title span {
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
@@ -2863,22 +2736,18 @@ button.brut-sidebar__group-title::after {
   color: var(--concrete-300);
   margin-left: var(--sp-2);
 }
-
 .brut-table-toolbar__search {
   flex: 1;
 }
-
 .brut-table-toolbar__search .brut-input {
   width: 100%;
 }
-
 .brut-table-toolbar__actions {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   flex-shrink: 0;
 }
-
 .brut-table-toolbar--bare {
   border: none;
   box-shadow: none;
@@ -2886,7 +2755,6 @@ button.brut-sidebar__group-title::after {
   padding-left: 0;
   padding-right: 0;
 }
-
 /* ============================================================
    TABLE — COLUMN VISIBILITY
    "Columns" button + per-column checkbox menu. Toggling sets
@@ -2894,14 +2762,12 @@ button.brut-sidebar__group-title::after {
    hides every [data-col="<key>"] cell via attribute selector.
    JS: src/js/components/table-columns.js
    ============================================================ */
-
 /* Trigger button — inherits .brut-btn; no extra overrides needed. */
 .brut-table-columns-btn {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
 }
-
 /* Menu item: adds flex layout + checkbox sizing on top of .brut-menu__item base. */
 .brut-table-columns-menu__item {
   display: flex;
@@ -2916,19 +2782,16 @@ button.brut-sidebar__group-title::after {
   accent-color: var(--ink);
   cursor: pointer;
 }
-
-/* Hide rule — JS injects per-instance <style> rules of this pattern:
+/* Hide rule — JS injects per-instance \3c style> rules of this pattern:
    .brut-table[data-col-hidden~="key"] [data-col="key"] { display: none }
    The selector uses ~= (whitespace-separated word match) so multiple
    hidden columns work additively from one data-col-hidden attribute. */
-
 /* ============================================================
    TABLE — GLOBAL FILTER
    Text input that filters tbody rows by combined cell text.
    Case-insensitive, AND across whitespace-separated tokens.
    Pairs with data-brut="table-filter".
    ============================================================ */
-
 /* TABLE — GLOBAL FILTER */
 .brut-table-filter {
   display: flex;
@@ -2942,7 +2805,6 @@ button.brut-sidebar__group-title::after {
   color: var(--concrete-400);
   white-space: nowrap;
 }
-
 /* ============================================================
    TABLE — RESPONSIVE
    Stacked-card layout below the small breakpoint (var(--bp-sm)) viewport width.
@@ -2950,7 +2812,6 @@ button.brut-sidebar__group-title::after {
    carry data-brut-col-label="…" for the cell prefix label.
    Pure CSS — no JS required.
    ============================================================ */
-
 @media (max-width: 640px) { /* var(--bp-sm) */
   .brut-table--responsive thead { display: none; }
   .brut-table--responsive,
@@ -2980,3 +2841,4 @@ button.brut-sidebar__group-title::after {
     margin-right: var(--sp-2);
   }
 }
+/*$vite$:1*/

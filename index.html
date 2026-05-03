@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRUT — Dev</title>
+</head>
+<body>
+  <main style="max-width:960px;margin:0 auto;padding:2rem">
+    <h1 class="brut-display-2">BRUT Dev Server</h1>
+    <p class="brut-body-lg" style="margin-bottom:2rem">
+      Edit <code>src/tokens.css</code> or <code>src/components.css</code> — changes hot-reload.
+      After build, verify full pages:
+      <a href="/preview/">preview/</a> &middot;
+      <a href="/docs/">docs/</a> &middot;
+      <a href="/demos/">demos/</a>
+    </p>
+
+    <section style="display:flex;flex-direction:column;gap:2rem">
+
+      <div>
+        <h2 class="brut-h3">Buttons</h2>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem">
+          <button class="brut-btn">Default</button>
+          <button class="brut-btn brut-btn--primary">Primary</button>
+          <button class="brut-btn brut-btn--danger">Danger</button>
+          <button class="brut-btn" disabled>Disabled</button>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="brut-h3">Form Controls</h2>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-top:.5rem">
+          <input class="brut-input" placeholder="Text input" />
+          <label class="brut-switch" data-brut="switch">
+            <span class="brut-switch__track">
+              <span class="brut-switch__thumb"></span>
+            </span>
+            <span class="brut-switch__label">Switch</span>
+          </label>
+          <label class="brut-checkbox" data-brut="checkbox">
+            <span class="brut-checkbox__box"></span>
+            <span class="brut-checkbox__label">Checkbox</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="brut-h3">Card</h2>
+        <div class="brut-card" style="max-width:400px;margin-top:.5rem">
+          <div class="brut-card__body">
+            <h3 class="brut-h4">Card Title</h3>
+            <p class="brut-body">This is a card component rendered through the Vite dev server.</p>
+            <button class="brut-btn brut-btn--primary" style="margin-top:.75rem">Action</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="brut-h3">Accordion</h2>
+        <div class="brut-accordion" data-brut="accordion">
+          <div class="brut-accordion__item">
+            <button class="brut-accordion__head" type="button">
+              <span>Section One</span>
+              <span class="brut-accordion__icon" aria-hidden="true"></span>
+            </button>
+            <div class="brut-accordion__body">
+              <p class="brut-body">Accordion content — verify JS interactivity works in dev mode.</p>
+            </div>
+          </div>
+          <div class="brut-accordion__item">
+            <button class="brut-accordion__head" type="button">
+              <span>Section Two</span>
+              <span class="brut-accordion__icon" aria-hidden="true"></span>
+            </button>
+            <div class="brut-accordion__body">
+              <p class="brut-body">Another panel.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="brut-h3">Badges &amp; Tags</h2>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+          <span class="brut-badge">Default</span>
+          <span class="brut-badge brut-badge--success">Success</span>
+          <span class="brut-badge brut-badge--warning">Warning</span>
+          <span class="brut-badge brut-badge--danger">Danger</span>
+        </div>
+      </div>
+
+    </section>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
