@@ -99,6 +99,10 @@
   --fs-4xl:  64px;
   --fs-5xl:  88px;
   --fs-6xl:  128px;
+  --fs-2xs:   10px;
+  --fs-badge: 11px;
+  --fs-tab:   13px;
+  --fs-input: 15px;
 
   --lh-tight:  0.95;
   --lh-snug:   1.1;
@@ -145,12 +149,18 @@
   --shadow-lg:  8px 8px 0 0 var(--ink);
   --shadow-xl:  12px 12px 0 0 var(--ink);
   --shadow-2xl: 16px 16px 0 0 var(--ink);
+  --shadow-2xs: 3px 3px 0 0 var(--ink);
 
   /* Spacing — 4px base */
+  --sp-px: 1px;
   --sp-1:  4px;
+  --sp-1h: 6px;
   --sp-2:  8px;
+  --sp-2h: 10px;
   --sp-3:  12px;
+  --sp-3h: 14px;
   --sp-4:  16px;
+  --sp-4h: 18px;
   --sp-5:  20px;
   --sp-6:  24px;
   --sp-7:  28px;
@@ -176,6 +186,43 @@
   --z-overlay:  400;   /* drawers, partial-screen overlays */
   --z-modal:    500;   /* modal dialogs */
   --z-toast:    600;   /* transient notifications — always on top */
+
+  /* ---------- CONTROL SIZING ---------- */
+  --control-sm:   20px;
+  --control-icon: 22px;
+  --control-md:   28px;
+  --control-lg:   36px;
+  --control-xl:   44px;
+
+  /* ---------- COMPONENT INTENT ---------- */
+  --switch-track-w:   56px;
+  --switch-track-h:   30px;
+  --switch-knob-on:   28px;
+  --range-track-h:    14px;
+  --range-dual-h:     26px;
+  --range-dual-thumb: 18px;
+  --otp-cell-h:       52px;
+  --textarea-min-h:   88px;
+  --field-label-w:    160px;
+  --field-min-w:      100px;
+  --search-pad-r:     38px;
+  --badge-pad-v:      5px;
+  --skeleton-h:       96px;
+  --shape-size:       120px;
+
+  /* ---------- LAYOUT ---------- */
+  --container-w:    1200px;
+  --container-sm:   720px;
+  --container-md:   960px;
+  --container-xl:   1440px;
+  --sidebar-w:      240px;
+  --split-side-w:   220px;
+  --drawer-w:       420px;
+  --popover-min-w:  220px;
+  --popover-max-w:  360px;
+  --dropdown-max-h: 240px;
+  --date-w:         280px;
+  --menu-min-w:     200px;
 }
 
 /* ---------- SEMANTIC ELEMENT STYLES ---------- */
