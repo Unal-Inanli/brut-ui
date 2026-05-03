@@ -3,52 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BRUT — Neo-Brutalist HTML+CSS UI Kit</title>
+  <title>BRUT — Neo-Brutalist UI Kit</title>
   <link rel="stylesheet" href="../dist/brut.css" />
   <style>
-    /* docs-only chrome — kept out of the kit */
+    /* docs-only chrome — kept out of the kit but still references kit tokens. */
     body { margin: 0; }
-    .docs-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    .docs-nav, .docs-main, .docs-section, .docs-block, .docs-preview, .docs-snippet,
+    .swatch, .scale-row, .shadow-card, .border-sample, .layout-frame, .layout-tile { box-sizing: border-box; }
+    .docs-shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; }
     .docs-nav {
       position: sticky; top: 0; align-self: start;
       height: 100vh; overflow-y: auto;
-      border-right: 4px solid var(--ink);
+      border-right: var(--bw-3) solid var(--ink);
       background: var(--paper-2);
       padding: var(--sp-5);
     }
     .docs-nav h1 {
       font-family: var(--font-display);
-      font-size: 22px;
+      font-size: var(--fs-lg);
       margin: 0 0 var(--sp-4);
-      letter-spacing: 0.02em;
+      letter-spacing: var(--tracking-tight);
     }
     .docs-nav h2 {
       font-family: var(--font-display);
-      font-size: 11px;
-      letter-spacing: 0.1em;
+      font-size: var(--fs-badge);
+      letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
       margin: var(--sp-5) 0 var(--sp-2);
       color: var(--concrete-400);
     }
     .docs-nav a {
       display: block;
-      padding: 4px 0;
+      padding: var(--sp-1) 0;
       font-family: var(--font-sans);
-      font-size: 14px;
+      font-size: var(--fs-sm);
       color: var(--ink);
       text-decoration: none;
-      border-bottom: 1px dashed transparent;
+      border-bottom: var(--sp-px) dashed transparent;
     }
     .docs-nav a:hover { border-bottom-color: var(--ink); }
-    .docs-main { padding: var(--sp-7) var(--sp-7) var(--sp-9); max-width: 1200ffpx; margin-left: 1.5rem; padding: 2rem 0rem;}
-    .docs-section { margin-bottom: var(--sp-9); padding-bottom: var(--sp-8); }
+    .docs-main { padding: var(--sp-7) var(--sp-7) var(--sp-12); max-width: 1200px; }
+    .docs-section { margin-bottom: var(--sp-12); padding-bottom: var(--sp-8); }
     .docs-section:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
     .docs-section > h2 {
       font-family: var(--font-display);
       font-size: var(--fs-2xl);
       text-transform: uppercase;
       margin: 0 0 var(--sp-2);
-      letter-spacing: 0.01em;
+      letter-spacing: var(--tracking-tight);
     }
     .docs-section > p.lead {
       font-size: var(--fs-md);
@@ -60,9 +62,9 @@
     .docs-block:last-child { margin-bottom: 0; }
     .docs-block > h3 {
       font-family: var(--font-display);
-      font-size: 12px;
+      font-size: var(--fs-xs);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: var(--tracking-widest);
       color: var(--concrete-400);
       margin: 0 0 var(--sp-3);
     }
@@ -70,15 +72,15 @@
     /* PREVIEW — default is centered flex row with breathing room.
        Use .docs-preview--block for vertical layouts (auto-spaces children). */
     .docs-preview {
-      border: 4px solid var(--ink);
+      border: var(--bw-3) solid var(--ink);
       background: var(--paper);
       padding: var(--sp-6);
-      box-shadow: 4px 4px 0 0 var(--ink);
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-wrap: wrap;
       gap: var(--sp-4);
       align-items: center;
-      min-height: 120px;
+      min-height: var(--sp-20);
     }
     .docs-preview--block { display: block; }
     .docs-preview--block > * + * { margin-top: var(--sp-4); }
@@ -99,43 +101,43 @@
       background: var(--ink);
       color: var(--paper);
       font-family: var(--font-mono);
-      font-size: 13px;
-      border: 4px solid var(--ink);
+      font-size: var(--fs-tab);
+      border: var(--bw-3) solid var(--ink);
       overflow-x: auto;
       white-space: pre;
-      line-height: 1.5;
+      line-height: var(--lh-normal);
     }
 
     /* Foundations chrome */
     .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--sp-3); width: 100%; }
     .swatch {
-      border: 3px solid var(--ink);
-      box-shadow: 3px 3px 0 0 var(--ink);
+      border: var(--bw-2) solid var(--ink);
+      box-shadow: var(--shadow-2xs);
       padding: var(--sp-3);
       font-family: var(--font-mono);
-      font-size: 12px;
-      min-height: 88px;
+      font-size: var(--fs-xs);
+      min-height: calc(var(--sp-20) + var(--sp-2));
       display: flex; flex-direction: column; justify-content: space-between;
     }
     .swatch span:first-child {
       font-family: var(--font-display);
-      font-size: 12px;
-      letter-spacing: 0.06em;
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider);
     }
-    .swatch code { font-size: 11px; opacity: 0.85; }
+    .swatch code { font-size: var(--fs-badge); opacity: 0.85; }
 
     .scale-list { width: 100%; }
     .scale-row {
       display: grid;
-      grid-template-columns: 80px 1fr;
+      grid-template-columns: var(--sp-20) 1fr;
       gap: var(--sp-4);
       align-items: center;
       padding: var(--sp-3) 0;
-      border-bottom: 1px dashed var(--concrete-200);
+      border-bottom: var(--sp-px) dashed var(--concrete-200);
     }
     .scale-row:last-child { border-bottom: 0; padding-bottom: 0; }
-    .scale-row code { font-family: var(--font-mono); font-size: 12px; }
-    .scale-row__bar { height: 8px; background: var(--ink); }
+    .scale-row code { font-family: var(--font-mono); font-size: var(--fs-xs); }
+    .scale-row__bar { height: var(--sp-2); background: var(--ink); }
 
     .shadow-grid {
       display: grid;
@@ -144,34 +146,34 @@
       width: 100%;
     }
     .shadow-card {
-      height: 80px;
+      height: var(--sp-20);
       background: var(--bone);
-      border: 4px solid var(--ink);
+      border: var(--bw-3) solid var(--ink);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-size: 12px;
-      letter-spacing: 0.1em;
+      font-family: var(--font-display); font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-widest);
     }
 
     .border-grid { display: flex; flex-wrap: wrap; gap: var(--sp-6); width: 100%; }
     .border-cell { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); }
-    .border-cell code { font-family: var(--font-mono); font-size: 11px; color: var(--concrete-400); }
+    .border-cell code { font-family: var(--font-mono); font-size: var(--fs-badge); color: var(--concrete-400); }
     .border-sample {
       background: var(--bone);
-      width: 80px; height: 60px;
-      box-shadow: 4px 4px 0 0 var(--ink);
+      width: var(--sp-20); height: var(--sp-16);
+      box-shadow: var(--shadow-sm);
     }
 
     /* Layout demo tiles — used in the Layout sections to show structure. */
     .layout-tile {
       background: var(--primary-soft);
-      border: 3px solid var(--ink);
+      border: var(--bw-2) solid var(--ink);
       padding: var(--sp-4) var(--sp-5);
       font-family: var(--font-display);
-      font-size: 12px;
-      letter-spacing: 0.08em;
+      font-size: var(--fs-xs);
+      letter-spacing: var(--tracking-wider);
       text-align: center;
       text-transform: uppercase;
-      line-height: 1;
+      line-height: var(--lh-tight);
     }
     .layout-tile--ink   { background: var(--ink); color: var(--paper); }
     .layout-tile--lime  { background: var(--pop-lime); }
@@ -179,20 +181,32 @@
     .layout-tile--bone  { background: var(--bone); }
     .layout-frame {
       width: 100%;
-      border: 3px dashed var(--concrete-300);
+      border: var(--bw-2) dashed var(--concrete-300);
       padding: var(--sp-4);
       background: var(--paper-2);
     }
     .layout-frame__label {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: var(--fs-badge);
       color: var(--concrete-400);
       margin-bottom: var(--sp-2);
     }
 
-    @media (max-width: 800px) {
+    /* Docs-only helper for in-flow demo blocks (e.g. .brut-aspect with centered label). */
+    .docs-aspect-demo {
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--fs-sm);
+      letter-spacing: var(--tracking-wider);
+    }
+
+    /* Match the kit's --bp-md breakpoint for the sidebar collapse. */
+    @media (max-width: 768px) {
       .docs-shell { grid-template-columns: 1fr; }
-      .docs-nav { position: relative; height: auto; border-right: 0; border-bottom: 4px solid var(--ink); }
+      .docs-nav { position: relative; height: auto; border-right: 0; border-bottom: var(--bw-3) solid var(--ink); }
       .docs-main { padding: var(--sp-5); }
     }
   </style>
@@ -203,8 +217,8 @@
     <!-- ───────────── SIDEBAR ───────────── -->
     <nav class="docs-nav">
       <h1>BRUT</h1>
-      <p style="font-family: var(--font-sans); font-size: 13px; margin: 0 0 var(--sp-3); color: var(--concrete-400);">
-        HTML + CSS only. One file: <code>dist/brut.css</code>.
+      <p style="font-family: var(--font-sans); font-size: var(--fs-tab); margin: 0 0 var(--sp-3); color: var(--concrete-400);">
+        Drop in <code>dist/brut.css</code>. Add <code>dist/brut.js</code> for interactive components.
       </p>
 
       <div style="padding: var(--sp-2) 0 var(--sp-3); border-bottom: var(--bw-1) solid var(--ink); margin: 0 0 var(--sp-3);">
@@ -228,6 +242,8 @@
       <a href="#badges">Badges</a>
       <a href="#cards">Cards</a>
       <a href="#accordion">Accordion</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#avatars">Avatars</a>
 
       <h2>Data</h2>
       <a href="#table">Table</a>
@@ -266,6 +282,7 @@
       <a href="#fieldset">Fieldset</a>
       <a href="#field">Field wrapper</a>
       <a href="#form-layouts">Form layouts</a>
+      <a href="#validation">Validation</a>
 
       <h2>Feedback</h2>
       <a href="#alerts">Alerts</a>
@@ -276,8 +293,8 @@
       <a href="#spinner">Spinner</a>
       <a href="#progress">Progress</a>
       <a href="#empty">Empty state</a>
-      <a href="#tabs">Tabs</a>
-      <a href="#avatars">Avatars</a>
+
+      <h2>Overlays</h2>
       <a href="#dialog">Dialog</a>
       <a href="#drawer">Drawer</a>
 
@@ -300,7 +317,6 @@
 
       <h2>Utilities</h2>
       <a href="#utilities">Utilities</a>
-      <a href="#validation">Validation</a>
     </nav>
 
     <!-- ───────────── MAIN ───────────── -->
@@ -337,10 +353,10 @@ bash build.sh
           <h3>Core</h3>
           <div class="docs-preview">
             <div class="swatch-grid">
-              <div class="swatch" style="background:#000;color:#fff;"><span>INK</span><code>--ink</code></div>
-              <div class="swatch" style="background:#FAF7F0;"><span>PAPER</span><code>--paper</code></div>
-              <div class="swatch" style="background:#FFD23F;"><span>PRIMARY</span><code>--primary</code></div>
-              <div class="swatch" style="background:#FFE680;"><span>PRIMARY SOFT</span><code>--primary-soft</code></div>
+              <div class="swatch" style="background: var(--ink); color: var(--paper);"><span>INK</span><code>--ink</code></div>
+              <div class="swatch" style="background: var(--paper);"><span>PAPER</span><code>--paper</code></div>
+              <div class="swatch" style="background: var(--primary);"><span>PRIMARY</span><code>--primary</code></div>
+              <div class="swatch" style="background: var(--primary-soft);"><span>PRIMARY SOFT</span><code>--primary-soft</code></div>
             </div>
           </div>
           <pre class="docs-snippet">background: var(--ink);
@@ -352,12 +368,12 @@ background: var(--primary);</pre>
           <h3>Pop accents</h3>
           <div class="docs-preview">
             <div class="swatch-grid">
-              <div class="swatch" style="background:#FF6B9D;"><span>PINK</span><code>--pop-pink</code></div>
-              <div class="swatch" style="background:#C6F432;"><span>LIME</span><code>--pop-lime</code></div>
-              <div class="swatch" style="background:#4D7CFF;color:#fff;"><span>BLUE</span><code>--pop-blue</code></div>
-              <div class="swatch" style="background:#FF7A2E;"><span>ORANGE</span><code>--pop-orange</code></div>
-              <div class="swatch" style="background:#B57BFF;"><span>PURPLE</span><code>--pop-purple</code></div>
-              <div class="swatch" style="background:#7FE3C4;"><span>MINT</span><code>--pop-mint</code></div>
+              <div class="swatch" style="background: var(--pop-pink);"><span>PINK</span><code>--pop-pink</code></div>
+              <div class="swatch" style="background: var(--pop-lime);"><span>LIME</span><code>--pop-lime</code></div>
+              <div class="swatch" style="background: var(--pop-blue); color: var(--paper);"><span>BLUE</span><code>--pop-blue</code></div>
+              <div class="swatch" style="background: var(--pop-orange);"><span>ORANGE</span><code>--pop-orange</code></div>
+              <div class="swatch" style="background: var(--pop-purple);"><span>PURPLE</span><code>--pop-purple</code></div>
+              <div class="swatch" style="background: var(--pop-mint);"><span>MINT</span><code>--pop-mint</code></div>
             </div>
           </div>
         </div>
@@ -366,10 +382,10 @@ background: var(--primary);</pre>
           <h3>Semantic</h3>
           <div class="docs-preview">
             <div class="swatch-grid">
-              <div class="swatch" style="background:#D9F7E5;"><span>SUCCESS</span><code>--success-bg</code></div>
-              <div class="swatch" style="background:#FFF1CC;"><span>WARNING</span><code>--warning-bg</code></div>
-              <div class="swatch" style="background:#FFD9D6;"><span>DANGER</span><code>--danger-bg</code></div>
-              <div class="swatch" style="background:#DDE6FF;"><span>INFO</span><code>--info-bg</code></div>
+              <div class="swatch" style="background: var(--success-bg);"><span>SUCCESS</span><code>--success-bg</code></div>
+              <div class="swatch" style="background: var(--warning-bg);"><span>WARNING</span><code>--warning-bg</code></div>
+              <div class="swatch" style="background: var(--danger-bg);"><span>DANGER</span><code>--danger-bg</code></div>
+              <div class="swatch" style="background: var(--info-bg);"><span>INFO</span><code>--info-bg</code></div>
             </div>
           </div>
         </div>
@@ -382,14 +398,16 @@ background: var(--primary);</pre>
         <div class="docs-preview docs-preview--block">
           <div class="brut-display-1">DISPLAY 1.</div>
           <div class="brut-display-2">DISPLAY 2.</div>
-          <h1 class="brut-h1">Heading 1</h1>
-          <h2 class="brut-h2">Heading 2</h2>
+          <div class="brut-h1">Heading 1</div>
+          <div class="brut-h2">Heading 2</div>
           <p class="brut-lead">A lead paragraph sets the tone.</p>
           <p class="brut-body">Body copy. Sentence case. Periods. Mouthy but useful.</p>
           <p class="brut-code">const ship = () =&gt; "loud";</p>
         </div>
         <pre class="docs-snippet">&lt;h1 class="brut-display-1"&gt;DISPLAY 1.&lt;/h1&gt;
-&lt;h2 class="brut-h1"&gt;Heading 1&lt;/h2&gt;
+&lt;h2 class="brut-display-2"&gt;DISPLAY 2.&lt;/h2&gt;
+&lt;h1 class="brut-h1"&gt;Heading 1&lt;/h1&gt;
+&lt;h2 class="brut-h2"&gt;Heading 2&lt;/h2&gt;
 &lt;p class="brut-lead"&gt;A lead paragraph sets the tone.&lt;/p&gt;
 &lt;p class="brut-body"&gt;Body copy.&lt;/p&gt;
 &lt;code class="brut-code"&gt;const x = 1;&lt;/code&gt;</pre>
@@ -399,43 +417,58 @@ background: var(--primary);</pre>
       <section class="docs-section" id="typography-primitives">
         <h2>Typography primitives</h2>
         <p class="lead">The full heading scale plus inline and block primitives. All listed in <code>SKILL.md</code> — use them anywhere you need semantic typography without the display-tier weight.</p>
-        <div class="docs-preview docs-preview--block">
-          <h4 class="brut-h4">Heading 4</h4>
-          <h5 class="brut-h5">Heading 5</h5>
-          <h6 class="brut-h6">Heading 6</h6>
-          <p class="brut-overline">Overline</p>
-          <p>Press <kbd class="brut-kbd">Ctrl</kbd> + <kbd class="brut-kbd">K</kbd> to search.</p>
-          <pre class="brut-pre">$ npm run build</pre>
-          <ul class="brut-list">
-            <li>Bulleted item one.</li>
-            <li>Bulleted item two.</li>
-          </ul>
-          <ol class="brut-list brut-list--ord">
-            <li>Ordered item one.</li>
-            <li>Ordered item two.</li>
-          </ol>
-          <p class="brut-prose">
-            <span class="brut-drop-cap">A</span>drop cap kicks off a long-form passage. Inside <code>.brut-prose</code> you also get rhythm — sibling spacing tuned for reading.
-            Highlight key text with <mark class="brut-mark">a brut mark</mark> mid-sentence.
-            Tabular numerals: <span class="brut-num">1,234,567</span>.
-          </p>
-          <label class="brut-label" for="primitives-input">Form label</label>
-          <input id="primitives-input" class="brut-input" type="text" placeholder="An input with a brut-label">
-        </div>
-        <pre class="docs-snippet">&lt;h4 class="brut-h4"&gt;Heading 4&lt;/h4&gt;
+
+        <div class="docs-block">
+          <h3>Heading scale</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-h4">Heading 4</div>
+            <div class="brut-h5">Heading 5</div>
+            <div class="brut-h6">Heading 6</div>
+            <p class="brut-overline">Overline</p>
+          </div>
+          <pre class="docs-snippet">&lt;h4 class="brut-h4"&gt;Heading 4&lt;/h4&gt;
 &lt;h5 class="brut-h5"&gt;Heading 5&lt;/h5&gt;
 &lt;h6 class="brut-h6"&gt;Heading 6&lt;/h6&gt;
-&lt;p class="brut-overline"&gt;Overline&lt;/p&gt;
-&lt;kbd class="brut-kbd"&gt;Ctrl&lt;/kbd&gt;
+&lt;p class="brut-overline"&gt;Overline&lt;/p&gt;</pre>
+        </div>
+
+        <div class="docs-block">
+          <h3>Inline + block</h3>
+          <div class="docs-preview docs-preview--block">
+            <p>Press <kbd class="brut-kbd">Ctrl</kbd> + <kbd class="brut-kbd">K</kbd> to search.</p>
+            <pre class="brut-pre">$ npm run build</pre>
+            <ul class="brut-list">
+              <li>Bulleted item one.</li>
+              <li>Bulleted item two.</li>
+            </ul>
+            <ol class="brut-list brut-list--ord">
+              <li>Ordered item one.</li>
+              <li>Ordered item two.</li>
+            </ol>
+          </div>
+          <pre class="docs-snippet">&lt;kbd class="brut-kbd"&gt;Ctrl&lt;/kbd&gt;
 &lt;pre class="brut-pre"&gt;$ npm run build&lt;/pre&gt;
 &lt;ul class="brut-list"&gt;...&lt;/ul&gt;
-&lt;ol class="brut-list brut-list--ord"&gt;...&lt;/ol&gt;
-&lt;p class="brut-prose"&gt;
-  &lt;span class="brut-drop-cap"&gt;A&lt;/span&gt;...
+&lt;ol class="brut-list brut-list--ord"&gt;...&lt;/ol&gt;</pre>
+        </div>
+
+        <div class="docs-block">
+          <h3>Prose with drop cap, mark, and stat figure</h3>
+          <div class="docs-preview docs-preview--block">
+            <p class="brut-prose brut-drop-cap">
+              A drop cap kicks off a long-form passage. Inside <code>.brut-prose</code> you also get rhythm — sibling spacing tuned for reading. Highlight key text with <mark class="brut-mark">a brut mark</mark> mid-sentence.
+            </p>
+            <span class="brut-num">1,234,567</span>
+            <p class="brut-overline">Total downloads</p>
+          </div>
+          <pre class="docs-snippet">&lt;p class="brut-prose brut-drop-cap"&gt;
+  A drop cap kicks off a long-form passage…
   &lt;mark class="brut-mark"&gt;highlight&lt;/mark&gt;
-  &lt;span class="brut-num"&gt;1,234&lt;/span&gt;
 &lt;/p&gt;
-&lt;label class="brut-label"&gt;Form label&lt;/label&gt;</pre>
+
+&lt;span class="brut-num"&gt;1,234,567&lt;/span&gt;
+&lt;p class="brut-overline"&gt;Total downloads&lt;/p&gt;</pre>
+        </div>
       </section>
 
       <!-- SPACING -->
@@ -518,6 +551,8 @@ border: var(--bw-6) solid var(--ink);</pre>
           <button class="brut-btn brut-btn--ink">INK</button>
           <button class="brut-btn brut-btn--pink">PINK</button>
           <button class="brut-btn brut-btn--lime">LIME</button>
+          <button class="brut-btn brut-btn--sm">SMALL</button>
+          <button class="brut-btn brut-btn--lg">LARGE</button>
         </div>
         <pre class="docs-snippet">&lt;button class="brut-btn"&gt;DEFAULT&lt;/button&gt;
 &lt;button class="brut-btn brut-btn--primary"&gt;PRIMARY&lt;/button&gt;
@@ -544,15 +579,15 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- CARDS -->
       <section class="docs-section" id="cards">
         <h2>Cards</h2>
-        <p class="lead">Border, offset shadow, 20px padding. No internal dividers.</p>
+        <p class="lead">Border, offset shadow, comfortable padding. No internal dividers.</p>
         <div class="docs-preview docs-preview--start" style="gap: var(--sp-6);">
           <div class="brut-card" style="flex: 1 1 240px;">
-            <h3 class="brut-h2" style="font-size: 18px; margin-bottom: var(--sp-2);">Card title.</h3>
-            <p class="brut-body" style="font-size: 14px;">Stack a heading and body inside any <code>.brut-card</code>.</p>
+            <h3 class="brut-h5" style="margin-bottom: var(--sp-2);">Card title.</h3>
+            <p class="brut-body" style="font-size: var(--fs-sm);">Stack a heading and body inside any <code>.brut-card</code>.</p>
           </div>
           <div class="brut-card" style="flex: 1 1 240px; background: var(--primary);">
-            <h3 class="brut-h2" style="font-size: 18px; margin-bottom: var(--sp-2);">Tinted.</h3>
-            <p class="brut-body" style="font-size: 14px;">Override <code>background</code> for emphasis variants.</p>
+            <h3 class="brut-h5" style="margin-bottom: var(--sp-2);">Tinted.</h3>
+            <p class="brut-body" style="font-size: var(--fs-sm);">Override <code>background</code> for emphasis variants.</p>
           </div>
         </div>
         <pre class="docs-snippet">&lt;div class="brut-card"&gt;
@@ -865,7 +900,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- TABLE RESPONSIVE -->
       <section class="docs-section" id="table-responsive">
         <h2>Table — Responsive</h2>
-        <p class="lead">Add <code>.brut-table--responsive</code> to collapse the table into stacked cards below 640 px. <code>&lt;thead&gt;</code> hides; each <code>&lt;tr&gt;</code> becomes a bordered card; each <code>&lt;td&gt;</code> renders its column label via <code>data-brut-col-label="…"</code>. Pure CSS — no JS required.</p>
+        <p class="lead">Add <code>.brut-table--responsive</code> to collapse the table into stacked cards below the <code>--bp-sm</code> breakpoint. <code>&lt;thead&gt;</code> hides; each <code>&lt;tr&gt;</code> becomes a bordered card; each <code>&lt;td&gt;</code> renders its column label via <code>data-brut-col-label="…"</code>. Pure CSS — no JS required.</p>
         <div class="docs-preview docs-preview--block">
           <table class="brut-table brut-table--responsive" style="max-width: 640px;">
             <thead class="brut-table__head">
@@ -1218,34 +1253,50 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Progress</h2>
         <p class="lead">Determinate and indeterminate progress bars. Set <code>--progress</code> (0–100) via inline style or use <code>data-brut="progress"</code> for JS control.</p>
 
-        <h3>Default</h3>
-        <div class="brut-progress" style="--progress: 65;">
-          <div class="brut-progress__bar"></div>
+        <div class="docs-block">
+          <h3>Default</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-progress" style="--progress: 65;">
+              <div class="brut-progress__bar"></div>
+            </div>
+          </div>
         </div>
 
-        <h3>With label</h3>
-        <div class="brut-progress" style="--progress: 42;">
-          <div class="brut-progress__bar"></div>
-          <span class="brut-progress__label">42%</span>
+        <div class="docs-block">
+          <h3>With label</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-progress" style="--progress: 42;">
+              <div class="brut-progress__bar"></div>
+              <span class="brut-progress__label">42%</span>
+            </div>
+          </div>
         </div>
 
-        <h3>Sizes</h3>
-        <div class="d-flex flex-column gap-3">
-          <div class="brut-progress brut-progress--sm" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
-          <div class="brut-progress" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
-          <div class="brut-progress brut-progress--lg" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
+        <div class="docs-block">
+          <h3>Sizes</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-progress brut-progress--sm" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
+            <div class="brut-progress" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
+            <div class="brut-progress brut-progress--lg" style="--progress: 50;"><div class="brut-progress__bar"></div></div>
+          </div>
         </div>
 
-        <h3>Colors</h3>
-        <div class="d-flex flex-column gap-3">
-          <div class="brut-progress brut-progress--success" style="--progress: 80;"><div class="brut-progress__bar"></div></div>
-          <div class="brut-progress brut-progress--danger" style="--progress: 30;"><div class="brut-progress__bar"></div></div>
-          <div class="brut-progress brut-progress--info" style="--progress: 60;"><div class="brut-progress__bar"></div></div>
-          <div class="brut-progress brut-progress--warning" style="--progress: 45;"><div class="brut-progress__bar"></div></div>
+        <div class="docs-block">
+          <h3>Colors</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-progress brut-progress--success" style="--progress: 80;"><div class="brut-progress__bar"></div></div>
+            <div class="brut-progress brut-progress--danger" style="--progress: 30;"><div class="brut-progress__bar"></div></div>
+            <div class="brut-progress brut-progress--info" style="--progress: 60;"><div class="brut-progress__bar"></div></div>
+            <div class="brut-progress brut-progress--warning" style="--progress: 45;"><div class="brut-progress__bar"></div></div>
+          </div>
         </div>
 
-        <h3>Indeterminate</h3>
-        <div class="brut-progress brut-progress--indeterminate"><div class="brut-progress__bar"></div></div>
+        <div class="docs-block">
+          <h3>Indeterminate</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-progress brut-progress--indeterminate"><div class="brut-progress__bar"></div></div>
+          </div>
+        </div>
 
         <pre class="docs-snippet">&lt;div class="brut-progress" style="--progress: 65;"&gt;
   &lt;div class="brut-progress__bar"&gt;&lt;/div&gt;
@@ -1264,11 +1315,11 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Skeleton</h2>
         <p class="lead">Loading placeholder with a hard ink stripe sweeping left to right. Three shapes — text line, block, circle — composed however you need.</p>
         <div class="docs-preview docs-preview--block">
-          <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+          <div class="brut-cluster">
             <span class="brut-skeleton brut-skeleton--circle"></span>
             <span class="brut-skeleton brut-skeleton--block" style="width: 200px;"></span>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 12px; max-width: 360px;">
+          <div class="brut-stack" style="max-width: 360px;">
             <span class="brut-skeleton brut-skeleton--text" style="width: 80%;"></span>
             <span class="brut-skeleton brut-skeleton--text" style="width: 95%;"></span>
             <span class="brut-skeleton brut-skeleton--text" style="width: 60%;"></span>
@@ -1588,16 +1639,16 @@ border: var(--bw-6) solid var(--ink);</pre>
         <div class="docs-preview docs-preview--block">
           <div class="brut-grid brut-grid--2" style="max-width:640px;">
             <div class="brut-field">
-              <label class="brut-field__label">Due date</label>
+              <label class="brut-field__label" for="docs-date-due">Due date</label>
               <div class="brut-date" data-brut="date" data-brut-name="due">
-                <input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" />
+                <input id="docs-date-due" class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" />
                 <input type="hidden" />
               </div>
             </div>
             <div class="brut-field">
-              <label class="brut-field__label">Pre-filled</label>
+              <label class="brut-field__label" for="docs-date-start">Pre-filled</label>
               <div class="brut-date" data-brut="date" data-brut-name="start">
-                <input class="brut-input brut-date__field" type="text" readonly value="2026-05-15" />
+                <input id="docs-date-start" class="brut-input brut-date__field" type="text" readonly value="2026-05-15" />
                 <input type="hidden" />
               </div>
             </div>
@@ -1616,16 +1667,16 @@ border: var(--bw-6) solid var(--ink);</pre>
         <div class="docs-preview docs-preview--block">
           <div class="brut-grid brut-grid--2" style="max-width:640px;">
             <div class="brut-field">
-              <label class="brut-field__label">Meeting (24h)</label>
+              <label class="brut-field__label" for="docs-time-meet">Meeting (24h)</label>
               <div class="brut-time" data-brut="time" data-brut-name="meet">
-                <input class="brut-input brut-time__field" type="text" readonly value="09:30" />
+                <input id="docs-time-meet" class="brut-input brut-time__field" type="text" readonly value="09:30" />
                 <input type="hidden" />
               </div>
             </div>
             <div class="brut-field">
-              <label class="brut-field__label">Doors (12h)</label>
+              <label class="brut-field__label" for="docs-time-doors">Doors (12h)</label>
               <div class="brut-time" data-brut="time" data-brut-name="doors" data-brut-mode="12">
-                <input class="brut-input brut-time__field" type="text" readonly value="19:00" />
+                <input id="docs-time-doors" class="brut-input brut-time__field" type="text" readonly value="19:00" />
                 <input type="hidden" />
               </div>
             </div>
@@ -1646,16 +1697,18 @@ border: var(--bw-6) solid var(--ink);</pre>
         <p class="lead">Two-thumb range slider. Native <code>&lt;input type="range"&gt;</code> can't do this; JS owns drag + keyboard, CSS owns the chrome. Mirrors min/max to two hidden inputs (<code>data-brut-name-min</code> / <code>-max</code>); dispatches <code>brut:change</code> with <code>{ min, max }</code>.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-field" style="max-width:520px;">
-            <label class="brut-field__label">Price (0–100)</label>
+            <span class="brut-field__label" id="docs-rd-price-label">Price (0–100)</span>
             <div class="brut-range-dual"
+                 aria-labelledby="docs-rd-price-label"
                  data-brut="range-dual"
                  data-brut-min="0" data-brut-max="100" data-brut-step="1"
                  data-brut-value-min="20" data-brut-value-max="80"
                  data-brut-name-min="price_min" data-brut-name-max="price_max"></div>
           </div>
           <div class="brut-field" style="max-width:520px;">
-            <label class="brut-field__label">Years (2000–2026, step 1)</label>
+            <span class="brut-field__label" id="docs-rd-year-label">Years (2000–2026, step 1)</span>
             <div class="brut-range-dual"
+                 aria-labelledby="docs-rd-year-label"
                  data-brut="range-dual"
                  data-brut-min="2000" data-brut-max="2026" data-brut-step="1"
                  data-brut-value-min="2010" data-brut-value-max="2020"
@@ -1674,104 +1727,111 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Form layouts</h2>
         <p class="lead">Four recipes that compose existing primitives. No new components — just <code>.brut-form</code>, <code>.brut-grid--2</code>, the new <code>.brut-field--inline</code> modifier, and <code>.brut-rows</code> with switches in the trail slot.</p>
 
-        <h3>Stacked (.brut-form)</h3>
-        <div class="docs-preview docs-preview--block">
-          <form class="brut-form" style="max-width:520px;">
-            <div class="brut-field">
-              <label class="brut-field__label" for="fl-name">Full name</label>
-              <input id="fl-name" class="brut-input" type="text" value="Rex Brut" />
-            </div>
-            <div class="brut-field">
-              <label class="brut-field__label" for="fl-email">Email</label>
-              <input id="fl-email" class="brut-input" type="email" value="rex@brut.dev" />
-            </div>
-          </form>
-        </div>
-        <pre class="docs-snippet">&lt;form class="brut-form"&gt;
+        <div class="docs-block">
+          <h3>Stacked (.brut-form)</h3>
+          <div class="docs-preview docs-preview--block">
+            <form class="brut-form" style="max-width:520px;">
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-name">Full name</label>
+                <input id="fl-name" class="brut-input" type="text" value="Rex Brut" />
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="fl-email">Email</label>
+                <input id="fl-email" class="brut-input" type="email" value="rex@brut.dev" />
+              </div>
+            </form>
+          </div>
+          <pre class="docs-snippet">&lt;form class="brut-form"&gt;
   &lt;div class="brut-field"&gt; … &lt;/div&gt;
   &lt;div class="brut-field"&gt; … &lt;/div&gt;
 &lt;/form&gt;</pre>
-
-        <h3>Two-column (.brut-grid--2)</h3>
-        <div class="docs-preview docs-preview--block">
-          <form class="brut-form" style="max-width:640px;">
-            <div class="brut-grid brut-grid--2">
-              <div class="brut-field">
-                <label class="brut-field__label" for="fl-first">First</label>
-                <input id="fl-first" class="brut-input" type="text" value="Rex" />
-              </div>
-              <div class="brut-field">
-                <label class="brut-field__label" for="fl-last">Last</label>
-                <input id="fl-last" class="brut-input" type="text" value="Brut" />
-              </div>
-              <div class="brut-field">
-                <label class="brut-field__label" for="fl-city">City</label>
-                <input id="fl-city" class="brut-input" type="text" value="New York" />
-              </div>
-              <div class="brut-field">
-                <label class="brut-field__label" for="fl-zip">ZIP</label>
-                <input id="fl-zip" class="brut-input" type="text" value="10001" />
-              </div>
-            </div>
-          </form>
         </div>
-        <pre class="docs-snippet">&lt;form class="brut-form"&gt;
+
+        <div class="docs-block">
+          <h3>Two-column (.brut-grid--2)</h3>
+          <div class="docs-preview docs-preview--block">
+            <form class="brut-form" style="max-width:640px;">
+              <div class="brut-grid brut-grid--2">
+                <div class="brut-field">
+                  <label class="brut-field__label" for="fl-first">First</label>
+                  <input id="fl-first" class="brut-input" type="text" value="Rex" />
+                </div>
+                <div class="brut-field">
+                  <label class="brut-field__label" for="fl-last">Last</label>
+                  <input id="fl-last" class="brut-input" type="text" value="Brut" />
+                </div>
+                <div class="brut-field">
+                  <label class="brut-field__label" for="fl-city">City</label>
+                  <input id="fl-city" class="brut-input" type="text" value="New York" />
+                </div>
+                <div class="brut-field">
+                  <label class="brut-field__label" for="fl-zip">ZIP</label>
+                  <input id="fl-zip" class="brut-input" type="text" value="10001" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <pre class="docs-snippet">&lt;form class="brut-form"&gt;
   &lt;div class="brut-grid brut-grid--2"&gt;
     &lt;div class="brut-field"&gt; … &lt;/div&gt;
     &lt;div class="brut-field"&gt; … &lt;/div&gt;
   &lt;/div&gt;
 &lt;/form&gt;</pre>
-
-        <h3>Inline (.brut-field--inline)</h3>
-        <div class="docs-preview docs-preview--block">
-          <form class="brut-form" style="max-width:520px;">
-            <div class="brut-field brut-field--inline">
-              <label class="brut-field__label" for="fl-handle">Display name</label>
-              <input id="fl-handle" class="brut-input" type="text" value="@rex" />
-            </div>
-            <div class="brut-field brut-field--inline">
-              <label class="brut-field__label" for="fl-plan">Plan</label>
-              <select id="fl-plan" class="brut-select">
-                <option>Solo</option>
-                <option>Studio</option>
-                <option>Agency</option>
-              </select>
-            </div>
-          </form>
         </div>
-        <pre class="docs-snippet">&lt;div class="brut-field brut-field--inline"&gt;
+
+        <div class="docs-block">
+          <h3>Inline (.brut-field--inline)</h3>
+          <div class="docs-preview docs-preview--block">
+            <form class="brut-form" style="max-width:520px;">
+              <div class="brut-field brut-field--inline">
+                <label class="brut-field__label" for="fl-handle">Display name</label>
+                <input id="fl-handle" class="brut-input" type="text" value="@rex" />
+              </div>
+              <div class="brut-field brut-field--inline">
+                <label class="brut-field__label" for="fl-plan">Plan</label>
+                <select id="fl-plan" class="brut-select">
+                  <option>Solo</option>
+                  <option>Studio</option>
+                  <option>Agency</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <pre class="docs-snippet">&lt;div class="brut-field brut-field--inline"&gt;
   &lt;label class="brut-field__label"&gt;Display name&lt;/label&gt;
   &lt;input class="brut-input" type="text" /&gt;
 &lt;/div&gt;</pre>
-
-        <h3>Settings rows (.brut-rows + switch in trail)</h3>
-        <div class="docs-preview docs-preview--block">
-          <ul class="brut-rows brut-rows--bordered" style="max-width:520px;">
-            <li class="brut-rows__item">
-              <span class="brut-rows__lead">@</span>
-              <div class="brut-rows__main">
-                <div class="brut-rows__title">Email notifications</div>
-                <div class="brut-rows__sub">Weekly digest, mentions, replies.</div>
-              </div>
-              <label class="brut-rows__trail brut-switch brut-switch--on" data-brut="switch">
-                <input type="checkbox" hidden checked />
-                <span class="brut-switch__knob"></span>
-              </label>
-            </li>
-            <li class="brut-rows__item">
-              <span class="brut-rows__lead">#</span>
-              <div class="brut-rows__main">
-                <div class="brut-rows__title">Two-factor auth</div>
-                <div class="brut-rows__sub">Codes via authenticator app.</div>
-              </div>
-              <label class="brut-rows__trail brut-switch" data-brut="switch">
-                <input type="checkbox" hidden />
-                <span class="brut-switch__knob"></span>
-              </label>
-            </li>
-          </ul>
         </div>
-        <pre class="docs-snippet">&lt;ul class="brut-rows brut-rows--bordered"&gt;
+
+        <div class="docs-block">
+          <h3>Settings rows (.brut-rows + switch in trail)</h3>
+          <div class="docs-preview docs-preview--block">
+            <ul class="brut-rows brut-rows--bordered" style="max-width:520px;">
+              <li class="brut-rows__item">
+                <span class="brut-rows__lead">@</span>
+                <div class="brut-rows__main">
+                  <div class="brut-rows__title">Email notifications</div>
+                  <div class="brut-rows__sub">Weekly digest, mentions, replies.</div>
+                </div>
+                <label class="brut-rows__trail brut-switch brut-switch--on" data-brut="switch">
+                  <input type="checkbox" hidden checked />
+                  <span class="brut-switch__knob"></span>
+                </label>
+              </li>
+              <li class="brut-rows__item">
+                <span class="brut-rows__lead">#</span>
+                <div class="brut-rows__main">
+                  <div class="brut-rows__title">Two-factor auth</div>
+                  <div class="brut-rows__sub">Codes via authenticator app.</div>
+                </div>
+                <label class="brut-rows__trail brut-switch" data-brut="switch">
+                  <input type="checkbox" hidden />
+                  <span class="brut-switch__knob"></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <pre class="docs-snippet">&lt;ul class="brut-rows brut-rows--bordered"&gt;
   &lt;li class="brut-rows__item"&gt;
     &lt;span class="brut-rows__lead"&gt;@&lt;/span&gt;
     &lt;div class="brut-rows__main"&gt;
@@ -1784,6 +1844,7 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;/label&gt;
   &lt;/li&gt;
 &lt;/ul&gt;</pre>
+        </div>
       </section>
 
       <!-- TABS -->
@@ -1807,19 +1868,17 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Avatars</h2>
         <p class="lead">Single avatars carry initials or a glyph. Wrap a row of them in <code>.brut-avatar-group</code> for the overlapping stack pattern; the trailing <code>.brut-avatar-group__more</code> shows the overflow count.</p>
         <div class="docs-preview docs-preview--block">
-          <div class="docs-preview">
+          <div class="brut-cluster">
             <span class="brut-avatar" style="background: var(--pop-pink);">JD</span>
             <span class="brut-avatar" style="background: var(--pop-lime);">&starf;</span>
             <span class="brut-avatar" style="background: var(--ink); color: var(--paper);">AB</span>
           </div>
-          <div class="docs-preview">
-            <span class="brut-avatar-group">
-              <span class="brut-avatar" style="background: var(--pop-pink);">JM</span>
-              <span class="brut-avatar" style="background: var(--pop-lime);">AD</span>
-              <span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span>
-              <span class="brut-avatar brut-avatar-group__more">+8</span>
-            </span>
-          </div>
+          <span class="brut-avatar-group">
+            <span class="brut-avatar" style="background: var(--pop-pink);">JM</span>
+            <span class="brut-avatar" style="background: var(--pop-lime);">AD</span>
+            <span class="brut-avatar" style="background: var(--pop-blue); color: var(--paper);">SK</span>
+            <span class="brut-avatar brut-avatar-group__more">+8</span>
+          </span>
         </div>
         <pre class="docs-snippet">&lt;span class="brut-avatar" style="background: var(--pop-pink);"&gt;JD&lt;/span&gt;
 
@@ -1837,11 +1896,11 @@ border: var(--bw-6) solid var(--ink);</pre>
         <div class="docs-preview">
           <div class="brut-dialog" style="width: 360px; max-width: 100%;">
             <div class="brut-dialog__head">
-              <span style="font-family: var(--font-display); text-transform: uppercase; font-size: 13px;">CONFIRM DELETE</span>
+              <span>CONFIRM DELETE</span>
               <span class="brut-dialog__x">×</span>
             </div>
             <div style="padding: var(--sp-5);">
-              <p style="margin:0 0 var(--sp-4); font-family: var(--font-sans); font-size: 14px;">Cannot be undone. You'll be fine.</p>
+              <p class="brut-body" style="margin: 0 0 var(--sp-4);">Cannot be undone. You'll be fine.</p>
               <div class="brut-cluster" style="gap: var(--sp-3);">
                 <button class="brut-btn brut-btn--ink brut-btn--sm">DELETE</button>
                 <button class="brut-btn brut-btn--sm">CANCEL</button>
@@ -1917,7 +1976,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- TOPNAV -->
       <section class="docs-section" id="topnav">
         <h2>Topnav</h2>
-        <p class="lead">Sticky page header. Brand + links + CTA on one row, with a mobile burger that collapses links below 760px. <code>data-brut="topnav"</code> wires the toggle.</p>
+        <p class="lead">Sticky page header. Brand + links + CTA on one row, with a mobile burger that collapses links at the <code>--bp-md</code> breakpoint. <code>data-brut="topnav"</code> wires the toggle.</p>
         <div class="docs-preview docs-preview--block">
           <header class="brut-topnav" data-brut="topnav" style="position: relative;">
             <div class="brut-topnav__inner">
@@ -2050,7 +2109,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- PAGINATION -->
       <section class="docs-section" id="pagination">
         <h2>Pagination</h2>
-        <p class="lead">Square 36px buttons in a row. Mark the current page with <code>--active</code> and use <code>.brut-pager__gap</code> for an ellipsis. CSS-only; the consumer wires links.</p>
+        <p class="lead">Square buttons in a row. Mark the current page with <code>--active</code> and use <code>.brut-pager__gap</code> for an ellipsis. CSS-only; the consumer wires links.</p>
         <div class="docs-preview docs-preview--block">
           <nav class="brut-pager" aria-label="Pagination">
             <button class="brut-pager__btn" type="button" aria-label="Previous">&lsaquo;</button>
@@ -2124,7 +2183,7 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Section</h2>
         <p class="lead">Full-bleed band with a 4px ink bottom rule. Opt out with <code>--flush</code>.</p>
         <div class="docs-preview docs-preview--block">
-          <div style="border-bottom: 4px solid var(--ink); padding: var(--sp-6) var(--sp-5); background: var(--paper-2);">
+          <div style="border-bottom: var(--bw-3) solid var(--ink); padding: var(--sp-6) var(--sp-5); background: var(--paper-2);">
             <div class="layout-tile layout-tile--bone">SECTION A</div>
           </div>
           <div style="padding: var(--sp-6) var(--sp-5); background: var(--bone);">
@@ -2199,26 +2258,38 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- 12-COL GRID -->
       <section class="docs-section" id="grid-12col">
         <h2>12-col Grid</h2>
-        <p class="lead">CSS Grid 12-column system. Stacks on mobile by default. Uses <code>--grid-gutter</code> (24px) gap.</p>
+        <p class="lead">CSS Grid 12-column system. Stacks on mobile by default. Uses <code>--grid-gutter</code> for column spacing.</p>
 
-        <h3>Equal columns</h3>
-        <div class="brut-row mb-4">
-          <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
-          <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
-          <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+        <div class="docs-block">
+          <h3>Equal columns</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+              <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+              <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+            </div>
+          </div>
         </div>
 
-        <h3>Sidebar layout</h3>
-        <div class="brut-row mb-4">
-          <div class="brut-col-3" style="background: var(--paper-2); padding: var(--sp-2);">col-3</div>
-          <div class="brut-col-9" style="background: var(--primary); padding: var(--sp-2);">col-9</div>
+        <div class="docs-block">
+          <h3>Sidebar layout</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-3" style="background: var(--paper-2); padding: var(--sp-2);">col-3</div>
+              <div class="brut-col-9" style="background: var(--primary); padding: var(--sp-2);">col-9</div>
+            </div>
+          </div>
         </div>
 
-        <h3>Responsive</h3>
-        <div class="brut-row mb-4">
-          <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--primary); padding: var(--sp-2);">12 → md:6 → lg:4</div>
-          <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--pop-lime); padding: var(--sp-2);">12 → md:6 → lg:4</div>
-          <div class="brut-col-12 brut-col-md-12 brut-col-lg-4" style="background: var(--pop-pink); padding: var(--sp-2);">12 → md:12 → lg:4</div>
+        <div class="docs-block">
+          <h3>Responsive</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--primary); padding: var(--sp-2);">12 → md:6 → lg:4</div>
+              <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--pop-lime); padding: var(--sp-2);">12 → md:6 → lg:4</div>
+              <div class="brut-col-12 brut-col-md-12 brut-col-lg-4" style="background: var(--pop-pink); padding: var(--sp-2);">12 → md:12 → lg:4</div>
+            </div>
+          </div>
         </div>
 
         <pre class="docs-snippet">&lt;div class="brut-row"&gt;
@@ -2246,13 +2317,13 @@ border: var(--bw-6) solid var(--ink);</pre>
           </div>
           <div>
             <div class="layout-frame__label">.brut-aspect.brut-aspect--video</div>
-            <div class="brut-aspect brut-aspect--video" style="max-width: 320px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em;">16 / 9</div>
+            <div class="brut-aspect brut-aspect--video docs-aspect-demo">16 / 9</div>
           </div>
           <div>
             <div class="layout-frame__label">.brut-shape (positioned in a hero)</div>
-            <div style="position: relative; height: 140px; background: var(--bone); border: 4px solid var(--ink); overflow: hidden;">
-              <div class="brut-shape brut-shape--rot-r" style="position: absolute; top: -24px; right: -24px;"></div>
-              <div style="position: absolute; bottom: var(--sp-4); left: var(--sp-4); font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em;">HERO COPY.</div>
+            <div style="position: relative; height: 140px; background: var(--bone); border: var(--bw-3) solid var(--ink); overflow: hidden;">
+              <div class="brut-shape brut-shape--rot-r" style="position: absolute; top: calc(-1 * var(--sp-6)); right: calc(-1 * var(--sp-6));"></div>
+              <div style="position: absolute; bottom: var(--sp-4); left: var(--sp-4); font-family: var(--font-display); font-size: var(--fs-base); letter-spacing: var(--tracking-wider);">HERO COPY.</div>
             </div>
           </div>
         </div>
@@ -2266,8 +2337,8 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Spacer</h2>
         <p class="lead"><code>.brut-spacer</code> is a flex-grow pusher. Drop it into a flex container to shove the next sibling to the far end without writing custom alignment CSS.</p>
         <div class="docs-preview docs-preview--block">
-          <div style="display: flex; align-items: center; gap: var(--sp-3); border: 4px solid var(--ink); padding: var(--sp-3); background: var(--bone);">
-            <span style="font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em;">LEFT</span>
+          <div style="display: flex; align-items: center; gap: var(--sp-3); border: var(--bw-3) solid var(--ink); padding: var(--sp-3); background: var(--bone);">
+            <span style="font-family: var(--font-display); font-size: var(--fs-base); letter-spacing: var(--tracking-wider);">LEFT</span>
             <span class="brut-spacer"></span>
             <button type="button" class="brut-btn brut-btn--sm">RIGHT</button>
           </div>
@@ -2282,58 +2353,74 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- UTILITIES -->
       <section class="docs-section" id="utilities">
         <h2>Utilities</h2>
-        <p class="lead">Bootstrap-compatible utility classes. All values use design tokens. Responsive variants at <code>sm</code> (640px), <code>md</code> (768px), <code>lg</code> (1024px).</p>
+        <p class="lead">Bootstrap-compatible utility classes. All values use design tokens. Responsive variants at <code>sm</code> (<code>--bp-sm</code>), <code>md</code> (<code>--bp-md</code>), <code>lg</code> (<code>--bp-lg</code>).</p>
 
-        <h3>Spacing</h3>
-        <p><code>.m-{0-8}</code>, <code>.mt-*</code>, <code>.mr-*</code>, <code>.mb-*</code>, <code>.ml-*</code>, <code>.mx-*</code>, <code>.my-*</code> — margin.<br>
-        <code>.p-{0-8}</code>, <code>.pt-*</code>, <code>.pr-*</code>, <code>.pb-*</code>, <code>.pl-*</code>, <code>.px-*</code>, <code>.py-*</code> — padding.<br>
-        <code>.m-auto</code>, <code>.mx-auto</code> — centering.</p>
-        <div class="d-flex gap-2 mb-4">
-          <div class="border p-1" style="background: var(--primary);"><code>p-1</code></div>
-          <div class="border p-3" style="background: var(--primary);"><code>p-3</code></div>
-          <div class="border p-5" style="background: var(--primary);"><code>p-5</code></div>
+        <div class="docs-block">
+          <h3>Spacing</h3>
+          <p><code>.m-{0-8}</code>, <code>.mt-*</code>, <code>.mr-*</code>, <code>.mb-*</code>, <code>.ml-*</code>, <code>.mx-*</code>, <code>.my-*</code> — margin.<br>
+          <code>.p-{0-8}</code>, <code>.pt-*</code>, <code>.pr-*</code>, <code>.pb-*</code>, <code>.pl-*</code>, <code>.px-*</code>, <code>.py-*</code> — padding.<br>
+          <code>.m-auto</code>, <code>.mx-auto</code> — centering.</p>
+          <div class="docs-preview">
+            <div class="border p-1" style="background: var(--primary);"><code>p-1</code></div>
+            <div class="border p-3" style="background: var(--primary);"><code>p-3</code></div>
+            <div class="border p-5" style="background: var(--primary);"><code>p-5</code></div>
+          </div>
         </div>
 
-        <h3>Display</h3>
-        <p><code>.d-none</code>, <code>.d-block</code>, <code>.d-inline</code>, <code>.d-inline-block</code>, <code>.d-flex</code>, <code>.d-inline-flex</code>, <code>.d-grid</code></p>
-
-        <h3>Flex</h3>
-        <p><code>.flex-row</code>, <code>.flex-column</code>, <code>.flex-wrap</code>, <code>.justify-content-*</code>, <code>.align-items-*</code>, <code>.flex-grow-*</code>, <code>.order-*</code>, <code>.gap-{0-6}</code></p>
-        <div class="d-flex justify-content-between align-items-center border p-3 mb-4">
-          <div class="border p-2" style="background: var(--primary);">Start</div>
-          <div class="border p-2" style="background: var(--pop-pink);">Center</div>
-          <div class="border p-2" style="background: var(--pop-lime);">End</div>
+        <div class="docs-block">
+          <h3>Display</h3>
+          <p><code>.d-none</code>, <code>.d-block</code>, <code>.d-inline</code>, <code>.d-inline-block</code>, <code>.d-flex</code>, <code>.d-inline-flex</code>, <code>.d-grid</code></p>
         </div>
 
-        <h3>Text</h3>
-        <p><code>.text-start</code>, <code>.text-center</code>, <code>.text-end</code>, <code>.text-truncate</code>, <code>.text-uppercase</code><br>
-        <code>.fw-normal</code>, <code>.fw-bold</code>, <code>.fs-sm</code>, <code>.fs-lg</code></p>
-
-        <h3>Sizing</h3>
-        <p><code>.w-25</code>, <code>.w-50</code>, <code>.w-75</code>, <code>.w-100</code>, <code>.h-*</code>, <code>.mw-100</code>, <code>.vh-100</code></p>
-
-        <h3>Colors</h3>
-        <div class="d-flex flex-wrap gap-2 mb-4">
-          <span class="text-ink fw-bold">text-ink</span>
-          <span class="text-muted">text-muted</span>
-          <span class="text-success fw-bold">text-success</span>
-          <span class="text-danger fw-bold">text-danger</span>
-          <span class="text-warning fw-bold">text-warning</span>
-        </div>
-        <div class="d-flex flex-wrap gap-2 mb-4">
-          <span class="border p-2 bg-primary">bg-primary</span>
-          <span class="border p-2 bg-success">bg-success</span>
-          <span class="border p-2 bg-danger">bg-danger</span>
-          <span class="border p-2 bg-info">bg-info</span>
+        <div class="docs-block">
+          <h3>Flex</h3>
+          <p><code>.flex-row</code>, <code>.flex-column</code>, <code>.flex-wrap</code>, <code>.justify-content-*</code>, <code>.align-items-*</code>, <code>.flex-grow-*</code>, <code>.order-*</code>, <code>.gap-{0-6}</code></p>
+          <div class="docs-preview docs-preview--block">
+            <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
+              <div class="border p-2" style="background: var(--primary);">Start</div>
+              <div class="border p-2" style="background: var(--pop-pink);">Center</div>
+              <div class="border p-2" style="background: var(--pop-lime);">End</div>
+            </div>
+          </div>
         </div>
 
-        <h3>Responsive variants</h3>
-        <p>Add <code>-sm-</code>, <code>-md-</code>, or <code>-lg-</code> for responsive behavior (mobile-first, min-width):</p>
-        <pre class="docs-snippet">&lt;!-- Stack on mobile, side-by-side on md+ --&gt;
+        <div class="docs-block">
+          <h3>Text</h3>
+          <p><code>.text-start</code>, <code>.text-center</code>, <code>.text-end</code>, <code>.text-truncate</code>, <code>.text-uppercase</code><br>
+          <code>.fw-normal</code>, <code>.fw-bold</code>, <code>.fs-sm</code>, <code>.fs-lg</code></p>
+        </div>
+
+        <div class="docs-block">
+          <h3>Sizing</h3>
+          <p><code>.w-25</code>, <code>.w-50</code>, <code>.w-75</code>, <code>.w-100</code>, <code>.h-*</code>, <code>.mw-100</code>, <code>.vh-100</code></p>
+        </div>
+
+        <div class="docs-block">
+          <h3>Colors</h3>
+          <div class="docs-preview">
+            <span class="text-ink fw-bold">text-ink</span>
+            <span class="text-muted">text-muted</span>
+            <span class="text-success fw-bold">text-success</span>
+            <span class="text-danger fw-bold">text-danger</span>
+            <span class="text-warning fw-bold">text-warning</span>
+          </div>
+          <div class="docs-preview">
+            <span class="border p-2 bg-primary">bg-primary</span>
+            <span class="border p-2 bg-success">bg-success</span>
+            <span class="border p-2 bg-danger">bg-danger</span>
+            <span class="border p-2 bg-info">bg-info</span>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Responsive variants</h3>
+          <p>Add <code>-sm-</code>, <code>-md-</code>, or <code>-lg-</code> for responsive behavior (mobile-first, min-width):</p>
+          <pre class="docs-snippet">&lt;!-- Stack on mobile, side-by-side on md+ --&gt;
 &lt;div class="d-flex flex-column flex-md-row gap-3"&gt;
   &lt;div class="p-3 p-md-5"&gt;Tighter on mobile, wider on desktop&lt;/div&gt;
   &lt;div class="mt-3 mt-md-0 ml-md-3"&gt;Margin shifts at breakpoint&lt;/div&gt;
 &lt;/div&gt;</pre>
+        </div>
       </section>
 
       <!-- VALIDATION -->
@@ -2341,31 +2428,39 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Validation</h2>
         <p class="lead">Native HTML5 and JS-driven form validation states.</p>
 
-        <h3>Native validation</h3>
-        <p>Inputs with <code>required</code> or <code>pattern</code> attributes automatically show <code>:user-valid</code> / <code>:user-invalid</code> styles after interaction.</p>
-        <div class="d-flex flex-column gap-3 mb-4" style="max-width: 400px;">
-          <div class="brut-field">
-            <label class="brut-field__label">Required field</label>
-            <input class="brut-input" type="text" required placeholder="Type then clear to see invalid">
-          </div>
-          <div class="brut-field">
-            <label class="brut-field__label">Email pattern</label>
-            <input class="brut-input" type="email" required placeholder="Enter a valid email">
+        <div class="docs-block">
+          <h3>Native validation</h3>
+          <p>Inputs with <code>required</code> or <code>pattern</code> attributes automatically show <code>:user-valid</code> / <code>:user-invalid</code> styles after interaction.</p>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-form" style="max-width: 400px;">
+              <div class="brut-field">
+                <label class="brut-field__label" for="docs-val-required">Required field</label>
+                <input id="docs-val-required" class="brut-input" type="text" required placeholder="Type then clear to see invalid">
+              </div>
+              <div class="brut-field">
+                <label class="brut-field__label" for="docs-val-email">Email pattern</label>
+                <input id="docs-val-email" class="brut-input" type="email" required placeholder="Enter a valid email">
+              </div>
+            </div>
           </div>
         </div>
 
-        <h3>JS-driven</h3>
-        <p>Toggle <code>.brut-field--valid</code> / <code>.brut-field--invalid</code> on the wrapper for manual control.</p>
-        <div class="d-flex flex-column gap-3 mb-4" style="max-width: 400px;">
-          <div class="brut-field brut-field--invalid">
-            <label class="brut-field__label">Invalid field</label>
-            <input class="brut-input" type="text" value="Bad input">
-            <span class="brut-field__error">This field has an error.</span>
-          </div>
-          <div class="brut-field brut-field--valid">
-            <label class="brut-field__label">Valid field</label>
-            <input class="brut-input" type="text" value="Good input">
-            <span class="brut-field__success">Looks good!</span>
+        <div class="docs-block">
+          <h3>JS-driven</h3>
+          <p>Toggle <code>.brut-field--valid</code> / <code>.brut-field--invalid</code> on the wrapper for manual control.</p>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-form" style="max-width: 400px;">
+              <div class="brut-field brut-field--invalid">
+                <label class="brut-field__label" for="docs-val-invalid">Invalid field</label>
+                <input id="docs-val-invalid" class="brut-input" type="text" value="Bad input">
+                <span class="brut-field__error">This field has an error.</span>
+              </div>
+              <div class="brut-field brut-field--valid">
+                <label class="brut-field__label" for="docs-val-valid">Valid field</label>
+                <input id="docs-val-valid" class="brut-input" type="text" value="Good input">
+                <span class="brut-field__success">Looks good.</span>
+              </div>
+            </div>
           </div>
         </div>
 
