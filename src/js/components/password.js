@@ -14,11 +14,13 @@
       if (!input || !btn) return;
       btn.setAttribute('type', 'button');
       btn.textContent = input.type === 'password' ? 'SHOW' : 'HIDE';
+      btn.setAttribute('aria-label', input.type === 'password' ? 'Show password' : 'Hide password');
       btn.addEventListener('click', function () {
         var hidden = input.type === 'password';
         input.type = hidden ? 'text' : 'password';
         btn.textContent = hidden ? 'HIDE' : 'SHOW';
         btn.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+        btn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
       });
     }
   });

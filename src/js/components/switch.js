@@ -23,7 +23,7 @@
 
       function emit() {
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { checked: el.classList.contains('brut-switch--on') }
+          detail: { value: el.classList.contains('brut-switch--on') }
         }));
       }
 

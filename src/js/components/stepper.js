@@ -27,6 +27,15 @@
         el.setAttribute('aria-valuenow', input.value);
       }
 
+      var programmatic = false;
+
+      function emitChange() {
+        el.dispatchEvent(new CustomEvent('brut:change', {
+          detail: { value: Number(input.value) },
+          bubbles: true
+        }));
+      }
+
       function clampAndDispatch(v) {
         var step = read('step', 1) || 1;
         var min  = read('min', -Infinity);
@@ -38,8 +47,11 @@
         v = parseFloat(v.toFixed(10));
         input.value = v;
         syncAria();
+        programmatic = true;
         input.dispatchEvent(new Event('input',  { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
+        programmatic = false;
+        emitChange();
       }
 
       function bump(mult) {
@@ -67,6 +79,10 @@
       if (maxAttr !== null) el.setAttribute('aria-valuemax', maxAttr);
       syncAria();
       input.addEventListener('input', syncAria);
+      input.addEventListener('change', function () {
+        if (programmatic) return;
+        emitChange();
+      });
 
       input.addEventListener('keydown', function (e) {
         var mult = 0;

@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Tag input preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Empty</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Topics</label>
+  <div class="brut-tag-input" data-brut="tag-input" data-brut-name="topics">
+    <input class="brut-tag-input__field" placeholder="Add a topic…">
+  </div>
+  <span class="brut-field__hint">Press Enter or comma to add.</span>
+</div>
+
+<h2>Pre-populated</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Skills</label>
+  <div class="brut-tag-input" data-brut="tag-input" data-brut-name="skills">
+    <span class="brut-tag" data-value="css">CSS <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="js">JavaScript <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="ux">UX <button class="brut-tag__x">×</button></span>
+    <input class="brut-tag-input__field" placeholder="Add a skill…">
+  </div>
+</div>
+
+<h2>Many tags</h2>
+<div class="brut-field" style="max-width:520px;">
+  <label class="brut-field__label">Labels</label>
+  <div class="brut-tag-input" data-brut="tag-input" data-brut-name="labels">
+    <span class="brut-tag" data-value="bug">bug <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="feature">feature <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="docs">docs <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="wontfix">wontfix <button class="brut-tag__x">×</button></span>
+    <span class="brut-tag" data-value="good-first-issue">good-first-issue <button class="brut-tag__x">×</button></span>
+    <input class="brut-tag-input__field" placeholder="Add a label…">
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Add or remove tags…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="tag-input"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+</body></html>

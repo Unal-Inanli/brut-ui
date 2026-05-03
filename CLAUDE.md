@@ -12,7 +12,7 @@
 
 ## Hard constraints (orchestrator-level guardrails)
 
-Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `tokens.css`, use `rgba()` shadows, gradients, rounded corners beyond input/tag radii, ease longer than 140ms, or hand-edit `dist/`. See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
+Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `tokens.css`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
 
 ---
 
@@ -84,9 +84,9 @@ Each scan returns a list of `path:line — finding — proposed fix`. No edits.
 | # | Scan | Command/heuristic | Files |
 |---|---|---|---|
 | S1 | Untokenized values in CSS | `grep -nE "#[0-9a-fA-F]{3,8}\|[0-9]+px\|[0-9.]+rem" src/components.css` then exclude lines whose value matches a token in `src/tokens.css` | `src/components.css` |
-| S2 | Forbidden visual patterns | grep for `linear-gradient`, `radial-gradient`, `rgba(`, `border-radius:` (flag values >12px outside `--radius-pill`), transitions >140ms, `ease-out`/`ease-in-out` durations >140ms | `src/components.css`, `src/tokens.css` |
+| S2 | Forbidden visual patterns | grep for `linear-gradient`, `radial-gradient`, `rgba(` (in components.css — must be ZERO; the only sanctioned use lives in `--scrim-bg`/`--scrim-bg-soft` in tokens.css), `border-radius:` (flag values >12px outside `--radius-pill`), transitions >140ms, `ease-out`/`ease-in-out` durations >140ms. Loader `animation` durations are exempt — flag only those without a `Sanctioned exception` comment nearby. | `src/components.css`, `src/tokens.css` |
 | S3 | Dead/duplicate classes | for each `.brut-*` selector in `src/components.css`, grep `preview/`, `docs/index.html`, `demos/`, `README.md` — flag classes with 0 references | `src/components.css` + all consumers |
-| S4 | Convention drift in JS | for each `src/js/components/*.js` confirm: single IIFE, registers on `data-brut="<name>"`, sets `type="button"` on wired buttons, dispatches `brut:change`, mirrors to hidden input, no `import`/`require`/CDN | `src/js/components/*.js` |
+| S4 | Convention drift in JS | for each `src/js/components/*.js` confirm: single IIFE, registers on `data-brut="<name>"`, sets `type="button"` on wired buttons, dispatches `brut:change` with `event.detail.value` always present, mirrors to a hidden input (or relies on a real form input like stepper/password), no `import`/`require`/CDN. Flag any dispatch missing `value` in `detail`. | `src/js/components/*.js` |
 | S5 | Sync drift between surfaces | for every `.brut-<name>` in `components.css`, confirm `preview/components-<name>.html` exists AND there is a `<section id="<name>">` in `docs/index.html`; flag mismatches | `src/components.css`, `preview/`, `docs/index.html` |
 | S6 | Accessibility gaps in JS components | grep each component for `role=`, `tabindex`, `aria-*`, `keydown`/Space/Enter handling — flag missing | `src/js/components/*.js` |
 | S7 | Bundle hygiene | report `wc -c dist/brut.css dist/brut.js` and flag any duplicated rule blocks (same selector defined twice in `components.css`) | `src/components.css` |

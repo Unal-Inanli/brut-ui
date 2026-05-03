@@ -4,7 +4,7 @@
        <thead class="brut-table__head">
          <tr class="brut-table__row">
            <th class="brut-table__cell">
-             <span class="brut-cb" data-brut-select-all></span>
+             <span class="brut-checkbox" data-brut-select-all></span>
            </th>
            <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
            <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>
@@ -13,7 +13,7 @@
        <tbody>
          <tr class="brut-table__row">
            <td class="brut-table__cell">
-             <label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label>
+             <label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label>
            </td>
            <td class="brut-table__cell" data-sort-value="alpha">Alpha</td>
            <td class="brut-table__cell brut-table__cell--num" data-sort-value="3">3</td>
@@ -95,7 +95,7 @@
             var dir = current === 'ascending' ? 'descending' : 'ascending';
             sortBy(el, key, dir);
             el.dispatchEvent(new CustomEvent('brut:change', {
-              detail: { key: key, dir: dir }
+              detail: { value: key, key: key, dir: dir }
             }));
           }
 
@@ -120,7 +120,7 @@
               input.dispatchEvent(new Event('change', { bubbles: true }));
             }
           }
-          row.classList.toggle('brut-cb--on', checked);
+          row.classList.toggle('brut-checkbox--on', checked);
           row.setAttribute('aria-checked', checked ? 'true' : 'false');
         }
 
@@ -131,12 +131,12 @@
 
         function isOn() {
           if (selectAllInput) return selectAllInput.checked;
-          return selectAll.classList.contains('brut-cb--on');
+          return selectAll.classList.contains('brut-checkbox--on');
         }
 
         function syncHeader(on) {
           if (selectAllInput) selectAllInput.checked = on;
-          selectAll.classList.toggle('brut-cb--on', on);
+          selectAll.classList.toggle('brut-checkbox--on', on);
           selectAll.setAttribute('aria-checked', on ? 'true' : 'false');
         }
 
@@ -146,7 +146,7 @@
           syncHeader(next);
           applyAll(next);
           el.dispatchEvent(new CustomEvent('brut:change', {
-            detail: { selectAll: next }
+            detail: { value: next, selectAll: true }
           }));
         });
         selectAll.addEventListener('keydown', function (e) {

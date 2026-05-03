@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — runtime
- * Built 2026-05-02T19:56:17Z
+ * Built 2026-05-03T14:10:50Z
  * Bundle: src/js/core.js + src/js/components/*.js
  */
 
@@ -179,7 +179,7 @@
 /* --- checkbox.js --- */
 /* checkbox — visual checkbox synced to an inner hidden <input type="checkbox">.
    Markup:
-     <label class="brut-cb" data-brut="checkbox">
+     <label class="brut-checkbox" data-brut="checkbox">
        <input type="checkbox" hidden>
      </label>
    The hidden checkbox is the source of truth. */
@@ -191,8 +191,8 @@
       var input = el.querySelector('input[type="checkbox"]');
 
       function sync() {
-        var on = input ? input.checked : el.classList.contains('brut-cb--on');
-        el.classList.toggle('brut-cb--on', on);
+        var on = input ? input.checked : el.classList.contains('brut-checkbox--on');
+        el.classList.toggle('brut-checkbox--on', on);
         el.setAttribute('aria-checked', on ? 'true' : 'false');
       }
 
@@ -201,7 +201,7 @@
 
       function emit() {
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { checked: el.classList.contains('brut-cb--on') }
+          detail: { checked: el.classList.contains('brut-checkbox--on') }
         }));
       }
 
@@ -213,7 +213,7 @@
           input.checked = !input.checked;
           input.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
-          el.classList.toggle('brut-cb--on');
+          el.classList.toggle('brut-checkbox--on');
           sync();
           emit();
         }
@@ -1097,7 +1097,7 @@
       }
 
       function emit() {
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { values: Object.keys(selected) } }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: Object.keys(selected) } }));
       }
 
       function add(o) {
@@ -1273,11 +1273,13 @@
       if (!input || !btn) return;
       btn.setAttribute('type', 'button');
       btn.textContent = input.type === 'password' ? 'SHOW' : 'HIDE';
+      btn.setAttribute('aria-label', input.type === 'password' ? 'Show password' : 'Hide password');
       btn.addEventListener('click', function () {
         var hidden = input.type === 'password';
         input.type = hidden ? 'text' : 'password';
         btn.textContent = hidden ? 'HIDE' : 'SHOW';
         btn.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+        btn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
       });
     }
   });
@@ -1547,7 +1549,7 @@
       }
 
       function emit() {
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { min: vMin, max: vMax } }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: { min: vMin, max: vMax } } }));
       }
 
       function setMin(v) { var nv = clamp(snap(v), min, vMax); if (nv !== vMin) { vMin = nv; render(); emit(); } }
@@ -1753,11 +1755,11 @@
 
 
 /* --- segmented.js --- */
-/* segmented — exclusive choice group on .brut-seg / .brut-seg__btn.
+/* segmented — exclusive choice group on .brut-segmented / .brut-segmented__btn.
    Markup:
-     <div class="brut-seg" data-brut="segmented">
-       <button class="brut-seg__btn brut-seg__btn--on" data-value="day">DAY</button>
-       <button class="brut-seg__btn" data-value="week">WEEK</button>
+     <div class="brut-segmented" data-brut="segmented">
+       <button class="brut-segmented__btn brut-segmented__btn--on" data-value="day">DAY</button>
+       <button class="brut-segmented__btn" data-value="week">WEEK</button>
      </div>
    Mirror to a form by setting data-brut-name="<input-name>" on the wrapper —
    a hidden <input type="hidden"> is created automatically.
@@ -1782,12 +1784,12 @@
 
       el.setAttribute('role', 'tablist');
 
-      var btns = Array.prototype.slice.call(el.querySelectorAll('.brut-seg__btn'));
+      var btns = Array.prototype.slice.call(el.querySelectorAll('.brut-segmented__btn'));
 
       function select(btn, focusIt) {
         btns.forEach(function (b) {
           var on = b === btn;
-          b.classList.toggle('brut-seg__btn--on', on);
+          b.classList.toggle('brut-segmented__btn--on', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
           b.setAttribute('tabindex', on ? '0' : '-1');
         });
@@ -1805,7 +1807,7 @@
 
       el.addEventListener('keydown', function (e) {
         var t = e.target;
-        if (!t || !t.classList || !t.classList.contains('brut-seg__btn')) return;
+        if (!t || !t.classList || !t.classList.contains('brut-segmented__btn')) return;
         var i = btns.indexOf(t);
         if (i < 0) return;
         var next = null;
@@ -1822,7 +1824,7 @@
         select(next, true);
       });
 
-      var initial = el.querySelector('.brut-seg__btn--on') || btns[0];
+      var initial = el.querySelector('.brut-segmented__btn--on') || btns[0];
       if (initial) {
         // Set roving tabindex on initial render without firing brut:change.
         btns.forEach(function (b) {
@@ -1911,6 +1913,15 @@
         el.setAttribute('aria-valuenow', input.value);
       }
 
+      var programmatic = false;
+
+      function emitChange() {
+        el.dispatchEvent(new CustomEvent('brut:change', {
+          detail: { value: Number(input.value) },
+          bubbles: true
+        }));
+      }
+
       function clampAndDispatch(v) {
         var step = read('step', 1) || 1;
         var min  = read('min', -Infinity);
@@ -1922,8 +1933,11 @@
         v = parseFloat(v.toFixed(10));
         input.value = v;
         syncAria();
+        programmatic = true;
         input.dispatchEvent(new Event('input',  { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
+        programmatic = false;
+        emitChange();
       }
 
       function bump(mult) {
@@ -1951,6 +1965,10 @@
       if (maxAttr !== null) el.setAttribute('aria-valuemax', maxAttr);
       syncAria();
       input.addEventListener('input', syncAria);
+      input.addEventListener('change', function () {
+        if (programmatic) return;
+        emitChange();
+      });
 
       input.addEventListener('keydown', function (e) {
         var mult = 0;
@@ -1995,7 +2013,7 @@
 
       function emit() {
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { checked: el.classList.contains('brut-switch--on') }
+          detail: { value: el.classList.contains('brut-switch--on') }
         }));
       }
 
@@ -2170,7 +2188,7 @@
         });
         hidden.value = q;
         if (countEl) countEl.textContent = visible + ' of ' + total;
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { query: q, visible: visible, total: total }, bubbles: true }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: q, visible: visible, total: total }, bubbles: true }));
         // Notify table listeners (pagination etc.) to re-render
         table.dispatchEvent(new CustomEvent('brut:change', { detail: { source: 'filter' }, bubbles: true }));
       }
@@ -2189,7 +2207,7 @@
        <thead class="brut-table__head">
          <tr class="brut-table__row">
            <th class="brut-table__cell">
-             <span class="brut-cb" data-brut-select-all></span>
+             <span class="brut-checkbox" data-brut-select-all></span>
            </th>
            <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
            <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>
@@ -2198,7 +2216,7 @@
        <tbody>
          <tr class="brut-table__row">
            <td class="brut-table__cell">
-             <label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label>
+             <label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label>
            </td>
            <td class="brut-table__cell" data-sort-value="alpha">Alpha</td>
            <td class="brut-table__cell brut-table__cell--num" data-sort-value="3">3</td>
@@ -2280,7 +2298,7 @@
             var dir = current === 'ascending' ? 'descending' : 'ascending';
             sortBy(el, key, dir);
             el.dispatchEvent(new CustomEvent('brut:change', {
-              detail: { key: key, dir: dir }
+              detail: { value: key, key: key, dir: dir }
             }));
           }
 
@@ -2305,7 +2323,7 @@
               input.dispatchEvent(new Event('change', { bubbles: true }));
             }
           }
-          row.classList.toggle('brut-cb--on', checked);
+          row.classList.toggle('brut-checkbox--on', checked);
           row.setAttribute('aria-checked', checked ? 'true' : 'false');
         }
 
@@ -2316,12 +2334,12 @@
 
         function isOn() {
           if (selectAllInput) return selectAllInput.checked;
-          return selectAll.classList.contains('brut-cb--on');
+          return selectAll.classList.contains('brut-checkbox--on');
         }
 
         function syncHeader(on) {
           if (selectAllInput) selectAllInput.checked = on;
-          selectAll.classList.toggle('brut-cb--on', on);
+          selectAll.classList.toggle('brut-checkbox--on', on);
           selectAll.setAttribute('aria-checked', on ? 'true' : 'false');
         }
 
@@ -2331,7 +2349,7 @@
           syncHeader(next);
           applyAll(next);
           el.dispatchEvent(new CustomEvent('brut:change', {
-            detail: { selectAll: next }
+            detail: { value: next, selectAll: true }
           }));
         });
         selectAll.addEventListener('keydown', function (e) {
@@ -2676,13 +2694,13 @@
       var amBtn = null, pmBtn = null;
       if (mode === 12) {
         var meridSeg = document.createElement('div');
-        meridSeg.className = 'brut-seg brut-time__meridian';
+        meridSeg.className = 'brut-segmented brut-time__meridian';
         amBtn = document.createElement('button');
-        amBtn.className = 'brut-seg__btn';
+        amBtn.className = 'brut-segmented__btn';
         amBtn.setAttribute('type', 'button');
         amBtn.textContent = 'AM';
         pmBtn = document.createElement('button');
-        pmBtn.className = 'brut-seg__btn';
+        pmBtn.className = 'brut-segmented__btn';
         pmBtn.setAttribute('type', 'button');
         pmBtn.textContent = 'PM';
         meridSeg.appendChild(amBtn);
@@ -2692,16 +2710,16 @@
         function setMerid(pm) {
           if (pm && hour < 12) hour += 12;
           if (!pm && hour >= 12) hour -= 12;
-          amBtn.classList.toggle('brut-seg__btn--on', !pm);
-          pmBtn.classList.toggle('brut-seg__btn--on',  pm);
+          amBtn.classList.toggle('brut-segmented__btn--on', !pm);
+          pmBtn.classList.toggle('brut-segmented__btn--on',  pm);
           hourCtrl.refresh();
           sync();
         }
         amBtn.addEventListener('click', function () { setMerid(false); });
         pmBtn.addEventListener('click', function () { setMerid(true);  });
 
-        amBtn.classList.toggle('brut-seg__btn--on', hour < 12);
-        pmBtn.classList.toggle('brut-seg__btn--on', hour >= 12);
+        amBtn.classList.toggle('brut-segmented__btn--on', hour < 12);
+        pmBtn.classList.toggle('brut-segmented__btn--on', hour >= 12);
       }
 
       function fmt() { return pad2(hour) + ':' + pad2(minute); }
@@ -2723,8 +2741,8 @@
         hourCtrl.refresh();
         minuteCtrl.refresh();
         if (amBtn && pmBtn) {
-          amBtn.classList.toggle('brut-seg__btn--on', hour < 12);
-          pmBtn.classList.toggle('brut-seg__btn--on', hour >= 12);
+          amBtn.classList.toggle('brut-segmented__btn--on', hour < 12);
+          pmBtn.classList.toggle('brut-segmented__btn--on', hour >= 12);
         }
         el.classList.add('brut-time--open');
         field.setAttribute('aria-expanded', 'true');

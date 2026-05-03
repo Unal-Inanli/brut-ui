@@ -201,6 +201,10 @@
         HTML + CSS only. One file: <code>dist/brut.css</code>.
       </p>
 
+      <div style="padding: var(--sp-2) 0 var(--sp-3); border-bottom: var(--bw-1) solid var(--ink); margin: 0 0 var(--sp-3);">
+        <input type="search" id="docs-sidebar-filter" placeholder="FILTER COMPONENTS…" aria-label="Filter components" class="brut-input brut-input--sm" style="width: 100%;" />
+      </div>
+
       <h2>Get started</h2>
       <a href="#install">Install</a>
       <a href="#build">Build</a>
@@ -595,7 +599,7 @@ border: var(--bw-6) solid var(--ink);</pre>
             <thead class="brut-table__head">
               <tr class="brut-table__row">
                 <th class="brut-table__cell" style="width: 36px;">
-                  <span class="brut-cb" data-brut-select-all></span>
+                  <span class="brut-checkbox" data-brut-select-all></span>
                 </th>
                 <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>
                 <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="role">Role</th>
@@ -604,19 +608,19 @@ border: var(--bw-6) solid var(--ink);</pre>
             </thead>
             <tbody>
               <tr class="brut-table__row">
-                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell"><label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label></td>
                 <td class="brut-table__cell" data-sort-value="alice">Alice</td>
                 <td class="brut-table__cell" data-sort-value="designer">Designer</td>
                 <td class="brut-table__cell brut-table__cell--num" data-sort-value="14">14</td>
               </tr>
               <tr class="brut-table__row">
-                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell"><label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label></td>
                 <td class="brut-table__cell" data-sort-value="bob">Bob</td>
                 <td class="brut-table__cell" data-sort-value="engineer">Engineer</td>
                 <td class="brut-table__cell brut-table__cell--num" data-sort-value="7">7</td>
               </tr>
               <tr class="brut-table__row">
-                <td class="brut-table__cell"><label class="brut-cb" data-brut-row-select><input type="checkbox" hidden></label></td>
+                <td class="brut-table__cell"><label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label></td>
                 <td class="brut-table__cell" data-sort-value="carla">Carla</td>
                 <td class="brut-table__cell" data-sort-value="pm">PM</td>
                 <td class="brut-table__cell brut-table__cell--num" data-sort-value="22">22</td>
@@ -627,14 +631,14 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;table class="brut-table brut-table--striped" data-brut="table"&gt;
   &lt;thead class="brut-table__head"&gt;
     &lt;tr class="brut-table__row"&gt;
-      &lt;th class="brut-table__cell"&gt;&lt;span class="brut-cb" data-brut-select-all&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="brut-table__cell"&gt;&lt;span class="brut-checkbox" data-brut-select-all&gt;&lt;/span&gt;&lt;/th&gt;
       &lt;th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name"&gt;Name&lt;/th&gt;
       &lt;th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty"&gt;Qty&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr class="brut-table__row"&gt;
-      &lt;td class="brut-table__cell"&gt;&lt;label class="brut-cb" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
+      &lt;td class="brut-table__cell"&gt;&lt;label class="brut-checkbox" data-brut-row-select&gt;&lt;input type="checkbox" hidden&gt;&lt;/label&gt;&lt;/td&gt;
       &lt;td class="brut-table__cell" data-sort-value="alice"&gt;Alice&lt;/td&gt;
       &lt;td class="brut-table__cell brut-table__cell--num" data-sort-value="14"&gt;14&lt;/td&gt;
     &lt;/tr&gt;
@@ -1087,10 +1091,10 @@ border: var(--bw-6) solid var(--ink);</pre>
       <section class="docs-section" id="checkboxes">
         <h2>Checkboxes</h2>
         <div class="docs-preview">
-          <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden /></label>
-          <label class="brut-cb brut-cb--on" data-brut="checkbox"><input type="checkbox" hidden checked /></label>
+          <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden /></label>
+          <label class="brut-checkbox brut-checkbox--on" data-brut="checkbox"><input type="checkbox" hidden checked /></label>
         </div>
-        <pre class="docs-snippet">&lt;label class="brut-cb" data-brut="checkbox"&gt;
+        <pre class="docs-snippet">&lt;label class="brut-checkbox" data-brut="checkbox"&gt;
   &lt;input type="checkbox" hidden /&gt;
 &lt;/label&gt;</pre>
       </section>
@@ -1181,8 +1185,8 @@ border: var(--bw-6) solid var(--ink);</pre>
               <button class="brut-popover__x" type="button" data-brut-close aria-label="Close">&times;</button>
             </div>
             <div class="brut-popover__body">
-              <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden/></label> Active<br/>
-              <label class="brut-cb" data-brut="checkbox"><input type="checkbox" hidden/></label> Archived
+              <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden/></label> Active<br/>
+              <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden/></label> Archived
             </div>
           </div>
         </div>
@@ -1260,15 +1264,15 @@ border: var(--bw-6) solid var(--ink);</pre>
         <h2>Segmented</h2>
         <p class="lead">Exclusive choice from a small set. With <code>data-brut="segmented"</code> JS toggles the active button and (optionally) writes to a hidden input named <code>data-brut-name</code>.</p>
         <div class="docs-preview">
-          <div class="brut-seg" data-brut="segmented" data-brut-name="range">
-            <button class="brut-seg__btn brut-seg__btn--on" data-value="day">DAY</button>
-            <button class="brut-seg__btn" data-value="week">WEEK</button>
-            <button class="brut-seg__btn" data-value="month">MONTH</button>
+          <div class="brut-segmented" data-brut="segmented" data-brut-name="range">
+            <button class="brut-segmented__btn brut-segmented__btn--on" data-value="day">DAY</button>
+            <button class="brut-segmented__btn" data-value="week">WEEK</button>
+            <button class="brut-segmented__btn" data-value="month">MONTH</button>
           </div>
         </div>
-        <pre class="docs-snippet">&lt;div class="brut-seg" data-brut="segmented" data-brut-name="range"&gt;
-  &lt;button class="brut-seg__btn brut-seg__btn--on" data-value="day"&gt;DAY&lt;/button&gt;
-  &lt;button class="brut-seg__btn" data-value="week"&gt;WEEK&lt;/button&gt;
+        <pre class="docs-snippet">&lt;div class="brut-segmented" data-brut="segmented" data-brut-name="range"&gt;
+  &lt;button class="brut-segmented__btn brut-segmented__btn--on" data-value="day"&gt;DAY&lt;/button&gt;
+  &lt;button class="brut-segmented__btn" data-value="week"&gt;WEEK&lt;/button&gt;
 &lt;/div&gt;</pre>
       </section>
 
@@ -2181,5 +2185,39 @@ border: var(--bw-6) solid var(--ink);</pre>
     </main>
   </div>
   <script src="../dist/brut.js" defer></script>
+  <script>
+    (function () {
+      var input = document.getElementById('docs-sidebar-filter');
+      if (!input) return;
+      var nav = document.querySelector('.docs-nav');
+      if (!nav) return;
+      var links = nav.querySelectorAll('a[href^="#"]');
+      var headings = nav.querySelectorAll('h2');
+
+      function apply() {
+        var q = input.value.trim().toLowerCase();
+        for (var i = 0; i < links.length; i++) {
+          var a = links[i];
+          var text = (a.textContent || '').toLowerCase();
+          a.style.display = (q === '' || text.indexOf(q) !== -1) ? '' : 'none';
+        }
+        for (var j = 0; j < headings.length; j++) {
+          var h = headings[j];
+          var anyVisible = false;
+          var sib = h.nextElementSibling;
+          while (sib && sib.tagName !== 'H2') {
+            if (sib.tagName === 'A' && sib.style.display !== 'none') {
+              anyVisible = true;
+              break;
+            }
+            sib = sib.nextElementSibling;
+          }
+          h.style.display = (q === '' || anyVisible) ? '' : 'none';
+        }
+      }
+
+      input.addEventListener('input', apply);
+    })();
+  </script>
 </body>
 </html>

@@ -6,6 +6,21 @@ BRUT is a neo-brutalist component library. Hard borders. Hard offset shadows. Lo
 
 The kit ships as **two flat bundles**: `dist/brut.css` for the visual system, and `dist/brut.js` — a tiny vanilla-JS runtime — for the interactive form components (switch, checkbox, radio, segmented, tabs, stepper, password toggle, search clear, OTP, tag input, combobox, file picker, dropzone, character counter, rating, dialog). Static visual components and CSS-only form controls (textarea, select, range, color, fieldset, …) need no script.
 
+---
+
+## Mental model
+
+BRUT is four things, in order:
+
+1. **Tokens** (`src/tokens.css`) — every color, type step, space, shadow, border, radius, motion, z-index, and semantic state alias is a CSS variable. If you reach for a hex or px that isn't a token, add a token first.
+2. **Classes** (`src/components.css`) — `.brut-<name>` blocks compose tokens into the visual system. No class hardcodes a value. Modifiers are BEM: `.brut-btn--primary`, `.brut-switch--on`.
+3. **Optional JS hook** (`src/js/components/<name>.js`) — interactivity opts in via `data-brut="<name>"`. The runtime auto-inits on `DOMContentLoaded`. Static visuals and CSS-only form controls (textarea, select, range, color, fieldset) need no JS.
+4. **Custom event + hidden input** — every form-state component dispatches `brut:change` with `event.detail.value` and mirrors its value to a hidden `<input>` so `<form>` submission just works.
+
+That's the entire shape. Open `docs/index.html` in a browser for the full component reference with live previews and copy-paste snippets.
+
+---
+
 This project is generated from scratch — no codebase, Figma, or attached materials were provided. Everything here is original visual direction, ready to be torn apart and iterated on.
 
 ---
@@ -121,7 +136,7 @@ I used Google Fonts as the source for all three families because no font files w
 
 ## How to use
 
-Drop the CSS bundle into any HTML page. Add the JS bundle if you use any interactive form component (anything with a `data-brut="…"` attribute).
+Drop the CSS bundle into any HTML page. Add the JS bundle if you use any interactive form component (anything with a `data-brut="…"` attribute). Open `docs/index.html` directly in a browser for the live component gallery — no build, no server, no install.
 
 ```html
 <link rel="stylesheet" href="dist/brut.css">

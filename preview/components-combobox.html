@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Combobox preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Empty</h2>
+<div class="brut-field" style="max-width:360px;">
+  <label class="brut-field__label">City</label>
+  <div class="brut-combobox" data-brut="combobox" data-brut-name="city">
+    <input class="brut-input" type="text" placeholder="Search city…">
+    <input type="hidden" name="city">
+    <ul class="brut-combobox__list">
+      <li class="brut-combobox__opt" data-value="nyc">New York</li>
+      <li class="brut-combobox__opt" data-value="ber">Berlin</li>
+      <li class="brut-combobox__opt" data-value="lon">London</li>
+      <li class="brut-combobox__opt" data-value="tok">Tokyo</li>
+      <li class="brut-combobox__opt" data-value="par">Paris</li>
+      <li class="brut-combobox__empty">No matches.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Pre-selected</h2>
+<div class="brut-field" style="max-width:360px;">
+  <label class="brut-field__label">Framework</label>
+  <div class="brut-combobox" data-brut="combobox" data-brut-name="framework">
+    <input class="brut-input" type="text" value="Vanilla JS" placeholder="Search…">
+    <input type="hidden" name="framework" value="vanilla">
+    <ul class="brut-combobox__list">
+      <li class="brut-combobox__opt" data-value="vanilla">Vanilla JS</li>
+      <li class="brut-combobox__opt" data-value="svelte">Svelte</li>
+      <li class="brut-combobox__opt" data-value="solid">Solid</li>
+      <li class="brut-combobox__opt" data-value="lit">Lit</li>
+      <li class="brut-combobox__empty">No matches.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Pick an option…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="combobox"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+</body></html>

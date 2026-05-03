@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Rating preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Empty (no selection)</h2>
+<div class="brut-field">
+  <label class="brut-field__label">Rate this</label>
+  <div class="brut-rating" data-brut="rating" data-brut-name="score" data-brut-value="0">
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+    <button class="brut-rating__star"></button>
+  </div>
+</div>
+
+<h2>Pre-selected (3 of 5)</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label">Quality</label>
+    <div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3">
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+    </div>
+  </div>
+
+  <div class="brut-field">
+    <label class="brut-field__label">Value</label>
+    <div class="brut-rating" data-brut="rating" data-brut-name="value" data-brut-value="5">
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+      <button class="brut-rating__star"></button>
+    </div>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Click or use arrow keys…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="rating"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+</body></html>

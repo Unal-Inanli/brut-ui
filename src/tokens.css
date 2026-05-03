@@ -59,6 +59,28 @@
   --fg-3:       var(--concrete-300);
   --border:     var(--ink);
 
+  /* Semantic state aliases — pair these for form validation, alerts, badges.
+     Components use these instead of reaching for raw --success / --danger. */
+  --bg-success:     var(--success-bg);
+  --text-success:   var(--success);
+  --border-success: var(--success);
+  --bg-error:       var(--danger-bg);
+  --text-error:     var(--danger);
+  --border-error:   var(--danger);
+  --bg-warning:     var(--warning-bg);
+  --text-warning:   var(--warning);
+  --border-warning: var(--warning);
+  --bg-info:        var(--info-bg);
+  --text-info:      var(--info);
+  --border-info:    var(--info);
+
+  /* Scrim — the ONLY sanctioned use of rgba in the kit.
+     Use --scrim-bg for modal/drawer backdrops; --scrim-bg-soft for the
+     striped diagonal scrim accent on disabled states. Components must
+     reference these tokens; raw rgba() in components.css is forbidden. */
+  --scrim-bg:      rgba(0, 0, 0, 0.4);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.06);
+
   /* ---------- TYPE ---------- */
 
   --font-display: 'Archivo Black', 'Helvetica Neue', Impact, sans-serif;
@@ -131,6 +153,7 @@
   --sp-4:  16px;
   --sp-5:  20px;
   --sp-6:  24px;
+  --sp-7:  28px;
   --sp-8:  32px;
   --sp-10: 40px;
   --sp-12: 48px;
@@ -143,6 +166,16 @@
   --dur-fast:   80ms;
   --dur-base:   140ms;
   --dur-slow:   220ms;
+
+  /* Z-index — stacking contexts. Higher number = on top.
+     Components must reference these tokens, never raw integers. */
+  --z-base:     0;
+  --z-sticky:   100;   /* sticky headers, sticky table headers */
+  --z-dropdown: 200;   /* combobox menus, select dropdowns */
+  --z-popover:  300;   /* popovers, tooltips */
+  --z-overlay:  400;   /* drawers, partial-screen overlays */
+  --z-modal:    500;   /* modal dialogs */
+  --z-toast:    600;   /* transient notifications — always on top */
 }
 
 /* ---------- SEMANTIC ELEMENT STYLES ---------- */

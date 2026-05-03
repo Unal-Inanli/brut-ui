@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — File preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Default (no selection)</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label">Avatar</label>
+    <label class="brut-file" data-brut="file">
+      <input type="file" name="avatar" accept="image/*">
+      <span class="brut-file__btn">CHOOSE FILE</span>
+      <span class="brut-file__name">No file selected</span>
+    </label>
+  </div>
+
+  <div class="brut-field">
+    <label class="brut-field__label">Resume</label>
+    <label class="brut-file" data-brut="file">
+      <input type="file" name="resume" accept=".pdf,.doc,.docx">
+      <span class="brut-file__btn">CHOOSE FILE</span>
+      <span class="brut-file__name">No file selected</span>
+    </label>
+  </div>
+</div>
+
+<h2>Multiple files</h2>
+<div class="brut-field" style="max-width:360px;">
+  <label class="brut-field__label">Attachments</label>
+  <label class="brut-file" data-brut="file">
+    <input type="file" name="attachments" multiple>
+    <span class="brut-file__btn">CHOOSE FILES</span>
+    <span class="brut-file__name">No file selected</span>
+  </label>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Choose a file…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="file"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        var names = Array.prototype.map.call(e.detail.files, function (f) { return f.name; });
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(names);
+      });
+    });
+  });
+</script>
+</body></html>
