@@ -1,0 +1,151 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Progress</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; background: var(--paper); font-family: var(--font-sans); }
+  .demo-section { padding: var(--sp-6); max-width: 640px; }
+  .demo-section + .demo-section { border-top: var(--bw-2) solid var(--concrete-100); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: var(--fs-md); letter-spacing: var(--tracking-wider); margin: 0 0 var(--sp-4); }
+  h3 { font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--concrete-400); margin: var(--sp-4) 0 var(--sp-2); }
+  .stack { display: flex; flex-direction: column; gap: var(--sp-3); }
+  .row { display: flex; gap: var(--sp-3); }
+</style></head>
+<body>
+
+<!-- ─── DETERMINATE: VALUE STEPS ─────────────────────────────────── -->
+<section class="demo-section">
+  <h2>Determinate — value steps</h2>
+  <div class="stack">
+    <div class="brut-progress" style="--progress: 0"  aria-label="0%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <div class="brut-progress" style="--progress: 25" aria-label="25%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <div class="brut-progress" style="--progress: 50" aria-label="50%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <div class="brut-progress" style="--progress: 75" aria-label="75%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <div class="brut-progress" style="--progress: 100" aria-label="100%">
+      <div class="brut-progress__bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WITH LABEL OVERLAY ───────────────────────────────────────── -->
+<section class="demo-section">
+  <h2>With label overlay</h2>
+  <div class="stack">
+    <div class="brut-progress brut-progress--lg" style="--progress: 42" aria-label="42%">
+      <div class="brut-progress__bar"></div>
+      <span class="brut-progress__label">42%</span>
+    </div>
+    <div class="brut-progress brut-progress--lg" style="--progress: 100" aria-label="100%">
+      <div class="brut-progress__bar"></div>
+      <span class="brut-progress__label">100%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SIZE VARIANTS ────────────────────────────────────────────── -->
+<section class="demo-section">
+  <h2>Size variants</h2>
+  <div class="stack">
+    <h3>sm</h3>
+    <div class="brut-progress brut-progress--sm" style="--progress: 60" aria-label="60%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <h3>default</h3>
+    <div class="brut-progress" style="--progress: 60" aria-label="60%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <h3>lg</h3>
+    <div class="brut-progress brut-progress--lg" style="--progress: 60" aria-label="60%">
+      <div class="brut-progress__bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COLOR VARIANTS ───────────────────────────────────────────── -->
+<section class="demo-section">
+  <h2>Color variants</h2>
+  <div class="stack">
+    <h3>success</h3>
+    <div class="brut-progress brut-progress--success" style="--progress: 80" aria-label="80%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <h3>danger</h3>
+    <div class="brut-progress brut-progress--danger" style="--progress: 30" aria-label="30%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <h3>info</h3>
+    <div class="brut-progress brut-progress--info" style="--progress: 55" aria-label="55%">
+      <div class="brut-progress__bar"></div>
+    </div>
+    <h3>warning</h3>
+    <div class="brut-progress brut-progress--warning" style="--progress: 65" aria-label="65%">
+      <div class="brut-progress__bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INDETERMINATE ────────────────────────────────────────────── -->
+<section class="demo-section">
+  <h2>Indeterminate</h2>
+  <div class="brut-progress brut-progress--indeterminate" aria-label="Loading…">
+    <div class="brut-progress__bar"></div>
+  </div>
+</section>
+
+<!-- ─── JS-DRIVEN DYNAMIC EXAMPLE ───────────────────────────────── -->
+<section class="demo-section">
+  <h2>JS-driven — interactive</h2>
+  <div
+    class="brut-progress brut-progress--lg"
+    data-brut="progress"
+    data-brut-value="40"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="40"
+    aria-label="Progress"
+    style="margin-bottom: var(--sp-4);"
+  >
+    <div class="brut-progress__bar"></div>
+    <span class="brut-progress__label"></span>
+  </div>
+  <div class="row">
+    <button class="brut-btn brut-btn--sm" type="button" id="js-dec">− 10</button>
+    <button class="brut-btn brut-btn--sm" type="button" id="js-inc">+ 10</button>
+    <button class="brut-btn brut-btn--sm brut-btn--outline" type="button" id="js-reset">Reset</button>
+  </div>
+  <p style="font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--concrete-400); margin-top: var(--sp-3);">
+    brut:change events logged to console.
+  </p>
+</section>
+
+<script src="../dist/brut.js"></script>
+<script>
+(function () {
+  var bar = document.querySelector('[data-brut="progress"]');
+  if (!bar) return;
+  bar.addEventListener('brut:change', function (e) {
+    console.log('brut:change', e.detail);
+  });
+  document.getElementById('js-inc').addEventListener('click', function () {
+    bar.brutProgress.setValue(bar.brutProgress.getValue() + 10);
+  });
+  document.getElementById('js-dec').addEventListener('click', function () {
+    bar.brutProgress.setValue(bar.brutProgress.getValue() - 10);
+  });
+  document.getElementById('js-reset').addEventListener('click', function () {
+    bar.brutProgress.setValue(40);
+  });
+})();
+</script>
+
+<div data-brut="theme-switcher"></div>
+</body></html>

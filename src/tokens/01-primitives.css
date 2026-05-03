@@ -137,6 +137,12 @@
   --dur-base:   140ms;
   --dur-slow:   220ms;
 
+  /* ---------- BREAKPOINTS ---------- */
+
+  --bp-sm:  640px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+
   /* ---------- Z-INDEX ---------- */
 
   /* Z-index — stacking contexts. Higher number = on top.

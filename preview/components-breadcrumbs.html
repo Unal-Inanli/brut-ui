@@ -5,10 +5,11 @@
 <style>
   body { margin: 0; padding: 24px; background: var(--paper); font-family: var(--font-sans); }
   h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 16px; letter-spacing: 0.06em; margin: 18px 0 8px; }
+  .demo-note { font-size: 12px; color: var(--concrete-300); font-family: var(--font-mono); margin-top: 4px; }
 </style></head>
 <body>
 
-<h2>Breadcrumbs</h2>
+<h2>Default</h2>
 
 <ol class="brut-crumbs">
   <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
@@ -38,6 +39,41 @@
   <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Settings</a></li>
   <li class="brut-crumbs__sep">/</li>
   <li class="brut-crumbs__item brut-crumbs__current">Permissions</li>
+</ol>
+
+<h2>With aria-current="page" (semantic variant)</h2>
+
+<ol class="brut-crumbs" aria-label="Breadcrumb">
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Docs</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item" aria-current="page">Components</li>
+</ol>
+
+<h2>Small variant (.brut-crumbs--sm)</h2>
+
+<ol class="brut-crumbs brut-crumbs--sm" aria-label="Breadcrumb">
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Settings</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item" aria-current="page">Notifications</li>
+</ol>
+
+<h2>Responsive truncation (.brut-crumbs--responsive)</h2>
+<p class="demo-note">On narrow viewports (&lt;640 px) only the first and last items remain visible, with an ellipsis prepended to the last item.</p>
+
+<ol class="brut-crumbs brut-crumbs--responsive" aria-label="Breadcrumb">
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Home</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Projects</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Brut-ui</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="#">Releases</a></li>
+  <li class="brut-crumbs__sep" aria-hidden="true">/</li>
+  <li class="brut-crumbs__item" aria-current="page">v1.0.0</li>
 </ol>
 
 <div data-brut="theme-switcher"></div>
