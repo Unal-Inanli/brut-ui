@@ -1,6 +1,6 @@
 /*!
  * BRUT v0.2.0 — neo-brutalist HTML+CSS UI kit
- * Built 2026-05-02T19:56:17Z
+ * Built 2026-05-03T14:10:50Z
  * Bundle: src/tokens.css + src/components.css
  */
 
@@ -64,6 +64,28 @@
   --fg-2:       var(--concrete-400);
   --fg-3:       var(--concrete-300);
   --border:     var(--ink);
+
+  /* Semantic state aliases — pair these for form validation, alerts, badges.
+     Components use these instead of reaching for raw --success / --danger. */
+  --bg-success:     var(--success-bg);
+  --text-success:   var(--success);
+  --border-success: var(--success);
+  --bg-error:       var(--danger-bg);
+  --text-error:     var(--danger);
+  --border-error:   var(--danger);
+  --bg-warning:     var(--warning-bg);
+  --text-warning:   var(--warning);
+  --border-warning: var(--warning);
+  --bg-info:        var(--info-bg);
+  --text-info:      var(--info);
+  --border-info:    var(--info);
+
+  /* Scrim — the ONLY sanctioned use of rgba in the kit.
+     Use --scrim-bg for modal/drawer backdrops; --scrim-bg-soft for the
+     striped diagonal scrim accent on disabled states. Components must
+     reference these tokens; raw rgba() in components.css is forbidden. */
+  --scrim-bg:      rgba(0, 0, 0, 0.4);
+  --scrim-bg-soft: rgba(0, 0, 0, 0.06);
 
   /* ---------- TYPE ---------- */
 
@@ -137,6 +159,7 @@
   --sp-4:  16px;
   --sp-5:  20px;
   --sp-6:  24px;
+  --sp-7:  28px;
   --sp-8:  32px;
   --sp-10: 40px;
   --sp-12: 48px;
@@ -149,6 +172,16 @@
   --dur-fast:   80ms;
   --dur-base:   140ms;
   --dur-slow:   220ms;
+
+  /* Z-index — stacking contexts. Higher number = on top.
+     Components must reference these tokens, never raw integers. */
+  --z-base:     0;
+  --z-sticky:   100;   /* sticky headers, sticky table headers */
+  --z-dropdown: 200;   /* combobox menus, select dropdowns */
+  --z-popover:  300;   /* popovers, tooltips */
+  --z-overlay:  400;   /* drawers, partial-screen overlays */
+  --z-modal:    500;   /* modal dialogs */
+  --z-toast:    600;   /* transient notifications — always on top */
 }
 
 /* ---------- SEMANTIC ELEMENT STYLES ---------- */
@@ -901,7 +934,7 @@ pre code {
 .brut-switch--on .brut-switch__knob { left: 28px; }
 
 /* CHECKBOX */
-.brut-cb {
+.brut-checkbox {
   width: 22px; height: 22px;
   border: 3px solid var(--ink);
   background: var(--bone);
@@ -909,8 +942,8 @@ pre code {
   display: inline-flex;
   align-items: center; justify-content: center;
 }
-.brut-cb--on { background: var(--primary); }
-.brut-cb--on::after {
+.brut-checkbox--on { background: var(--primary); }
+.brut-checkbox--on::after {
   content: "\2715";
   font-family: var(--font-display);
   font-size: var(--fs-base); font-weight: 900;
@@ -1088,6 +1121,7 @@ pre code {
   height: 100%;
   background: var(--ink);
   transform: skewX(-20deg);
+  /* Sanctioned exception: loader animations may exceed --dur-base; the 140ms cap applies to transitions, not loops. */
   animation: brut-skel-sweep 800ms var(--ease-snap) infinite;
 }
 @keyframes brut-skel-sweep {
@@ -1115,6 +1149,7 @@ pre code {
   border: var(--bw-3) solid var(--ink);
   border-top-color: var(--primary);
   background: transparent;
+  /* Sanctioned exception: loader animations may exceed --dur-base; the 140ms cap applies to transitions, not loops. */
   animation: brut-spin 600ms linear infinite;
 }
 .brut-spinner--sm { width: 24px; height: 24px; border-width: var(--bw-2); }
@@ -1156,13 +1191,13 @@ pre code {
 }
 
 /* SEGMENTED */
-.brut-seg {
+.brut-segmented {
   display: inline-flex;
   border: 4px solid var(--ink);
   box-shadow: 4px 4px 0 0 var(--ink);
   background: var(--bone);
 }
-.brut-seg__btn {
+.brut-segmented__btn {
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: var(--fs-xs);
@@ -1173,8 +1208,8 @@ pre code {
   border-right: 3px solid var(--ink);
   cursor: pointer;
 }
-.brut-seg__btn:last-child { border-right: 0; }
-.brut-seg__btn--on { background: var(--ink); color: var(--paper); }
+.brut-segmented__btn:last-child { border-right: 0; }
+.brut-segmented__btn--on { background: var(--ink); color: var(--paper); }
 
 /* TABS */
 .brut-tabs {
@@ -1551,6 +1586,7 @@ pre code {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  /* Sanctioned exception: checkmark glyph drawn via gradient until a 24px stroke-based SVG sprite ships (see TODO.md Tier 6.1). Do NOT use gradients elsewhere. */
   background-image:
     linear-gradient(45deg,  transparent 50%, var(--ink) 50%),
     linear-gradient(135deg, var(--ink) 50%, transparent 50%);
@@ -1565,7 +1601,7 @@ pre code {
   box-shadow: var(--shadow-sm);
 }
 
-/* RADIO — round companion to .brut-cb. JS toggles --on. */
+/* RADIO — round companion to .brut-checkbox. JS toggles --on. */
 .brut-radio {
   width: 22px; height: 22px;
   border: var(--bw-2) solid var(--ink);
@@ -2670,9 +2706,9 @@ button.brut-sidebar__group-title::after {
   inset: 0;
   background:
     repeating-linear-gradient(45deg,
-      rgba(0,0,0,0.06) 0 1px,
+      var(--scrim-bg-soft) 0 1px,
       transparent 1px 8px),
-    rgba(0,0,0,0.4);
+    var(--scrim-bg);
   z-index: 100;
   display: flex;
   align-items: center;

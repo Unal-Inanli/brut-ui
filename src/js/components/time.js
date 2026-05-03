@@ -144,13 +144,13 @@
       var amBtn = null, pmBtn = null;
       if (mode === 12) {
         var meridSeg = document.createElement('div');
-        meridSeg.className = 'brut-seg brut-time__meridian';
+        meridSeg.className = 'brut-segmented brut-time__meridian';
         amBtn = document.createElement('button');
-        amBtn.className = 'brut-seg__btn';
+        amBtn.className = 'brut-segmented__btn';
         amBtn.setAttribute('type', 'button');
         amBtn.textContent = 'AM';
         pmBtn = document.createElement('button');
-        pmBtn.className = 'brut-seg__btn';
+        pmBtn.className = 'brut-segmented__btn';
         pmBtn.setAttribute('type', 'button');
         pmBtn.textContent = 'PM';
         meridSeg.appendChild(amBtn);
@@ -160,16 +160,16 @@
         function setMerid(pm) {
           if (pm && hour < 12) hour += 12;
           if (!pm && hour >= 12) hour -= 12;
-          amBtn.classList.toggle('brut-seg__btn--on', !pm);
-          pmBtn.classList.toggle('brut-seg__btn--on',  pm);
+          amBtn.classList.toggle('brut-segmented__btn--on', !pm);
+          pmBtn.classList.toggle('brut-segmented__btn--on',  pm);
           hourCtrl.refresh();
           sync();
         }
         amBtn.addEventListener('click', function () { setMerid(false); });
         pmBtn.addEventListener('click', function () { setMerid(true);  });
 
-        amBtn.classList.toggle('brut-seg__btn--on', hour < 12);
-        pmBtn.classList.toggle('brut-seg__btn--on', hour >= 12);
+        amBtn.classList.toggle('brut-segmented__btn--on', hour < 12);
+        pmBtn.classList.toggle('brut-segmented__btn--on', hour >= 12);
       }
 
       function fmt() { return pad2(hour) + ':' + pad2(minute); }
@@ -191,8 +191,8 @@
         hourCtrl.refresh();
         minuteCtrl.refresh();
         if (amBtn && pmBtn) {
-          amBtn.classList.toggle('brut-seg__btn--on', hour < 12);
-          pmBtn.classList.toggle('brut-seg__btn--on', hour >= 12);
+          amBtn.classList.toggle('brut-segmented__btn--on', hour < 12);
+          pmBtn.classList.toggle('brut-segmented__btn--on', hour >= 12);
         }
         el.classList.add('brut-time--open');
         field.setAttribute('aria-expanded', 'true');

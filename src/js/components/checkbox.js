@@ -1,6 +1,6 @@
 /* checkbox — visual checkbox synced to an inner hidden <input type="checkbox">.
    Markup:
-     <label class="brut-cb" data-brut="checkbox">
+     <label class="brut-checkbox" data-brut="checkbox">
        <input type="checkbox" hidden>
      </label>
    The hidden checkbox is the source of truth. */
@@ -12,8 +12,8 @@
       var input = el.querySelector('input[type="checkbox"]');
 
       function sync() {
-        var on = input ? input.checked : el.classList.contains('brut-cb--on');
-        el.classList.toggle('brut-cb--on', on);
+        var on = input ? input.checked : el.classList.contains('brut-checkbox--on');
+        el.classList.toggle('brut-checkbox--on', on);
         el.setAttribute('aria-checked', on ? 'true' : 'false');
       }
 
@@ -22,7 +22,7 @@
 
       function emit() {
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { checked: el.classList.contains('brut-cb--on') }
+          detail: { checked: el.classList.contains('brut-checkbox--on') }
         }));
       }
 
@@ -34,7 +34,7 @@
           input.checked = !input.checked;
           input.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
-          el.classList.toggle('brut-cb--on');
+          el.classList.toggle('brut-checkbox--on');
           sync();
           emit();
         }

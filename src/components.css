@@ -564,7 +564,7 @@
 .brut-switch--on .brut-switch__knob { left: 28px; }
 
 /* CHECKBOX */
-.brut-cb {
+.brut-checkbox {
   width: 22px; height: 22px;
   border: 3px solid var(--ink);
   background: var(--bone);
@@ -572,8 +572,8 @@
   display: inline-flex;
   align-items: center; justify-content: center;
 }
-.brut-cb--on { background: var(--primary); }
-.brut-cb--on::after {
+.brut-checkbox--on { background: var(--primary); }
+.brut-checkbox--on::after {
   content: "\2715";
   font-family: var(--font-display);
   font-size: var(--fs-base); font-weight: 900;
@@ -751,6 +751,7 @@
   height: 100%;
   background: var(--ink);
   transform: skewX(-20deg);
+  /* Sanctioned exception: loader animations may exceed --dur-base; the 140ms cap applies to transitions, not loops. */
   animation: brut-skel-sweep 800ms var(--ease-snap) infinite;
 }
 @keyframes brut-skel-sweep {
@@ -778,6 +779,7 @@
   border: var(--bw-3) solid var(--ink);
   border-top-color: var(--primary);
   background: transparent;
+  /* Sanctioned exception: loader animations may exceed --dur-base; the 140ms cap applies to transitions, not loops. */
   animation: brut-spin 600ms linear infinite;
 }
 .brut-spinner--sm { width: 24px; height: 24px; border-width: var(--bw-2); }
@@ -819,13 +821,13 @@
 }
 
 /* SEGMENTED */
-.brut-seg {
+.brut-segmented {
   display: inline-flex;
   border: 4px solid var(--ink);
   box-shadow: 4px 4px 0 0 var(--ink);
   background: var(--bone);
 }
-.brut-seg__btn {
+.brut-segmented__btn {
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: var(--fs-xs);
@@ -836,8 +838,8 @@
   border-right: 3px solid var(--ink);
   cursor: pointer;
 }
-.brut-seg__btn:last-child { border-right: 0; }
-.brut-seg__btn--on { background: var(--ink); color: var(--paper); }
+.brut-segmented__btn:last-child { border-right: 0; }
+.brut-segmented__btn--on { background: var(--ink); color: var(--paper); }
 
 /* TABS */
 .brut-tabs {
@@ -1214,6 +1216,7 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  /* Sanctioned exception: checkmark glyph drawn via gradient until a 24px stroke-based SVG sprite ships (see TODO.md Tier 6.1). Do NOT use gradients elsewhere. */
   background-image:
     linear-gradient(45deg,  transparent 50%, var(--ink) 50%),
     linear-gradient(135deg, var(--ink) 50%, transparent 50%);
@@ -1228,7 +1231,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* RADIO — round companion to .brut-cb. JS toggles --on. */
+/* RADIO — round companion to .brut-checkbox. JS toggles --on. */
 .brut-radio {
   width: 22px; height: 22px;
   border: var(--bw-2) solid var(--ink);
@@ -2333,9 +2336,9 @@ button.brut-sidebar__group-title::after {
   inset: 0;
   background:
     repeating-linear-gradient(45deg,
-      rgba(0,0,0,0.06) 0 1px,
+      var(--scrim-bg-soft) 0 1px,
       transparent 1px 8px),
-    rgba(0,0,0,0.4);
+    var(--scrim-bg);
   z-index: 100;
   display: flex;
   align-items: center;

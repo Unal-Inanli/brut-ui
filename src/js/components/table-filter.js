@@ -54,7 +54,7 @@
         });
         hidden.value = q;
         if (countEl) countEl.textContent = visible + ' of ' + total;
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { query: q, visible: visible, total: total }, bubbles: true }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: q, visible: visible, total: total }, bubbles: true }));
         // Notify table listeners (pagination etc.) to re-render
         table.dispatchEvent(new CustomEvent('brut:change', { detail: { source: 'filter' }, bubbles: true }));
       }

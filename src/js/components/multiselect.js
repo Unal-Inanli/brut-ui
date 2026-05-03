@@ -86,7 +86,7 @@
       }
 
       function emit() {
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { values: Object.keys(selected) } }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: Object.keys(selected) } }));
       }
 
       function add(o) {

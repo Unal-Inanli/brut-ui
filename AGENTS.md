@@ -74,6 +74,7 @@ The build is intentionally trivial — it concatenates `tokens.css + components.
 1. Add the variable to `src/tokens.css` under the right `:root` section (color / type / spacing / shadow / border / motion).
 2. If it deserves to be visible in the docs, add a row to the relevant Foundations section in `docs/index.html` (e.g. a swatch, a shadow card, a scale row).
 3. Rebuild.
+- When adding a token that fits an existing scale (z-index, semantic state, scrim), match the naming pattern of that scale. Prefer extending the existing semantic alias layer (`--bg-*`, `--text-*`, `--border-*`) over exposing raw scales to consumers.
 
 ## JavaScript components
 
@@ -97,24 +98,57 @@ Behavior lives in `src/js/components/<name>.js`. Every file is a single IIFE tha
 
 ### Conventions — match these in every new component
 
+- **Class root MUST equal the JS hook name.** A component registered as `Brut.register('checkbox', …)` uses class `.brut-checkbox`, not `.brut-cb`. No abbreviations. Modifiers follow BEM: `.brut-<name>--<variant>`, `.brut-<name>__<part>`, `.brut-<name>--on` for toggled state.
 - **One component per file.** Filename is the component name (`stepper.js`, `tag-input.js`).
 - **Hook on `data-brut="<name>"`.** Never select on a class name. Class names are visual; data attributes are behavioral. A consumer must be able to opt in by adding the attribute, and opt out by removing it.
 - **No external dependencies.** No npm imports, no CDN links, no polyfills. Standard DOM and ES2015+ that runs everywhere modern browsers do (`addEventListener`, `querySelectorAll`, `classList`, `CustomEvent`, `dispatchEvent`, optional chaining is fine).
 - **Idempotent init.** The `__brutInit` flag handles this for you — don't fight it. Don't bind global listeners on every init; if you need a global keydown listener, scope it to the element's open/close state.
 - **Always `setAttribute('type', 'button')`** on any `<button>` you wire so it doesn't submit forms accidentally.
 - **Mirror state to a hidden `<input>`** so the value posts cleanly with the surrounding form. Read `data-brut-name` to derive the input name; if no hidden input exists, create one. The hidden input is the source of truth.
-- **Dispatch `CustomEvent('brut:change', { detail })`** on every committed state change. Components with a "completion" notion (OTP) also dispatch `brut:complete`. Consumers wire callbacks via `el.addEventListener('brut:change', …)`.
+- **Dispatch `CustomEvent('brut:change', { detail })`** on every committed state change. **`detail.value` MUST always be present** and represent the single, complete state of the component (boolean / string / array / object). Extras are allowed (e.g. `{ value: 'q', visible: 12, total: 50 }` for a filter), but `value` is canonical and consumers can rely on it. Components with a "completion" notion (OTP) also dispatch `brut:complete` with the same `{ value }` shape.
 - **Keyboard support.** Click handlers should also respond to Space and Enter on focusable elements. Set `role`, `tabindex`, and `aria-checked` / `aria-selected` / `aria-expanded` where appropriate. The runtime won't add these for you.
 - **Fail soft.** If required child elements are missing, return early — don't throw. The runtime catches throws and logs to the console, but a bad selector that matches nothing is the better outcome than a noisy error.
 - **No animations longer than 140ms.** No fades. Match the visual language: snap, don't ease.
 
 ### Public events the runtime expects
 
-| Event | When | Detail |
+| Event | When | Detail (canonical shape) |
 | --- | --- | --- |
-| `brut:change` | A committed state change (after click, after Enter, after select). | Component-specific. Use `value` for single value, `checked` for booleans, `tags`/`files` for collections. |
+| `brut:change` | A committed state change (after click, after Enter, after select). | `{ value, …extras }`. `value` is the single complete state — boolean for toggles, string for single-select, array for multiselect, `{min, max}` for ranges. Extras are allowed but `value` must always be present. |
 | `brut:complete` | All required input collected (e.g. OTP fully filled). | `{ value }` |
-| `brut:open` / `brut:close` | Dialog/popover transitions. | none |
+| `brut:open` / `brut:close` | Dialog/popover/drawer/topnav transitions. | none |
+
+### Form-component checklist
+
+A "form-state component" carries a value the user picks/edits and that should post with a surrounding `<form>`. For these, all of the following MUST hold:
+
+1. The component is registered on `data-brut="<name>"` and uses class root `.brut-<name>`.
+2. It mirrors its value to a hidden `<input>` (or to an existing visible input like stepper's `<input type="number">`) named from `data-brut-name` on the wrapper. The input is the source of truth — submitting the surrounding form posts the value.
+3. It dispatches `brut:change` with `event.detail.value` set to the current value.
+4. Every focusable surface has a `role`, `tabindex`, and keyboard handler (Space/Enter for toggles, Arrow/Home/End for navigators).
+
+A "non-form component" (dialog, popover, tooltip, drawer, topnav, sidebar, toast) is exempt from rules 2 and 3 — they emit `brut:open` / `brut:close` instead. The `password` component is also exempt: its visible `<input type="password">` is already the form field; the toggle button is presentational and only updates `aria-label`.
+
+| Component | Form state? | Hidden input | brut:change | Notes |
+| --- | --- | --- | --- | --- |
+| switch | yes | yes | `{ value: boolean }` | |
+| checkbox | yes | yes | `{ value: boolean }` | |
+| radio | yes | yes | `{ value: string }` | |
+| segmented | yes | yes | `{ value: string }` | |
+| stepper | yes | uses visible `<input type="number">` | `{ value: number }` | |
+| otp | yes | yes | `{ value: string }`, also `brut:complete` | |
+| rating | yes | yes | `{ value: number }` | |
+| combobox | yes | yes | `{ value, label }` | |
+| multiselect | yes | yes (one per value) | `{ value: string[] }` | |
+| range-dual | yes | yes (two inputs) | `{ value: { min, max } }` | |
+| time | yes | yes | `{ value, hour, minute }` | |
+| tag-input | yes | yes (one per tag) | `{ value: string[] }` | |
+| dropzone / file | yes | uses real `<input type="file">` | `{ value: File[] }` | |
+| password | exempt | uses real `<input type="password">` | none | toggle updates `aria-label` only |
+| table-filter | partial | yes | `{ value: query, visible, total }` | drives table visibility |
+| table sort | exempt | none | `{ value: key, key, dir }` | UI control, not a form value |
+| table select-all | exempt | none | `{ value: boolean, selectAll: true }` | UI control |
+| dialog / drawer / popover / tooltip / topnav / sidebar / toast | exempt | none | `brut:open`/`brut:close` | non-form |
 
 ### Hard constraints — do not cross these
 
@@ -129,6 +163,14 @@ Behavior lives in `src/js/components/<name>.js`. Every file is a single IIFE tha
   - Borders are 4px ink (3px small, 6–8px hero); colored borders only for error states.
   - Shadows are hard offset only (`Xpx Ypx 0 0 var(--ink)`), never blurred.
   - Hover lifts up-and-left and grows the shadow; press translates down-and-right and collapses the shadow. Snap, don't ease — 80–140ms transitions on `cubic-bezier(0.2, 0.8, 0.2, 1)`.
+
+### Sanctioned exceptions
+
+The hard rules above have a small, explicit set of carve-outs. These are the ONLY exceptions; do not invent new ones.
+
+- **`rgba()`** is allowed only via the `--scrim-bg` and `--scrim-bg-soft` tokens in `src/tokens.css`. Components must reference those tokens — raw `rgba()` literals in `src/components.css` are forbidden.
+- **Animations longer than 140ms** are allowed only for *loaders* (skeleton sweep, spinner). The 140ms cap applies to **transitions**, not loops. New loaders must be commented `/* Sanctioned exception: loader animations may exceed --dur-base */` so the carve-out is visible.
+- **Gradients** are allowed only for the checkbox checkmark glyph until a 24px stroke-based SVG sprite ships (TODO.md Tier 6.1). Do not use gradients anywhere else; new gradients require user approval.
 
 ## Verifying changes
 

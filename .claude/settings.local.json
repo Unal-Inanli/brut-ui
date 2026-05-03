@@ -11,7 +11,18 @@
       "Bash(node -c /Users/spartan/Projects/ui-kit/src/js/components/table.js)",
       "Bash(node -e ' *)",
       "Bash(bash /Users/spartan/Projects/ui-kit/build.sh)",
-      "Bash(node -c /Users/spartan/Projects/ui-kit/dist/brut.js)"
+      "Bash(node -c /Users/spartan/Projects/ui-kit/dist/brut.js)",
+      "Bash(grep -E \"#[0-9A-Fa-f]{3,6}|[0-9]+px|[0-9.]+rem|[0-9]+ms|linear-gradient|radial-gradient|rgba\\\\\\(|border-radius:[^0]*[0-9]+px\" /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/src/components.css)",
+      "Bash(grep -nE \"#[0-9A-Fa-f]{3,6}\\(?![0-9A-Fa-f]\\)|: [0-9.]+px|: [0-9.]+rem|: [0-9.]+ms|rgba\\\\\\(\" /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/src/components.css)",
+      "Bash(xargs -I {} basename {})",
+      "Bash(grep -nE 'linear-gradient|radial-gradient|rgba\\\\\\(|border-radius:[^0]*[0-9]{2,}px' /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/src/components.css)",
+      "Bash(grep -E '[2-9][0-9]{2,}ms|[5-9][0-9]{2}ms')",
+      "Bash(cat)",
+      "Bash(bash /tmp/audit.sh)",
+      "Bash(awk -F: '{print $1}')",
+      "Bash(python3 /tmp/final_audit.py)",
+      "Bash(echo \"\\(exit=$?\\)\")",
+      "Bash(grep -nE \"brut-cb|brut-seg\\([^a-z-m]|$\\)\" /Users/spartan/Projects/ui-kit/.claude/worktrees/wonderful-curie-54e34c/SKILL.md)"
     ]
   }
 }

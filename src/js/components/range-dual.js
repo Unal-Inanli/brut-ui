@@ -114,7 +114,7 @@
       }
 
       function emit() {
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { min: vMin, max: vMax } }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: { min: vMin, max: vMax } } }));
       }
 
       function setMin(v) { var nv = clamp(snap(v), min, vMax); if (nv !== vMin) { vMin = nv; render(); emit(); } }

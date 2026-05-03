@@ -12,7 +12,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 
 ## Quick reference for BRUT
 
-- **Tokens:** `src/tokens.css` — every color, font, spacing, shadow, border lives here as a CSS variable.
+- **Tokens:** `src/tokens.css` — every color, font, spacing, shadow, border lives here as a CSS variable. The token system covers color, type, spacing, shadows, borders, motion, **z-index** (`--z-base` … `--z-toast`), **semantic state aliases** (`--bg-success`, `--text-error`, `--border-warning`, …), and **scrim** (`--scrim-bg`, `--scrim-bg-soft` — the only sanctioned `rgba` use).
 - **Components & layout:** `src/components.css` — every `.brut-*` class.
 - **JS runtime:** `src/js/core.js` + `src/js/components/*.js` — one file per JS-bound component. Wire on `data-brut="<name>"`.
 - **Bundles:** `dist/brut.css` is `tokens.css` + `components.css`. `dist/brut.js` is `core.js` + every `components/*.js`. **Ship the CSS file always; ship the JS file when you use any interactive form component.** Rebuild after any edit with `npm run build` or `bash build.sh`.
@@ -27,7 +27,7 @@ All classes live in `src/components.css` (and bundled in `dist/brut.css`):
 
 - **Static:** `.brut-btn` (+ `--primary`/`--ink`/`--pink`/`--lime`/`--sm`/`--lg`), `.brut-badge` (+ `--ok`/`--warn`/`--err`/`--info`), `.brut-card`, `.brut-alert` + `.brut-alert__icon`, `.brut-avatar`, `.brut-tags` + `.brut-tag` (+ `--ink`/`--lime`/`--pink`/`--blue`).
 - **Inputs (CSS-only — no JS needed):** `.brut-input` (+ `--sm`/`--lg`/`--err`/`--ok`), `.brut-textarea`, `.brut-select`, `.brut-input-group` + `.brut-input-group__addon`, `.brut-range`, `.brut-color`, `.brut-fieldset` + `.brut-fieldset__legend`, `.brut-form`, `.brut-field` + `.brut-field__label`/`__hint`/`__error`/`__counter`, `.brut-label`.
-- **Interactive (need `dist/brut.js` and `data-brut="…"`):** `.brut-switch`, `.brut-cb`, `.brut-radio`, `.brut-seg` + `.brut-seg__btn`, `.brut-tabs` + `.brut-tab`, `.brut-stepper`, `.brut-password`, `.brut-search`, `.brut-otp`, `.brut-tag-input`, `.brut-combobox`, `.brut-file`, `.brut-dropzone`, `.brut-rating`, `.brut-field__counter[data-brut="counter"]`, `.brut-dialog`.
+- **Interactive (need `dist/brut.js` and `data-brut="…"`):** `.brut-switch`, `.brut-checkbox`, `.brut-radio`, `.brut-segmented` + `.brut-segmented__btn`, `.brut-tabs` + `.brut-tab`, `.brut-stepper`, `.brut-password`, `.brut-search`, `.brut-otp`, `.brut-tag-input`, `.brut-combobox`, `.brut-file`, `.brut-dropzone`, `.brut-rating`, `.brut-field__counter[data-brut="counter"]`, `.brut-dialog`.
 - **Layout primitives:** `.brut-container`, `.brut-section`, `.brut-stack`, `.brut-cluster`, `.brut-bar`, `.brut-grid`, `.brut-split`, `.brut-rule`, `.brut-aspect`, `.brut-scrim`, `.brut-shape`, `.brut-spacer`. Compose pages without inline flexbox.
 - **Typography:** `.brut-display-1`/`-2`/`-3`, `.brut-h1`–`.brut-h6`, `.brut-lead`, `.brut-body`, `.brut-small`, `.brut-caption`, `.brut-eyebrow`, `.brut-kicker`, `.brut-overline`, `.brut-quote`, `.brut-pull-quote`, `.brut-link`, `.brut-code`, `.brut-kbd`, `.brut-pre`, `.brut-list` (+ `--ord`/`--check`), `.brut-drop-cap`, `.brut-highlight`, `.brut-num`, `.brut-prose`.
 
@@ -45,4 +45,4 @@ Every JS-bound component opts in via `data-brut="<name>"`. The runtime auto-init
 </label>
 ```
 
-The hidden `<input>` is the source of truth — it posts with the surrounding form. Listen for `el.addEventListener('brut:change', e => …)` to react to changes.
+The hidden `<input>` is the source of truth — it posts with the surrounding form. Listen for `el.addEventListener('brut:change', e => …)`. The event detail always includes `e.detail.value` (the single, complete state — boolean, string, array, or object), plus optional component-specific extras.

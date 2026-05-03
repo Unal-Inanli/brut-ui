@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — OTP preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>6-digit (auto-generated cells)</h2>
+<div class="brut-field">
+  <label class="brut-field__label">Verification code</label>
+  <div class="brut-otp" data-brut="otp" data-brut-len="6" data-brut-name="code"></div>
+</div>
+
+<h2>4-digit PIN</h2>
+<div class="brut-field">
+  <label class="brut-field__label">PIN</label>
+  <div class="brut-otp" data-brut="otp" data-brut-len="4" data-brut-name="pin"></div>
+</div>
+
+<h2>Pre-populated cells</h2>
+<div class="brut-field">
+  <label class="brut-field__label">Code (partial)</label>
+  <div class="brut-otp" data-brut="otp" data-brut-name="partial">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="4">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="2">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric">
+    <input class="brut-otp__cell" maxlength="1" inputmode="numeric">
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Type digits…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="otp"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] change ' + JSON.stringify(e.detail);
+      });
+      el.addEventListener('brut:complete', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] COMPLETE ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+</body></html>

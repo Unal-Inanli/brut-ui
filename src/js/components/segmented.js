@@ -1,8 +1,8 @@
-/* segmented — exclusive choice group on .brut-seg / .brut-seg__btn.
+/* segmented — exclusive choice group on .brut-segmented / .brut-segmented__btn.
    Markup:
-     <div class="brut-seg" data-brut="segmented">
-       <button class="brut-seg__btn brut-seg__btn--on" data-value="day">DAY</button>
-       <button class="brut-seg__btn" data-value="week">WEEK</button>
+     <div class="brut-segmented" data-brut="segmented">
+       <button class="brut-segmented__btn brut-segmented__btn--on" data-value="day">DAY</button>
+       <button class="brut-segmented__btn" data-value="week">WEEK</button>
      </div>
    Mirror to a form by setting data-brut-name="<input-name>" on the wrapper —
    a hidden <input type="hidden"> is created automatically.
@@ -27,12 +27,12 @@
 
       el.setAttribute('role', 'tablist');
 
-      var btns = Array.prototype.slice.call(el.querySelectorAll('.brut-seg__btn'));
+      var btns = Array.prototype.slice.call(el.querySelectorAll('.brut-segmented__btn'));
 
       function select(btn, focusIt) {
         btns.forEach(function (b) {
           var on = b === btn;
-          b.classList.toggle('brut-seg__btn--on', on);
+          b.classList.toggle('brut-segmented__btn--on', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
           b.setAttribute('tabindex', on ? '0' : '-1');
         });
@@ -50,7 +50,7 @@
 
       el.addEventListener('keydown', function (e) {
         var t = e.target;
-        if (!t || !t.classList || !t.classList.contains('brut-seg__btn')) return;
+        if (!t || !t.classList || !t.classList.contains('brut-segmented__btn')) return;
         var i = btns.indexOf(t);
         if (i < 0) return;
         var next = null;
@@ -67,7 +67,7 @@
         select(next, true);
       });
 
-      var initial = el.querySelector('.brut-seg__btn--on') || btns[0];
+      var initial = el.querySelector('.brut-segmented__btn--on') || btns[0];
       if (initial) {
         // Set roving tabindex on initial render without firing brut:change.
         btns.forEach(function (b) {
