@@ -6,18 +6,25 @@
   "main": "dist/brut.js",
   "module": "dist/brut.esm.js",
   "style": "dist/brut.css",
+  "bin": {
+    "brut": "./bin/brut.js"
+  },
   "exports": {
     ".": {
       "import": "./dist/brut.esm.js",
       "require": "./dist/brut.js",
       "style": "./dist/brut.css"
     },
-    "./css": "./dist/brut.css"
+    "./css": "./dist/brut.css",
+    "./config": "./src/config/define.js",
+    "./vite": "./src/config/vite-plugin.js",
+    "./manifest": "./dist/components.json"
   },
   "sideEffects": true,
   "files": [
     "dist/",
-    "src/"
+    "src/",
+    "bin/"
   ],
   "scripts": {
     "dev": "vite",
@@ -27,5 +34,13 @@
   "license": "MIT",
   "devDependencies": {
     "vite": "^8.0.10"
+  },
+  "peerDependencies": {
+    "vite": ">=6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
   }
 }
