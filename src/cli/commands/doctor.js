@@ -9,7 +9,17 @@ import { pathToFileURL } from 'node:url';
 import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS } from '../../config/define.js';
 
 const WARNING_TYPES = new Set(['MISSING_META']);
-const INFO_TYPES = new Set(['META_DRIFT']);
+const INFO_TYPES = new Set(['META_DRIFT', 'CLASS_ROOT_EXCEPTION', 'EXAMPLE_DRIFT']);
+
+// Components whose CSS class root intentionally diverges from the
+// `.brut-<name>` convention. Each entry must declare the exact class
+// string and a reason; doctor emits CLASS_ROOT_EXCEPTION (info) for
+// these and CLASS_ROOT_DRIFT (failure) for any other divergence.
+const KNOWN_CLASS_ROOT_EXCEPTIONS = {
+  'counter':       { class: '.brut-field__counter',     reason: 'Sub-element of .brut-field (BEM); see ARCHITECTURE.md D4' },
+  'table-columns': { class: '.brut-table-columns-btn',  reason: 'Trigger button is the labeled element; see ARCHITECTURE.md D4' },
+  'tooltip':       { class: '.brut-tip',                reason: 'Pre-convention naming; see ARCHITECTURE.md D4' },
+};
 
 function walk(dir, exts, results = []) {
   for (const entry of readdirSync(dir)) {
@@ -200,6 +210,98 @@ export default async function doctor(args) {
           file: metaRel,
           message: `Selector "${entry.selector}" should be "${expectedSelector}" for interactive components`,
         });
+      }
+    }
+
+    // INVARIANT_DRIFT: every interactive component must also be in KNOWN_COMPONENTS.
+    // Pre-M7 a real bug of this kind (combobox/table-columns/table-filter) went
+    // undetected — never let it recur silently.
+    const knownSet = new Set(KNOWN_COMPONENTS);
+    for (const name of INTERACTIVE_COMPONENTS) {
+      if (!knownSet.has(name)) {
+        issues.push({
+          type: 'INVARIANT_DRIFT',
+          file: 'src/config/define.js',
+          message: `${name} is interactive but missing from KNOWN_COMPONENTS`,
+        });
+      }
+    }
+
+    // CLASS_ROOT_DRIFT / CLASS_ROOT_EXCEPTION: enforce class root === .brut-<name>
+    // (with allowlist for grandfathered exceptions). EXAMPLE_DRIFT: every brut-*
+    // class in an example's HTML must have a matching rule in components.css, and
+    // every data-brut hook must equal the entry's name.
+    const knownClassRoots = new Set();
+    {
+      const re = new RegExp(`\\.${prefix}-([a-z][a-z0-9_-]*)`, 'g');
+      for (const m of componentsCss.matchAll(re)) knownClassRoots.add(m[1]);
+    }
+    for (const name of INTERACTIVE_COMPONENTS) {
+      const metaPath = resolve(componentsDir, `${name}.meta.js`);
+      const metaRel = `src/js/components/${name}.meta.js`;
+      if (!existsSync(metaPath)) continue;
+      let entry;
+      try {
+        const mod = await import(pathToFileURL(metaPath).href);
+        entry = mod.default;
+      } catch { continue; }
+      if (!entry || typeof entry !== 'object') continue;
+
+      // Class-root convention check
+      if (typeof entry.class === 'string') {
+        const expectedClass = `.${prefix}-${name}`;
+        if (entry.class !== expectedClass) {
+          const allow = KNOWN_CLASS_ROOT_EXCEPTIONS[name];
+          if (allow && allow.class === entry.class) {
+            issues.push({
+              type: 'CLASS_ROOT_EXCEPTION',
+              file: metaRel,
+              message: `${name} uses ${entry.class} (allowlisted: ${allow.reason})`,
+            });
+          } else {
+            issues.push({
+              type: 'CLASS_ROOT_DRIFT',
+              file: metaRel,
+              message: `class "${entry.class}" does not match convention "${expectedClass}" — rename or add to KNOWN_CLASS_ROOT_EXCEPTIONS`,
+            });
+          }
+        }
+      }
+
+      // Example-HTML drift check
+      if (Array.isArray(entry.examples)) {
+        const classRe = /class="([^"]+)"/g;
+        const hookRe = new RegExp(`data-${prefix}="([^"]+)"`, 'g');
+        for (const ex of entry.examples) {
+          if (!ex || typeof ex.html !== 'string') continue;
+          const title = typeof ex.title === 'string' ? ex.title : '(untitled)';
+          const seenTokens = new Set();
+          for (const m of ex.html.matchAll(classRe)) {
+            for (const tok of m[1].split(/\s+/)) {
+              if (!tok.startsWith(`${prefix}-`)) continue;
+              const root = tok.slice(prefix.length + 1);
+              if (seenTokens.has(root)) continue;
+              seenTokens.add(root);
+              if (!knownClassRoots.has(root)) {
+                issues.push({
+                  type: 'EXAMPLE_DRIFT',
+                  file: metaRel,
+                  message: `example "${title}" references unknown class .${prefix}-${root}`,
+                });
+              }
+            }
+          }
+          // The example must include the component's own data-brut hook somewhere.
+          // Other hooks (e.g. a wrapping topnav around a theme-switcher demo) are fine.
+          const hooks = Array.from(ex.html.matchAll(hookRe), m => m[1]);
+          if (hooks.length > 0 && !hooks.includes(name)) {
+            issues.push({
+              type: 'EXAMPLE_DRIFT',
+              file: metaRel,
+              message: `example "${title}" has data-${prefix}="${hooks.join('", "')}" but no data-${prefix}="${name}"`,
+            });
+          }
+        }
       }
     }
   }

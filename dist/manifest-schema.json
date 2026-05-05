@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brut.dev/schema/components-v1.json",
+  "title": "BRUT UI components manifest",
+  "description": "Schema for dist/components.json emitted by the BRUT UI Vite plugin.",
+  "type": "object",
+  "required": ["$schema", "version", "prefix", "themes", "components"],
+  "properties": {
+    "$schema": { "const": "https://brut.dev/schema/components-v1.json" },
+    "version": { "type": "string" },
+    "prefix":  { "type": "string", "default": "brut" },
+    "themes":  { "type": "array", "items": { "type": "string" } },
+    "components": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/component" }
+    }
+  },
+  "$defs": {
+    "component": {
+      "oneOf": [
+        { "$ref": "#/$defs/interactiveComponent" },
+        { "$ref": "#/$defs/staticComponent" }
+      ]
+    },
+    "interactiveComponent": {
+      "type": "object",
+      "required": ["name", "description", "useCases", "kind", "class", "selector", "modifiers", "dataAttributes", "events", "formState", "a11y", "examples"],
+      "properties": {
+        "kind": { "const": "interactive" },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "useCases": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "class":    { "type": "string", "pattern": "^\\.[a-z]" },
+        "selector": { "type": "string" },
+        "modifiers":      { "type": "array", "items": { "type": "string" } },
+        "dataAttributes": { "type": "array", "items": { "$ref": "#/$defs/dataAttr" } },
+        "events":         { "type": "array", "items": { "$ref": "#/$defs/event" } },
+        "formState":      { "$ref": "#/$defs/formState" },
+        "a11y":           { "$ref": "#/$defs/a11y" },
+        "examples":       { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/example" } }
+      }
+    },
+    "staticComponent": {
+      "type": "object",
+      "required": ["name", "class", "selector", "kind"],
+      "properties": {
+        "kind": { "const": "static" },
+        "name":     { "type": "string" },
+        "class":    { "type": "string" },
+        "selector": { "type": ["string", "null"] }
+      }
+    },
+    "dataAttr": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name":        { "type": "string" },
+        "values":      { "oneOf": [{ "type": "string" }, { "type": "array" }] },
+        "description": { "type": "string" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name":   { "type": "string" },
+        "detail": { "type": "object" }
+      }
+    },
+    "formState": {
+      "type": "object",
+      "required": ["hiddenInput"],
+      "properties": {
+        "hiddenInput": { "type": "boolean" },
+        "name":        { "type": "string" }
+      }
+    },
+    "a11y": {
+      "type": "object",
+      "properties": {
+        "role":            { "type": "string" },
+        "roledescription": { "type": "string" },
+        "keyboard":        { "type": "array", "items": { "type": "string" } },
+        "aria":            { "type": "array", "items": { "type": "string" } },
+        "notes":           { "type": "string" }
+      }
+    },
+    "example": {
+      "type": "object",
+      "required": ["title", "html"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "html":  { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
