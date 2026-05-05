@@ -1,7 +1,10 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { existsSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { defineConfig } from '../../config/define.js';
+
+const PACKAGE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+const PACKAGE_ENTRY = resolve(PACKAGE_ROOT, 'src/main.js');
 
 export default async function build(args) {
   let vite;
@@ -28,7 +31,7 @@ export default async function build(args) {
     plugins: [brutPlugin(cfg)],
     build: {
       lib: {
-        entry: resolve(process.cwd(), 'src/main.js'),
+        entry: PACKAGE_ENTRY,
         name: 'Brut',
         formats: ['iife', 'es'],
         fileName: (format) => format === 'iife' ? `${cfg.prefix}.js` : `${cfg.prefix}.esm.js`,

@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] — 2026-05-05
+
+### Fixed
+
+- `npx brut build` no longer fails with `Cannot resolve entry module
+  src/main.js` in a freshly initialized consumer project. The CLI's `build`
+  command was resolving the Vite library entry from `process.cwd()` instead
+  of the installed `@sprtn/ui` package, so projects that contained only a
+  `brut.config.js` (the sole file `brut init` scaffolds) had no entry to
+  bundle. The entry now resolves from the package directory.
+
 ## [1.0.0] — 2026-05-05
 
 The first stable release. The package name moves from `brut` to `@sprtn/ui`
