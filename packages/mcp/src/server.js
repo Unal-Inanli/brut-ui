@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * @brut/mcp — Model Context Protocol server for the BRUT UI kit.
+ * @sprtn/mcp — Model Context Protocol server for the BRUT UI kit.
  *
  * Exposes three tools (list_components, get_component, list_themes) over stdio
  * so that AI agents (Claude Code, Claude Desktop, Cursor, etc.) can scaffold
  * BRUT pages without crawling the source.
  *
- * The manifest is resolved lazily at startup via `import.meta.resolve('brut/manifest')`
- * — this works because the consumer installs `brut` alongside `@brut/mcp` and
- * the root `brut` package's `exports['./manifest']` field points to its
+ * The manifest is resolved lazily at startup via `import.meta.resolve('@sprtn/ui/manifest')`
+ * — this works because the consumer installs `@sprtn/ui` alongside `@sprtn/mcp` and
+ * the root `@sprtn/ui` package's `exports['./manifest']` field points to its
  * `dist/components.json`. The manifest is read once and held in memory; it is
  * not re-read on every tool call.
  */
@@ -31,8 +31,8 @@ const TOOLS = [listComponents, getComponent, listThemes];
 
 async function loadManifest() {
   // Resolve relative to this server file so it works whether installed as a
-  // workspace dep, a published package, or run via `npx -y @brut/mcp`.
-  const url = await import.meta.resolve('brut/manifest');
+  // workspace dep, a published package, or run via `npx -y @sprtn/mcp`.
+  const url = await import.meta.resolve('@sprtn/ui/manifest');
   const path = fileURLToPath(url);
   const raw = await readFile(path, 'utf8');
   return JSON.parse(raw);

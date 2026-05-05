@@ -10,7 +10,7 @@ code you see is exactly the markup you copy.
 
 For programmatic access — modifiers, events, hidden-input contracts — read
 the [manifest](https://github.com/Unal-Inanli/brut-ui/blob/main/dist/components.json)
-or wire up [`@brut/mcp`](https://github.com/Unal-Inanli/brut-ui/tree/main/packages/mcp).
+or wire up [`@sprtn/mcp`](https://github.com/Unal-Inanli/brut-ui/tree/main/packages/mcp).
 
 ## Forms
 

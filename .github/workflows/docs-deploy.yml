@@ -8,7 +8,7 @@
 # Local equivalent of the build job:
 #   pnpm install
 #   pnpm build                            # builds dist/brut.{css,js}
-#   pnpm --filter @brut/docs-site build   # builds docs-site/.vitepress/dist
+#   pnpm --filter @sprtn/docs-site build   # builds docs-site/.vitepress/dist
 name: Deploy docs site
 
 on:
@@ -59,7 +59,7 @@ jobs:
         run: pnpm build
 
       - name: Build docs site
-        run: pnpm --filter @brut/docs-site build
+        run: pnpm --filter @sprtn/docs-site build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

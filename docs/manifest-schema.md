@@ -2,7 +2,7 @@
 
 ## Overview
 
-`dist/components.json` is the build-time manifest of every component shipped by BRUT. It enumerates each component's class root, JS selector, data-attributes, dispatched events, form-state, accessibility surface, and copy-pasteable HTML examples. The manifest is the source of truth for `@brut/mcp`, `npx brut doctor`, and any external tool that needs to discover BRUT primitives without reading source. The machine-readable JSON Schema lives next to the manifest at `docs/manifest-schema.json`.
+`dist/components.json` is the build-time manifest of every component shipped by BRUT. It enumerates each component's class root, JS selector, data-attributes, dispatched events, form-state, accessibility surface, and copy-pasteable HTML examples. The manifest is the source of truth for `@sprtn/mcp`, `npx brut doctor`, and any external tool that needs to discover BRUT primitives without reading source. The machine-readable JSON Schema lives next to the manifest at `docs/manifest-schema.json`.
 
 ## Top-level shape
 

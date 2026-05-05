@@ -8,7 +8,7 @@ If you're a contributor, an agent, or a downstream consumer reviewing the kit, *
 
 1. **Class root === `data-brut` hook.** Every interactive component has class root `.brut-<name>` and selector `[data-brut="<name>"]`. This is what makes BRUT predictable for agents — given the manifest, an LLM can synthesize markup with zero guesses.
 2. **Runtime ships zero dependencies.** `brut.js` is a single IIFE with no imports. Consumers can audit it in 10 minutes. The toolchain may be modern (Vite, MCP-SDK in the side package) but the runtime stays vanilla.
-3. **Manifest is canonical.** Agents query `dist/components.json` (via `@brut/mcp` or directly). Source crawls are the fallback, not the path. This compounds: every component shipped with full metadata makes the next agent task cheaper.
+3. **Manifest is canonical.** Agents query `dist/components.json` (via `@sprtn/mcp` or directly). Source crawls are the fallback, not the path. This compounds: every component shipped with full metadata makes the next agent task cheaper.
 
 Each of these is encoded in tooling (`brut doctor`) where possible. Where they aren't, drift sneaks in. Section *Convention violations on disk* enumerates the current drift.
 
@@ -91,8 +91,8 @@ Each `.meta.js` includes `examples: [{ title, html }]`. The HTML is a literal st
 
 `pnpm-workspace.yaml` lists `packages/*`, but the root `brut` package lives at the repo root, not under `packages/`. This means:
 - pnpm CLI flags like `--filter brut` work, but `--filter ./packages/*` does not include the root.
-- Cross-package `workspace:*` resolution is fine for `@brut/mcp`, but documentation around "the BRUT package vs. the BRUT workspace" gets ambiguous.
-- A future second sibling (e.g. `@brut/themes`, `@brut/config-schema`) will need to decide its parent.
+- Cross-package `workspace:*` resolution is fine for `@sprtn/mcp`, but documentation around "the BRUT package vs. the BRUT workspace" gets ambiguous.
+- A future second sibling (e.g. `@sprtn/themes`, `@sprtn/config-schema`) will need to decide its parent.
 
 **Impact:** mostly cosmetic today, but the standard pnpm layout is to put everything under `packages/*`. Migration cost grows with each new package added.
 **Recommendation:** before M8, decide: either move root code under `packages/ui/` (one-time disruption, breaks all relative paths in docs/preview) or accept the two-tier layout permanently and document it. Don't keep punting.

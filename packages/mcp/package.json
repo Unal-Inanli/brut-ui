@@ -1,5 +1,5 @@
 {
-  "name": "@brut/mcp",
+  "name": "@sprtn/mcp",
   "version": "0.1.0",
   "type": "module",
   "description": "Model Context Protocol server for the BRUT UI kit. Exposes the component manifest to AI agents.",
@@ -24,7 +24,7 @@
     "vitest": "^2.0.0"
   },
   "peerDependencies": {
-    "@brut/ui": "workspace:*"
+    "@sprtn/ui": "workspace:*"
   },
   "license": "MIT"
 }

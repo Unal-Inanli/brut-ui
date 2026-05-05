@@ -20,12 +20,12 @@ importers:
 
   packages/mcp:
     dependencies:
-      '@brut/ui':
-        specifier: workspace:*
-        version: link:../..
       '@modelcontextprotocol/sdk':
         specifier: ^1.0.0
         version: 1.29.0(zod@4.4.3)
+      '@sprtn/ui':
+        specifier: workspace:*
+        version: link:../..
     devDependencies:
       vitest:
         specifier: ^2.0.0
