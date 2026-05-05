@@ -1,5 +1,5 @@
 /**
- * @brut/mcp smoke tests.
+ * @sprtn/mcp smoke tests.
  *
  * Verifies each tool handler works end-to-end against the real manifest at
  * `dist/components.json`. The tests invoke handlers directly (no stdio

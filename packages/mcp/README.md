@@ -1,21 +1,22 @@
-# @brut/mcp
+# @sprtn/mcp
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for the
 [BRUT UI](https://github.com/your-org/brut-ui) kit. It exposes the BRUT
 component manifest to AI agents (Claude Code, Claude Desktop, Cursor, …) so
 they can scaffold BRUT pages without crawling the source.
 
-The server reads the manifest from the peer `brut` package's
-`brut/manifest` export (`dist/components.json`) — bumping `brut` propagates
-new components to the agent immediately, no rebuild of `@brut/mcp` required.
+The server reads the manifest from the peer `@sprtn/ui` package's
+`@sprtn/ui/manifest` export (`dist/components.json`) — bumping `@sprtn/ui`
+propagates new components to the agent immediately, no rebuild of
+`@sprtn/mcp` required.
 
 ## Install
 
 ```bash
-npm install -D brut @brut/mcp
+npm install -D @sprtn/ui @sprtn/mcp
 ```
 
-`@brut/mcp` declares `brut` as a peer dependency, so it must be installed
+`@sprtn/mcp` declares `@sprtn/ui` as a peer dependency, so it must be installed
 alongside it.
 
 ## Wire into an MCP client
@@ -27,7 +28,7 @@ alongside it.
   "mcpServers": {
     "brut": {
       "command": "npx",
-      "args": ["-y", "@brut/mcp"]
+      "args": ["-y", "@sprtn/mcp"]
     }
   }
 }
@@ -40,7 +41,7 @@ alongside it.
   "mcpServers": {
     "brut": {
       "command": "npx",
-      "args": ["-y", "@brut/mcp"]
+      "args": ["-y", "@sprtn/mcp"]
     }
   }
 }
@@ -53,7 +54,7 @@ alongside it.
   "mcpServers": {
     "brut": {
       "command": "npx",
-      "args": ["-y", "@brut/mcp"]
+      "args": ["-y", "@sprtn/mcp"]
     }
   }
 }
@@ -78,7 +79,7 @@ the runtime `data-theme` switcher options.
 ```bash
 brut-mcp           # run the stdio server (used by MCP clients)
 brut-mcp --help    # show help
-brut-mcp --version # print the @brut/mcp version
+brut-mcp --version # print the @sprtn/mcp version
 ```
 
 ## License

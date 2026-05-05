@@ -6,8 +6,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.0.0] — 2026-05-05
 
-The first stable release. The package name moves from `brut` to `@brut/ui`
-to align with `@brut/mcp`. The runtime contract — drop `brut.css` and
+The first stable release. The package name moves from `brut` to `@sprtn/ui`
+to align with `@sprtn/mcp`. The runtime contract — drop `brut.css` and
 `brut.js` into a page, write `.brut-*` classes — is unchanged.
 
 ### Added
@@ -27,7 +27,7 @@ to align with `@brut/mcp`. The runtime contract — drop `brut.css` and
   component, its modifiers, events, hidden-input contract, and
   copy-pasteable examples. Backed by `dist/manifest-schema.json` (JSON
   Schema 2020-12).
-- **`@brut/mcp` server** (M7). MCP tools (`list_components`,
+- **`@sprtn/mcp` server** (M7). MCP tools (`list_components`,
   `get_component`, `search_examples`, `validate_markup`) consume the
   manifest so AI agents can scaffold pages without crawling source.
 - **Sidecar metadata files** (M7). Each interactive component now has a
@@ -43,10 +43,10 @@ to align with `@brut/mcp`. The runtime contract — drop `brut.css` and
 
 ### Changed
 
-- **Package name: `brut` → `@brut/ui`.** Imports become
-  `import '@brut/ui/css'` and `import '@brut/ui'`. The `exports` map and
+- **Package name: `brut` → `@sprtn/ui`.** Imports become
+  `import '@sprtn/ui/css'` and `import '@sprtn/ui'`. The `exports` map and
   bin entry are unchanged.
-- **`@brut/mcp` peerDependency** updated to `@brut/ui ^1.0.0`.
+- **`@sprtn/mcp` peerDependency** updated to `@sprtn/ui ^1.0.0`.
 
 ### Removed
 

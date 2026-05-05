@@ -4,7 +4,7 @@
 
 > **Encoding principles** (lifted from ARCHITECTURE.md — internalize these):
 > 1. **Doctor encodes every hard constraint.** A constraint that exists only in docs is a bug, not a constraint. New rules land with their `brut doctor` check, not just a doc bullet.
-> 2. **Manifest is canonical; source is fallback.** When tooling needs a component's shape, query `dist/components.json` (or `@brut/mcp`). Source crawls are the fallback.
+> 2. **Manifest is canonical; source is fallback.** When tooling needs a component's shape, query `dist/components.json` (or `@sprtn/mcp`). Source crawls are the fallback.
 > 3. **Conventions are predictions, not aesthetics.** `Class root === data-brut hook` exists so agents can predict markup; each violation costs prediction accuracy. Treat violations as bugs unless explicitly grandfathered in ARCHITECTURE.md §D4.
 > 4. **Single source of truth, derived views.** Parallel arrays (e.g., `KNOWN_COMPONENTS` and `INTERACTIVE_COMPONENTS` in `define.js`) are smells. If two lists must agree, derive one from the other.
 
@@ -18,7 +18,7 @@
 
 ## Hard constraints (orchestrator-level guardrails)
 
-Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list. **Package carve-out:** the zero-dependency rule applies to the runtime `brut` package and the source under `src/`. Standalone packages under `packages/*` (e.g., `@brut/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers using `brut` never install a bundler or framework — is permanent.
+Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list. **Package carve-out:** the zero-dependency rule applies to the runtime `brut` package and the source under `src/`. Standalone packages under `packages/*` (e.g., `@sprtn/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers using `brut` never install a bundler or framework — is permanent.
 
 > **Note for milestone work:** the "no build-time tool" and "no dependency" constraints above are scheduled to relax at milestone **M3** (Vite migration) and milestone **M6** (config + CLI). They remain in force for any task NOT explicitly tagged with one of those milestones. The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See "1.0 Roadmap" below.
 
@@ -36,8 +36,8 @@ BRUT is mid-evolution from a hand-built kit to a publishable, themeable, configu
 | **M4** | Themes (3 default) | Runtime `[data-theme]` swap with `brutalist` (default) + `corporate` + `minimal` | Attribute swap flips visuals across every preview page |
 | **M5** | Utilities + Bootstrap CSS parity | `src/utilities.css` (mt-3, d-flex, …) + 12-col grid + validation states + responsive navbar + progress + breadcrumb refresh | All new components have 4 surfaces in sync; tree-shake test passes |
 | **M6** | Configuration + CLI | `brut.config.js` Vite plugin + `npx brut init/add/theme/migrate/doctor/build` | `prefix: 'ui'` rename produces zero `brut-` substrings; `doctor` flags planted issues |
-| **M7** | Manifest + MCP + JS parity | `dist/components.json` + `@brut/mcp` server + carousel/pagination-JS/breadcrumb-JS/navbar-JS | MCP `list_components` enumerates; agent test scaffolds working page via MCP only |
-| **M8** | VitePress docs + 1.0 launch | New `docs-site/` (`preview/` retained as fixtures); npm publish; CDN URLs documented | `npm view @brut/ui` resolves; jsdelivr URL resolves; site deployed |
+| **M7** | Manifest + MCP + JS parity | `dist/components.json` + `@sprtn/mcp` server + carousel/pagination-JS/breadcrumb-JS/navbar-JS | MCP `list_components` enumerates; agent test scaffolds working page via MCP only |
+| **M8** | VitePress docs + 1.0 launch | New `docs-site/` (`preview/` retained as fixtures); npm publish; CDN URLs documented | `npm view @sprtn/ui` resolves; jsdelivr URL resolves; site deployed |
 
 When picking up a milestone, read the milestone's row, the relevant memory entries, and Workflows C–G below. Don't widen scope — milestones are independently shippable on purpose.
 

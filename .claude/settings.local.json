@@ -26,7 +26,10 @@
       "Bash(pnpm install *)",
       "Bash(pnpm build *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(pnpm --filter @sprtn/mcp test)",
+      "Bash(ls .github/PULL_REQUEST_TEMPLATE* .github/pull_request_template*)",
+      "Bash(ls .github/)"
     ]
   }
 }

@@ -14,14 +14,14 @@ The fastest path. Add two tags to your `<head>` and you're done.
 
 ```html
 <!-- jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@brut/ui@1/dist/brut.css" />
-<script src="https://cdn.jsdelivr.net/npm/@brut/ui@1/dist/brut.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.css" />
+<script src="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.js" defer></script>
 ```
 
 ```html
 <!-- unpkg (alternative) -->
-<link rel="stylesheet" href="https://unpkg.com/@brut/ui@1/dist/brut.css" />
-<script src="https://unpkg.com/@brut/ui@1/dist/brut.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/@sprtn/ui@1/dist/brut.css" />
+<script src="https://unpkg.com/@sprtn/ui@1/dist/brut.js" defer></script>
 ```
 
 ::: tip Pin the major
@@ -33,18 +33,18 @@ move pixels under your users.
 ### npm
 
 ```bash
-npm install @brut/ui
+npm install @sprtn/ui
 # or
-pnpm add @brut/ui
+pnpm add @sprtn/ui
 # or
-yarn add @brut/ui
+yarn add @sprtn/ui
 ```
 
 Then load the CSS and (optionally) the JS:
 
 ```js
-import '@brut/ui/css'
-import '@brut/ui'
+import '@sprtn/ui/css'
+import '@sprtn/ui'
 ```
 
 Bundlers like Vite, webpack, esbuild, and Rollup pick up the
@@ -54,7 +54,7 @@ Bundlers like Vite, webpack, esbuild, and Rollup pick up the
 
 Grab the two files directly from the
 [latest GitHub release](https://github.com/Unal-Inanli/brut-ui/releases/latest)
-or copy them out of `node_modules/@brut/ui/dist/`.
+or copy them out of `node_modules/@sprtn/ui/dist/`.
 
 ::: info JS is optional
 Pure CSS components (buttons, cards, badges, alerts, layout helpers) work
@@ -140,13 +140,13 @@ hard offset shadow and snaps to the lower-right on click, you're set.
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BRUT smoke test</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@brut/ui@1/dist/brut.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.css" />
   </head>
   <body style="padding: 2rem;">
     <button type="button" class="brut-btn brut-btn--primary brut-btn--lg">
       It works.
     </button>
-    <script src="https://cdn.jsdelivr.net/npm/@brut/ui@1/dist/brut.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.js" defer></script>
   </body>
 </html>
 ```

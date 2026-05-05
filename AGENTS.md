@@ -72,7 +72,7 @@ The build is intentionally trivial — it concatenates `tokens/*.css + component
 
 ## How to write a `<name>.meta.js`
 
-Every interactive component must ship a sidecar manifest at `src/js/components/<name>.meta.js`. The Vite plugin reads these at build time and merges them into `dist/components.json`, which the `@brut/mcp` server exposes to AI agents.
+Every interactive component must ship a sidecar manifest at `src/js/components/<name>.meta.js`. The Vite plugin reads these at build time and merges them into `dist/components.json`, which the `@sprtn/mcp` server exposes to AI agents.
 
 Mirror `src/js/components/carousel.meta.js` exactly — field order, schema, naming.
 
@@ -205,7 +205,7 @@ A "non-form component" (dialog, popover, tooltip, drawer, topnav, sidebar, toast
 - **No JSX.** All previously-existing JSX has been removed. Don't reintroduce it.
 - **No transpilers.** No Babel, esbuild, swc, tsc. Source files run in the browser as-is. Stick to syntax that current evergreen browsers support natively (no decorators, no class fields beyond what V8 ships, etc.).
 - **No new package dependencies.** `package.json` exists only to expose the `build` script. Do not add deps — runtime or dev.
-- **Package carve-out**: the no-deps rule applies to the runtime `brut` package and `src/`. Standalone packages under `packages/*` (e.g., `@brut/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers of `brut` install no bundler, framework, or runtime — is permanent.
+- **Package carve-out**: the no-deps rule applies to the runtime `brut` package and `src/`. Standalone packages under `packages/*` (e.g., `@sprtn/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers of `brut` install no bundler, framework, or runtime — is permanent.
 - **No CSS preprocessors.** No Sass, Less, PostCSS, Tailwind, lightningcss. Plain CSS only.
 - **No hardcoded design values in components.** If you reach for a hex, px, or rem that isn't a token, add a token first.
 - **Visual rules** (carry over from the design system — see README.md for the full philosophy):
