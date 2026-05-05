@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { componentsSidebar } from './components-sidebar'
 
 // VitePress config for the BRUT docs site.
 // The site loads dist/brut.css the same way an external consumer would —
@@ -38,9 +39,7 @@ export default defineConfig({
       '/components/': [
         {
           text: 'Components',
-          items: [
-            { text: 'Overview', link: '/components/' },
-          ],
+          items: componentsSidebar,
         },
       ],
       '/reference/': [

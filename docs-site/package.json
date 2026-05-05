@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node ../scripts/sync-preview-to-docs-site.js",
     "dev": "vitepress dev",
+    "prebuild": "node ../scripts/sync-preview-to-docs-site.js",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
