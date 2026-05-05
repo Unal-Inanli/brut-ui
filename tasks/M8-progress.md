@@ -69,7 +69,7 @@ ticked, picks up the next unchecked row.
 | 3 | ✅ `docs(m8): port changelog + add 1.0.0 entry` | `docs-site/changelog.md`, root `CHANGELOG.md` (new) | renders; 1.0.0 section present |
 | 4 | ✅ `docs(m8): components index + iframe previews` | `docs-site/components/index.md`, one MD per component embedding `<iframe src="../preview/components-<name>.html">`. Generator: `scripts/gen-docs-component-pages.js`. Sync: `scripts/sync-preview-to-docs-site.js` (runs as prebuild/predev). | 51 component pages built, 64 fixtures synced into `docs-site/public/`, build passes in 4.9 s |
 | 5 | ✅ `docs(m8): examples page` | `docs-site/examples.md` iframing 3 demos (landing, login, dashboard). Sync script extended to mirror `demos/` into `docs-site/public/demos/`. CSS/JS refs inside synced HTML rewritten to `../brut.{css,js}` (relative — works in dev and under `base: '/brut-ui/'`). | renders, all 3 iframes load |
-| 6 | `docs(m8): manifest schema reference` | `docs-site/reference/manifest.md` (port from `docs/manifest-schema.md`) | renders |
+| 6 | ✅ `docs(m8): manifest schema reference` | `docs-site/reference/manifest.md` includes `docs/manifest-schema.md` via VitePress `<!--@include: -->` so the existing 205-line reference is single-sourced | renders, 7 hits for key schema terms |
 | 7 | `chore(m8): GitHub Pages deploy workflow (disabled)` | `.github/workflows/docs-deploy.yml` with `workflow_dispatch` only | YAML lints |
 | 8 | `chore(m8): bump version to 1.0.0 + align package name` | `package.json` (name decision applied), `packages/mcp/package.json` peerDep bump if needed | `pnpm build` still works |
 | 9 | (USER) `npm publish` + enable Pages workflow | external action by user | acceptance gate met |
@@ -128,6 +128,9 @@ small, frequent commits.
 
 ## Status log (most recent at top)
 
+- 2026-05-05 — Row 6: reference/manifest.md uses VitePress include of
+  `docs/manifest-schema.md` (single source of truth — same pattern as the
+  changelog include).
 - 2026-05-05 — Row 5: examples.md iframes the three full-page demos
   (landing, login, dashboard). Sync script extended to mirror `demos/`,
   and the CSS/JS rewriting inside synced HTML switched from absolute
