@@ -25,7 +25,7 @@ export default {
   examples: [
     {
       title: 'Confirm dialog with scrim',
-      html: '<button class="brut-btn" data-brut-open="dlg-confirm">Open confirm</button>\n<div class="brut-scrim" id="dlg-confirm-scrim" hidden></div>\n<div class="brut-dialog" id="dlg-confirm" data-brut="dialog" data-brut-scrim="dlg-confirm-scrim" hidden role="dialog" aria-modal="true" aria-labelledby="dlg-confirm-title">\n  <div class="brut-dialog__head">\n    <span id="dlg-confirm-title">DELETE PROJECT?</span>\n    <button class="brut-dialog__x" data-brut-close>×</button>\n  </div>\n  <div class="brut-dialog__body">\n    This nukes <strong>project-alpha</strong> and all its history.\n  </div>\n  <div class="brut-dialog__foot">\n    <button class="brut-btn" data-brut-close>Cancel</button>\n    <button class="brut-btn brut-btn--danger" data-brut-close>Yes, delete</button>\n  </div>\n</div>',
+      html: '<button class="brut-btn" data-brut-open="dlg-confirm">Open confirm</button>\n<div class="brut-scrim" id="dlg-confirm-scrim" hidden></div>\n<div class="brut-dialog" id="dlg-confirm" data-brut="dialog" data-brut-scrim="dlg-confirm-scrim" hidden role="dialog" aria-modal="true" aria-labelledby="dlg-confirm-title">\n  <div class="brut-dialog__head">\n    <span id="dlg-confirm-title">DELETE PROJECT?</span>\n    <button class="brut-dialog__x" data-brut-close>×</button>\n  </div>\n  <div class="brut-dialog__body">\n    This nukes <strong>project-alpha</strong> and all its history.\n  </div>\n  <div class="brut-dialog__foot">\n    <button class="brut-btn" data-brut-close>Cancel</button>\n    <button class="brut-btn brut-btn--ink" data-brut-close>Yes, delete</button>\n  </div>\n</div>',
     },
   ],
 };

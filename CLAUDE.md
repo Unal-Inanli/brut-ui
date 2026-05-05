@@ -1,6 +1,12 @@
 # CLAUDE.md — Agentic operations playbook
 
-> **Read these first, then come back here:** [AGENTS.md](AGENTS.md) (conventions, hard constraints, build), [SKILL.md](SKILL.md) (class & token reference), [README.md](README.md) (philosophy). This file does **not** repeat them — it tells an orchestrator how to break work into atomic, delegable tasks.
+> **Read these first, then come back here:** [AGENTS.md](AGENTS.md) (conventions, hard constraints, build), [SKILL.md](SKILL.md) (class & token reference), [README.md](README.md) (philosophy), [ARCHITECTURE.md](ARCHITECTURE.md) (post-M7 design rationale, debt, and convention violations to be aware of). This file does **not** repeat them — it tells an orchestrator how to break work into atomic, delegable tasks.
+
+> **Encoding principles** (lifted from ARCHITECTURE.md — internalize these):
+> 1. **Doctor encodes every hard constraint.** A constraint that exists only in docs is a bug, not a constraint. New rules land with their `brut doctor` check, not just a doc bullet.
+> 2. **Manifest is canonical; source is fallback.** When tooling needs a component's shape, query `dist/components.json` (or `@brut/mcp`). Source crawls are the fallback.
+> 3. **Conventions are predictions, not aesthetics.** `Class root === data-brut hook` exists so agents can predict markup; each violation costs prediction accuracy. Treat violations as bugs unless explicitly grandfathered in ARCHITECTURE.md §D4.
+> 4. **Single source of truth, derived views.** Parallel arrays (e.g., `KNOWN_COMPONENTS` and `INTERACTIVE_COMPONENTS` in `define.js`) are smells. If two lists must agree, derive one from the other.
 
 ## Project shape (1-screen mental model)
 

@@ -188,6 +188,20 @@ export default function brutPlugin(inlineConfig) {
           fileName: 'components.json',
           source: JSON.stringify(manifest, null, 2),
         });
+
+        // Re-emit the JSON Schema alongside the manifest (the source lives in
+        // docs/ because emptyOutDir clears dist/; agents and validators reading
+        // dist/components.json can fetch dist/manifest-schema.json from the same dir).
+        try {
+          const schemaPath = resolve(projectRoot, 'docs/manifest-schema.json');
+          if (existsSync(schemaPath)) {
+            this.emitFile({
+              type: 'asset',
+              fileName: 'manifest-schema.json',
+              source: readFileSync(schemaPath, 'utf8'),
+            });
+          }
+        } catch { /* schema source missing is non-fatal */ }
       }
     },
   };
