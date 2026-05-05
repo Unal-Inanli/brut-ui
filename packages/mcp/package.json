@@ -24,7 +24,7 @@
     "vitest": "^2.0.0"
   },
   "peerDependencies": {
-    "brut": "workspace:*"
+    "@brut/ui": "workspace:*"
   },
   "license": "MIT"
 }

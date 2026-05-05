@@ -1,0 +1,20 @@
+/* brut-bridge.css — minimal CSS that lets brut tokens apply within the
+   VitePress default theme without overriding VitePress chrome.
+
+   Rule of thumb: scope brut visuals to .brut-* classes (which they already
+   are) and only nudge the docs container so iframes/snippets read clean.
+*/
+
+.brut-preview-frame {
+  display: block;
+  width: 100%;
+  border: var(--bw-3, 4px) solid var(--ink, #0a0a0a);
+  box-shadow: 6px 6px 0 0 var(--ink, #0a0a0a);
+  background: var(--paper, #f5f1e8);
+}
+
+/* VitePress wraps content in <div class="vp-doc">. Don't fight it — but
+   make sure brut buttons/inputs inside markdown demos keep their family. */
+.vp-doc :where(.brut-btn, .brut-input, .brut-badge, .brut-tag, .brut-card) {
+  font-family: var(--font-sans);
+}
