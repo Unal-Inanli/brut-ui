@@ -2,6 +2,8 @@
 
 > **Direction of travel:** BRUT is mid-evolution to a Vite-built, themeable, configurable, AI-native framework. The "no build tools / no dependencies" hard constraints below remain authoritative for any task NOT explicitly tagged with one of the 1.0 milestones (M1–M8). The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See [CLAUDE.md](CLAUDE.md) "1.0 Roadmap" and the `project_brut_*` memory entries for locked decisions, rationale, and per-milestone activation rules for new workflows (Workflow C: add a theme, D: add utilities, E: bump a token, F: add a variant, G: generate a manifest entry).
 
+> **Before significant work, read [ARCHITECTURE.md](ARCHITECTURE.md).** It is the principal-engineer review of the kit post-M7 — covers structurally-sound patterns to preserve, accumulating debt, three known class-root convention violations (counter, table-columns, tooltip), and the prioritized next-quarter follow-ups. Tooling (`brut doctor`, `scripts/check-manifest.js`) catches surface drift; ARCHITECTURE.md catches the structural drift the tools can't yet see.
+
 ## What this project is
 
 **BRUT** is a neo-brutalist UI library distributed as one CSS bundle and one optional JS bundle. Think Bootstrap, but stripped down — `dist/brut.css` is the visual system; `dist/brut.js` is a tiny vanilla-JS runtime that wires the interactive form components (switch, checkbox, radio, stepper, OTP, combobox, file/dropzone, etc.). Static visual components and CSS-only form controls (textarea, select, range, color, fieldset, …) work with no script.
