@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS, KNOWN_THEMES } from './define.js';
 
@@ -8,6 +8,64 @@ function renamePrefix(code, from, to) {
     .replaceAll(from + '-', to + '-')
     .replaceAll('data-' + from, 'data-' + to)
     .replaceAll(from + ':', to + ':');
+}
+
+const REQUIRED_META_FIELDS = ['name', 'description', 'useCases', 'kind', 'class', 'examples'];
+
+async function loadMetaFiles(root) {
+  const dir = resolve(root, 'src/js/components');
+  const map = new Map();
+  if (!existsSync(dir)) return map;
+  let entries;
+  try {
+    entries = readdirSync(dir);
+  } catch {
+    return map;
+  }
+  for (const file of entries) {
+    if (!file.endsWith('.meta.js')) continue;
+    const name = file.slice(0, -'.meta.js'.length);
+    const filePath = resolve(dir, file);
+    try {
+      const mod = await import(pathToFileURL(filePath).href);
+      const entry = mod.default;
+      if (entry && typeof entry === 'object') {
+        map.set(name, entry);
+      }
+    } catch {
+      /* skip files that fail to import; doctor will flag separately */
+    }
+  }
+  return map;
+}
+
+function validateMetaEntry(entry, ctx) {
+  const missing = [];
+  for (const field of REQUIRED_META_FIELDS) {
+    const value = entry[field];
+    if (value === undefined || value === null) {
+      missing.push(field);
+      continue;
+    }
+    if ((field === 'useCases' || field === 'examples') && (!Array.isArray(value) || value.length < 1)) {
+      missing.push(field);
+    }
+  }
+  if (missing.length > 0 && ctx && typeof ctx.warn === 'function') {
+    ctx.warn(`[brut] ${entry.name || '(unnamed)'}.meta.js missing required field(s): ${missing.join(', ')}`);
+  }
+}
+
+function applyPrefixToMeta(entry, prefix) {
+  if (prefix === 'brut') return entry;
+  const out = { ...entry };
+  if (typeof entry.class === 'string') {
+    out.class = renamePrefix(entry.class, 'brut', prefix);
+  }
+  if (typeof entry.selector === 'string') {
+    out.selector = renamePrefix(entry.selector, 'brut', prefix);
+  }
+  return out;
 }
 
 function generateVariantCSS(variants, prefix) {
@@ -21,20 +79,29 @@ function generateVariantCSS(variants, prefix) {
   return css;
 }
 
-function generateManifest(cfg, version) {
-  return {
-    $schema: 'https://brut.dev/schema/components.json',
-    version,
-    prefix: cfg.prefix,
-    themes: KNOWN_THEMES,
-    components: KNOWN_COMPONENTS.map(name => ({
+async function generateManifest(cfg, version, root, ctx) {
+  const metaMap = await loadMetaFiles(root);
+  const components = KNOWN_COMPONENTS.map(name => {
+    const meta = metaMap.get(name);
+    if (meta) {
+      validateMetaEntry(meta, ctx);
+      return applyPrefixToMeta(meta, cfg.prefix);
+    }
+    return {
       name,
       class: `.${cfg.prefix}-${name}`,
       selector: INTERACTIVE_COMPONENTS.includes(name)
         ? `[data-${cfg.prefix}="${name}"]`
         : null,
       kind: INTERACTIVE_COMPONENTS.includes(name) ? 'interactive' : 'static',
-    })),
+    };
+  });
+  return {
+    $schema: 'https://brut.dev/schema/components-v1.json',
+    version,
+    prefix: cfg.prefix,
+    themes: KNOWN_THEMES,
+    components,
   };
 }
 
@@ -51,6 +118,7 @@ async function loadConfigFile(root) {
 export default function brutPlugin(inlineConfig) {
   let cfg;
   let pkgVersion = '0.0.0';
+  let projectRoot = process.cwd();
 
   return {
     name: 'brut',
@@ -64,6 +132,7 @@ export default function brutPlugin(inlineConfig) {
     },
 
     async configResolved(resolved) {
+      projectRoot = resolved.root || process.cwd();
       cfg = inlineConfig
         ? defineConfig(inlineConfig)
         : await loadConfigFile(resolved.root);
@@ -76,7 +145,7 @@ export default function brutPlugin(inlineConfig) {
       }
     },
 
-    generateBundle(_, bundle) {
+    async generateBundle(_, bundle) {
       for (const chunk of Object.values(bundle)) {
         if (chunk.type !== 'chunk') continue;
         const coreRe = /(\t?\/\/#region src\/js\/core\.js\n[\s\S]*?\n\t?\/\/#endregion\n)/;
@@ -113,10 +182,11 @@ export default function brutPlugin(inlineConfig) {
       }
 
       if (cfg.output.manifest) {
+        const manifest = await generateManifest(cfg, pkgVersion, projectRoot, this);
         this.emitFile({
           type: 'asset',
           fileName: 'components.json',
-          source: JSON.stringify(generateManifest(cfg, pkgVersion), null, 2),
+          source: JSON.stringify(manifest, null, 2),
         });
       }
     },

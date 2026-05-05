@@ -1,0 +1,30 @@
+{
+  "name": "@brut/mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Model Context Protocol server for the BRUT UI kit. Exposes the component manifest to AI agents.",
+  "bin": {
+    "brut-mcp": "./src/server.js"
+  },
+  "main": "./src/server.js",
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0"
+  },
+  "peerDependencies": {
+    "brut": "workspace:*"
+  },
+  "license": "MIT"
+}

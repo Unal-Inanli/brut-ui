@@ -1,7 +1,15 @@
+// Doctor: validates a brut workspace.
+// Failure-level checks (exit 1): UNKNOWN_CLASS, HARDCODED_COLOR, HARDCODED_PX, MISSING_JS.
+// Warning-level checks (exit 0): MISSING_META — interactive component lacks a sidecar .meta.js.
+// Informational checks (exit 0): META_DRIFT — meta declares modifiers/events/selector that
+//                                drift from the runtime JS or components.css.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { resolve, extname, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { defineConfig, KNOWN_COMPONENTS } from '../../config/define.js';
+import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS } from '../../config/define.js';
+
+const WARNING_TYPES = new Set(['MISSING_META']);
+const INFO_TYPES = new Set(['META_DRIFT']);
 
 function walk(dir, exts, results = []) {
   for (const entry of readdirSync(dir)) {
@@ -115,6 +123,87 @@ export default async function doctor(args) {
     }
   }
 
+  // MISSING_META + META_DRIFT — only meaningful inside a brut workspace
+  // (the one with src/js/components/). Skip silently when run elsewhere
+  // so consumers running `npx brut doctor` don't get noise about brut's
+  // own components.
+  const componentsDir = resolve(root, 'src/js/components');
+  if (existsSync(componentsDir)) {
+    const componentsCssPath = resolve(root, 'src/components.css');
+    const componentsCss = existsSync(componentsCssPath)
+      ? readFileSync(componentsCssPath, 'utf8')
+      : '';
+
+    for (const name of INTERACTIVE_COMPONENTS) {
+      const metaPath = resolve(componentsDir, `${name}.meta.js`);
+      const jsPath = resolve(componentsDir, `${name}.js`);
+      const metaRel = `src/js/components/${name}.meta.js`;
+
+      if (!existsSync(metaPath)) {
+        issues.push({
+          type: 'MISSING_META',
+          file: metaRel,
+          message: `Interactive component ${name} has no sidecar .meta.js (M7 deliverable)`,
+        });
+        continue;
+      }
+
+      let entry;
+      try {
+        const mod = await import(pathToFileURL(metaPath).href);
+        entry = mod.default;
+      } catch {
+        continue; // import errors are flagged elsewhere; don't double-report
+      }
+      if (!entry || typeof entry !== 'object') continue;
+
+      // Drift check 1: modifiers declared in meta but missing from components.css
+      if (Array.isArray(entry.modifiers)) {
+        for (const modRaw of entry.modifiers) {
+          const mod = typeof modRaw === 'string'
+            ? modRaw
+            : (modRaw && typeof modRaw === 'object' ? modRaw.name : null);
+          if (!mod || typeof mod !== 'string') continue;
+          if (!mod.startsWith('--')) continue; // skip BEM elements / non-modifier entries
+          const selector = `.${prefix}-${name}${mod}`;
+          if (!componentsCss.includes(selector)) {
+            issues.push({
+              type: 'META_DRIFT',
+              file: metaRel,
+              message: `Modifier "${mod}" declared in meta but no "${selector}" rule in components.css`,
+            });
+          }
+        }
+      }
+
+      // Drift check 2: events declared in meta but never dispatched in JS
+      if (Array.isArray(entry.events) && existsSync(jsPath)) {
+        const jsSrc = readFileSync(jsPath, 'utf8');
+        for (const ev of entry.events) {
+          const evName = ev && typeof ev === 'object' ? ev.name : null;
+          if (!evName || typeof evName !== 'string') continue;
+          if (!jsSrc.includes(`'${evName}'`) && !jsSrc.includes(`"${evName}"`) && !jsSrc.includes(`\`${evName}\``)) {
+            issues.push({
+              type: 'META_DRIFT',
+              file: metaRel,
+              message: `Event "${evName}" declared in meta but not dispatched in ${name}.js`,
+            });
+          }
+        }
+      }
+
+      // Drift check 3: interactive components must use the data-<prefix> hook
+      const expectedSelector = `[data-${prefix}="${name}"]`;
+      if (typeof entry.selector === 'string' && entry.selector !== expectedSelector) {
+        issues.push({
+          type: 'META_DRIFT',
+          file: metaRel,
+          message: `Selector "${entry.selector}" should be "${expectedSelector}" for interactive components`,
+        });
+      }
+    }
+  }
+
   if (!issues.length) {
     console.log('No issues found.');
     return;
@@ -127,13 +216,15 @@ export default async function doctor(args) {
   }
 
   for (const [type, items] of Object.entries(grouped)) {
-    console.log(`\n${type} (${items.length}):`);
+    const tag = WARNING_TYPES.has(type) ? ' [warning]' : INFO_TYPES.has(type) ? ' [info]' : '';
+    console.log(`\n${type}${tag} (${items.length}):`);
     for (const item of items.slice(0, 20)) {
       console.log(`  ${item.file} — ${item.message}`);
     }
     if (items.length > 20) console.log(`  ... and ${items.length - 20} more`);
   }
 
-  console.log(`\n${issues.length} issue(s) found.`);
-  process.exit(1);
+  const failures = issues.filter(i => !WARNING_TYPES.has(i.type) && !INFO_TYPES.has(i.type));
+  console.log(`\n${issues.length} issue(s) found (${failures.length} failure-level).`);
+  if (failures.length > 0) process.exit(1);
 }

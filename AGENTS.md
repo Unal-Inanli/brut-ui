@@ -68,6 +68,47 @@ The build is intentionally trivial — it concatenates `tokens/*.css + component
 5. **Rebuild** with `npm run build`.
 6. **Verify** by opening `docs/index.html` and `preview/components-<name>.html` in a browser. Both must render with no console errors. JS-bound components must respond to clicks/keys; the hidden `<input>` should reflect state.
 
+## How to write a `<name>.meta.js`
+
+Every interactive component must ship a sidecar manifest at `src/js/components/<name>.meta.js`. The Vite plugin reads these at build time and merges them into `dist/components.json`, which the `@brut/mcp` server exposes to AI agents.
+
+Mirror `src/js/components/carousel.meta.js` exactly — field order, schema, naming.
+
+**Required fields** (build emits a warning if missing):
+
+- `name` — string matching the component name (e.g. `'switch'`).
+- `description` — one concrete sentence, present tense, third person. Tells what the component does, not why. Example: "Boolean toggle. On/off state mirrored to a hidden input."
+- `useCases` — array of 3–5 short noun phrases describing real consumer scenarios. Example: `['theme toggle', 'feature flag', 'settings boolean']`.
+- `kind` — `'interactive'` for components with JS, `'static'` for CSS-only.
+- `class` — the component's root class, with leading dot. Example: `'.brut-switch'`.
+- `examples` — array of `{ title, html }`. Each `html` is a complete copy-pasteable markup snippet.
+
+**Optional but recommended fields:**
+
+- `selector` — the data-attribute selector. Always `[data-brut="<name>"]` for interactive components.
+- `modifiers` — array of class-modifier strings (e.g. `['--sm', '--lg']`). Empty array if none.
+- `dataAttributes` — array of `{ name, values, description }` documenting consumer-facing data-* attributes.
+- `events` — array of `{ name, detail }`. Use the `brut:` prefix.
+- `formState` — `{ hiddenInput: <bool>, name: <note> }`. `true` for components mirroring to a real form input.
+- `a11y` — `{ role, roledescription, keyboard: [...], aria: [...], notes }`. Fields are individually optional but `keyboard` should be `[]` when no keyboard interaction exists.
+
+**Static components in M7** ship the 4-field stub (`name, class, selector, kind`) only. Backfill is post-M7.
+
+**Validation:** the Vite plugin's `validateMetaEntry` warns at build time. `node scripts/check-manifest.js` is the deterministic gate. `npx brut doctor` flags `MISSING_META` and `META_DRIFT`.
+
+**See also:** `docs/manifest-schema.md` (human-readable reference), `dist/manifest-schema.json` (JSON Schema), `src/js/components/carousel.meta.js` (canonical exemplar).
+
+## AI-native conventions
+
+BRUT is designed so AI agents can scaffold pages without crawling source. These conventions make the kit predictable for LLMs:
+
+- **Class root === component name.** Hook `data-brut="switch"` ⇒ class root `.brut-switch`, never `.brut-cb`. No abbreviations.
+- **One selector per interactive.** Always `[data-brut="<name>"]`. No compound or attribute-based selectors.
+- **Single event per state change.** Components dispatch `brut:change` (or `brut:open`/`brut:close`) with the new state in `event.detail.value`. The `value` key is always present.
+- **Examples are self-contained.** Every `examples[*].html` in a manifest entry must render correctly when pasted into a page that loads `dist/brut.css` + `dist/brut.js`. No assumed parent context.
+- **Manifest is canonical.** Once shipped, `dist/components.json` is the source of truth for agents. Documentation HTML and source files are fallbacks.
+- **No agent-only fields.** Manifest fields are useful to humans and agents alike. If a field exists only to please LLMs, it belongs in a separate annotation file, not the manifest.
+
 ## How to refine an existing component
 
 1. Edit `src/components.css` for visuals, `src/js/components/<name>.js` for behavior. Keep using existing tokens.
@@ -162,6 +203,7 @@ A "non-form component" (dialog, popover, tooltip, drawer, topnav, sidebar, toast
 - **No JSX.** All previously-existing JSX has been removed. Don't reintroduce it.
 - **No transpilers.** No Babel, esbuild, swc, tsc. Source files run in the browser as-is. Stick to syntax that current evergreen browsers support natively (no decorators, no class fields beyond what V8 ships, etc.).
 - **No new package dependencies.** `package.json` exists only to expose the `build` script. Do not add deps — runtime or dev.
+- **Package carve-out**: the no-deps rule applies to the runtime `brut` package and `src/`. Standalone packages under `packages/*` (e.g., `@brut/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers of `brut` install no bundler, framework, or runtime — is permanent.
 - **No CSS preprocessors.** No Sass, Less, PostCSS, Tailwind, lightningcss. Plain CSS only.
 - **No hardcoded design values in components.** If you reach for a hex, px, or rem that isn't a token, add a token first.
 - **Visual rules** (carry over from the design system — see README.md for the full philosophy):

@@ -124,6 +124,235 @@ var Brut = (function() {
 		});
 	})();
 	//#endregion
+	//#region src/js/components/carousel.js
+	(function() {
+		if (!window.Brut) return;
+		Brut.register("carousel", {
+			selector: "[data-brut=\"carousel\"]",
+			init: function(el) {
+				var viewport = el.querySelector(".brut-carousel__viewport");
+				var track = el.querySelector(".brut-carousel__track");
+				var dotsBox = el.querySelector(".brut-carousel__dots");
+				var prevBtn = el.querySelector(".brut-carousel__btn--prev");
+				var nextBtn = el.querySelector(".brut-carousel__btn--next");
+				if (!viewport || !track) return;
+				var slides = Array.prototype.slice.call(track.querySelectorAll(".brut-carousel__slide"));
+				if (slides.length === 0) return;
+				var loop = el.hasAttribute("data-loop");
+				var autoplay = parseInt(el.getAttribute("data-autoplay"), 10) || 0;
+				var current = parseInt(el.getAttribute("data-current"), 10) || 0;
+				if (current < 0) current = 0;
+				if (current >= slides.length) current = slides.length - 1;
+				if (!el.hasAttribute("role")) el.setAttribute("role", "region");
+				if (!el.hasAttribute("aria-roledescription")) el.setAttribute("aria-roledescription", "carousel");
+				if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0");
+				track.setAttribute("aria-live", "polite");
+				if (prevBtn && prevBtn.tagName === "BUTTON") prevBtn.setAttribute("type", "button");
+				if (nextBtn && nextBtn.tagName === "BUTTON") nextBtn.setAttribute("type", "button");
+				var dots = [];
+				if (dotsBox) {
+					dotsBox.innerHTML = "";
+					if (!dotsBox.hasAttribute("role")) dotsBox.setAttribute("role", "tablist");
+					for (var i = 0; i < slides.length; i++) {
+						var dot = document.createElement("button");
+						dot.setAttribute("type", "button");
+						dot.setAttribute("role", "tab");
+						dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+						dot.className = "brut-carousel__dot";
+						dot.setAttribute("data-index", String(i));
+						dotsBox.appendChild(dot);
+						dots.push(dot);
+					}
+				}
+				function isRTL() {
+					return (document.dir || document.documentElement.dir) === "rtl";
+				}
+				function applyTransform(offsetPx) {
+					var w = viewport.clientWidth;
+					var x = -current * w + (offsetPx || 0);
+					track.style.transform = "translateX(" + x + "px)";
+				}
+				function updateUI() {
+					for (var i = 0; i < dots.length; i++) if (i === current) {
+						dots[i].setAttribute("aria-current", "true");
+						dots[i].classList.add("brut-carousel__dot--on");
+					} else {
+						dots[i].removeAttribute("aria-current");
+						dots[i].classList.remove("brut-carousel__dot--on");
+					}
+					if (!loop) {
+						if (prevBtn) prevBtn.disabled = current <= 0;
+						if (nextBtn) nextBtn.disabled = current >= slides.length - 1;
+					} else {
+						if (prevBtn) prevBtn.disabled = false;
+						if (nextBtn) nextBtn.disabled = false;
+					}
+					el.setAttribute("data-current", String(current));
+				}
+				function goTo(index) {
+					var last = slides.length - 1;
+					if (loop) {
+						if (index < 0) index = last;
+						if (index > last) index = 0;
+					} else {
+						if (index < 0) index = 0;
+						if (index > last) index = last;
+					}
+					if (index === current) {
+						applyTransform(0);
+						updateUI();
+						return;
+					}
+					current = index;
+					applyTransform(0);
+					updateUI();
+					el.dispatchEvent(new CustomEvent("brut:change", { detail: { value: current } }));
+				}
+				function next() {
+					goTo(current + 1);
+				}
+				function prev() {
+					goTo(current - 1);
+				}
+				if (prevBtn) prevBtn.addEventListener("click", function onPrevClick(e) {
+					e.preventDefault();
+					prev();
+				});
+				if (nextBtn) nextBtn.addEventListener("click", function onNextClick(e) {
+					e.preventDefault();
+					next();
+				});
+				if (dotsBox) dotsBox.addEventListener("click", function onDotClick(e) {
+					var t = e.target;
+					if (!t || !t.classList || !t.classList.contains("brut-carousel__dot")) return;
+					var idx = parseInt(t.getAttribute("data-index"), 10);
+					if (!isNaN(idx)) goTo(idx);
+				});
+				el.addEventListener("keydown", function onKeydown(e) {
+					switch (e.key) {
+						case "ArrowRight":
+							e.preventDefault();
+							if (isRTL()) prev();
+							else next();
+							break;
+						case "ArrowLeft":
+							e.preventDefault();
+							if (isRTL()) next();
+							else prev();
+							break;
+						case "Home":
+							e.preventDefault();
+							goTo(0);
+							break;
+						case "End":
+							e.preventDefault();
+							goTo(slides.length - 1);
+							break;
+						default: return;
+					}
+				});
+				var timer = null;
+				var paused = false;
+				var reduced = false;
+				try {
+					reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				} catch (e) {
+					reduced = false;
+				}
+				function startAuto() {
+					if (!autoplay || autoplay <= 0) return;
+					if (reduced) return;
+					if (paused) return;
+					stopAuto();
+					timer = setInterval(function onTick() {
+						next();
+					}, autoplay);
+				}
+				function stopAuto() {
+					if (timer) {
+						clearInterval(timer);
+						timer = null;
+					}
+				}
+				function pauseAuto() {
+					paused = true;
+					stopAuto();
+				}
+				function resumeAuto() {
+					paused = false;
+					startAuto();
+				}
+				if (autoplay > 0 && !reduced) {
+					el.addEventListener("mouseenter", pauseAuto);
+					el.addEventListener("mouseleave", resumeAuto);
+					el.addEventListener("focusin", pauseAuto);
+					el.addEventListener("focusout", resumeAuto);
+					document.addEventListener("visibilitychange", function onVis() {
+						if (document.hidden) pauseAuto();
+						else resumeAuto();
+					});
+				}
+				var dragging = false;
+				var startX = 0;
+				var startT = 0;
+				var deltaX = 0;
+				var activePointerId = null;
+				var prevUserSelect = "";
+				var SWIPE_RATIO = .3;
+				var VELOCITY_THRESH = .5;
+				function onPointerDown(e) {
+					if (e.pointerType === "mouse" && e.button !== 0) return;
+					dragging = true;
+					activePointerId = e.pointerId;
+					startX = e.clientX;
+					startT = typeof performance !== "undefined" && performance.now ? performance.now() : Date.now();
+					deltaX = 0;
+					prevUserSelect = track.style.userSelect || "";
+					track.style.userSelect = "none";
+					try {
+						viewport.setPointerCapture(e.pointerId);
+					} catch (err) {}
+					pauseAuto();
+				}
+				function onPointerMove(e) {
+					if (!dragging || e.pointerId !== activePointerId) return;
+					deltaX = e.clientX - startX;
+					applyTransform(deltaX);
+				}
+				function endDrag(e) {
+					if (!dragging) return;
+					if (e && e.pointerId !== activePointerId && e.pointerId !== void 0) return;
+					dragging = false;
+					var w = viewport.clientWidth || 1;
+					var now = typeof performance !== "undefined" && performance.now ? performance.now() : Date.now();
+					var dt = Math.max(1, now - startT);
+					var velocity = Math.abs(deltaX) / dt;
+					var ratio = Math.abs(deltaX) / w;
+					try {
+						viewport.releasePointerCapture(activePointerId);
+					} catch (err) {}
+					track.style.userSelect = prevUserSelect;
+					activePointerId = null;
+					if (ratio > SWIPE_RATIO || velocity > VELOCITY_THRESH) if (deltaX < 0) next();
+					else prev();
+					else applyTransform(0);
+					deltaX = 0;
+					if (!el.matches(":hover") && !el.contains(document.activeElement)) resumeAuto();
+				}
+				viewport.addEventListener("pointerdown", onPointerDown);
+				viewport.addEventListener("pointermove", onPointerMove);
+				viewport.addEventListener("pointerup", endDrag);
+				viewport.addEventListener("pointercancel", endDrag);
+				window.addEventListener("resize", function onResize() {
+					if (!dragging) applyTransform(0);
+				});
+				updateUI();
+				applyTransform(0);
+				startAuto();
+			}
+		});
+	})();
+	//#endregion
 	//#region src/js/components/checkbox.js
 	(function() {
 		if (!window.Brut) return;
@@ -1051,6 +1280,116 @@ var Brut = (function() {
 		});
 	})();
 	//#endregion
+	//#region src/js/components/pagination.js
+	(function() {
+		if (!window.Brut) return;
+		Brut.register("pagination", {
+			selector: "[data-brut=\"pagination\"]",
+			init: function(el) {
+				var total = parseInt(el.getAttribute("data-total"), 10);
+				var pageSize = parseInt(el.getAttribute("data-page-size"), 10);
+				var page = parseInt(el.getAttribute("data-page"), 10) || 1;
+				var siblings = parseInt(el.getAttribute("data-sibling-count"), 10);
+				if (isNaN(siblings) || siblings < 0) siblings = 1;
+				if (!total || total <= 0 || !pageSize || pageSize <= 0) return;
+				var totalPages = Math.max(1, Math.ceil(total / pageSize));
+				if (page < 1) page = 1;
+				if (page > totalPages) page = totalPages;
+				if (!el.hasAttribute("role")) el.setAttribute("role", "navigation");
+				if (!el.hasAttribute("aria-label")) el.setAttribute("aria-label", "Pagination");
+				function pagesToShow() {
+					var set = {};
+					set[1] = true;
+					set[totalPages] = true;
+					for (var p = page - siblings; p <= page + siblings; p++) if (p >= 1 && p <= totalPages) set[p] = true;
+					var nums = Object.keys(set).map(function(k) {
+						return parseInt(k, 10);
+					});
+					nums.sort(function(a, b) {
+						return a - b;
+					});
+					var out = [];
+					for (var i = 0; i < nums.length; i++) {
+						if (i > 0 && nums[i] - nums[i - 1] > 1) out.push(null);
+						out.push(nums[i]);
+					}
+					return out;
+				}
+				function makeBtn(label, ariaLabel, targetPage, extraClass, isActive, isDisabled) {
+					var b = document.createElement("button");
+					b.setAttribute("type", "button");
+					b.className = "brut-pagination__btn" + (extraClass ? " " + extraClass : "");
+					b.textContent = label;
+					if (ariaLabel) b.setAttribute("aria-label", ariaLabel);
+					if (targetPage != null) b.setAttribute("data-page", String(targetPage));
+					if (isActive) b.setAttribute("aria-current", "page");
+					if (isDisabled) b.disabled = true;
+					return b;
+				}
+				function render() {
+					el.setAttribute("data-page", String(page));
+					while (el.firstChild) el.removeChild(el.firstChild);
+					el.appendChild(makeBtn("‹", "Previous page", page - 1, "brut-pagination__btn--prev", false, page <= 1));
+					var items = pagesToShow();
+					for (var i = 0; i < items.length; i++) {
+						var n = items[i];
+						if (n === null) {
+							var gap = document.createElement("span");
+							gap.className = "brut-pagination__gap";
+							gap.setAttribute("aria-hidden", "true");
+							gap.textContent = "…";
+							el.appendChild(gap);
+						} else el.appendChild(makeBtn(String(n), "Page " + n, n, n === page ? "brut-pagination__btn--active" : "", n === page, false));
+					}
+					el.appendChild(makeBtn("›", "Next page", page + 1, "brut-pagination__btn--next", false, page >= totalPages));
+				}
+				function goTo(target) {
+					if (target < 1) target = 1;
+					if (target > totalPages) target = totalPages;
+					if (target === page) return;
+					page = target;
+					render();
+					el.dispatchEvent(new CustomEvent("brut:change", { detail: {
+						page,
+						pageSize,
+						total
+					} }));
+				}
+				el.addEventListener("click", function(e) {
+					var t = e.target;
+					if (!t || !t.getAttribute) return;
+					var btn = t.closest ? t.closest("[data-page]") : null;
+					if (!btn || !el.contains(btn)) return;
+					if (btn.disabled) return;
+					var n = parseInt(btn.getAttribute("data-page"), 10);
+					if (!isNaN(n)) goTo(n);
+				});
+				el.addEventListener("keydown", function(e) {
+					switch (e.key) {
+						case "ArrowLeft":
+							e.preventDefault();
+							goTo(page - 1);
+							break;
+						case "ArrowRight":
+							e.preventDefault();
+							goTo(page + 1);
+							break;
+						case "Home":
+							e.preventDefault();
+							goTo(1);
+							break;
+						case "End":
+							e.preventDefault();
+							goTo(totalPages);
+							break;
+						default: return;
+					}
+				});
+				render();
+			}
+		});
+	})();
+	//#endregion
 	//#region src/js/components/password.js
 	(function() {
 		if (!window.Brut) return;
@@ -1951,7 +2290,7 @@ var Brut = (function() {
 			selector: "[data-brut=\"table\"]",
 			init: function(el) {
 				var thead = el.querySelector("thead");
-				el.querySelector("tbody");
+				var tbody = el.querySelector("tbody");
 				if (!thead) return;
 				var sortables = thead.querySelectorAll(".brut-table__cell--sortable");
 				for (var i = 0; i < sortables.length; i++) (function(h) {
@@ -2024,6 +2363,25 @@ var Brut = (function() {
 					if (!selectAll.hasAttribute("role")) selectAll.setAttribute("role", "checkbox");
 					if (!selectAll.hasAttribute("tabindex")) selectAll.setAttribute("tabindex", "0");
 					syncHeader(isOn());
+				}
+				var pager = el.querySelector("[data-brut=\"pagination\"]");
+				if (!pager && el.parentElement) pager = el.parentElement.querySelector("[data-brut=\"pagination\"]");
+				if (pager && tbody) {
+					var allRows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+					if (!pager.hasAttribute("data-total")) pager.setAttribute("data-total", String(allRows.length));
+					if (!pager.hasAttribute("data-page-size")) pager.setAttribute("data-page-size", String(allRows.length || 1));
+					function applyPage(page, pageSize) {
+						var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+						var start = (page - 1) * pageSize;
+						var end = start + pageSize;
+						for (var i = 0; i < rows.length; i++) rows[i].hidden = i < start || i >= end;
+					}
+					pager.addEventListener("brut:change", function(e) {
+						if (!e.target || !e.target.matches || !e.target.matches("[data-brut=\"pagination\"]")) return;
+						var d = e.detail || {};
+						if (typeof d.page === "number" && typeof d.pageSize === "number") applyPage(d.page, d.pageSize);
+					});
+					applyPage(parseInt(pager.getAttribute("data-page"), 10) || 1, parseInt(pager.getAttribute("data-page-size"), 10) || allRows.length || 1);
 				}
 			}
 		});

@@ -12,7 +12,7 @@
 
 ## Hard constraints (orchestrator-level guardrails)
 
-Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list.
+Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list. **Package carve-out:** the zero-dependency rule applies to the runtime `brut` package and the source under `src/`. Standalone packages under `packages/*` (e.g., `@brut/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers using `brut` never install a bundler or framework — is permanent.
 
 > **Note for milestone work:** the "no build-time tool" and "no dependency" constraints above are scheduled to relax at milestone **M3** (Vite migration) and milestone **M6** (config + CLI). They remain in force for any task NOT explicitly tagged with one of those milestones. The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See "1.0 Roadmap" below.
 
@@ -68,10 +68,11 @@ Decide before fanning out:
 | 0 | Add tokens (only if new design values are required) | general-purpose | `src/tokens/` (appropriate layer file) | — | grep new var name appears once in the layer file |
 | 1 | Add CSS class block under the matching banner | general-purpose | `src/components.css` | 0 | `grep -n "\.brut-<name>" src/components.css` returns the new block; no hex/px/rem outside tokens |
 | 2 | Add JS module (interactive only) | general-purpose | `src/js/components/<name>.js` | — | file is a single IIFE, registers on `data-brut="<name>"`, no imports, no external libs |
-| 3 | Create preview page | general-purpose | `preview/components-<name>.html` | 1, 2 | links `../dist/brut.css` (and `../dist/brut.js` if interactive); renders every variant |
-| 4 | Add docs section | general-purpose | `docs/index.html` | 1, 2 | sidebar anchor + `<section class="docs-section" id="<name>">` with live preview and escaped `<pre class="docs-snippet">` |
-| 5 | Build | (self) | `dist/brut.css`, `dist/brut.js` | 1–4 | `bash build.sh` exits 0; both files non-zero bytes |
-| 6 | Browser verify | (self) | — | 5 | open `docs/index.html` and `preview/components-<name>.html`; no 404s, no console errors; JS components respond to click + Space/Enter; hidden input reflects state |
+| 3 | Add sidecar `<name>.meta.js` (interactive only) | general-purpose | `src/js/components/<name>.meta.js` | 2 | `node -e "import('./src/js/components/<name>.meta.js').then(m=>{const e=m.default;if(!e.name||!e.description||!e.useCases?.length||!e.kind||!e.class||!e.examples?.length)throw 0;console.log('ok')})"` prints `ok`; `pnpm build` emits no validateMetaEntry warnings for this component |
+| 4 | Create preview page | general-purpose | `preview/components-<name>.html` | 1, 2 | links `../dist/brut.css` (and `../dist/brut.js` if interactive); renders every variant |
+| 5 | Add docs section | general-purpose | `docs/index.html` | 1, 2 | sidebar anchor + `<section class="docs-section" id="<name>">` with live preview and escaped `<pre class="docs-snippet">` |
+| 6 | Build | (self) | `dist/brut.css`, `dist/brut.js` | 1–5 | `bash build.sh` exits 0; both files non-zero bytes |
+| 7 | Browser verify | (self) | — | 6 | open `docs/index.html` and `preview/components-<name>.html`; no 404s, no console errors; JS components respond to click + Space/Enter; hidden input reflects state |
 
 **Subagent brief template (copy verbatim, fill `{…}`):**
 ```
@@ -82,6 +83,8 @@ Constraints: no new deps, no frameworks, no transpilers, no hardcoded colors/px/
 Output: the diff only. Do not run the build. Do not edit any other file.
 Verify locally before reporting done: {grep or syntax check that proves the change landed}.
 ```
+
+For interactive components, a sidecar `src/js/components/<name>.meta.js` is also required and must mirror `src/js/components/carousel.meta.js` exactly (field order, schema, naming).
 
 ### Phase 3 — Final gate (orchestrator runs)
 ```bash
@@ -238,24 +241,32 @@ Visual diff: every preview page renders correctly under `<html data-theme="<name
 
 ---
 
-## Workflow G — Generate manifest entry for a component
+## Workflow G — Generate or refresh a component's `.meta.js`
 
-**Trigger:** new component lands without manifest, or a component's events/props/modifiers changed.
+**Trigger:** new component lands without a `.meta.js`, or a component's events / data-attributes / modifiers / examples changed and the metadata is stale.
 
-**Activates after M7.**
+**Activates after M7.** Before M7, no manifest infrastructure existed.
 
-### Phase 1 — Scope
-Read the component's JS file (or `*.meta.js` for static-only). Identify: kind (interactive/static), selector, class, modifiers, data-attributes, events, form-state, a11y, examples.
+### Phase 1 — Scope (no delegation)
+Read three files for the target component:
+- `src/js/components/<name>.js` — events fired, data attributes read, keyboard handled, aria set.
+- `src/components.css` `.brut-<name>` block — modifiers (look for `.brut-<name>--*`).
+- `preview/components-<name>.html` — canonical example markup.
 
-### Phase 2 — Atomic tasks
-1. Add a frontmatter comment block at the top of the component file (or its `.meta.js`) following the manifest schema.
-2. Run the manifest generator (`pnpm build` re-emits `dist/components.json`).
-3. Verify the entry appears in the rebuilt manifest with all required fields.
+### Phase 2 — Author or update `<name>.meta.js`
+Single atomic task. Mirror `src/js/components/carousel.meta.js` exactly — field order, schema, naming. Required fields: `name`, `description`, `useCases` (≥1), `kind`, `class`, `examples` (≥1). All other fields populated from real source reads.
+
+Validation rules (paste-quoted from `src/config/vite-plugin.js`'s `validateMetaEntry`):
+- `description`: one concrete sentence, present tense, third person.
+- `useCases`: 3–5 short noun phrases describing real consumer scenarios.
+- `examples`: copy-pasteable markup snippets, each `{ title, html }`.
+- `formState.hiddenInput`: true for components mirroring to a hidden form input; false otherwise.
 
 ### Phase 3 — Gate
-- `dist/components.json` contains the component with all required fields.
-- `npx brut doctor` does NOT flag this component as missing manifest data.
-- MCP `get_component(<name>)` returns the populated record.
+1. `pnpm build` — emits the full entry into `dist/components.json` (not the 4-field stub).
+2. `node scripts/check-manifest.js` — exits 0 for this component.
+3. `npx brut doctor` — no `MISSING_META` or `META_DRIFT` warning for this component.
+4. The entry's class and selector are byte-identical to the runtime contract.
 
 ---
 

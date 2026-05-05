@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BRUT &mdash; carousel</title>
+  <link rel="stylesheet" href="../dist/brut.css"/>
+</head>
+<body>
+
+<section class="brut-section brut-section--tight brut-section--bone">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--sm">
+      <a class="brut-link" href="index.html">&larr; Back to index</a>
+      <h1 class="brut-h1">carousel</h1>
+      <p>Slide-based content rotator with prev/next, dots, optional autoplay and loop. Five variants below cover the full surface.</p>
+    </div>
+  </div>
+</section>
+
+<section class="brut-section brut-section--tight">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--md">
+      <h2 class="brut-h2">Default</h2>
+      <p>Four slides, no autoplay, no loop. <strong>Prev</strong> is disabled at slide 0; <strong>next</strong> is disabled at the last slide.</p>
+
+      <div class="brut-carousel" data-brut="carousel" data-current="0">
+        <div class="brut-carousel__viewport">
+          <div class="brut-carousel__track">
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 1</h3>
+              <p>The first slide. Prev should be disabled here.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 2</h3>
+              <p>The second slide.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 3</h3>
+              <p>The third slide.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 4</h3>
+              <p>The last slide. Next should be disabled here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brut-carousel__nav">
+          <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>
+          <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>
+        </div>
+        <div class="brut-carousel__dots" role="tablist"></div>
+      </div>
+
+      <pre class="brut-pre"><code>&lt;div class=&quot;brut-carousel&quot; data-brut=&quot;carousel&quot; data-current=&quot;0&quot;&gt;
+  &lt;div class=&quot;brut-carousel__viewport&quot;&gt;
+    &lt;div class=&quot;brut-carousel__track&quot;&gt;
+      &lt;div class=&quot;brut-carousel__slide&quot;&gt;Slide 1&lt;/div&gt;
+      &lt;div class=&quot;brut-carousel__slide&quot;&gt;Slide 2&lt;/div&gt;
+      &lt;div class=&quot;brut-carousel__slide&quot;&gt;Slide 3&lt;/div&gt;
+      &lt;div class=&quot;brut-carousel__slide&quot;&gt;Slide 4&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;brut-carousel__nav&quot;&gt;
+    &lt;button class=&quot;brut-carousel__btn brut-carousel__btn--prev&quot; aria-label=&quot;Previous slide&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;brut-carousel__btn brut-carousel__btn--next&quot; aria-label=&quot;Next slide&quot;&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;brut-carousel__dots&quot; role=&quot;tablist&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="brut-section brut-section--tight brut-section--paper-2">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--md">
+      <h2 class="brut-h2">With loop</h2>
+      <p>Same four slides, but with <code>data-loop</code>. Prev/next wrap around the ends instead of clamping.</p>
+
+      <div class="brut-carousel" data-brut="carousel" data-current="0" data-loop>
+        <div class="brut-carousel__viewport">
+          <div class="brut-carousel__track">
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 1</h3>
+              <p>Press prev to wrap to slide 4.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 2</h3>
+              <p>The second slide.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 3</h3>
+              <p>The third slide.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 4</h3>
+              <p>Press next to wrap to slide 1.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brut-carousel__nav">
+          <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>
+          <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>
+        </div>
+        <div class="brut-carousel__dots" role="tablist"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brut-section brut-section--tight">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--md">
+      <h2 class="brut-h2">With autoplay</h2>
+      <p>Set <code>data-autoplay="3000"</code> (ms) plus <code>data-loop</code> &mdash; the track advances every three seconds and pauses on hover or focus.</p>
+
+      <div class="brut-carousel" data-brut="carousel" data-current="0" data-autoplay="3000" data-loop>
+        <div class="brut-carousel__viewport">
+          <div class="brut-carousel__track">
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 1</h3>
+              <p>Hover to pause.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 2</h3>
+              <p>Focus a button to pause.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 3</h3>
+              <p>Move away to resume.</p>
+            </div>
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Slide 4</h3>
+              <p>Loops back to slide 1.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brut-carousel__nav">
+          <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>
+          <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>
+        </div>
+        <div class="brut-carousel__dots" role="tablist"></div>
+      </div>
+
+      <pre class="brut-pre"><code>&lt;div class=&quot;brut-carousel&quot; data-brut=&quot;carousel&quot; data-autoplay=&quot;3000&quot; data-loop&gt;
+  ...
+&lt;/div&gt;</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="brut-section brut-section--tight brut-section--paper-2">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--md">
+      <h2 class="brut-h2">Image content</h2>
+      <p>Slides are content-agnostic &mdash; here each one wraps a <code>.brut-aspect--video</code> placeholder. Any markup may live inside <code>.brut-carousel__slide</code>.</p>
+
+      <div class="brut-carousel" data-brut="carousel" data-current="0" data-loop>
+        <div class="brut-carousel__viewport">
+          <div class="brut-carousel__track">
+            <div class="brut-carousel__slide">
+              <div class="brut-aspect brut-aspect--video brut-section--primary">
+                <div class="brut-stack brut-stack--xs">
+                  <h3 class="brut-h2">Image one</h3>
+                  <p>Primary tile.</p>
+                </div>
+              </div>
+            </div>
+            <div class="brut-carousel__slide">
+              <div class="brut-aspect brut-aspect--video brut-section--lime">
+                <div class="brut-stack brut-stack--xs">
+                  <h3 class="brut-h2">Image two</h3>
+                  <p>Lime tile.</p>
+                </div>
+              </div>
+            </div>
+            <div class="brut-carousel__slide">
+              <div class="brut-aspect brut-aspect--video brut-section--pink">
+                <div class="brut-stack brut-stack--xs">
+                  <h3 class="brut-h2">Image three</h3>
+                  <p>Pink tile.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="brut-carousel__nav">
+          <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>
+          <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>
+        </div>
+        <div class="brut-carousel__dots" role="tablist"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brut-section brut-section--tight">
+  <div class="brut-container brut-container--md">
+    <div class="brut-stack brut-stack--md">
+      <h2 class="brut-h2">Single slide</h2>
+      <p>One slide only. Confirms the component degrades gracefully &mdash; nav buttons disable themselves and the page does not throw.</p>
+
+      <div class="brut-carousel" data-brut="carousel" data-current="0">
+        <div class="brut-carousel__viewport">
+          <div class="brut-carousel__track">
+            <div class="brut-carousel__slide">
+              <h3 class="brut-h2">Only slide</h3>
+              <p>Nothing to navigate to.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brut-carousel__nav">
+          <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>
+          <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>
+        </div>
+        <div class="brut-carousel__dots" role="tablist"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../dist/brut.js" defer></script>
+</body>
+</html>
