@@ -71,8 +71,9 @@ ticked, picks up the next unchecked row.
 | 5 | ✅ `docs(m8): examples page` | `docs-site/examples.md` iframing 3 demos (landing, login, dashboard). Sync script extended to mirror `demos/` into `docs-site/public/demos/`. CSS/JS refs inside synced HTML rewritten to `../brut.{css,js}` (relative — works in dev and under `base: '/brut-ui/'`). | renders, all 3 iframes load |
 | 6 | ✅ `docs(m8): manifest schema reference` | `docs-site/reference/manifest.md` includes `docs/manifest-schema.md` via VitePress `<!--@include: -->` so the existing 205-line reference is single-sourced | renders, 7 hits for key schema terms |
 | 7 | ✅ `chore(m8): GitHub Pages deploy workflow (disabled)` | `.github/workflows/docs-deploy.yml` with `workflow_dispatch` only. Build steps: pnpm install → `pnpm build` (kit) → `pnpm --filter @brut/docs-site build` (site) → upload `docs-site/.vitepress/dist`. | YAML lints; manual run instructions documented in file header |
-| 8 | `chore(m8): bump version to 1.0.0 + align package name` | `package.json` (name decision applied), `packages/mcp/package.json` peerDep bump if needed | `pnpm build` still works |
-| 9 | (USER) `npm publish` + enable Pages workflow | external action by user | acceptance gate met |
+| 8 | ✅ `chore(m8): bump version to 1.0.0 + align package name` | `package.json` (name `brut`→`@brut/ui`, version `0.2.0`→`1.0.0`), `packages/mcp/package.json` peerDep `brut`→`@brut/ui`. `dist/components.json` `version` field auto-rebuilt to `1.0.0`. | `pnpm build` and `pnpm --filter @brut/docs-site build` both pass; `node scripts/check-manifest.js` passes |
+| 9 | `chore(m8): remove legacy site/ now that docs-site/ has parity` | Delete `site/` (5 hand-built HTML pages superseded by `docs-site/`) | repo grep for `site/` returns no broken refs |
+| 10 | (USER) `npm publish` + enable Pages workflow | external action by user | acceptance gate met |
 
 ---
 
@@ -128,6 +129,11 @@ small, frequent commits.
 
 ## Status log (most recent at top)
 
+- 2026-05-05 — Row 8: package renamed `brut` → `@brut/ui`, version bumped
+  to 1.0.0. `@brut/mcp` peerDependency aligned. Manifest auto-emits new
+  version. Both builds pass; manifest check passes. The kit's
+  `bin: { "brut": "./bin/brut.js" }` command name is unchanged — only the
+  npm package name moves.
 - 2026-05-05 — Row 7: GH Pages workflow lands at
   `.github/workflows/docs-deploy.yml`. Trigger is `workflow_dispatch` only;
   the `push` trigger block is commented out with instructions for the user

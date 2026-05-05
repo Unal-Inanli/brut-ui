@@ -1,6 +1,6 @@
 {
-  "name": "brut",
-  "version": "0.2.0",
+  "name": "@brut/ui",
+  "version": "1.0.0",
   "type": "module",
   "description": "Neo-brutalist UI kit. One CSS file + one optional JS runtime for interactive form components.",
   "main": "dist/brut.js",
