@@ -66,7 +66,7 @@ ticked, picks up the next unchecked row.
 | 0 | ✅ `docs(m8): checkpoint plan` | This file. | file exists, pushed |
 | 1 | ✅ `chore(m8): scaffold docs-site/ with VitePress` | `docs-site/package.json`, `docs-site/.vitepress/config.ts`, `docs-site/.vitepress/theme/`, `docs-site/index.md`, root `pnpm-workspace.yaml` updated | `pnpm --filter @brut/docs-site build` succeeds, emits `docs-site/.vitepress/dist/` (12.7 KB index.html + assets) |
 | 2 | ✅ `docs(m8): port landing + get-started from site/` | `docs-site/index.md` (hero), `docs-site/get-started.md` (install + CDN URLs) | pages render, all links resolve |
-| 3 | `docs(m8): port changelog + add 1.0.0 entry` | `docs-site/changelog.md`, root `CHANGELOG.md` (new) | renders; 1.0.0 section present |
+| 3 | ✅ `docs(m8): port changelog + add 1.0.0 entry` | `docs-site/changelog.md`, root `CHANGELOG.md` (new) | renders; 1.0.0 section present |
 | 4 | `docs(m8): components index + iframe previews` | `docs-site/components/index.md`, one MD per component embedding `<iframe src="/preview/components-<name>.html">` | every component page renders, iframe loads |
 | 5 | `docs(m8): examples page` | `docs-site/examples.md` linking `demos/*.html` | renders, demo links work |
 | 6 | `docs(m8): manifest schema reference` | `docs-site/reference/manifest.md` (port from `docs/manifest-schema.md`) | renders |
@@ -128,6 +128,11 @@ small, frequent commits.
 
 ## Status log (most recent at top)
 
+- 2026-05-05 — Row 3: root `CHANGELOG.md` written (Keep-a-Changelog format)
+  with 1.0.0 (M1–M8 summary) and 0.1.0 entries. `docs-site/changelog.md`
+  uses VitePress `<!--@include: ../CHANGELOG.md{3,}-->` so the file is single
+  sourced — npm renders root CHANGELOG.md, VitePress renders the included
+  copy.
 - 2026-05-05 — Row 2: get-started.md ported. Includes CDN install (jsDelivr +
   unpkg, both pinned to `@brut/ui@1`), npm install, download, three onboarding
   examples (button/switch/field), token override pattern, smoke-test snippet.
