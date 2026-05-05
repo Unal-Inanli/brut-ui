@@ -57,8 +57,8 @@ ticked, picks up the next unchecked row.
 
 | # | Commit message prefix | What it lands | Verify |
 |---|---|---|---|
-| 0 | `docs(m8): checkpoint plan` | This file. | file exists, pushed |
-| 1 | `chore(m8): scaffold docs-site/ with VitePress` | `docs-site/package.json`, `docs-site/.vitepress/config.ts`, `docs-site/.vitepress/theme/`, `docs-site/index.md`, root `pnpm-workspace.yaml` updated | `pnpm --filter docs-site build` succeeds, emits `docs-site/.vitepress/dist/` |
+| 0 | ✅ `docs(m8): checkpoint plan` | This file. | file exists, pushed |
+| 1 | ✅ `chore(m8): scaffold docs-site/ with VitePress` | `docs-site/package.json`, `docs-site/.vitepress/config.ts`, `docs-site/.vitepress/theme/`, `docs-site/index.md`, root `pnpm-workspace.yaml` updated | `pnpm --filter @brut/docs-site build` succeeds, emits `docs-site/.vitepress/dist/` (12.7 KB index.html + assets) |
 | 2 | `docs(m8): port landing + get-started from site/` | `docs-site/index.md` (hero), `docs-site/get-started.md` (install + CDN URLs) | pages render, all links resolve |
 | 3 | `docs(m8): port changelog + add 1.0.0 entry` | `docs-site/changelog.md`, root `CHANGELOG.md` (new) | renders; 1.0.0 section present |
 | 4 | `docs(m8): components index + iframe previews` | `docs-site/components/index.md`, one MD per component embedding `<iframe src="/preview/components-<name>.html">` | every component page renders, iframe loads |
@@ -122,4 +122,8 @@ small, frequent commits.
 
 ## Status log (most recent at top)
 
-- 2026-05-05 — Row 0: checkpoint doc written. Pending push.
+- 2026-05-05 — Row 1: docs-site/ scaffolded with VitePress 1.6.4. Build passes
+  (3.4 s). Other top-level pages (get-started, components, examples, changelog,
+  reference/manifest) are placeholder MD with pointers to which row fills them.
+  VitePress base path defaults to `/brut-ui/` (override with `VITE_BASE`).
+- 2026-05-05 — Row 0: checkpoint doc written and pushed.
