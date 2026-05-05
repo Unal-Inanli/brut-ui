@@ -1,0 +1,81 @@
+# Deploys docs-site/ to GitHub Pages.
+#
+# Currently gated to manual dispatch. To enable automatic deploys on
+# pushes to main:
+#   1. In repo Settings → Pages, set "Source" to "GitHub Actions".
+#   2. Uncomment the "push" trigger below.
+#
+# Local equivalent of the build job:
+#   pnpm install
+#   pnpm build                            # builds dist/brut.{css,js}
+#   pnpm --filter @brut/docs-site build   # builds docs-site/.vitepress/dist
+name: Deploy docs site
+
+on:
+  workflow_dispatch:
+  # Uncomment to deploy on every push to main:
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'docs-site/**'
+  #     - 'preview/**'
+  #     - 'demos/**'
+  #     - 'src/**'
+  #     - 'docs/manifest-schema.md'
+  #     - 'CHANGELOG.md'
+  #     - '.github/workflows/docs-deploy.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build kit (emits dist/)
+        run: pnpm build
+
+      - name: Build docs site
+        run: pnpm --filter @brut/docs-site build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
