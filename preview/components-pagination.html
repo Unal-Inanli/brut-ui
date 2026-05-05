@@ -9,33 +9,47 @@
 <body>
 
 <h3>Numbered</h3>
-<nav class="brut-pager" aria-label="Pagination">
-  <button class="brut-pager__btn" type="button" aria-label="Previous">&lsaquo;</button>
-  <button class="brut-pager__btn" type="button">1</button>
-  <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">2</button>
-  <button class="brut-pager__btn" type="button">3</button>
-  <span class="brut-pager__gap" aria-hidden="true">&hellip;</span>
-  <button class="brut-pager__btn" type="button">9</button>
-  <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+<nav class="brut-pagination" aria-label="Pagination">
+  <button class="brut-pagination__btn" type="button" aria-label="Previous">&lsaquo;</button>
+  <button class="brut-pagination__btn" type="button">1</button>
+  <button class="brut-pagination__btn brut-pagination__btn--active" type="button" aria-current="page">2</button>
+  <button class="brut-pagination__btn" type="button">3</button>
+  <span class="brut-pagination__gap" aria-hidden="true">&hellip;</span>
+  <button class="brut-pagination__btn" type="button">9</button>
+  <button class="brut-pagination__btn" type="button" aria-label="Next">&rsaquo;</button>
 </nav>
 
 <h3>With disabled prev</h3>
-<nav class="brut-pager" aria-label="Pagination">
-  <button class="brut-pager__btn" type="button" aria-disabled="true" disabled>&lsaquo;</button>
-  <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">1</button>
-  <button class="brut-pager__btn" type="button">2</button>
-  <button class="brut-pager__btn" type="button">3</button>
-  <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+<nav class="brut-pagination" aria-label="Pagination">
+  <button class="brut-pagination__btn" type="button" aria-disabled="true" disabled>&lsaquo;</button>
+  <button class="brut-pagination__btn brut-pagination__btn--active" type="button" aria-current="page">1</button>
+  <button class="brut-pagination__btn" type="button">2</button>
+  <button class="brut-pagination__btn" type="button">3</button>
+  <button class="brut-pagination__btn" type="button" aria-label="Next">&rsaquo;</button>
 </nav>
 
 <h3>As anchors</h3>
-<nav class="brut-pager" aria-label="Pagination">
-  <a class="brut-pager__btn" href="#">&lsaquo;</a>
-  <a class="brut-pager__btn" href="#">1</a>
-  <a class="brut-pager__btn brut-pager__btn--active" href="#" aria-current="page">2</a>
-  <a class="brut-pager__btn" href="#">3</a>
-  <a class="brut-pager__btn" href="#">&rsaquo;</a>
+<nav class="brut-pagination" aria-label="Pagination">
+  <a class="brut-pagination__btn" href="#">&lsaquo;</a>
+  <a class="brut-pagination__btn" href="#">1</a>
+  <a class="brut-pagination__btn brut-pagination__btn--active" href="#" aria-current="page">2</a>
+  <a class="brut-pagination__btn" href="#">3</a>
+  <a class="brut-pagination__btn" href="#">&rsaquo;</a>
 </nav>
+
+<h3>Interactive &mdash; small range</h3>
+<p>Five pages of ten items each. All page numbers fit, so no ellipsis is rendered.</p>
+<nav class="brut-pagination" data-brut="pagination" data-total="50" data-page-size="10" data-page="1"></nav>
+<pre><code>&lt;nav class=&quot;brut-pagination&quot; data-brut=&quot;pagination&quot;
+     data-total=&quot;50&quot; data-page-size=&quot;10&quot; data-page=&quot;1&quot;&gt;&lt;/nav&gt;</code></pre>
+
+<h3>Interactive &mdash; large range with ellipsis</h3>
+<p>Twenty-five pages with the current page mid-stream; outer pages collapse into ellipsis gaps.</p>
+<nav class="brut-pagination" data-brut="pagination" data-total="500" data-page-size="20" data-page="7"></nav>
+
+<h3>Interactive &mdash; wider sibling window</h3>
+<p>Same dataset as above but with <code>data-sibling-count="2"</code>, exposing more neighbours around the current page.</p>
+<nav class="brut-pagination" data-brut="pagination" data-total="500" data-page-size="20" data-page="13" data-sibling-count="2"></nav>
 
 <div data-brut="theme-switcher"></div>
 <script src="../dist/brut.js"></script>

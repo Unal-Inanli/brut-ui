@@ -48,4 +48,12 @@
   --progress-h:    var(--sp-6);
   --progress-h-sm: var(--sp-3);
   --progress-h-lg: var(--sp-8);
+
+  /* ---------- CAROUSEL ---------- */
+  --carousel-gap:              var(--sp-2);
+  --carousel-dot-size:         var(--sp-3);
+  --carousel-btn-size:         var(--control-xl);
+  --carousel-track-transition: var(--dur-base);  /* 140ms — at the limit, never above */
+  --carousel-bw:               var(--bw-3);
+  --carousel-shadow:           var(--shadow-sm);
 }

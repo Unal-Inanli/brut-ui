@@ -241,6 +241,7 @@
       <a href="#buttons">Buttons</a>
       <a href="#badges">Badges</a>
       <a href="#cards">Cards</a>
+      <a href="#carousel">Carousel</a>
       <a href="#accordion">Accordion</a>
       <a href="#tabs">Tabs</a>
       <a href="#avatars">Avatars</a>
@@ -593,6 +594,48 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;div class="brut-card"&gt;
   &lt;h3&gt;Card title.&lt;/h3&gt;
   &lt;p&gt;Body copy.&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- CAROUSEL -->
+      <section class="docs-section" id="carousel">
+        <h2>Carousel</h2>
+        <p class="lead">Single-track carousel with prev/next, dot indicators, keyboard nav (Arrow keys, Home/End), optional autoplay (with pause on hover/focus and respect for <code>prefers-reduced-motion</code>), infinite loop, and pointer/swipe support.</p>
+        <ul>
+          <li><code>data-current</code> — initial slide index (default <code>0</code>).</li>
+          <li><code>data-autoplay</code> — interval in ms; absent or <code>0</code> disables autoplay.</li>
+          <li><code>data-loop</code> — boolean; wraps past the ends instead of clamping.</li>
+          <li>Emits <code>brut:change</code> with <code>detail.value</code> set to the current index.</li>
+        </ul>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-carousel" data-brut="carousel" data-current="0" data-autoplay="5000" data-loop>
+            <div class="brut-carousel__viewport">
+              <div class="brut-carousel__track">
+                <div class="brut-carousel__slide">Slide 1</div>
+                <div class="brut-carousel__slide">Slide 2</div>
+                <div class="brut-carousel__slide">Slide 3</div>
+              </div>
+            </div>
+            <div class="brut-carousel__nav">
+              <button class="brut-carousel__btn brut-carousel__btn--prev" type="button" aria-label="Previous slide">&lsaquo;</button>
+              <button class="brut-carousel__btn brut-carousel__btn--next" type="button" aria-label="Next slide">&rsaquo;</button>
+            </div>
+            <div class="brut-carousel__dots" role="tablist"></div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-carousel" data-brut="carousel" data-current="0" data-autoplay="5000" data-loop&gt;
+  &lt;div class="brut-carousel__viewport"&gt;
+    &lt;div class="brut-carousel__track"&gt;
+      &lt;div class="brut-carousel__slide"&gt;Slide 1&lt;/div&gt;
+      &lt;div class="brut-carousel__slide"&gt;Slide 2&lt;/div&gt;
+      &lt;div class="brut-carousel__slide"&gt;Slide 3&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="brut-carousel__nav"&gt;
+    &lt;button class="brut-carousel__btn brut-carousel__btn--prev" type="button" aria-label="Previous slide"&gt;&lsaquo;&lt;/button&gt;
+    &lt;button class="brut-carousel__btn brut-carousel__btn--next" type="button" aria-label="Next slide"&gt;&rsaquo;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="brut-carousel__dots" role="tablist"&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
       </section>
 
@@ -2109,34 +2152,41 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- PAGINATION -->
       <section class="docs-section" id="pagination">
         <h2>Pagination</h2>
-        <p class="lead">Square buttons in a row. Mark the current page with <code>--active</code> and use <code>.brut-pager__gap</code> for an ellipsis. CSS-only; the consumer wires links.</p>
+        <p class="lead">Square buttons in a row. Use it two ways: hand-author the markup with <code>--active</code> and <code>.brut-pagination__gap</code> for static/server-rendered pages, or add <code>data-brut="pagination"</code> with <code>data-total</code> / <code>data-page-size</code> and let the JS render and wire the buttons.</p>
         <div class="docs-preview docs-preview--block">
-          <nav class="brut-pager" aria-label="Pagination">
-            <button class="brut-pager__btn" type="button" aria-label="Previous">&lsaquo;</button>
-            <button class="brut-pager__btn" type="button">1</button>
-            <button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page">2</button>
-            <button class="brut-pager__btn" type="button">3</button>
-            <span class="brut-pager__gap" aria-hidden="true">&hellip;</span>
-            <button class="brut-pager__btn" type="button">9</button>
-            <button class="brut-pager__btn" type="button" aria-label="Next">&rsaquo;</button>
+          <nav class="brut-pagination" aria-label="Pagination">
+            <button class="brut-pagination__btn" type="button" aria-label="Previous">&lsaquo;</button>
+            <button class="brut-pagination__btn" type="button">1</button>
+            <button class="brut-pagination__btn brut-pagination__btn--active" type="button" aria-current="page">2</button>
+            <button class="brut-pagination__btn" type="button">3</button>
+            <span class="brut-pagination__gap" aria-hidden="true">&hellip;</span>
+            <button class="brut-pagination__btn" type="button">9</button>
+            <button class="brut-pagination__btn" type="button" aria-label="Next">&rsaquo;</button>
           </nav>
-          <nav class="brut-pager" aria-label="Pagination">
-            <a class="brut-pager__btn" href="#pagination">&lsaquo;</a>
-            <a class="brut-pager__btn" href="#pagination">1</a>
-            <a class="brut-pager__btn brut-pager__btn--active" href="#pagination" aria-current="page">2</a>
-            <a class="brut-pager__btn" href="#pagination">3</a>
-            <a class="brut-pager__btn" href="#pagination">&rsaquo;</a>
+          <nav class="brut-pagination" aria-label="Pagination">
+            <a class="brut-pagination__btn" href="#pagination">&lsaquo;</a>
+            <a class="brut-pagination__btn" href="#pagination">1</a>
+            <a class="brut-pagination__btn brut-pagination__btn--active" href="#pagination" aria-current="page">2</a>
+            <a class="brut-pagination__btn" href="#pagination">3</a>
+            <a class="brut-pagination__btn" href="#pagination">&rsaquo;</a>
           </nav>
         </div>
-        <pre class="docs-snippet">&lt;nav class="brut-pager" aria-label="Pagination"&gt;
-  &lt;button class="brut-pager__btn" type="button" aria-label="Previous"&gt;&amp;lsaquo;&lt;/button&gt;
-  &lt;button class="brut-pager__btn" type="button"&gt;1&lt;/button&gt;
-  &lt;button class="brut-pager__btn brut-pager__btn--active" type="button" aria-current="page"&gt;2&lt;/button&gt;
-  &lt;button class="brut-pager__btn" type="button"&gt;3&lt;/button&gt;
-  &lt;span class="brut-pager__gap"&gt;&amp;hellip;&lt;/span&gt;
-  &lt;button class="brut-pager__btn" type="button"&gt;9&lt;/button&gt;
-  &lt;button class="brut-pager__btn" type="button" aria-label="Next"&gt;&amp;rsaquo;&lt;/button&gt;
+        <pre class="docs-snippet">&lt;nav class="brut-pagination" aria-label="Pagination"&gt;
+  &lt;button class="brut-pagination__btn" type="button" aria-label="Previous"&gt;&amp;lsaquo;&lt;/button&gt;
+  &lt;button class="brut-pagination__btn" type="button"&gt;1&lt;/button&gt;
+  &lt;button class="brut-pagination__btn brut-pagination__btn--active" type="button" aria-current="page"&gt;2&lt;/button&gt;
+  &lt;button class="brut-pagination__btn" type="button"&gt;3&lt;/button&gt;
+  &lt;span class="brut-pagination__gap"&gt;&amp;hellip;&lt;/span&gt;
+  &lt;button class="brut-pagination__btn" type="button"&gt;9&lt;/button&gt;
+  &lt;button class="brut-pagination__btn" type="button" aria-label="Next"&gt;&amp;rsaquo;&lt;/button&gt;
 &lt;/nav&gt;</pre>
+        <h3>Interactive</h3>
+        <p>With <code>data-brut="pagination"</code> the JS renders the prev/next and numbered buttons from <code>data-total</code> / <code>data-page-size</code>, handles click and arrow-key navigation, and dispatches <code>brut:change</code> with <code>{ page, pageSize, total }</code> on the nav.</p>
+        <div class="docs-preview docs-preview--block">
+          <nav class="brut-pagination" data-brut="pagination" data-total="500" data-page-size="20" data-page="5"></nav>
+        </div>
+        <pre class="docs-snippet">&lt;nav class=&quot;brut-pagination&quot; data-brut=&quot;pagination&quot;
+     data-total=&quot;500&quot; data-page-size=&quot;20&quot; data-page=&quot;5&quot;&gt;&lt;/nav&gt;</pre>
       </section>
 
       <!-- MENU -->

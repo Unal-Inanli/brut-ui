@@ -1,0 +1,47 @@
+export default {
+  name: 'table',
+  description: 'Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.',
+  useCases: ['admin dashboards', 'inventory lists', 'user management grids', 'analytics reports', 'spreadsheet-like data'],
+  kind: 'interactive',
+  class: '.brut-table',
+  selector: '[data-brut="table"]',
+  modifiers: [
+    { name: '--striped',      description: 'Zebra-striped tbody rows' },
+    { name: '--bordered',     description: 'Vertical separators between cells' },
+    { name: '--compact',      description: 'Tighter cell padding' },
+    { name: '--responsive',   description: 'Below the small breakpoint, stack rows as cards (requires data-brut-col-label on each td)' },
+    { name: '--sticky-head',  description: 'thead remains visible while tbody scrolls' },
+    { name: '--sticky-col',   description: 'First column remains visible during horizontal scroll' },
+  ],
+  dataAttributes: [
+    { name: 'data-sort-key',         values: 'string',        description: 'On a th.brut-table__cell--sortable: identifier for the sortable column' },
+    { name: 'data-sort-value',       values: 'string|number', description: 'On a td: explicit value used for sorting (falls back to text content)' },
+    { name: 'data-brut-select-all',  values: 'boolean attribute', description: 'On a header element: toggles every [data-brut-row-select] in the table' },
+    { name: 'data-brut-row-select',  values: 'boolean attribute', description: 'On a tbody row checkbox: marks the row as selectable by the header toggle' },
+    { name: 'data-brut-col-label',   values: 'string',        description: 'On a td (responsive mode): label prefix shown before the cell value when stacked' },
+  ],
+  events: [
+    { name: 'brut:change', detail: { value: 'string (sort key) or boolean (when selectAll is true)', key: 'string (sort key, when sorting)', dir: '"ascending" | "descending"', selectAll: 'true (only on select-all toggle)' } },
+  ],
+  formState: { hiddenInput: false, name: 'Row checkboxes own their own form state; the table itself does not mirror to a hidden input' },
+  a11y: {
+    role: 'table (native)',
+    keyboard: ['Space', 'Enter'],
+    aria: ['aria-sort (on sortable th: none|ascending|descending)', 'role="columnheader"', 'role="checkbox" (on select-all)', 'aria-checked (on select-all and rows)'],
+    notes: 'Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input.',
+  },
+  examples: [
+    {
+      title: 'Default — static',
+      html: '<table class="brut-table">\n  <thead class="brut-table__head">\n    <tr class="brut-table__row">\n      <th class="brut-table__cell">Name</th>\n      <th class="brut-table__cell">Role</th>\n      <th class="brut-table__cell brut-table__cell--num">Items</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class="brut-table__row"><td class="brut-table__cell">Alice</td><td class="brut-table__cell">Designer</td><td class="brut-table__cell brut-table__cell--num">14</td></tr>\n    <tr class="brut-table__row"><td class="brut-table__cell">Bob</td><td class="brut-table__cell">Engineer</td><td class="brut-table__cell brut-table__cell--num">7</td></tr>\n  </tbody>\n</table>',
+    },
+    {
+      title: 'Sortable + select-all',
+      html: '<table class="brut-table brut-table--striped" data-brut="table">\n  <thead class="brut-table__head">\n    <tr class="brut-table__row">\n      <th class="brut-table__cell"><span class="brut-checkbox" data-brut-select-all></span></th>\n      <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="name">Name</th>\n      <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="qty">Qty</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class="brut-table__row">\n      <td class="brut-table__cell"><label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label></td>\n      <td class="brut-table__cell" data-sort-value="alice">Alice</td>\n      <td class="brut-table__cell brut-table__cell--num" data-sort-value="14">14</td>\n    </tr>\n    <tr class="brut-table__row">\n      <td class="brut-table__cell"><label class="brut-checkbox" data-brut-row-select><input type="checkbox" hidden></label></td>\n      <td class="brut-table__cell" data-sort-value="bob">Bob</td>\n      <td class="brut-table__cell brut-table__cell--num" data-sort-value="7">7</td>\n    </tr>\n  </tbody>\n</table>',
+    },
+    {
+      title: 'Compact + bordered',
+      html: '<table class="brut-table brut-table--compact brut-table--bordered">\n  <thead class="brut-table__head">\n    <tr class="brut-table__row">\n      <th class="brut-table__cell">SKU</th>\n      <th class="brut-table__cell">Title</th>\n      <th class="brut-table__cell brut-table__cell--num">Stock</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class="brut-table__row"><td class="brut-table__cell">A-001</td><td class="brut-table__cell">Bone-white tee</td><td class="brut-table__cell brut-table__cell--num">122</td></tr>\n  </tbody>\n</table>',
+    },
+  ],
+};

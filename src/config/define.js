@@ -1,19 +1,19 @@
 export const KNOWN_COMPONENTS = [
   'accordion','alert','aspect','avatar','avatar-group','badge','bar','body',
-  'btn','caption','card','checkbox','cluster','code','col','container',
+  'btn','caption','card','carousel','checkbox','cluster','code','col','combobox','container',
   'counter','date','dialog','display','divider','drawer','dropzone','file',
   'footer','grid','h1','h2','h3','h4','h5','h6','hero','input','kbd',
   'label','lead','link','list','menu','mono','multiselect','notice','otp',
-  'overline','password','popover','pre','progress','prose','quote','radio',
+  'overline','pagination','password','popover','pre','progress','prose','quote','radio',
   'range','range-dual','rating','row','search','section','segmented','select',
   'sidebar','skeleton','small','spinner','stack','stat','stepper','switch',
-  'table','tabs','tag','tag-input','textarea','theme-switcher','time','toast',
+  'table','table-columns','table-filter','tabs','tag','tag-input','textarea','theme-switcher','time','toast',
   'toast-host','tooltip','topnav',
 ];
 
 export const INTERACTIVE_COMPONENTS = [
-  'accordion','checkbox','combobox','counter','date','dialog','drawer',
-  'dropzone','file','menu','multiselect','otp','password','popover',
+  'accordion','carousel','checkbox','combobox','counter','date','dialog','drawer',
+  'dropzone','file','menu','multiselect','otp','pagination','password','popover',
   'progress','radio','range-dual','rating','search','segmented','sidebar',
   'stepper','switch','table','table-columns','table-filter','tabs',
   'tag-input','theme-switcher','time','toast-host','tooltip','topnav',

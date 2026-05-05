@@ -1,0 +1,2686 @@
+{
+  "$schema": "https://brut.dev/schema/components-v1.json",
+  "version": "0.2.0",
+  "prefix": "brut",
+  "themes": [
+    "brutalist",
+    "corporate",
+    "minimal"
+  ],
+  "components": [
+    {
+      "name": "accordion",
+      "description": "Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode.",
+      "useCases": [
+        "FAQ section",
+        "shipping and returns details",
+        "settings panels",
+        "sidebar nav groups",
+        "product specifications"
+      ],
+      "kind": "interactive",
+      "class": ".brut-accordion",
+      "selector": "[data-brut=\"accordion\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-allow-multi",
+          "values": "boolean attribute",
+          "description": "When present, multiple items can stay open at once; otherwise opening one closes the others"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "open": "boolean (new state of the toggled item)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "keyboard": [
+          "Enter",
+          "Space"
+        ],
+        "aria": [
+          "aria-expanded (on each head)",
+          "aria-controls (on head, points to body id)"
+        ],
+        "notes": "Heads default to <button type=\"button\">. Bodies receive an auto-generated id when none is set. The brut:change event bubbles from the toggled item, not the accordion root."
+      },
+      "examples": [
+        {
+          "title": "Default — single-open",
+          "html": "<div class=\"brut-accordion\" data-brut=\"accordion\">\n  <div class=\"brut-accordion__item brut-accordion__item--open\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>SHIPPING</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">Ships in 2-3 business days.</div>\n  </div>\n  <div class=\"brut-accordion__item\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>RETURNS</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">30-day return window.</div>\n  </div>\n</div>"
+        },
+        {
+          "title": "Allow multiple open",
+          "html": "<div class=\"brut-accordion\" data-brut=\"accordion\" data-brut-allow-multi>\n  <div class=\"brut-accordion__item brut-accordion__item--open\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>ONE</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">First panel body.</div>\n  </div>\n  <div class=\"brut-accordion__item brut-accordion__item--open\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>TWO</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">Second panel body.</div>\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "class": ".brut-alert",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "aspect",
+      "class": ".brut-aspect",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "avatar",
+      "class": ".brut-avatar",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "avatar-group",
+      "class": ".brut-avatar-group",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "badge",
+      "class": ".brut-badge",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "bar",
+      "class": ".brut-bar",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "body",
+      "class": ".brut-body",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "btn",
+      "class": ".brut-btn",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "caption",
+      "class": ".brut-caption",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "card",
+      "class": ".brut-card",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "carousel",
+      "description": "Single-track slide carousel with prev/next, dots, keyboard, autoplay, optional loop, and pointer-driven swipe.",
+      "useCases": [
+        "image gallery",
+        "feature showcase",
+        "testimonial rotator",
+        "onboarding screens",
+        "product highlights"
+      ],
+      "kind": "interactive",
+      "class": ".brut-carousel",
+      "selector": "[data-brut=\"carousel\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-current",
+          "values": "integer (default 0)",
+          "description": "Initial slide index; clamped to slide count"
+        },
+        {
+          "name": "data-autoplay",
+          "values": "integer ms (omit or 0 to disable)",
+          "description": "Autoplay interval in milliseconds"
+        },
+        {
+          "name": "data-loop",
+          "values": "boolean attribute",
+          "description": "When present, prev/next wrap at edges instead of clamping"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "integer (current slide index)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "region",
+        "roledescription": "carousel",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-roledescription",
+          "aria-live (on track)",
+          "aria-current (on active dot)"
+        ],
+        "notes": "Autoplay respects prefers-reduced-motion and pauses on hover, focus, and tab visibility change. Arrow keys are RTL-aware."
+      },
+      "examples": [
+        {
+          "title": "Default — clamp at edges",
+          "html": "<div class=\"brut-carousel\" data-brut=\"carousel\" data-current=\"0\">\n  <div class=\"brut-carousel__viewport\">\n    <div class=\"brut-carousel__track\">\n      <div class=\"brut-carousel__slide\">Slide 1</div>\n      <div class=\"brut-carousel__slide\">Slide 2</div>\n      <div class=\"brut-carousel__slide\">Slide 3</div>\n    </div>\n  </div>\n  <div class=\"brut-carousel__nav\">\n    <button class=\"brut-carousel__btn brut-carousel__btn--prev\" aria-label=\"Previous slide\"></button>\n    <button class=\"brut-carousel__btn brut-carousel__btn--next\" aria-label=\"Next slide\"></button>\n  </div>\n  <div class=\"brut-carousel__dots\" role=\"tablist\"></div>\n</div>"
+        },
+        {
+          "title": "Autoplay + loop",
+          "html": "<div class=\"brut-carousel\" data-brut=\"carousel\" data-autoplay=\"5000\" data-loop>\n  <div class=\"brut-carousel__viewport\">\n    <div class=\"brut-carousel__track\">\n      <div class=\"brut-carousel__slide\">Slide 1</div>\n      <div class=\"brut-carousel__slide\">Slide 2</div>\n      <div class=\"brut-carousel__slide\">Slide 3</div>\n    </div>\n  </div>\n  <div class=\"brut-carousel__nav\">\n    <button class=\"brut-carousel__btn brut-carousel__btn--prev\" aria-label=\"Previous slide\"></button>\n    <button class=\"brut-carousel__btn brut-carousel__btn--next\" aria-label=\"Next slide\"></button>\n  </div>\n  <div class=\"brut-carousel__dots\" role=\"tablist\"></div>\n</div>"
+        },
+        {
+          "title": "Image content",
+          "html": "<div class=\"brut-carousel\" data-brut=\"carousel\" data-current=\"0\">\n  <div class=\"brut-carousel__viewport\">\n    <div class=\"brut-carousel__track\">\n      <div class=\"brut-carousel__slide\"><img src=\"/img/1.jpg\" alt=\"First\"></div>\n      <div class=\"brut-carousel__slide\"><img src=\"/img/2.jpg\" alt=\"Second\"></div>\n      <div class=\"brut-carousel__slide\"><img src=\"/img/3.jpg\" alt=\"Third\"></div>\n    </div>\n  </div>\n  <div class=\"brut-carousel__nav\">\n    <button class=\"brut-carousel__btn brut-carousel__btn--prev\" aria-label=\"Previous slide\"></button>\n    <button class=\"brut-carousel__btn brut-carousel__btn--next\" aria-label=\"Next slide\"></button>\n  </div>\n  <div class=\"brut-carousel__dots\" role=\"tablist\"></div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "description": "Visual checkbox label whose checked state is mirrored by an inner hidden <input type=\"checkbox\">.",
+      "useCases": [
+        "form consent",
+        "multi-select filter list",
+        "task completion toggle",
+        "settings toggles",
+        "table row selection"
+      ],
+      "kind": "interactive",
+      "class": ".brut-checkbox",
+      "selector": "[data-brut=\"checkbox\"]",
+      "modifiers": [
+        "--on"
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "checked": "boolean (current checked state)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Wraps a real <input type=\"checkbox\" hidden> which carries name/value for native form submission"
+      },
+      "a11y": {
+        "role": "checkbox",
+        "keyboard": [
+          "Space",
+          "Enter"
+        ],
+        "aria": [
+          "aria-checked"
+        ],
+        "notes": "Suppresses the native <label> click so the inner input toggles exactly once. Works without an inner input by toggling the .brut-checkbox--on class directly."
+      },
+      "examples": [
+        {
+          "title": "Checked and unchecked",
+          "html": "<label class=\"brut-checkbox\" data-brut=\"checkbox\"><input type=\"checkbox\" hidden checked/></label>\n<label class=\"brut-checkbox\" data-brut=\"checkbox\"><input type=\"checkbox\" hidden/></label>"
+        },
+        {
+          "title": "With form name",
+          "html": "<label class=\"brut-checkbox\" data-brut=\"checkbox\">\n  <input type=\"checkbox\" name=\"agree\" value=\"yes\" hidden/>\n</label>"
+        }
+      ]
+    },
+    {
+      "name": "cluster",
+      "class": ".brut-cluster",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "code",
+      "class": ".brut-code",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "col",
+      "class": ".brut-col",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "combobox",
+      "description": "Searchable single-select with a text input that filters a static option list and a hidden input mirror for form submission.",
+      "useCases": [
+        "country picker",
+        "tag-free single-tag selection",
+        "framework chooser",
+        "autocomplete dropdown",
+        "searchable enum field"
+      ],
+      "kind": "interactive",
+      "class": ".brut-combobox",
+      "selector": "[data-brut=\"combobox\"]",
+      "modifiers": [
+        "--open"
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Name for the auto-injected hidden input when one is not supplied in markup"
+        },
+        {
+          "name": "data-value",
+          "values": "string (on each .brut-combobox__opt)",
+          "description": "Value written to the hidden input when this option is picked; falls back to option text content"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (selected option value)",
+            "label": "string (selected option label)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Hidden input is created automatically when data-brut-name is set; otherwise consumer supplies <input type=\"hidden\">"
+      },
+      "a11y": {
+        "role": "combobox (on the text input); listbox (on the list); option (on each item)",
+        "keyboard": [
+          "ArrowDown",
+          "ArrowUp",
+          "Enter",
+          "Escape"
+        ],
+        "aria": [
+          "aria-autocomplete=\"list\"",
+          "aria-expanded",
+          "aria-selected (on options)"
+        ],
+        "notes": "Outside click closes the list. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match."
+      },
+      "examples": [
+        {
+          "title": "Empty city picker",
+          "html": "<div class=\"brut-combobox\" data-brut=\"combobox\" data-brut-name=\"city\">\n  <input class=\"brut-input\" type=\"text\" placeholder=\"Search city…\">\n  <input type=\"hidden\" name=\"city\">\n  <ul class=\"brut-combobox__list\">\n    <li class=\"brut-combobox__opt\" data-value=\"nyc\">New York</li>\n    <li class=\"brut-combobox__opt\" data-value=\"ber\">Berlin</li>\n    <li class=\"brut-combobox__opt\" data-value=\"lon\">London</li>\n    <li class=\"brut-combobox__opt\" data-value=\"tok\">Tokyo</li>\n    <li class=\"brut-combobox__empty\">No matches.</li>\n  </ul>\n</div>"
+        },
+        {
+          "title": "Pre-filled value",
+          "html": "<div class=\"brut-combobox\" data-brut=\"combobox\" data-brut-name=\"framework\">\n  <input class=\"brut-input\" type=\"text\" value=\"Vanilla JS\" placeholder=\"Search…\">\n  <input type=\"hidden\" name=\"framework\" value=\"vanilla\">\n  <ul class=\"brut-combobox__list\">\n    <li class=\"brut-combobox__opt\" data-value=\"vanilla\">Vanilla JS</li>\n    <li class=\"brut-combobox__opt\" data-value=\"svelte\">Svelte</li>\n    <li class=\"brut-combobox__opt\" data-value=\"solid\">Solid</li>\n    <li class=\"brut-combobox__opt\" data-value=\"lit\">Lit</li>\n    <li class=\"brut-combobox__empty\">No matches.</li>\n  </ul>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "container",
+      "class": ".brut-container",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "counter",
+      "description": "Live character counter that mirrors the length of a paired input or textarea and flags overflow.",
+      "useCases": [
+        "textarea character limit",
+        "tweet-style composer",
+        "bio field",
+        "comment box helper",
+        "SMS message length hint"
+      ],
+      "kind": "interactive",
+      "class": ".brut-field__counter",
+      "selector": "[data-brut=\"counter\"]",
+      "modifiers": [
+        "--over"
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-for",
+          "values": "id of an <input> or <textarea>",
+          "description": "Required — id of the element whose value length is counted"
+        },
+        {
+          "name": "data-brut-max",
+          "values": "integer",
+          "description": "Optional fallback maximum when the target has no maxlength attribute"
+        }
+      ],
+      "events": [],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "keyboard": [],
+        "notes": "Read-only indicator; not focusable. Pair the target input with an aria-describedby pointing at the counter element if the count should be announced."
+      },
+      "examples": [
+        {
+          "title": "Textarea with maxlength",
+          "html": "<label class=\"brut-field__label\" for=\"bio\">Bio</label>\n<textarea id=\"bio\" class=\"brut-textarea\" maxlength=\"120\">Make it loud.</textarea>\n<span class=\"brut-field__counter\" data-brut=\"counter\" data-brut-for=\"bio\"></span>"
+        },
+        {
+          "title": "Override max via data attribute",
+          "html": "<input id=\"title\" class=\"brut-input\" type=\"text\">\n<span class=\"brut-field__counter\" data-brut=\"counter\" data-brut-for=\"title\" data-brut-max=\"60\"></span>"
+        }
+      ]
+    },
+    {
+      "name": "date",
+      "description": "Text field paired with a popover calendar; selecting a day writes ISO YYYY-MM-DD into the visible field and a hidden mirror.",
+      "useCases": [
+        "due date picker",
+        "birthday field",
+        "reservation date",
+        "event scheduling",
+        "expiry date input"
+      ],
+      "kind": "interactive",
+      "class": ".brut-date",
+      "selector": "[data-brut=\"date\"]",
+      "modifiers": [
+        "--open"
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Name for the auto-injected hidden input when one is not supplied in markup"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (ISO YYYY-MM-DD)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Hidden input is created automatically when data-brut-name is set; otherwise consumer supplies <input type=\"hidden\">"
+      },
+      "a11y": {
+        "role": "combobox (on the field); grid (on the day grid); gridcell (on each day)",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "Enter",
+          "Escape",
+          "PageUp",
+          "PageDown"
+        ],
+        "aria": [
+          "aria-haspopup=\"dialog\"",
+          "aria-expanded",
+          "aria-label (on prev/next nav buttons)"
+        ],
+        "notes": "Week starts on Monday. Outside-month days are rendered but visually muted via --out. Outside-click closes the popover. PageUp/PageDown shift the visible month and clamp the focused day to the new month's last day."
+      },
+      "examples": [
+        {
+          "title": "Empty due date",
+          "html": "<div class=\"brut-date\" data-brut=\"date\" data-brut-name=\"due\">\n  <input class=\"brut-input brut-date__field\" type=\"text\" readonly placeholder=\"YYYY-MM-DD\" />\n  <input type=\"hidden\" />\n</div>"
+        },
+        {
+          "title": "Pre-filled value",
+          "html": "<div class=\"brut-date\" data-brut=\"date\" data-brut-name=\"start\">\n  <input class=\"brut-input brut-date__field\" type=\"text\" readonly value=\"2026-05-15\" />\n  <input type=\"hidden\" />\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "description": "Modal dialog wired to external open triggers with optional scrim, escape-to-close, and any [data-brut-close] inside.",
+      "useCases": [
+        "delete confirmation",
+        "keyboard shortcut help",
+        "login prompt",
+        "settings modal",
+        "destructive action confirmation"
+      ],
+      "kind": "interactive",
+      "class": ".brut-dialog",
+      "selector": "[data-brut=\"dialog\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-scrim",
+          "values": "id of a .brut-scrim element",
+          "description": "Optional sibling scrim toggled in lockstep with the dialog"
+        },
+        {
+          "name": "data-brut-open",
+          "values": "id of a [data-brut=\"dialog\"] (on a trigger)",
+          "description": "Click target that opens the dialog with the matching id"
+        },
+        {
+          "name": "data-brut-close",
+          "values": "boolean attribute (on a child)",
+          "description": "Marks any element inside the dialog as a close trigger"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:open",
+          "detail": {
+            "value": "undefined"
+          }
+        },
+        {
+          "name": "brut:close",
+          "detail": {
+            "value": "undefined"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "dialog",
+        "keyboard": [
+          "Escape"
+        ],
+        "aria": [
+          "aria-modal (consumer-supplied)",
+          "aria-labelledby (consumer-supplied)"
+        ],
+        "notes": "Toggles the [hidden] attribute rather than display:none. Scrim closes only on direct click (not on bubbling from inner content). The dialog id is required — components without an id are skipped."
+      },
+      "examples": [
+        {
+          "title": "Confirm dialog with scrim",
+          "html": "<button class=\"brut-btn\" data-brut-open=\"dlg-confirm\">Open confirm</button>\n<div class=\"brut-scrim\" id=\"dlg-confirm-scrim\" hidden></div>\n<div class=\"brut-dialog\" id=\"dlg-confirm\" data-brut=\"dialog\" data-brut-scrim=\"dlg-confirm-scrim\" hidden role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"dlg-confirm-title\">\n  <div class=\"brut-dialog__head\">\n    <span id=\"dlg-confirm-title\">DELETE PROJECT?</span>\n    <button class=\"brut-dialog__x\" data-brut-close>×</button>\n  </div>\n  <div class=\"brut-dialog__body\">\n    This nukes <strong>project-alpha</strong> and all its history.\n  </div>\n  <div class=\"brut-dialog__foot\">\n    <button class=\"brut-btn\" data-brut-close>Cancel</button>\n    <button class=\"brut-btn brut-btn--danger\" data-brut-close>Yes, delete</button>\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "display",
+      "class": ".brut-display",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "divider",
+      "class": ".brut-divider",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "drawer",
+      "description": "Side sheet that slides in from any edge, opened by external triggers with optional scrim and escape-to-close.",
+      "useCases": [
+        "cart panel",
+        "mobile navigation",
+        "filter panel",
+        "detail inspector",
+        "notifications drawer"
+      ],
+      "kind": "interactive",
+      "class": ".brut-drawer",
+      "selector": "[data-brut=\"drawer\"]",
+      "modifiers": [
+        "--right",
+        "--left",
+        "--top",
+        "--bottom",
+        "--open"
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-side",
+          "values": "\"right\" | \"left\" | \"top\" | \"bottom\" (default \"right\")",
+          "description": "Edge the drawer slides from; auto-applied as a .brut-drawer--<side> class if missing"
+        },
+        {
+          "name": "data-brut-scrim",
+          "values": "id of a .brut-scrim element",
+          "description": "Optional sibling scrim toggled in lockstep with the drawer"
+        },
+        {
+          "name": "data-brut-open",
+          "values": "id of a [data-brut=\"drawer\"] (on a trigger)",
+          "description": "Click target that opens the drawer with the matching id"
+        },
+        {
+          "name": "data-brut-close",
+          "values": "boolean attribute (on a child)",
+          "description": "Marks any element inside the drawer as a close trigger"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:open",
+          "detail": {
+            "value": "undefined"
+          }
+        },
+        {
+          "name": "brut:close",
+          "detail": {
+            "value": "undefined"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "dialog",
+        "keyboard": [
+          "Escape"
+        ],
+        "aria": [
+          "aria-label (consumer-supplied)"
+        ],
+        "notes": "Forces a layout flush before adding --open so the slide transition runs from the closed transform. The drawer id is required — components without an id are skipped."
+      },
+      "examples": [
+        {
+          "title": "Right drawer",
+          "html": "<button class=\"brut-btn brut-btn--primary\" type=\"button\" data-brut-open=\"dr-right\">RIGHT DRAWER</button>\n<div class=\"brut-scrim\" id=\"dr-right-scrim\" hidden></div>\n<div class=\"brut-drawer\" id=\"dr-right\" data-brut=\"drawer\" data-brut-side=\"right\" data-brut-scrim=\"dr-right-scrim\" hidden role=\"dialog\" aria-label=\"Right drawer\">\n  <div class=\"brut-drawer__head\">\n    <span>RIGHT DRAWER</span>\n    <button class=\"brut-drawer__x\" data-brut-close type=\"button\" aria-label=\"Close\">&times;</button>\n  </div>\n  <div class=\"brut-drawer__body\">\n    <p>This drawer slides in from the right edge.</p>\n  </div>\n</div>"
+        },
+        {
+          "title": "Bottom sheet",
+          "html": "<button class=\"brut-btn\" type=\"button\" data-brut-open=\"dr-bottom\">BOTTOM DRAWER</button>\n<div class=\"brut-scrim\" id=\"dr-bottom-scrim\" hidden></div>\n<div class=\"brut-drawer\" id=\"dr-bottom\" data-brut=\"drawer\" data-brut-side=\"bottom\" data-brut-scrim=\"dr-bottom-scrim\" hidden role=\"dialog\" aria-label=\"Bottom drawer\">\n  <div class=\"brut-drawer__head\">\n    <span>BOTTOM DRAWER</span>\n    <button class=\"brut-drawer__x\" data-brut-close type=\"button\" aria-label=\"Close\">&times;</button>\n  </div>\n  <div class=\"brut-drawer__body\">\n    <p>Bottom drawer is full-width and clamped to 80vh.</p>\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "dropzone",
+      "description": "Drag-and-drop file region wrapping a hidden <input type=\"file\">, with click-to-browse, keyboard activation, and a drag-over state class.",
+      "useCases": [
+        "image upload",
+        "document attachment",
+        "asset import",
+        "avatar picker",
+        "bulk file upload form"
+      ],
+      "kind": "interactive",
+      "class": ".brut-dropzone",
+      "selector": "[data-brut=\"dropzone\"]",
+      "modifiers": [
+        "--drag"
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "files": "FileList (the input.files reference after assignment)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "Wraps a real <input type=\"file\"> — its name attribute carries the upload field on form submission"
+      },
+      "a11y": {
+        "role": "button",
+        "keyboard": [
+          "Enter",
+          "Space"
+        ],
+        "aria": [
+          "aria-label (auto-set from .brut-dropzone__hint text or \"Choose files\")"
+        ],
+        "notes": "Sets role=\"button\" and tabindex=\"0\" if absent. Programmatic FileList assignment uses a DataTransfer to satisfy browsers that reject direct .files writes; the inner input also fires a native change event."
+      },
+      "examples": [
+        {
+          "title": "Single file",
+          "html": "<label class=\"brut-dropzone\" data-brut=\"dropzone\">\n  <input type=\"file\" name=\"upload\">\n  <span class=\"brut-dropzone__hint\">Drop a file here.</span>\n  <span class=\"brut-dropzone__sub\">Or click to browse.</span>\n</label>"
+        },
+        {
+          "title": "Multiple files with accept filter",
+          "html": "<label class=\"brut-dropzone\" data-brut=\"dropzone\">\n  <input type=\"file\" name=\"assets\" multiple accept=\"image/*,.pdf\">\n  <span class=\"brut-dropzone__hint\">Drop images or PDFs here.</span>\n  <span class=\"brut-dropzone__sub\">Or click to browse. Multiple allowed.</span>\n</label>"
+        }
+      ]
+    },
+    {
+      "name": "file",
+      "description": "File picker that wraps a hidden <input type=\"file\"> with a visible button and live filename label.",
+      "useCases": [
+        "avatar upload",
+        "resume upload",
+        "attachment picker",
+        "image import",
+        "document submission"
+      ],
+      "kind": "interactive",
+      "class": ".brut-file",
+      "selector": "[data-brut=\"file\"]",
+      "modifiers": [],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "FileList (event.detail.files)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "submits via the wrapped native <input type=\"file\">"
+      },
+      "a11y": {
+        "role": null,
+        "keyboard": [
+          "Tab",
+          "Space",
+          "Enter"
+        ],
+        "aria": [],
+        "notes": "Uses a real <label> wrapping the native file input, so click, focus, and keyboard activation are inherited from the browser. The visible button is purely decorative."
+      },
+      "examples": [
+        {
+          "title": "Single file",
+          "html": "<label class=\"brut-file\" data-brut=\"file\">\n  <input type=\"file\" name=\"avatar\" accept=\"image/*\">\n  <span class=\"brut-file__btn\">CHOOSE FILE</span>\n  <span class=\"brut-file__name\">No file selected</span>\n</label>"
+        },
+        {
+          "title": "Multiple files",
+          "html": "<label class=\"brut-file\" data-brut=\"file\">\n  <input type=\"file\" name=\"attachments\" multiple>\n  <span class=\"brut-file__btn\">CHOOSE FILES</span>\n  <span class=\"brut-file__name\">No file selected</span>\n</label>"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "class": ".brut-footer",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "grid",
+      "class": ".brut-grid",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h1",
+      "class": ".brut-h1",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h2",
+      "class": ".brut-h2",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h3",
+      "class": ".brut-h3",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h4",
+      "class": ".brut-h4",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h5",
+      "class": ".brut-h5",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "h6",
+      "class": ".brut-h6",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "hero",
+      "class": ".brut-hero",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "input",
+      "class": ".brut-input",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "kbd",
+      "class": ".brut-kbd",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "label",
+      "class": ".brut-label",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "lead",
+      "class": ".brut-lead",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "link",
+      "class": ".brut-link",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "list",
+      "class": ".brut-list",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "menu",
+      "description": "Trigger-anchored dropdown menu with click-outside, Escape, and arrow-key focus navigation.",
+      "useCases": [
+        "row actions",
+        "overflow menu",
+        "user account menu",
+        "context actions",
+        "kebab menu"
+      ],
+      "kind": "interactive",
+      "class": ".brut-menu",
+      "selector": "[data-brut=\"menu\"]",
+      "modifiers": [
+        {
+          "name": ".brut-menu__item--danger",
+          "description": "Destructive action style for an item (e.g. Delete, Sign out)"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-menu-open",
+          "values": "id of the target .brut-menu",
+          "description": "Placed on a trigger element; clicking it toggles the matching menu"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:open",
+          "detail": {}
+        },
+        {
+          "name": "brut:close",
+          "detail": {}
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "menu",
+        "keyboard": [
+          "ArrowDown",
+          "ArrowUp",
+          "Home",
+          "End",
+          "Escape"
+        ],
+        "aria": [
+          "aria-haspopup=\"menu\" (auto-set on trigger)"
+        ],
+        "notes": "Trigger gets type=\"button\" and aria-haspopup automatically. Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll."
+      },
+      "examples": [
+        {
+          "title": "Row actions menu",
+          "html": "<button class=\"brut-btn brut-btn--primary\" type=\"button\" data-brut-menu-open=\"m-actions\">ACTIONS</button>\n<div class=\"brut-menu\" id=\"m-actions\" data-brut=\"menu\" hidden>\n  <button class=\"brut-menu__item\" type=\"button\">Edit</button>\n  <button class=\"brut-menu__item\" type=\"button\">Duplicate</button>\n  <button class=\"brut-menu__item\" type=\"button\">Share</button>\n  <hr class=\"brut-menu__sep\"/>\n  <button class=\"brut-menu__item brut-menu__item--danger\" type=\"button\">Delete</button>\n</div>"
+        },
+        {
+          "title": "Overflow menu with link items",
+          "html": "<button class=\"brut-btn\" type=\"button\" data-brut-menu-open=\"m-links\" aria-label=\"More\">…</button>\n<div class=\"brut-menu\" id=\"m-links\" data-brut=\"menu\" hidden>\n  <a class=\"brut-menu__item\" href=\"#\">Profile</a>\n  <a class=\"brut-menu__item\" href=\"#\">Settings</a>\n  <a class=\"brut-menu__item\" href=\"#\">Help</a>\n  <hr class=\"brut-menu__sep\"/>\n  <a class=\"brut-menu__item brut-menu__item--danger\" href=\"#\">Sign out</a>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "mono",
+      "class": ".brut-mono",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "multiselect",
+      "description": "Combobox-style field that holds chips for selected values with type-to-filter, keyboard toggle, and Backspace removal.",
+      "useCases": [
+        "skill picker",
+        "tag picker",
+        "category filter",
+        "recipient list",
+        "faceted search"
+      ],
+      "kind": "interactive",
+      "class": ".brut-multiselect",
+      "selector": "[data-brut=\"multiselect\"]",
+      "modifiers": [
+        {
+          "name": ".brut-multiselect--open",
+          "description": "Applied while the option list is visible"
+        },
+        {
+          "name": ".brut-multiselect__opt--selected",
+          "description": "Marks an option as currently chosen (toggled internally)"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string (default \"values\")",
+          "description": "name attribute used on the generated hidden inputs (one per selected value)"
+        },
+        {
+          "name": "data-value",
+          "values": "string",
+          "description": "On each .brut-multiselect__opt, the value submitted when selected"
+        },
+        {
+          "name": "data-selected",
+          "values": "boolean attribute",
+          "description": "On a .brut-multiselect__opt, marks it as pre-selected on init"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string[] (selected values)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "one <input type=\"hidden\" name=\"<data-brut-name>\"> per selected value, marked with data-brut-mirror=\"1\""
+      },
+      "a11y": {
+        "role": "combobox (input) + listbox (list) + option (items)",
+        "keyboard": [
+          "Backspace (remove last chip when input empty)",
+          "Enter (toggle first visible match)",
+          "Escape (close)"
+        ],
+        "aria": [
+          "aria-autocomplete=\"list\"",
+          "aria-expanded",
+          "aria-multiselectable=\"true\"",
+          "aria-selected on options"
+        ],
+        "notes": "Click outside closes the list. Filtering hides non-matching options and shows the .brut-multiselect__empty fallback when no options match."
+      },
+      "examples": [
+        {
+          "title": "Empty multiselect",
+          "html": "<div class=\"brut-multiselect\" data-brut=\"multiselect\" data-brut-name=\"skills\">\n  <div class=\"brut-multiselect__field\">\n    <input class=\"brut-multiselect__input\" placeholder=\"Pick skills…\" />\n  </div>\n  <ul class=\"brut-multiselect__list\">\n    <li class=\"brut-multiselect__opt\" data-value=\"ux\">UX</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"css\">CSS</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"js\">JavaScript</li>\n    <li class=\"brut-multiselect__empty\">No matches.</li>\n  </ul>\n</div>"
+        },
+        {
+          "title": "Pre-selected options",
+          "html": "<div class=\"brut-multiselect\" data-brut=\"multiselect\" data-brut-name=\"tags\">\n  <div class=\"brut-multiselect__field\">\n    <input class=\"brut-multiselect__input\" placeholder=\"Add a tag…\" />\n  </div>\n  <ul class=\"brut-multiselect__list\">\n    <li class=\"brut-multiselect__opt\" data-value=\"news\"  data-selected>News</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"press\" data-selected>Press</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"brand\">Brand</li>\n    <li class=\"brut-multiselect__empty\">No matches.</li>\n  </ul>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "notice",
+      "class": ".brut-notice",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "otp",
+      "description": "One-time-code input rendered as one cell per digit with auto-advance, paste-fill, and Backspace/Arrow navigation.",
+      "useCases": [
+        "email verification",
+        "2FA code",
+        "SMS one-time password",
+        "PIN entry",
+        "magic-link confirm"
+      ],
+      "kind": "interactive",
+      "class": ".brut-otp",
+      "selector": "[data-brut=\"otp\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-len",
+          "values": "integer (default 6)",
+          "description": "Number of cells to auto-generate when none are present"
+        },
+        {
+          "name": "data-brut-name",
+          "values": "string (default \"otp\")",
+          "description": "name attribute on the hidden input that mirrors the joined value"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (joined digits so far)"
+          }
+        },
+        {
+          "name": "brut:complete",
+          "detail": {
+            "value": "string (full code, fires when all cells are filled)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "auto-created <input type=\"hidden\" name=\"<data-brut-name>\"> with the joined value"
+      },
+      "a11y": {
+        "role": null,
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "Backspace",
+          "Paste"
+        ],
+        "aria": [],
+        "notes": "Cells are real <input> elements with inputmode=\"numeric\" and autocomplete=\"one-time-code\", so iOS/Android suggest SMS codes. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell."
+      },
+      "examples": [
+        {
+          "title": "6-digit, auto-generated cells",
+          "html": "<div class=\"brut-otp\" data-brut=\"otp\" data-brut-len=\"6\" data-brut-name=\"code\"></div>"
+        },
+        {
+          "title": "4-digit PIN",
+          "html": "<div class=\"brut-otp\" data-brut=\"otp\" data-brut-len=\"4\" data-brut-name=\"pin\"></div>"
+        },
+        {
+          "title": "Pre-populated cells",
+          "html": "<div class=\"brut-otp\" data-brut=\"otp\" data-brut-name=\"partial\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\" value=\"4\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\" value=\"2\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "overline",
+      "class": ".brut-overline",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "pagination",
+      "description": "Page navigation with prev/next, numbered buttons, first/last anchors, and ellipsis gaps for large page counts.",
+      "useCases": [
+        "paginated table rows",
+        "search result pages",
+        "blog/article archives",
+        "data grid navigation",
+        "image gallery paging"
+      ],
+      "kind": "interactive",
+      "class": ".brut-pagination",
+      "selector": "[data-brut=\"pagination\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-total",
+          "values": "integer (required, > 0)",
+          "description": "Total number of items in the dataset"
+        },
+        {
+          "name": "data-page-size",
+          "values": "integer (required, > 0)",
+          "description": "Number of items shown per page"
+        },
+        {
+          "name": "data-page",
+          "values": "integer (default 1)",
+          "description": "Current 1-based page; clamped to total page count"
+        },
+        {
+          "name": "data-sibling-count",
+          "values": "integer (default 1)",
+          "description": "Pages shown on each side of the current page before collapsing into an ellipsis"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "page": "integer (new current page)",
+            "pageSize": "integer",
+            "total": "integer"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "navigation",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "notes": "Root gets role=\"navigation\" and aria-label=\"Pagination\" if absent. Active page button carries aria-current=\"page\". Prev/next buttons are disabled at the edges. Ellipsis gaps are aria-hidden so screen readers skip them."
+      },
+      "examples": [
+        {
+          "title": "Default — 10 pages of 20",
+          "html": "<nav class=\"brut-pagination\" data-brut=\"pagination\" data-total=\"200\" data-page-size=\"20\" data-page=\"1\"></nav>"
+        },
+        {
+          "title": "Mid-range with siblings collapsed",
+          "html": "<nav class=\"brut-pagination\" data-brut=\"pagination\" data-total=\"500\" data-page-size=\"25\" data-page=\"10\" data-sibling-count=\"1\"></nav>"
+        },
+        {
+          "title": "Wider sibling window",
+          "html": "<nav class=\"brut-pagination\" data-brut=\"pagination\" data-total=\"1000\" data-page-size=\"50\" data-page=\"7\" data-sibling-count=\"2\"></nav>"
+        }
+      ]
+    },
+    {
+      "name": "password",
+      "description": "Password input with a SHOW/HIDE toggle button that flips the input type between password and text.",
+      "useCases": [
+        "login form",
+        "sign-up form",
+        "change-password field",
+        "confirm-password field",
+        "API key entry"
+      ],
+      "kind": "interactive",
+      "class": ".brut-password",
+      "selector": "[data-brut=\"password\"]",
+      "modifiers": [],
+      "dataAttributes": [],
+      "events": [],
+      "formState": {
+        "hiddenInput": false,
+        "name": "submits via the wrapped native <input> (type flips between \"password\" and \"text\")"
+      },
+      "a11y": {
+        "role": null,
+        "keyboard": [
+          "Tab",
+          "Space",
+          "Enter (on toggle button)"
+        ],
+        "aria": [
+          "aria-label on toggle (\"Show password\" / \"Hide password\")",
+          "aria-pressed on toggle"
+        ],
+        "notes": "Toggle button is forced to type=\"button\" so it never submits the surrounding form. Label text and aria attributes update in sync with the visibility state."
+      },
+      "examples": [
+        {
+          "title": "Default (hidden)",
+          "html": "<div class=\"brut-password\" data-brut=\"password\">\n  <input class=\"brut-input\" type=\"password\" name=\"password\" placeholder=\"Enter password…\">\n  <button class=\"brut-password__toggle\">SHOW</button>\n</div>"
+        },
+        {
+          "title": "With initial value",
+          "html": "<div class=\"brut-password\" data-brut=\"password\">\n  <input class=\"brut-input\" type=\"password\" name=\"current\" value=\"hunter2secret\">\n  <button class=\"brut-password__toggle\">SHOW</button>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "description": "Trigger-anchored card with optional head bar, dismissed by click-outside, Escape, or any [data-brut-close] inside.",
+      "useCases": [
+        "filter panel",
+        "inline help",
+        "quick-edit form",
+        "detail card",
+        "tooltip-style content"
+      ],
+      "kind": "interactive",
+      "class": ".brut-popover",
+      "selector": "[data-brut=\"popover\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-popover-open",
+          "values": "id of the target .brut-popover",
+          "description": "On a trigger element; clicking it toggles the matching popover"
+        },
+        {
+          "name": "data-brut-close",
+          "values": "boolean attribute",
+          "description": "On any element inside the popover; clicking it closes the popover"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:open",
+          "detail": {}
+        },
+        {
+          "name": "brut:close",
+          "detail": {}
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": null,
+        "keyboard": [
+          "Escape (close)"
+        ],
+        "aria": [
+          "aria-label on .brut-popover__x close button"
+        ],
+        "notes": "Trigger gets type=\"button\" automatically. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger."
+      },
+      "examples": [
+        {
+          "title": "Trigger + popover with head",
+          "html": "<button class=\"brut-btn brut-btn--primary\" type=\"button\" data-brut-popover-open=\"po-filters\">FILTERS</button>\n<div class=\"brut-popover\" id=\"po-filters\" data-brut=\"popover\" hidden>\n  <div class=\"brut-popover__head\">\n    <span>Filters</span>\n    <button class=\"brut-popover__x\" type=\"button\" data-brut-close aria-label=\"Close\">&times;</button>\n  </div>\n  <div class=\"brut-popover__body\">\n    <label class=\"brut-checkbox\"><input type=\"checkbox\"/><span>Active</span></label>\n    <label class=\"brut-checkbox\"><input type=\"checkbox\"/><span>Archived</span></label>\n    <label class=\"brut-checkbox\"><input type=\"checkbox\"/><span>Pending</span></label>\n  </div>\n</div>"
+        },
+        {
+          "title": "Plain body, no head",
+          "html": "<button class=\"brut-btn\" type=\"button\" data-brut-popover-open=\"po-info\">WHAT IS THIS?</button>\n<div class=\"brut-popover\" id=\"po-info\" data-brut=\"popover\" hidden>\n  <div class=\"brut-popover__body\">\n    A popover is a small anchored card. Click the trigger again, click outside, or press Esc to close.\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "pre",
+      "class": ".brut-pre",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "progress",
+      "description": "Determinate or indeterminate horizontal progress bar driven by a CSS --progress variable, with a JS API for live updates.",
+      "useCases": [
+        "file upload progress",
+        "multi-step form completion",
+        "background job status",
+        "media buffering",
+        "onboarding completion"
+      ],
+      "kind": "interactive",
+      "class": ".brut-progress",
+      "selector": "[data-brut=\"progress\"]",
+      "modifiers": [
+        {
+          "name": ".brut-progress--sm",
+          "description": "Smaller bar height"
+        },
+        {
+          "name": ".brut-progress--lg",
+          "description": "Larger bar height"
+        },
+        {
+          "name": ".brut-progress--success",
+          "description": "Success color fill"
+        },
+        {
+          "name": ".brut-progress--danger",
+          "description": "Danger color fill"
+        },
+        {
+          "name": ".brut-progress--info",
+          "description": "Info color fill"
+        },
+        {
+          "name": ".brut-progress--warning",
+          "description": "Warning color fill"
+        },
+        {
+          "name": ".brut-progress--indeterminate",
+          "description": "Animated indeterminate stripe (no value)"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-value",
+          "values": "number 0–100 (default 0)",
+          "description": "Initial progress value; mirrored to aria-valuenow and the --progress CSS variable"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "number 0–100 (current value, bubbles)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "progressbar",
+        "keyboard": [],
+        "aria": [
+          "aria-valuemin=\"0\"",
+          "aria-valuemax=\"100\"",
+          "aria-valuenow (kept in sync with current value)",
+          "aria-label (author-supplied)"
+        ],
+        "notes": "role and aria-valuemin/max are set on init. Use el.brutProgress.setValue(n) and el.brutProgress.getValue() for programmatic updates. The optional .brut-progress__label text is updated to the rounded percentage on every setValue."
+      },
+      "examples": [
+        {
+          "title": "Static determinate (CSS-only via --progress)",
+          "html": "<div class=\"brut-progress\" style=\"--progress: 50\" aria-label=\"50%\">\n  <div class=\"brut-progress__bar\"></div>\n</div>"
+        },
+        {
+          "title": "JS-driven with label",
+          "html": "<div class=\"brut-progress brut-progress--lg\" data-brut=\"progress\" data-brut-value=\"40\" aria-label=\"Progress\">\n  <div class=\"brut-progress__bar\"></div>\n  <span class=\"brut-progress__label\"></span>\n</div>"
+        },
+        {
+          "title": "Indeterminate",
+          "html": "<div class=\"brut-progress brut-progress--indeterminate\" aria-label=\"Loading…\">\n  <div class=\"brut-progress__bar\"></div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "prose",
+      "class": ".brut-prose",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "quote",
+      "class": ".brut-quote",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "radio",
+      "description": "Visual radio control synced to an inner hidden <input type=\"radio\">, grouped by name, with Space/Enter activation.",
+      "useCases": [
+        "size picker",
+        "plan selector",
+        "one-of-N option",
+        "survey question",
+        "shipping method"
+      ],
+      "kind": "interactive",
+      "class": ".brut-radio",
+      "selector": "[data-brut=\"radio\"]",
+      "modifiers": [
+        {
+          "name": ".brut-radio--on",
+          "description": "Checked visual state (toggled in sync with the underlying input)"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Optional group name when there is no inner radio input; siblings sharing this name behave as one group"
+        },
+        {
+          "name": "data-value",
+          "values": "string",
+          "description": "Value emitted in brut:change when there is no inner radio input"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (selected radio value)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "submits via the wrapped native <input type=\"radio\">"
+      },
+      "a11y": {
+        "role": "radio",
+        "keyboard": [
+          "Space",
+          "Enter"
+        ],
+        "aria": [
+          "aria-checked"
+        ],
+        "notes": "role=\"radio\" and tabindex=\"0\" are set on init. Native <input type=\"radio\"> change events keep all siblings in the same group visually in sync, so labels, click, and form reset all behave correctly."
+      },
+      "examples": [
+        {
+          "title": "Size group",
+          "html": "<label class=\"brut-radio brut-radio--on\" data-brut=\"radio\">\n  <input type=\"radio\" name=\"size\" value=\"md\" hidden checked/>\n</label>\n<label class=\"brut-radio\" data-brut=\"radio\">\n  <input type=\"radio\" name=\"size\" value=\"lg\" hidden/>\n</label>"
+        }
+      ]
+    },
+    {
+      "name": "range",
+      "class": ".brut-range",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "range-dual",
+      "description": "Two-thumb range slider that emits a min/max pair, with pointer drag, click-to-jump on the track, and keyboard nudging.",
+      "useCases": [
+        "price filter",
+        "budget range",
+        "date or year window",
+        "numeric histogram filter",
+        "duration bracket"
+      ],
+      "kind": "interactive",
+      "class": ".brut-range-dual",
+      "selector": "[data-brut=\"range-dual\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-min",
+          "values": "number (default 0)",
+          "description": "Lower bound of the slider"
+        },
+        {
+          "name": "data-brut-max",
+          "values": "number (default 100)",
+          "description": "Upper bound of the slider"
+        },
+        {
+          "name": "data-brut-step",
+          "values": "number (default 1)",
+          "description": "Snap increment for thumbs and keyboard"
+        },
+        {
+          "name": "data-brut-value-min",
+          "values": "number",
+          "description": "Initial position of the lower thumb"
+        },
+        {
+          "name": "data-brut-value-max",
+          "values": "number",
+          "description": "Initial position of the upper thumb"
+        },
+        {
+          "name": "data-brut-name-min",
+          "values": "string",
+          "description": "Form name for the auto-created hidden input mirroring the lower value"
+        },
+        {
+          "name": "data-brut-name-max",
+          "values": "string",
+          "description": "Form name for the auto-created hidden input mirroring the upper value"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "{ min: number, max: number }"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "two hidden inputs created when data-brut-name-min / data-brut-name-max are set"
+      },
+      "a11y": {
+        "role": "slider (one per thumb)",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-label (per thumb)",
+          "aria-valuemin",
+          "aria-valuemax",
+          "aria-valuenow"
+        ],
+        "notes": "The lower thumb is clamped at the upper thumb and vice versa via aria-valuemin/aria-valuemax. PageUp/PageDown move by 10× step. Home/End collapse to the opposite thumb or to min/max."
+      },
+      "examples": [
+        {
+          "title": "Default — 0 to 100, step 1",
+          "html": "<div class=\"brut-range-dual\"\n     data-brut=\"range-dual\"\n     data-brut-min=\"0\" data-brut-max=\"100\" data-brut-step=\"1\"\n     data-brut-value-min=\"20\" data-brut-value-max=\"80\"\n     data-brut-name-min=\"price_min\" data-brut-name-max=\"price_max\"></div>"
+        },
+        {
+          "title": "Coarse step (5) over a wider range",
+          "html": "<div class=\"brut-range-dual\"\n     data-brut=\"range-dual\"\n     data-brut-min=\"0\" data-brut-max=\"500\" data-brut-step=\"5\"\n     data-brut-value-min=\"100\" data-brut-value-max=\"350\"\n     data-brut-name-min=\"budget_min\" data-brut-name-max=\"budget_max\"></div>"
+        },
+        {
+          "title": "Year window",
+          "html": "<div class=\"brut-range-dual\"\n     data-brut=\"range-dual\"\n     data-brut-min=\"2000\" data-brut-max=\"2026\" data-brut-step=\"1\"\n     data-brut-value-min=\"2010\" data-brut-value-max=\"2020\"\n     data-brut-name-min=\"year_min\" data-brut-name-max=\"year_max\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "description": "Row of 1–N star buttons that records an integer score, with hover preview, click-to-toggle, and full keyboard control.",
+      "useCases": [
+        "product rating",
+        "review score",
+        "feedback survey",
+        "satisfaction prompt",
+        "quality scoring"
+      ],
+      "kind": "interactive",
+      "class": ".brut-rating",
+      "selector": "[data-brut=\"rating\"]",
+      "modifiers": [
+        {
+          "name": ".brut-rating__star--on",
+          "description": "Filled state applied to stars at or below the current value"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Form name; when set, a hidden input is auto-created and synced"
+        },
+        {
+          "name": "data-brut-value",
+          "values": "integer (default 0)",
+          "description": "Initial score; clamped to 0..N where N is the star count"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "integer (current score, 0..N)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "hidden input created automatically when data-brut-name is set"
+      },
+      "a11y": {
+        "role": "slider (wrapper) with role=\"radio\" on each star",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-valuemin",
+          "aria-valuemax",
+          "aria-valuenow",
+          "aria-checked (per star)"
+        ],
+        "notes": "Wrapper is the focusable target with tabindex=\"0\". Hover and focus on individual stars preview the score; mouseleave/focusout repaint the locked value. Clicking the active star clears the score (toggle to 0)."
+      },
+      "examples": [
+        {
+          "title": "Empty (no selection)",
+          "html": "<div class=\"brut-rating\" data-brut=\"rating\" data-brut-name=\"score\" data-brut-value=\"0\">\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n</div>"
+        },
+        {
+          "title": "Pre-selected (3 of 5)",
+          "html": "<div class=\"brut-rating\" data-brut=\"rating\" data-brut-name=\"quality\" data-brut-value=\"3\">\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "row",
+      "class": ".brut-row",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "search",
+      "description": "Text input wrapper with a clear (×) button that appears only when the field has a value and resets the input on click.",
+      "useCases": [
+        "site search field",
+        "list filter input",
+        "command palette trigger",
+        "inline lookup",
+        "table toolbar search"
+      ],
+      "kind": "interactive",
+      "class": ".brut-search",
+      "selector": "[data-brut=\"search\"]",
+      "modifiers": [
+        {
+          "name": ".brut-search--has-value",
+          "description": "Toggled on the wrapper while the input is non-empty; reveals the clear button"
+        }
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "input",
+          "detail": {
+            "value": "string (current input value, native event on the inner input)"
+          }
+        },
+        {
+          "name": "change",
+          "detail": {
+            "value": "string (fires on blur and after the clear button is pressed)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "the inner <input type=\"search\"> is the canonical form value"
+      },
+      "a11y": {
+        "role": "native search input",
+        "keyboard": [
+          "standard text input keys"
+        ],
+        "aria": [
+          "aria-label (on the clear button)"
+        ],
+        "notes": "Clearing dispatches both input and change events on the inner field, then refocuses the input so typing can continue uninterrupted."
+      },
+      "examples": [
+        {
+          "title": "Empty",
+          "html": "<div class=\"brut-search\" data-brut=\"search\">\n  <input class=\"brut-input\" type=\"search\" placeholder=\"Search…\">\n  <button class=\"brut-search__clear\" aria-label=\"Clear\">×</button>\n</div>"
+        },
+        {
+          "title": "Pre-filled (clear button visible)",
+          "html": "<div class=\"brut-search\" data-brut=\"search\">\n  <input class=\"brut-input\" type=\"search\" value=\"button\" placeholder=\"Search…\">\n  <button class=\"brut-search__clear\" aria-label=\"Clear\">×</button>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "section",
+      "class": ".brut-section",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "segmented",
+      "description": "Exclusive choice button group that behaves like a horizontal radio set, with roving tabindex and arrow-key navigation.",
+      "useCases": [
+        "view mode switcher (day / week / month)",
+        "unit toggle",
+        "filter scope picker",
+        "compact one-of-N selector",
+        "chart granularity control"
+      ],
+      "kind": "interactive",
+      "class": ".brut-segmented",
+      "selector": "[data-brut=\"segmented\"]",
+      "modifiers": [
+        {
+          "name": ".brut-segmented__btn--on",
+          "description": "Active state applied to the currently selected segment button"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Form name; when set, a hidden input is auto-created and synced to the active segment"
+        },
+        {
+          "name": "data-value",
+          "values": "string",
+          "description": "Per-button value; falls back to the button's text content when omitted"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (data-value of the selected segment, or its text content)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "hidden input created automatically when data-brut-name is set"
+      },
+      "a11y": {
+        "role": "tablist with role=\"tab\" on each segment",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-selected (per segment)",
+          "tabindex (roving)"
+        ],
+        "notes": "Arrow keys wrap at both ends. Roving tabindex keeps exactly one segment focusable; activation moves focus to the new segment."
+      },
+      "examples": [
+        {
+          "title": "Default — three segments",
+          "html": "<div class=\"brut-segmented\" data-brut=\"segmented\">\n  <button class=\"brut-segmented__btn brut-segmented__btn--on\" data-value=\"day\">DAY</button>\n  <button class=\"brut-segmented__btn\" data-value=\"week\">WEEK</button>\n  <button class=\"brut-segmented__btn\" data-value=\"month\">MONTH</button>\n</div>"
+        },
+        {
+          "title": "Form-bound (mirrors to a hidden input)",
+          "html": "<div class=\"brut-segmented\" data-brut=\"segmented\" data-brut-name=\"range\">\n  <button class=\"brut-segmented__btn brut-segmented__btn--on\" data-value=\"7d\">7D</button>\n  <button class=\"brut-segmented__btn\" data-value=\"30d\">30D</button>\n  <button class=\"brut-segmented__btn\" data-value=\"90d\">90D</button>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "class": ".brut-select",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "sidebar",
+      "description": "Vertical app navigation rail with optional collapsible groups; clicking a button-typed group title toggles its closed state.",
+      "useCases": [
+        "app shell navigation",
+        "admin dashboard rail",
+        "settings nav",
+        "docs site index",
+        "workspace switcher"
+      ],
+      "kind": "interactive",
+      "class": ".brut-sidebar",
+      "selector": "[data-brut=\"sidebar\"]",
+      "modifiers": [
+        {
+          "name": ".brut-sidebar__group--closed",
+          "description": "Hides the items beneath a group title and flips the title indicator to \"+\""
+        },
+        {
+          "name": ".brut-sidebar__item--active",
+          "description": "Marks the current page link inside the rail"
+        }
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "{ group: HTMLElement, closed: boolean }"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "native landmark (<aside>)",
+        "keyboard": [
+          "Enter / Space (on a group title button)"
+        ],
+        "aria": [
+          "aria-expanded (on collapsible group title buttons)"
+        ],
+        "notes": "Only group titles authored as <button> become collapsible; <h3> or other elements render the same chrome but stay static. Initial closed state is read from the .brut-sidebar__group--closed class on mount."
+      },
+      "examples": [
+        {
+          "title": "Two groups + one collapsed group",
+          "html": "<aside class=\"brut-sidebar\" data-brut=\"sidebar\">\n  <a class=\"brut-sidebar__brand\" href=\"#\">BRUT</a>\n  <div class=\"brut-sidebar__group\">\n    <button class=\"brut-sidebar__group-title\" type=\"button\">Main</button>\n    <a class=\"brut-sidebar__item brut-sidebar__item--active\" href=\"#\">Dashboard</a>\n    <a class=\"brut-sidebar__item\" href=\"#\">Projects</a>\n    <a class=\"brut-sidebar__item\" href=\"#\">Inbox</a>\n  </div>\n  <div class=\"brut-sidebar__group brut-sidebar__group--closed\">\n    <button class=\"brut-sidebar__group-title\" type=\"button\">Archived</button>\n    <a class=\"brut-sidebar__item\" href=\"#\">Old project</a>\n  </div>\n</aside>"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "class": ".brut-skeleton",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "small",
+      "class": ".brut-small",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "spinner",
+      "class": ".brut-spinner",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "stack",
+      "class": ".brut-stack",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "stat",
+      "class": ".brut-stat",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "stepper",
+      "description": "Numeric input flanked by minus / plus buttons; reads min, max, and step from the inner <input type=\"number\"> and clamps to the step grid.",
+      "useCases": [
+        "quantity selector",
+        "guest / passenger count",
+        "unit count in checkout",
+        "configurable numeric setting",
+        "paginated page size"
+      ],
+      "kind": "interactive",
+      "class": ".brut-stepper",
+      "selector": "[data-brut=\"stepper\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-step",
+          "values": "\"up\" | \"down\"",
+          "description": "Direction hint on each button; falls back to first-button=down, second-button=up when omitted"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "number (current input value, parsed)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "the inner <input type=\"number\"> is the canonical form value (no separate hidden input)"
+      },
+      "a11y": {
+        "role": "spinbutton (on the wrapper)",
+        "keyboard": [
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown"
+        ],
+        "aria": [
+          "aria-valuenow",
+          "aria-valuemin",
+          "aria-valuemax"
+        ],
+        "notes": "PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min."
+      },
+      "examples": [
+        {
+          "title": "Default — 0 to 99, step 1",
+          "html": "<div class=\"brut-stepper\" data-brut=\"stepper\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"down\">−</button>\n  <input class=\"brut-stepper__input\" type=\"number\" min=\"0\" max=\"99\" step=\"1\" value=\"0\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"up\">+</button>\n</div>"
+        },
+        {
+          "title": "Coarse step (5) over 0–100",
+          "html": "<div class=\"brut-stepper\" data-brut=\"stepper\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"down\">−</button>\n  <input class=\"brut-stepper__input\" type=\"number\" min=\"0\" max=\"100\" step=\"5\" value=\"25\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"up\">+</button>\n</div>"
+        },
+        {
+          "title": "Decimal step",
+          "html": "<div class=\"brut-stepper\" data-brut=\"stepper\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"down\">−</button>\n  <input class=\"brut-stepper__input\" type=\"number\" min=\"0\" max=\"5\" step=\"0.1\" value=\"1.0\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"up\">+</button>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "description": "Boolean toggle backed by a hidden <input type=\"checkbox\"> that posts with the surrounding form; click and Space/Enter both flip state.",
+      "useCases": [
+        "settings toggle",
+        "feature flag",
+        "notification opt-in",
+        "dark mode switch",
+        "inline form boolean"
+      ],
+      "kind": "interactive",
+      "class": ".brut-switch",
+      "selector": "[data-brut=\"switch\"]",
+      "modifiers": [
+        {
+          "name": ".brut-switch--on",
+          "description": "On state; mirrors the inner checkbox's checked property"
+        }
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "boolean (true when on)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "inner <input type=\"checkbox\" hidden> is the source of truth and posts with the form"
+      },
+      "a11y": {
+        "role": "switch",
+        "keyboard": [
+          "Space",
+          "Enter"
+        ],
+        "aria": [
+          "aria-checked"
+        ],
+        "notes": "The wrapper is a <label> but its native click-forwards to the inner checkbox is intercepted to prevent double-toggling. Native checkbox change events also fire, so existing form handlers continue to work."
+      },
+      "examples": [
+        {
+          "title": "Default — off",
+          "html": "<label class=\"brut-switch\" data-brut=\"switch\">\n  <input type=\"checkbox\" hidden>\n  <span class=\"brut-switch__knob\"></span>\n</label>"
+        },
+        {
+          "title": "Default — on",
+          "html": "<label class=\"brut-switch brut-switch--on\" data-brut=\"switch\">\n  <input type=\"checkbox\" checked hidden>\n  <span class=\"brut-switch__knob\"></span>\n</label>"
+        },
+        {
+          "title": "Form-bound with name",
+          "html": "<label class=\"brut-switch\" data-brut=\"switch\">\n  <input type=\"checkbox\" name=\"notifications\" hidden>\n  <span class=\"brut-switch__knob\"></span>\n</label>"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "description": "Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.",
+      "useCases": [
+        "admin dashboards",
+        "inventory lists",
+        "user management grids",
+        "analytics reports",
+        "spreadsheet-like data"
+      ],
+      "kind": "interactive",
+      "class": ".brut-table",
+      "selector": "[data-brut=\"table\"]",
+      "modifiers": [
+        {
+          "name": "--striped",
+          "description": "Zebra-striped tbody rows"
+        },
+        {
+          "name": "--bordered",
+          "description": "Vertical separators between cells"
+        },
+        {
+          "name": "--compact",
+          "description": "Tighter cell padding"
+        },
+        {
+          "name": "--responsive",
+          "description": "Below the small breakpoint, stack rows as cards (requires data-brut-col-label on each td)"
+        },
+        {
+          "name": "--sticky-head",
+          "description": "thead remains visible while tbody scrolls"
+        },
+        {
+          "name": "--sticky-col",
+          "description": "First column remains visible during horizontal scroll"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-sort-key",
+          "values": "string",
+          "description": "On a th.brut-table__cell--sortable: identifier for the sortable column"
+        },
+        {
+          "name": "data-sort-value",
+          "values": "string|number",
+          "description": "On a td: explicit value used for sorting (falls back to text content)"
+        },
+        {
+          "name": "data-brut-select-all",
+          "values": "boolean attribute",
+          "description": "On a header element: toggles every [data-brut-row-select] in the table"
+        },
+        {
+          "name": "data-brut-row-select",
+          "values": "boolean attribute",
+          "description": "On a tbody row checkbox: marks the row as selectable by the header toggle"
+        },
+        {
+          "name": "data-brut-col-label",
+          "values": "string",
+          "description": "On a td (responsive mode): label prefix shown before the cell value when stacked"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (sort key) or boolean (when selectAll is true)",
+            "key": "string (sort key, when sorting)",
+            "dir": "\"ascending\" | \"descending\"",
+            "selectAll": "true (only on select-all toggle)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "Row checkboxes own their own form state; the table itself does not mirror to a hidden input"
+      },
+      "a11y": {
+        "role": "table (native)",
+        "keyboard": [
+          "Space",
+          "Enter"
+        ],
+        "aria": [
+          "aria-sort (on sortable th: none|ascending|descending)",
+          "role=\"columnheader\"",
+          "role=\"checkbox\" (on select-all)",
+          "aria-checked (on select-all and rows)"
+        ],
+        "notes": "Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input."
+      },
+      "examples": [
+        {
+          "title": "Default — static",
+          "html": "<table class=\"brut-table\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\">Name</th>\n      <th class=\"brut-table__cell\">Role</th>\n      <th class=\"brut-table__cell brut-table__cell--num\">Items</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">Alice</td><td class=\"brut-table__cell\">Designer</td><td class=\"brut-table__cell brut-table__cell--num\">14</td></tr>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">Bob</td><td class=\"brut-table__cell\">Engineer</td><td class=\"brut-table__cell brut-table__cell--num\">7</td></tr>\n  </tbody>\n</table>"
+        },
+        {
+          "title": "Sortable + select-all",
+          "html": "<table class=\"brut-table brut-table--striped\" data-brut=\"table\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\"><span class=\"brut-checkbox\" data-brut-select-all></span></th>\n      <th class=\"brut-table__cell brut-table__cell--sortable\" data-sort-key=\"name\">Name</th>\n      <th class=\"brut-table__cell brut-table__cell--sortable brut-table__cell--num\" data-sort-key=\"qty\">Qty</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\">\n      <td class=\"brut-table__cell\"><label class=\"brut-checkbox\" data-brut-row-select><input type=\"checkbox\" hidden></label></td>\n      <td class=\"brut-table__cell\" data-sort-value=\"alice\">Alice</td>\n      <td class=\"brut-table__cell brut-table__cell--num\" data-sort-value=\"14\">14</td>\n    </tr>\n    <tr class=\"brut-table__row\">\n      <td class=\"brut-table__cell\"><label class=\"brut-checkbox\" data-brut-row-select><input type=\"checkbox\" hidden></label></td>\n      <td class=\"brut-table__cell\" data-sort-value=\"bob\">Bob</td>\n      <td class=\"brut-table__cell brut-table__cell--num\" data-sort-value=\"7\">7</td>\n    </tr>\n  </tbody>\n</table>"
+        },
+        {
+          "title": "Compact + bordered",
+          "html": "<table class=\"brut-table brut-table--compact brut-table--bordered\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\">SKU</th>\n      <th class=\"brut-table__cell\">Title</th>\n      <th class=\"brut-table__cell brut-table__cell--num\">Stock</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">A-001</td><td class=\"brut-table__cell\">Bone-white tee</td><td class=\"brut-table__cell brut-table__cell--num\">122</td></tr>\n  </tbody>\n</table>"
+        }
+      ]
+    },
+    {
+      "name": "table-columns",
+      "description": "Column-visibility menu for a brut-table; injects a checkbox menu and toggles column display via a data attribute.",
+      "useCases": [
+        "hide noisy columns",
+        "tailor table density",
+        "user-customizable reports",
+        "admin grids with many fields"
+      ],
+      "kind": "interactive",
+      "class": ".brut-table-columns-btn",
+      "selector": "[data-brut=\"table-columns\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-table",
+          "values": "id of target <table>",
+          "description": "ID of the .brut-table this control governs"
+        },
+        {
+          "name": "data-brut-name",
+          "values": "string (default \"visible_cols\")",
+          "description": "name attribute for the generated hidden input mirroring the visible columns CSV"
+        },
+        {
+          "name": "data-col",
+          "values": "string",
+          "description": "Required on every th and td of the target table; identifies the column for hide/show"
+        },
+        {
+          "name": "data-brut-col-label",
+          "values": "string",
+          "description": "Optional override for the menu item label (defaults to th text content)"
+        },
+        {
+          "name": "data-col-hidden",
+          "values": "space-separated keys",
+          "description": "Written to the table by the component; matches the injected attribute-selector CSS rules that hide cells"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "visible": "array of visible column keys"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Generated hidden input carries data-brut-cols-state and a comma-separated list of visible column keys"
+      },
+      "a11y": {
+        "role": "menu (on the generated dropdown)",
+        "keyboard": [
+          "Space",
+          "Enter",
+          "Escape"
+        ],
+        "aria": [
+          "role=\"menu\"",
+          "role=\"menuitemcheckbox\" on each item",
+          "aria-checked on each item"
+        ],
+        "notes": "Reuses the brut-menu component for open/close and keyboard navigation; runs Brut.init on the parent so the dynamically inserted menu wires itself up."
+      },
+      "examples": [
+        {
+          "title": "Toolbar button governing a table",
+          "html": "<div class=\"toolbar\">\n  <button class=\"brut-btn brut-btn--sm brut-table-columns-btn\"\n          data-brut=\"table-columns\"\n          data-brut-table=\"people\"\n          data-brut-name=\"visible_cols\">&#x229E; COLUMNS</button>\n</div>\n<table id=\"people\" class=\"brut-table brut-table--striped\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\" data-col=\"name\">Name</th>\n      <th class=\"brut-table__cell\" data-col=\"role\">Role</th>\n      <th class=\"brut-table__cell\" data-col=\"email\">Email</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\">\n      <td class=\"brut-table__cell\" data-col=\"name\">Alice</td>\n      <td class=\"brut-table__cell\" data-col=\"role\">Designer</td>\n      <td class=\"brut-table__cell\" data-col=\"email\">alice@example.com</td>\n    </tr>\n  </tbody>\n</table>"
+        },
+        {
+          "title": "Custom menu labels",
+          "html": "<button class=\"brut-btn brut-btn--sm brut-table-columns-btn\"\n        data-brut=\"table-columns\" data-brut-table=\"orders\">COLUMNS</button>\n<table id=\"orders\" class=\"brut-table\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\" data-col=\"id\" data-brut-col-label=\"Order #\">ID</th>\n      <th class=\"brut-table__cell\" data-col=\"total\" data-brut-col-label=\"Total ($)\">Total</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\">\n      <td class=\"brut-table__cell\" data-col=\"id\">A-001</td>\n      <td class=\"brut-table__cell\" data-col=\"total\">42.00</td>\n    </tr>\n  </tbody>\n</table>"
+        }
+      ]
+    },
+    {
+      "name": "table-filter",
+      "description": "Global text filter for a brut-table; hides tbody rows whose combined text fails to match every whitespace-separated token (AND, case-insensitive).",
+      "useCases": [
+        "quick search above a table",
+        "large list narrowing",
+        "admin grids",
+        "reports with lots of rows"
+      ],
+      "kind": "interactive",
+      "class": ".brut-table-filter",
+      "selector": "[data-brut=\"table-filter\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-table",
+          "values": "id of target <table>",
+          "description": "ID of the .brut-table whose rows are filtered"
+        },
+        {
+          "name": "data-brut-name",
+          "values": "string (default \"q\")",
+          "description": "name attribute for the generated hidden input mirroring the query"
+        },
+        {
+          "name": "data-brut-filter-hidden",
+          "values": "boolean attribute",
+          "description": "Written to a row by the component when it is hidden by the current filter"
+        },
+        {
+          "name": "data-brut-hidden-by",
+          "values": "\"filter\"",
+          "description": "Sentinel marking which decorator hid the row, so other decorators can coexist without clobbering each other"
+        },
+        {
+          "name": "data-brut-row-expansion",
+          "values": "boolean attribute",
+          "description": "On a row: opt out of being filtered (used by row expansion patterns)"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (lowercased query)",
+            "visible": "integer (matching row count)",
+            "total": "integer (total rows)"
+          }
+        },
+        {
+          "name": "brut:change",
+          "detail": {
+            "source": "\"filter\" (re-dispatched on the table to notify pagination etc.)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Generated hidden input carries data-brut-filter-state and the current query string"
+      },
+      "a11y": {
+        "role": "search (via type=search input)",
+        "keyboard": [],
+        "aria": [
+          "Standard label/input pairing via brut-field__label"
+        ],
+        "notes": "Filter runs on every input event; expansion rows (data-brut-row-expansion) are skipped. Updates a .brut-table-filter__count element with \"X of Y\" if present."
+      },
+      "examples": [
+        {
+          "title": "Search box above a table",
+          "html": "<div class=\"brut-table-filter\" data-brut=\"table-filter\" data-brut-table=\"people\">\n  <label class=\"brut-field__label\" for=\"q-people\">Search</label>\n  <input id=\"q-people\" class=\"brut-input\" type=\"search\" placeholder=\"Filter rows…\" autocomplete=\"off\"/>\n  <span class=\"brut-table-filter__count\"></span>\n</div>\n<table id=\"people\" class=\"brut-table brut-table--striped\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\">Name</th>\n      <th class=\"brut-table__cell\">Role</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">Alice Chen</td><td class=\"brut-table__cell\">Designer</td></tr>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">Bob Marsh</td><td class=\"brut-table__cell\">Engineer</td></tr>\n  </tbody>\n</table>"
+        },
+        {
+          "title": "Custom hidden-input name",
+          "html": "<div class=\"brut-table-filter\" data-brut=\"table-filter\" data-brut-table=\"orders\" data-brut-name=\"order_q\">\n  <input class=\"brut-input\" type=\"search\" placeholder=\"Filter orders…\"/>\n  <span class=\"brut-table-filter__count\"></span>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "description": "One-of-N panel switcher: clicking or arrow-keying a tab reveals the panel whose data-brut-panel matches the tab's data-brut-tab.",
+      "useCases": [
+        "settings sections",
+        "product detail subviews",
+        "log/console panels",
+        "docs subsections",
+        "wizard or report views"
+      ],
+      "kind": "interactive",
+      "class": ".brut-tabs",
+      "selector": "[data-brut=\"tabs\"]",
+      "modifiers": [
+        {
+          "name": ".brut-tab--on",
+          "description": "Active state on the currently selected tab button"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-tab",
+          "values": "string",
+          "description": "Per-tab key; matched against panels' data-brut-panel"
+        },
+        {
+          "name": "data-brut-panel",
+          "values": "string",
+          "description": "Per-panel key; the panel whose key matches the active tab is shown, others receive the hidden attribute"
+        },
+        {
+          "name": "data-brut-panels",
+          "values": "CSS selector",
+          "description": "Optional root in which to look up panels; defaults to the tablist's parent element"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (data-brut-tab of the active tab)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "tablist with role=\"tab\" on each trigger",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "aria-selected (per tab)",
+          "tabindex (roving)"
+        ],
+        "notes": "WAI-ARIA tabs pattern with roving tabindex and arrow-key wrap. Panels are hidden via the native [hidden] attribute, so they are removed from layout and the accessibility tree."
+      },
+      "examples": [
+        {
+          "title": "Default — three tabs, sibling panels",
+          "html": "<div class=\"brut-tabs\" data-brut=\"tabs\">\n  <button class=\"brut-tab brut-tab--on\" data-brut-tab=\"overview\">OVERVIEW</button>\n  <button class=\"brut-tab\" data-brut-tab=\"specs\">SPECS</button>\n  <button class=\"brut-tab\" data-brut-tab=\"reviews\">REVIEWS</button>\n</div>\n<div data-brut-panel=\"overview\">Overview content</div>\n<div data-brut-panel=\"specs\" hidden>Specs content</div>\n<div data-brut-panel=\"reviews\" hidden>Reviews content</div>"
+        },
+        {
+          "title": "Panels scoped via data-brut-panels",
+          "html": "<div class=\"brut-tabs\" data-brut=\"tabs\" data-brut-panels=\"#detail-panels\">\n  <button class=\"brut-tab brut-tab--on\" data-brut-tab=\"info\">INFO</button>\n  <button class=\"brut-tab\" data-brut-tab=\"logs\">LOGS</button>\n</div>\n<div id=\"detail-panels\">\n  <section data-brut-panel=\"info\">Info</section>\n  <section data-brut-panel=\"logs\" hidden>Logs</section>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "class": ".brut-tag",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "tag-input",
+      "description": "Chip-entry field. Enter or comma commits a tag, Backspace at empty input removes the last, and each chip has an x button to delete itself.",
+      "useCases": [
+        "email recipients",
+        "topic tagging",
+        "skills picker",
+        "label editor on issue trackers",
+        "keyword filter input"
+      ],
+      "kind": "interactive",
+      "class": ".brut-tag-input",
+      "selector": "[data-brut=\"tag-input\"]",
+      "modifiers": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string (default \"tags\")",
+          "description": "Name attribute for the auto-created hidden input that mirrors comma-joined tag values"
+        },
+        {
+          "name": "data-value",
+          "values": "string",
+          "description": "Set on each .brut-tag chip to provide the canonical tag value; falls back to chip textContent"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "tags": "string[] (current tag values)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Auto-creates <input type=\"hidden\"> with comma-joined values; name is data-brut-name or \"tags\""
+      },
+      "a11y": {
+        "role": "group (implicit via wrapping element)",
+        "keyboard": [
+          "Enter (commit)",
+          ",",
+          "Backspace (when input empty, removes last)"
+        ],
+        "aria": [],
+        "notes": "Duplicate values are silently rejected. On blur with non-empty input the pending value is committed. Clicking the wrapper outside the field focuses the field."
+      },
+      "examples": [
+        {
+          "title": "Empty field",
+          "html": "<div class=\"brut-field\" style=\"max-width:520px;\">\n  <label class=\"brut-field__label\">Topics</label>\n  <div class=\"brut-tag-input\" data-brut=\"tag-input\" data-brut-name=\"topics\">\n    <input class=\"brut-tag-input__field\" placeholder=\"Add a topic…\">\n  </div>\n  <span class=\"brut-field__hint\">Press Enter or comma to add.</span>\n</div>"
+        },
+        {
+          "title": "Pre-populated chips",
+          "html": "<div class=\"brut-tag-input\" data-brut=\"tag-input\" data-brut-name=\"skills\">\n  <span class=\"brut-tag\" data-value=\"css\">CSS <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"js\">JavaScript <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"ux\">UX <button class=\"brut-tag__x\">×</button></span>\n  <input class=\"brut-tag-input__field\" placeholder=\"Add a skill…\">\n</div>"
+        },
+        {
+          "title": "Many tags with custom name",
+          "html": "<div class=\"brut-tag-input\" data-brut=\"tag-input\" data-brut-name=\"labels\">\n  <span class=\"brut-tag\" data-value=\"bug\">bug <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"feature\">feature <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"docs\">docs <button class=\"brut-tag__x\">×</button></span>\n  <input class=\"brut-tag-input__field\" placeholder=\"Add a label…\">\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "class": ".brut-textarea",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "theme-switcher",
+      "description": "Radio group that flips the active theme via Brut.theme(); writes [data-theme] on the document root and persists the choice.",
+      "useCases": [
+        "site-wide theme toggle in header",
+        "demo-page theme picker",
+        "storybook-style preview toolbar",
+        "docs page chrome",
+        "app settings panel"
+      ],
+      "kind": "interactive",
+      "class": ".brut-theme-switcher",
+      "selector": "[data-brut=\"theme-switcher\"]",
+      "modifiers": [
+        {
+          "name": "__btn--on",
+          "description": "Applied to the currently selected theme button (paired with aria-checked=\"true\")"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-themes",
+          "values": "comma-separated names (default \"brutalist,corporate,minimal\")",
+          "description": "Theme list to render as buttons; each becomes a radio with that data-value"
+        },
+        {
+          "name": "data-value",
+          "values": "string (written by JS on each generated button)",
+          "description": "Theme name carried by each rendered button"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (selected theme name)"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "Theme is applied via Brut.theme() and document-root [data-theme]; no form value"
+      },
+      "a11y": {
+        "role": "radiogroup",
+        "keyboard": [
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "Home",
+          "End"
+        ],
+        "aria": [
+          "role=\"radiogroup\"",
+          "aria-label=\"Theme\"",
+          "role=\"radio\" (on each button)",
+          "aria-checked",
+          "roving tabindex"
+        ],
+        "notes": "Empty <div data-brut=\"theme-switcher\"></div> is enough — the script generates the buttons. Initial selection mirrors Brut.theme(); arrow keys cycle and immediately apply the focused theme."
+      },
+      "examples": [
+        {
+          "title": "Default three-way switcher",
+          "html": "<div data-brut=\"theme-switcher\"></div>"
+        },
+        {
+          "title": "Custom theme list",
+          "html": "<div data-brut=\"theme-switcher\" data-brut-themes=\"brutalist,minimal\"></div>"
+        },
+        {
+          "title": "Inside a topnav",
+          "html": "<header class=\"brut-topnav\" data-brut=\"topnav\">\n  <div class=\"brut-topnav__inner\">\n    <a class=\"brut-topnav__brand\" href=\"/\">BRUT</a>\n    <div data-brut=\"theme-switcher\" style=\"margin-left:auto;\"></div>\n  </div>\n</header>"
+        }
+      ]
+    },
+    {
+      "name": "time",
+      "description": "Text-field combobox with a popover hour/minute stepper; emits HH:MM (24-hour ISO) with optional 12-hour AM/PM display and minute snapping.",
+      "useCases": [
+        "meeting time picker",
+        "event scheduling form",
+        "doors-open input",
+        "reservation slot selector",
+        "availability range bound"
+      ],
+      "kind": "interactive",
+      "class": ".brut-time",
+      "selector": "[data-brut=\"time\"]",
+      "modifiers": [
+        {
+          "name": "--open",
+          "description": "Applied while the popover is visible"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-name",
+          "values": "string",
+          "description": "Name for the hidden input mirror; if absent, no hidden input is auto-created"
+        },
+        {
+          "name": "data-brut-mode",
+          "values": "\"24\" (default) | \"12\"",
+          "description": "Display mode for the hour stepper; output is always 24-hour HH:MM"
+        },
+        {
+          "name": "data-brut-minute-step",
+          "values": "integer (default 1)",
+          "description": "Minute snap interval; values not on the grid are rounded to the nearest step"
+        }
+      ],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "string (HH:MM, 24-hour)",
+            "hour": "integer 0-23",
+            "minute": "integer 0-59"
+          }
+        }
+      ],
+      "formState": {
+        "hiddenInput": true,
+        "name": "Hidden input inside the wrapper carries HH:MM; auto-created when data-brut-name is set, otherwise an existing <input type=\"hidden\"> is reused"
+      },
+      "a11y": {
+        "role": "combobox (on the visible field)",
+        "keyboard": [
+          "ArrowDown / Enter (open)",
+          "Escape (close)",
+          "ArrowUp / ArrowDown (on stepper inputs)"
+        ],
+        "aria": [
+          "role=\"combobox\"",
+          "aria-haspopup=\"dialog\"",
+          "aria-expanded",
+          "aria-label=\"HOUR\"",
+          "aria-label=\"MIN\"",
+          "aria-label on stepper buttons"
+        ],
+        "notes": "Outside-click closes the popover. The visible field is readonly; values are committed via the steppers. In 12-hour mode an AM/PM segmented control toggles below the row."
+      },
+      "examples": [
+        {
+          "title": "24-hour, populated",
+          "html": "<div class=\"brut-field\">\n  <label class=\"brut-field__label\">Meeting</label>\n  <div class=\"brut-time\" data-brut=\"time\" data-brut-name=\"meet\">\n    <input class=\"brut-input brut-time__field\" type=\"text\" readonly value=\"09:30\" />\n    <input type=\"hidden\" />\n  </div>\n</div>"
+        },
+        {
+          "title": "12-hour with AM/PM",
+          "html": "<div class=\"brut-time\" data-brut=\"time\" data-brut-name=\"doors\" data-brut-mode=\"12\">\n  <input class=\"brut-input brut-time__field\" type=\"text\" readonly value=\"19:00\" />\n  <input type=\"hidden\" />\n</div>"
+        },
+        {
+          "title": "15-minute snap",
+          "html": "<div class=\"brut-time\" data-brut=\"time\" data-brut-name=\"slot\" data-brut-minute-step=\"15\">\n  <input class=\"brut-input brut-time__field\" type=\"text\" readonly value=\"14:00\" />\n  <input type=\"hidden\" />\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "class": ".brut-toast",
+      "selector": null,
+      "kind": "static"
+    },
+    {
+      "name": "toast-host",
+      "description": "Container that anchors transient .brut-toast notifications spawned by the imperative Brut.toast() API; auto-creates itself if absent.",
+      "useCases": [
+        "save-success notifications",
+        "background-job status",
+        "form validation flash messages",
+        "undo prompts",
+        "non-blocking error banners"
+      ],
+      "kind": "interactive",
+      "class": ".brut-toast-host",
+      "selector": "[data-brut=\"toast-host\"]",
+      "modifiers": [
+        {
+          "name": "--top-right",
+          "description": "Anchor host to the top-right corner of the viewport (default)"
+        },
+        {
+          "name": "--top-left",
+          "description": "Anchor host to the top-left corner of the viewport"
+        },
+        {
+          "name": "--bottom-right",
+          "description": "Anchor host to the bottom-right corner of the viewport"
+        },
+        {
+          "name": "--bottom-left",
+          "description": "Anchor host to the bottom-left corner of the viewport"
+        }
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:close",
+          "detail": {}
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "No form value; the host renders ephemeral notifications"
+      },
+      "a11y": {
+        "role": "status / alert (per toast: \"alert\" for err and warn, \"status\" otherwise)",
+        "keyboard": [
+          "click the toast x button to dismiss"
+        ],
+        "aria": [
+          "role=\"status\" or role=\"alert\" (per toast)",
+          "aria-live=\"polite\" or \"assertive\" (per toast)",
+          "aria-label=\"Dismiss\" on the close button"
+        ],
+        "notes": "Toasts are spawned imperatively via Brut.toast({ kind, message, timeout, host }) where kind is \"ok\" | \"warn\" | \"err\" | \"info\". Each toast bubbles brut:close on dismissal. If no host element exists when Brut.toast() is called, one is appended to <body> automatically."
+      },
+      "examples": [
+        {
+          "title": "Top-right host (default)",
+          "html": "<div class=\"brut-toast-host brut-toast-host--top-right\" data-brut=\"toast-host\"></div>"
+        },
+        {
+          "title": "Bottom-left host",
+          "html": "<div class=\"brut-toast-host brut-toast-host--bottom-left\" data-brut=\"toast-host\"></div>"
+        },
+        {
+          "title": "Programmatic spawn (after host is present)",
+          "html": "<div class=\"brut-toast-host brut-toast-host--top-right\" data-brut=\"toast-host\"></div>\n<button class=\"brut-btn\" type=\"button\"\n        onclick=\"Brut.toast({ kind: 'ok', message: 'Saved!', timeout: 4000 })\">SAVE</button>"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "description": "Hover/focus-triggered ink bubble appended to <body> on show and removed on hide; positioned on one of four sides relative to the trigger.",
+      "useCases": [
+        "button hint text",
+        "icon-only control labeling",
+        "truncated text on hover",
+        "form field helper hints",
+        "keyboard-shortcut reveal"
+      ],
+      "kind": "interactive",
+      "class": ".brut-tip",
+      "selector": "[data-brut=\"tooltip\"]",
+      "modifiers": [
+        {
+          "name": "--top",
+          "description": "Bubble positioned above the trigger (default)"
+        },
+        {
+          "name": "--bottom",
+          "description": "Bubble positioned below the trigger"
+        },
+        {
+          "name": "--left",
+          "description": "Bubble positioned to the left of the trigger"
+        },
+        {
+          "name": "--right",
+          "description": "Bubble positioned to the right of the trigger"
+        }
+      ],
+      "dataAttributes": [
+        {
+          "name": "data-brut-tip",
+          "values": "string",
+          "description": "Required. The tooltip text shown in the bubble"
+        },
+        {
+          "name": "data-brut-tip-side",
+          "values": "\"top\" (default) | \"bottom\" | \"left\" | \"right\"",
+          "description": "Side of the trigger on which to render the bubble"
+        }
+      ],
+      "events": [],
+      "formState": {
+        "hiddenInput": false,
+        "name": "Display-only — no form value"
+      },
+      "a11y": {
+        "role": "tooltip (on the bubble)",
+        "keyboard": [
+          "focus to show",
+          "blur to hide",
+          "Escape to dismiss"
+        ],
+        "aria": [
+          "role=\"tooltip\"",
+          "aria-describedby (set on trigger while bubble is visible)"
+        ],
+        "notes": "Trigger can be any element; if it is a <button> the script forces type=\"button\". Bubble is created on show and removed on hide; only one bubble per trigger. Position is computed from getBoundingClientRect with an 8px gap."
+      },
+      "examples": [
+        {
+          "title": "Default top tooltip on a button",
+          "html": "<button class=\"brut-btn brut-btn--primary\" type=\"button\"\n        data-brut=\"tooltip\" data-brut-tip=\"Saved at 12:04\">SAVE</button>"
+        },
+        {
+          "title": "Four sides",
+          "html": "<div class=\"row\">\n  <button class=\"brut-btn\" type=\"button\" data-brut=\"tooltip\" data-brut-tip=\"Top tooltip\" data-brut-tip-side=\"top\">TOP</button>\n  <button class=\"brut-btn\" type=\"button\" data-brut=\"tooltip\" data-brut-tip=\"Bottom tooltip\" data-brut-tip-side=\"bottom\">BOTTOM</button>\n  <button class=\"brut-btn\" type=\"button\" data-brut=\"tooltip\" data-brut-tip=\"Left tooltip\" data-brut-tip-side=\"left\">LEFT</button>\n  <button class=\"brut-btn\" type=\"button\" data-brut=\"tooltip\" data-brut-tip=\"Right tooltip\" data-brut-tip-side=\"right\">RIGHT</button>\n</div>"
+        },
+        {
+          "title": "On a focusable input",
+          "html": "<input class=\"brut-input\" type=\"text\" placeholder=\"Email\"\n       data-brut=\"tooltip\"\n       data-brut-tip=\"We never share email\"\n       data-brut-tip-side=\"bottom\" />"
+        }
+      ]
+    },
+    {
+      "name": "topnav",
+      "description": "Sticky page header whose only behavior is the mobile burger toggle for the link list; outside-click and Escape close it.",
+      "useCases": [
+        "marketing site header",
+        "docs site chrome",
+        "app shell top bar",
+        "mobile-friendly navigation",
+        "product landing nav"
+      ],
+      "kind": "interactive",
+      "class": ".brut-topnav",
+      "selector": "[data-brut=\"topnav\"]",
+      "modifiers": [
+        {
+          "name": "--open",
+          "description": "Applied while the mobile link drawer is expanded"
+        }
+      ],
+      "dataAttributes": [],
+      "events": [
+        {
+          "name": "brut:open",
+          "detail": {}
+        },
+        {
+          "name": "brut:close",
+          "detail": {}
+        }
+      ],
+      "formState": {
+        "hiddenInput": false,
+        "name": "Navigation chrome — no form value"
+      },
+      "a11y": {
+        "role": "banner (via <header>)",
+        "keyboard": [
+          "Tab to burger",
+          "Enter / Space to toggle",
+          "Escape to close"
+        ],
+        "aria": [
+          "aria-expanded (on burger)",
+          "aria-controls (on burger)",
+          "aria-label (on burger)"
+        ],
+        "notes": "Burger element is .brut-topnav__burger; auto-typed as type=\"button\". Clicks outside the header or pressing Escape close the open menu. Clicking any .brut-topnav__link also closes (mobile UX)."
+      },
+      "examples": [
+        {
+          "title": "Brand + links + CTA",
+          "html": "<header class=\"brut-topnav\" data-brut=\"topnav\">\n  <div class=\"brut-topnav__inner\">\n    <a class=\"brut-topnav__brand\" href=\"/\">\n      <span class=\"brut-topnav__mark\">B</span>\n      <span>BRUT&nbsp;UI</span>\n    </a>\n    <nav class=\"brut-topnav__links\">\n      <a class=\"brut-topnav__link brut-topnav__link--active\" href=\"#\">Docs</a>\n      <a class=\"brut-topnav__link\" href=\"#\">Components</a>\n      <a class=\"brut-topnav__link\" href=\"#\">Demos</a>\n    </nav>\n    <a class=\"brut-btn brut-btn--primary brut-btn--sm brut-topnav__cta\" href=\"#\">Read the docs</a>\n    <button class=\"brut-topnav__burger\" aria-label=\"Menu\">≡</button>\n  </div>\n</header>"
+        },
+        {
+          "title": "Minimal — brand and burger only",
+          "html": "<header class=\"brut-topnav\" data-brut=\"topnav\">\n  <div class=\"brut-topnav__inner\">\n    <a class=\"brut-topnav__brand\" href=\"/\">BRUT</a>\n    <nav class=\"brut-topnav__links\">\n      <a class=\"brut-topnav__link\" href=\"#\">Home</a>\n      <a class=\"brut-topnav__link\" href=\"#\">About</a>\n    </nav>\n    <button class=\"brut-topnav__burger\" aria-label=\"Menu\">≡</button>\n  </div>\n</header>"
+        }
+      ]
+    }
+  ]
+}

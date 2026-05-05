@@ -157,6 +157,36 @@
         if (!selectAll.hasAttribute('tabindex')) selectAll.setAttribute('tabindex', '0');
         syncHeader(isOn());
       }
+
+      // Pagination integration. If a child (or sibling) [data-brut="pagination"]
+      // exists, delegate paging UI to it and just slice rows on brut:change.
+      // No pagination element ⇒ behavior is byte-identical to before.
+      var pager = el.querySelector('[data-brut="pagination"]');
+      if (!pager && el.parentElement) pager = el.parentElement.querySelector('[data-brut="pagination"]');
+      if (pager && tbody) {
+        var allRows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+        if (!pager.hasAttribute('data-total'))     pager.setAttribute('data-total', String(allRows.length));
+        if (!pager.hasAttribute('data-page-size')) pager.setAttribute('data-page-size', String(allRows.length || 1));
+
+        function applyPage(page, pageSize) {
+          var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+          var start = (page - 1) * pageSize;
+          var end   = start + pageSize;
+          for (var i = 0; i < rows.length; i++) {
+            rows[i].hidden = (i < start || i >= end);
+          }
+        }
+
+        pager.addEventListener('brut:change', function (e) {
+          if (!e.target || !e.target.matches || !e.target.matches('[data-brut="pagination"]')) return;
+          var d = e.detail || {};
+          if (typeof d.page === 'number' && typeof d.pageSize === 'number') applyPage(d.page, d.pageSize);
+        });
+
+        var initPage     = parseInt(pager.getAttribute('data-page'), 10) || 1;
+        var initPageSize = parseInt(pager.getAttribute('data-page-size'), 10) || allRows.length || 1;
+        applyPage(initPage, initPageSize);
+      }
     }
   });
 })();

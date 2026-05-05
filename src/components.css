@@ -983,6 +983,101 @@
   font-family: var(--font-display);
 }
 
+/* CAROUSEL — sliding deck of equal-width slides. JS toggles --current,
+   updates [data-current], and wires prev/next + dots. CSS only paints. */
+.brut-carousel {
+  position: relative;
+  display: block;
+  border: var(--carousel-bw) solid var(--ink);
+  box-shadow: var(--carousel-shadow);
+  background: var(--bone);
+}
+.brut-carousel:focus-visible {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+.brut-carousel__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.brut-carousel__track {
+  display: flex;
+  width: 100%;
+  transition: transform var(--carousel-track-transition) var(--ease-snap);
+  will-change: transform;
+}
+.brut-carousel__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  background: var(--paper);
+}
+.brut-carousel__slide + .brut-carousel__slide {
+  border-left: var(--bw-2) solid var(--ink);
+}
+
+/* NAV — prev/next button wrapper, absolutely positioned over the viewport. */
+.brut-carousel__nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  transform: translateY(-50%);
+  padding: 0 var(--sp-3);
+}
+.brut-carousel__btn {
+  pointer-events: auto;
+  width: var(--carousel-btn-size);
+  height: var(--carousel-btn-size);
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--bw-2) solid var(--ink);
+  box-shadow: var(--shadow-2xs);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+.brut-carousel__btn:hover { background: var(--accent); color: var(--ink); }
+.brut-carousel__btn[disabled] {
+  background: var(--scrim-bg-soft);
+  color: var(--fg-3);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.brut-carousel__btn--prev::before { content: "\2039"; }
+.brut-carousel__btn--next::before { content: "\203A"; }
+
+/* DOTS — square indicators, brutalist (no radius). */
+.brut-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--carousel-gap);
+  padding: var(--sp-3);
+  border-top: var(--bw-2) solid var(--ink);
+  background: var(--bone);
+}
+.brut-carousel__dot {
+  width: var(--carousel-dot-size);
+  height: var(--carousel-dot-size);
+  background: var(--paper);
+  border: var(--bw-2) solid var(--ink);
+  padding: 0;
+  cursor: pointer;
+  font-size: 0; /* hide visually-hidden label fallback */
+}
+.brut-carousel__dot:hover { background: var(--accent-soft); }
+.brut-carousel__dot[aria-current="true"] {
+  background: var(--ink);
+}
+
 /* DIALOG */
 .brut-dialog {
   position: fixed;
@@ -2249,8 +2344,8 @@ button.brut-sidebar__group-title::after {
   }
 }
 
-/* PAGER — page navigation buttons. CSS-only; consumer wires links. */
-.brut-pager {
+/* PAGINATION — page navigation buttons. CSS-only; consumer wires links. */
+.brut-pagination {
   display: flex;
   gap: var(--sp-2);
   align-items: center;
@@ -2258,7 +2353,7 @@ button.brut-sidebar__group-title::after {
   padding: 0;
   margin: 0;
 }
-.brut-pager__btn {
+.brut-pagination__btn {
   width: var(--control-lg);
   height: var(--control-lg);
   display: inline-flex;
@@ -2277,17 +2372,17 @@ button.brut-sidebar__group-title::after {
   transition: transform var(--dur-fast) var(--ease-snap),
               box-shadow var(--dur-fast) var(--ease-snap);
 }
-.brut-pager__btn:hover  { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--badge-pad-v) var(--badge-pad-v) 0 0 var(--ink); }
-.brut-pager__btn:active { transform: translate(var(--bw-1), var(--bw-1)); box-shadow: 0 0 0 0 var(--ink); }
-.brut-pager__btn--active {
+.brut-pagination__btn:hover  { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--badge-pad-v) var(--badge-pad-v) 0 0 var(--ink); }
+.brut-pagination__btn:active { transform: translate(var(--bw-1), var(--bw-1)); box-shadow: 0 0 0 0 var(--ink); }
+.brut-pagination__btn--active {
   background: var(--primary);
 }
-.brut-pager__btn[disabled],
-.brut-pager__btn[aria-disabled="true"] {
+.brut-pagination__btn[disabled],
+.brut-pagination__btn[aria-disabled="true"] {
   opacity: 0.5;
   pointer-events: none;
 }
-.brut-pager__gap {
+.brut-pagination__gap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
