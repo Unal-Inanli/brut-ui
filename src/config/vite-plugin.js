@@ -2,6 +2,8 @@ import { resolve } from 'node:path';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS, KNOWN_THEMES } from './define.js';
+import { STATIC_META } from './static-meta.js';
+import { UTILITY_CATEGORIES, BREAKPOINTS } from './utilities-meta.js';
 
 function renamePrefix(code, from, to) {
   return code
@@ -87,6 +89,15 @@ async function generateManifest(cfg, version, root, ctx) {
       validateMetaEntry(meta, ctx);
       return applyPrefixToMeta(meta, cfg.prefix);
     }
+    const staticMeta = STATIC_META.get(name);
+    if (staticMeta) {
+      return applyPrefixToMeta({
+        ...staticMeta,
+        kind: 'static',
+        class: `.${cfg.prefix}-${name}`,
+        selector: null,
+      }, cfg.prefix);
+    }
     return {
       name,
       class: `.${cfg.prefix}-${name}`,
@@ -102,6 +113,8 @@ async function generateManifest(cfg, version, root, ctx) {
     prefix: cfg.prefix,
     themes: KNOWN_THEMES,
     components,
+    utilities: UTILITY_CATEGORIES,
+    breakpoints: BREAKPOINTS,
   };
 }
 

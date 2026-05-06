@@ -26,8 +26,10 @@ import {
 import * as listComponents from './tools/list_components.js';
 import * as getComponent from './tools/get_component.js';
 import * as listThemes from './tools/list_themes.js';
+import * as listUtilities from './tools/list_utilities.js';
+import * as suggestComponent from './tools/suggest_component.js';
 
-const TOOLS = [listComponents, getComponent, listThemes];
+const TOOLS = [listComponents, getComponent, listThemes, listUtilities, suggestComponent];
 
 async function loadManifest() {
   // Resolve relative to this server file so it works whether installed as a

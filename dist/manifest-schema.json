@@ -13,6 +13,14 @@
     "components": {
       "type": "array",
       "items": { "$ref": "#/$defs/component" }
+    },
+    "utilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/utilityCategory" }
+    },
+    "breakpoints": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
     }
   },
   "$defs": {
@@ -47,7 +55,34 @@
         "kind": { "const": "static" },
         "name":     { "type": "string" },
         "class":    { "type": "string" },
-        "selector": { "type": ["string", "null"] }
+        "selector": { "type": ["string", "null"] },
+        "description":  { "type": "string" },
+        "useCases":     { "type": "array", "items": { "type": "string" } },
+        "htmlElements": { "type": "array", "items": { "type": "string" } },
+        "modifiers":    { "type": "array", "items": { "$ref": "#/$defs/modifier" } },
+        "notes":        { "type": "string" },
+        "examples":     { "type": "array", "items": { "$ref": "#/$defs/example" } }
+      }
+    },
+    "modifier": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name":        { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "utilityCategory": {
+      "type": "object",
+      "required": ["category", "description", "classes"],
+      "properties": {
+        "category":    { "type": "string" },
+        "description": { "type": "string" },
+        "classes":     { "type": "array", "items": { "type": "string" } },
+        "responsive":  { "type": "boolean" },
+        "breakpoints": { "type": "array", "items": { "type": "string" } },
+        "pattern":     { "type": "string" },
+        "notes":       { "type": "string" }
       }
     },
     "dataAttr": {
