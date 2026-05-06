@@ -4,6 +4,39 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-05-06
+
+### Added
+
+- **MCP utility & suggestion tools.** `@sprtn/mcp` ships `list_utilities`,
+  `suggest_component`, `list_tokens`, `update_token`, and `add_token`, plus
+  richer static metadata for components that don't emit their own
+  `.meta.js`. Backed by two new modules in `@sprtn/ui`:
+  `src/config/static-meta.js` and `src/config/utilities-meta.js`, both
+  consumed by the manifest emitter.
+- **Manifest enrichment.** `dist/components.json` now includes utility-class
+  metadata and an expanded static surface for non-interactive components.
+  `dist/manifest-schema.json` updated to match.
+- **Contributing guide.** New `CONTRIBUTING.md` plus issue templates under
+  `.github/ISSUE_TEMPLATE/` (bug report, component request, feature
+  request, config).
+
+### Changed
+
+- **README rewritten** for human-first install. Three install paths
+  (`<script>`, `npm`, `npx brut init`), an integration map, and a quick
+  "first build" walkthrough. The script-tag / zero-build adoption story
+  remains the recommended on-ramp.
+- **Vite plugin** (`src/config/vite-plugin.js`) wires the new static and
+  utility metadata into the manifest output.
+
+### Documentation
+
+- New integration guides under `docs-site/integrations/`: Astro, Next.js,
+  Nuxt, plain HTML, SvelteKit, Vite.
+- New foundations pages under `docs-site/foundations/`: fonts, iconography,
+  visual, voice.
+
 ## [1.0.1] — 2026-05-05
 
 ### Fixed
