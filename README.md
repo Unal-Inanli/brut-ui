@@ -41,6 +41,8 @@ import '@sprtn/ui'      // optional JS runtime (data-brut auto-init)
 
 The `exports` map covers Vite, webpack, esbuild, Rollup, Next.js, Astro, SvelteKit, and Nuxt out of the box. See **[integration guides](https://unal-inanli.github.io/brut-ui/integrations/)** for stack-specific walkthroughs.
 
+**One-shot config scaffold.** Run `npx brut init` and you get `brut.config.js` (for the optional Vite plugin) plus a `.mcp.json` that registers the [`@sprtn/mcp`](https://www.npmjs.com/package/@sprtn/mcp) server with Claude Code, Cursor, and Claude Desktop — so AI agents can read your component manifest without crawling source. Flags: `--no-mcp`, `--no-config`, `--force`.
+
 ### Download
 
 Grab the two files from the [latest GitHub release](https://github.com/Unal-Inanli/brut-ui/releases/latest) or copy them out of `node_modules/@sprtn/ui/dist/`.

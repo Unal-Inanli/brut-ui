@@ -44,7 +44,8 @@ brut — BRUT UI Kit CLI
 Usage: brut <command> [options]
 
 Commands:
-  init       Scaffold a brut.config.js in the current directory
+  init       Scaffold brut.config.js and .mcp.json in the current directory
+             Flags: --no-config, --no-mcp, --force
   add        Add components to your config  (brut add btn card)
   theme      Manage themes                  (brut theme new|list)
   migrate    Apply migration rules for deprecated tokens/classes
