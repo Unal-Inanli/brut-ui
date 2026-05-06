@@ -18,7 +18,7 @@ export const inputSchema = {
 
 let cachedIndex = null;
 
-export async function handler({ intent } = {}, manifest) {
+export async function handler({ intent } = {}, { manifest }) {
   if (!intent) throw new Error('The "intent" parameter is required.');
 
   if (!cachedIndex) cachedIndex = buildIndex(manifest);

@@ -8,7 +8,7 @@ export const inputSchema = {
   },
 };
 
-export async function handler({ name } = {}, manifest) {
+export async function handler({ name } = {}, { manifest }) {
   const entry = (manifest.components ?? []).find((c) => c.name === name);
   if (!entry) throw new Error(`Unknown component: ${name}`);
   return entry;

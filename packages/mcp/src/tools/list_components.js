@@ -7,7 +7,7 @@ export const inputSchema = {
   },
 };
 
-export async function handler({ kind } = {}, manifest) {
+export async function handler({ kind } = {}, { manifest }) {
   let components = manifest.components ?? [];
   if (kind) components = components.filter((c) => c.kind === kind);
   return components.map((c) => ({
