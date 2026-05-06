@@ -74,7 +74,7 @@ async function main() {
     return;
   }
   if (argv.includes('--version') || argv.includes('-v')) {
-    process.stdout.write('0.1.0\n');
+    process.stdout.write('0.3.0\n');
     return;
   }
 
@@ -82,7 +82,7 @@ async function main() {
   const context = { manifest, root };
 
   const server = new Server(
-    { name: 'brut', version: '0.1.0' },
+    { name: 'brut', version: '0.3.0' },
     { capabilities: { tools: {} } },
   );
 
