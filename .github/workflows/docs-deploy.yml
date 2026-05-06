@@ -1,9 +1,8 @@
 # Deploys docs-site/ to GitHub Pages.
 #
-# Currently gated to manual dispatch. To enable automatic deploys on
-# pushes to main:
-#   1. In repo Settings → Pages, set "Source" to "GitHub Actions".
-#   2. Uncomment the "push" trigger below.
+# Triggers on pushes to master that touch docs-relevant paths, plus manual
+# dispatch from the Actions tab. Repo Settings → Pages must have "Source"
+# set to "GitHub Actions".
 #
 # Local equivalent of the build job:
 #   pnpm install
@@ -13,17 +12,16 @@ name: Deploy docs site
 
 on:
   workflow_dispatch:
-  # Uncomment to deploy on every push to main:
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - 'docs-site/**'
-  #     - 'preview/**'
-  #     - 'demos/**'
-  #     - 'src/**'
-  #     - 'docs/manifest-schema.md'
-  #     - 'CHANGELOG.md'
-  #     - '.github/workflows/docs-deploy.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'docs-site/**'
+      - 'preview/**'
+      - 'demos/**'
+      - 'src/**'
+      - 'docs/manifest-schema.md'
+      - 'CHANGELOG.md'
+      - '.github/workflows/docs-deploy.yml'
 
 permissions:
   contents: read
