@@ -4,6 +4,26 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-05-07
+
+### Added
+
+- **One-command contributor onboarding.** `pnpm bootstrap` runs the
+  Node-version check, builds `dist/` (so `dist/components.json` exists for
+  the MCP server), and runs `npx brut doctor` for a clean baseline.
+  Implementation in `scripts/bootstrap.js`.
+- **Post-install reminder.** `pnpm install` now nudges first-time
+  contributors toward `pnpm bootstrap` via the `prepare` lifecycle hook
+  (`scripts/post-install-notice.js`). No-ops in CI and after the first
+  successful build.
+
+### Documentation
+
+- README "Contributing" surfaces the `pnpm bootstrap` one-liner so new
+  contributors hit it on the main entry path.
+- CONTRIBUTING "Verify before you push" uses `pnpm build` for consistency
+  with the rest of the page.
+
 ## [1.1.0] — 2026-05-06
 
 ### Added

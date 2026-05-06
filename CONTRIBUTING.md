@@ -130,7 +130,7 @@ The full constraint list lives in
 Run all of these locally. CI runs them too — fail there and you wait.
 
 ```bash
-npm run build                                      # must exit 0
+pnpm build                                         # must exit 0
 
 grep -rE "ui_kits|jsx|text/babel|React|require\(|import .* from " src/ docs/ preview/
 # must print nothing — confirms no framework leakage

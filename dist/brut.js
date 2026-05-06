@@ -58,7 +58,7 @@ var Brut = (function() {
 		Brut.ready = ready;
 		Brut.theme = theme;
 		Brut._components = registered;
-		Brut.version = "1.1.0";
+		Brut.version = "1.2.0";
 		restoreTheme();
 		ready(function() {
 			setTimeout(function() {

@@ -139,6 +139,13 @@ For tooling: `dist/components.json` is a machine-readable enumeration of every c
 
 ## Contributing
 
+```bash
+git clone https://github.com/Unal-Inanli/brut-ui.git
+cd brut-ui && pnpm install && pnpm bootstrap
+```
+
+That's the full local setup — `pnpm bootstrap` builds `dist/`, runs `brut doctor`, and primes the MCP server. Each `git worktree` needs its own `pnpm install && pnpm bootstrap` because `node_modules/` is per-worktree.
+
 PRs welcome. Read **[CONTRIBUTING.md](./CONTRIBUTING.md)** before opening one — it covers the four surfaces every component touches (CSS, JS, preview, docs) and the hard constraints (no deps, no gradients, no soft shadows, no transitions over 140ms).
 
 For AI-orchestrated contributions, **[AGENTS.md](./AGENTS.md)** is the authoritative recipe and **[CLAUDE.md](./CLAUDE.md)** is the orchestration playbook.
