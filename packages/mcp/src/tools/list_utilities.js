@@ -14,7 +14,7 @@ export const inputSchema = {
   },
 };
 
-export async function handler({ category } = {}, manifest) {
+export async function handler({ category } = {}, { manifest }) {
   const utilities = manifest.utilities ?? [];
 
   if (!category) {

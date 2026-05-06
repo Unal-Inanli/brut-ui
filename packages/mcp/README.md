@@ -69,10 +69,22 @@ Restart the client; the `brut` server should appear in its MCP tool list.
 | `list_components` | `{ kind?: 'interactive' \| 'static' }` | Array of `{ name, kind, description, class }` for every component (optionally filtered by kind). |
 | `get_component` | `{ name: string }` *(required)* | Full manifest entry for the named component — class, selector, modifiers, data-attributes, events, form-state, a11y, examples. Throws `Unknown component: <name>` if not found. |
 | `list_themes` | `{}` | Array of built-in theme names (`['brutalist', 'corporate', 'minimal']`). |
+| `list_tokens` | `{ layer?: 'primitives' \| 'semantic' \| 'intent', category?: string }` | All design tokens grouped by layer and category. Each token includes name, value, and inline comment. |
+| `update_token` | `{ token: string, value: string }` *(both required)* | Updates an existing token's value in its source CSS file. Returns `{ token, layer, category, oldValue, newValue, warning }`. |
+| `add_token` | `{ token: string, value: string, layer: string, category?: string, comment?: string }` | Adds a new token to the specified layer and category section. Throws if the token already exists. |
+
+### Read-only tools
 
 Use `list_components` to discover what's available, `get_component` to fetch
 the snippets and props for a specific component, and `list_themes` to surface
 the runtime `data-theme` switcher options.
+
+### Token editing tools
+
+Use `list_tokens` to discover available design tokens, `update_token` to modify
+an existing token (e.g. change the primary accent color), and `add_token` to
+introduce new tokens. Changes are written directly to the source CSS files under
+`src/tokens/` and take effect after a rebuild.
 
 ## CLI
 
