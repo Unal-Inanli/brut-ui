@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://unal-inanli.github.io/brut-ui/
+    about: Install, usage, components, integrations, manifest schema. Most "how do I…" questions are answered here.
+  - name: GitHub Discussions
+    url: https://github.com/Unal-Inanli/brut-ui/discussions
+    about: Open-ended questions, design feedback, and "is this a good fit for…" conversations belong here.

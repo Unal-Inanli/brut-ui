@@ -43,12 +43,41 @@ yarn add @sprtn/ui
 Then load the CSS and (optionally) the JS:
 
 ```js
-import '@sprtn/ui/css'
-import '@sprtn/ui'
+import '@sprtn/ui/css'   // styles
+import '@sprtn/ui'       // optional JS runtime (data-brut auto-init)
 ```
 
 Bundlers like Vite, webpack, esbuild, and Rollup pick up the
-`exports` map and emit only what you import.
+`exports` map and resolve these specifiers without further config.
+
+#### What you can import
+
+The package exposes five subpaths:
+
+| Specifier | Resolves to | When to use |
+| --- | --- | --- |
+| `@sprtn/ui` | `dist/brut.esm.js` | The JS runtime (interactive components). |
+| `@sprtn/ui/css` | `dist/brut.css` | The single stylesheet. Always load this. |
+| `@sprtn/ui/manifest` | `dist/components.json` | Component metadata for tooling and AI agents. |
+| `@sprtn/ui/vite` | `src/config/vite-plugin.js` | Optional Vite plugin (config-driven builds). |
+| `@sprtn/ui/config` | `src/config/define.js` | `defineConfig` helper for `brut.config.js`. |
+
+For stack-specific walkthroughs (Vite, Next.js, Astro, SvelteKit,
+Nuxt, plain HTML), see the **[Integrations](/integrations/)** pages.
+
+::: tip CSS-side `@import` works too
+If your project organizes styles in `.css` files instead of importing
+them from JS, you can write:
+
+```css
+/* anywhere in a CSS file processed by Vite, webpack, esbuild, etc. */
+@import '@sprtn/ui/css';
+```
+
+This is identical to `import '@sprtn/ui/css'` from JS — pick the one
+that matches your project. **It does not work in vanilla browser CSS**
+because bare module specifiers only resolve through a bundler.
+:::
 
 ### Download
 
@@ -153,9 +182,65 @@ hard offset shadow and snaps to the lower-right on click, you're set.
 
 ---
 
+## Troubleshooting
+
+### `Cannot find module '@sprtn/ui/css'`
+
+Your Node version is below 18. The `exports` map in `package.json` is
+a Node 18+ feature. Either upgrade Node, or fall back to deep paths
+that work on every version:
+
+```js
+import '@sprtn/ui/dist/brut.css'
+import '@sprtn/ui/dist/brut.js'
+```
+
+### Components don't activate (switch doesn't toggle, dialog doesn't open, …)
+
+Three possible causes:
+
+1. **`brut.js` isn't loaded.** Check the network tab. The runtime is
+   what wires up `data-brut="…"` elements.
+2. **Markup was inserted after `DOMContentLoaded`.** Auto-init only
+   runs once. Call `Brut.init(rootElement)` after dynamic insertion.
+   Re-init is a no-op.
+3. **The component isn't actually a `data-brut` component.** Static
+   visuals (button, card, badge, alert, layout primitives) need no JS
+   — they work on CSS alone.
+
+### Styles look wrong / token overrides don't apply
+
+Load order. Your custom CSS must be loaded **after** `brut.css` so
+your `:root` overrides win. Check both your import order in JS *and*
+the order of `<link>` tags in HTML.
+
+### Hover shows soft shadows, motion feels slow
+
+You likely have a global `*` selector applying a `transition` or
+`box-shadow` in your own stylesheet. BRUT's tokens use snap motion
+(80–140ms) and hard offset shadows by design — anything global will
+override them. Scope your `*` rules.
+
+### `@import '@sprtn/ui/css'` in vanilla CSS gives a 404
+
+Bare module specifiers only resolve inside a bundler. Use one of
+these instead, depending on your setup:
+
+```css
+/* if your CSS is processed by Vite/webpack/esbuild/Rollup */
+@import '@sprtn/ui/css';
+
+/* if you're loading raw CSS in the browser */
+@import url('https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.css');
+```
+
+---
+
 ## What's next?
 
+- **[Integrations](/integrations/)** — Vite, Next.js, Astro, SvelteKit, Nuxt, plain HTML.
 - **[Components](/components/)** — 150+ components, organized by category.
 - **[Examples](/examples)** — full-page templates built with BRUT.
+- **[Foundations](/foundations/visual)** — the visual rules every screen obeys.
 - **[Manifest schema](/reference/manifest)** — for tooling and AI agents.
 - **[GitHub](https://github.com/Unal-Inanli/brut-ui)** — source, issues, releases.
