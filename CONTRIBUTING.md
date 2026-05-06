@@ -25,8 +25,11 @@ They drop in a `<link>` tag or `npm install @sprtn/ui` and write
 
 ## Prerequisites
 
-- **Node ≥18.** That's it. There are no other system requirements.
-- A package manager (`npm`, `pnpm`, or `yarn`).
+- **Node ≥20.** A `.nvmrc` is committed — run `nvm use` if you have nvm.
+- **pnpm.** This repo is a pnpm workspace; `npm` and `yarn` won't resolve
+  `workspace:*` references. The `packageManager` field is pinned, so
+  Corepack (bundled with Node 20+) will fetch the right pnpm version
+  automatically. If `pnpm` isn't found, run `corepack enable` once.
 - A modern browser for testing.
 
 If you only want to *use* the kit, you don't need Node at all — see
@@ -39,14 +42,29 @@ the [install docs](https://unal-inanli.github.io/brut-ui/get-started).
 ```bash
 git clone https://github.com/Unal-Inanli/brut-ui.git
 cd brut-ui
-npm install
-npm run dev          # starts Vite with HMR on the preview pages
-npm run build        # produces dist/brut.css, dist/brut.js, dist/components.json
+pnpm install
+pnpm bootstrap        # builds dist/, runs doctor, primes the MCP server
+```
+
+`pnpm bootstrap` runs `pnpm build` (so `dist/components.json` exists for
+the MCP server) and `npx brut doctor` (so you catch convention drift
+before pushing). After bootstrap, **restart Claude Code** so it loads
+`.mcp.json` and registers the local `brut` MCP server — Claude can then
+query the component manifest directly without crawling source.
+
+Then:
+
+```bash
+pnpm dev              # starts Vite with HMR on the preview pages
+pnpm preview          # serve the built dist/ (rarely needed)
 ```
 
 Open any file under `preview/` in your browser to see a single
 component in isolation. Open `docs/index.html` for the full Bootstrap-
 style component reference.
+
+Working in a `git worktree`? Each worktree needs its own `pnpm install`
+and `pnpm bootstrap` because `node_modules/` is per-worktree.
 
 ---
 

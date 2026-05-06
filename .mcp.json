@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "brut": {
+      "command": "pnpm",
+      "args": ["exec", "brut-mcp"]
+    }
+  }
+}
