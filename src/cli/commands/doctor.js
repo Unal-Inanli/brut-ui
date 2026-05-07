@@ -1,6 +1,10 @@
 // Doctor: validates a brut workspace.
 // Failure-level checks (exit 1): UNKNOWN_CLASS, HARDCODED_COLOR, HARDCODED_PX, MISSING_JS.
-// Warning-level checks (exit 0): MISSING_META — interactive component lacks a sidecar .meta.js.
+// Warning-level checks (exit 0): MISSING_META — interactive component lacks a sidecar .meta.js;
+//                                SURFACE_COVERAGE_GAP — manifest ↔ preview ↔ docs three-surface
+//                                drift; DOCS_SECTION_SHAPE — docs/index.html section deviates from
+//                                canonical shape; SNIPPET_PREVIEW_DRIFT — modifier set in a docs
+//                                section's rendered preview disagrees with its escaped snippet.
 // Informational checks (exit 0): META_DRIFT — meta declares modifiers/events/selector that
 //                                drift from the runtime JS or components.css.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -8,8 +12,65 @@ import { resolve, extname, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS } from '../../config/define.js';
 
-const WARNING_TYPES = new Set(['MISSING_META']);
+const WARNING_TYPES = new Set([
+  'MISSING_META',
+  'SURFACE_COVERAGE_GAP',
+  'DOCS_SECTION_SHAPE',
+  'SNIPPET_PREVIEW_DRIFT',
+]);
 const INFO_TYPES = new Set(['META_DRIFT', 'CLASS_ROOT_EXCEPTION', 'EXAMPLE_DRIFT']);
+
+// Manifest names whose docs id / preview basename uses an irregular plural
+// or a docs alias (e.g. table-filter is documented as "table-global-filter"
+// alongside other table sub-pages). Regular plurals (+s, +es) are auto-derived;
+// only list exceptions here.
+const PLURAL_ALIASES = {
+  btn:            ['buttons'],
+  crumbs:         ['breadcrumbs'],
+  switch:         ['toggles'],
+  'table-filter': ['table-global-filter'],
+};
+
+// Docs section ids that legitimately do not map to a single manifest component
+// — foundations, install/build, validation umbrella, layout/form aggregations,
+// and table sub-pages that document brut-table modifiers (sticky, responsive)
+// rather than separate components.
+const FOUNDATION_DOCS_IDS = new Set([
+  'borders', 'build', 'color', 'colors', 'install', 'shadows', 'spacing',
+  'typography', 'typography-primitives', 'utilities', 'validation',
+  'field', 'fieldset', 'form-layouts', 'grid-12col', 'input-group',
+  'layout-container', 'layout-grid', 'layout-misc', 'layout-section',
+  'layout-spacer', 'layout-stack',
+  'table-sticky', 'table-responsive',
+]);
+
+// preview/components-<basename>.html files that intentionally bundle multiple
+// components (composite previews) or document a brut-table modifier pattern
+// rather than a standalone component.
+const COMPOSITE_PREVIEW_BASENAMES = new Set([
+  'forms', 'form-layouts', 'grid', 'layout', 'modal',
+  'table-responsive', 'table-sticky',
+]);
+
+// Manifest components whose docs are intentionally aggregated under umbrella
+// sections (typography, typography-primitives, layout-*) — not expected to have
+// their own preview page or top-level docs section.
+const AGGREGATED_PRIMITIVES = new Set([
+  // typography primitives
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'lead', 'prose', 'quote', 'small',
+  'mono', 'kbd', 'code', 'label', 'link', 'overline', 'caption', 'display',
+  'body', 'pre', 'list',
+  // layout primitives
+  'container', 'col', 'row', 'stack', 'cluster', 'bar', 'hero', 'section',
+  'aspect', 'divider', 'notice', 'stat',
+  // BEM sub-elements documented inline in their parent's section
+  'counter', // .brut-field__counter — sub-element of brut-field
+  // composed-primitive aggregations (documented inside an umbrella section)
+  'avatar-group', // documented inside the "avatars" section
+  'grid',         // documented inside the "layout-grid" section
+  // host/utility components without standalone demos
+  'theme-switcher', 'toast-host',
+]);
 
 // Components whose CSS class root intentionally diverges from the
 // `.brut-<name>` convention. Each entry must declare the exact class
@@ -302,6 +363,189 @@ export default async function doctor(args) {
             });
           }
         }
+      }
+    }
+  }
+
+  // SURFACE_COVERAGE_GAP — every manifest component should have a class block,
+  // a preview page (preview/components-<name>.html), and a docs section
+  // (<section class="docs-section" id="<name>">) — modulo allowlists for
+  // foundations, composites, and primitives aggregated under umbrella sections.
+  // Inverse: orphan docs sections / preview files are also flagged.
+  // Only runs in a brut workspace (manifest + docs + preview must all exist).
+  const manifestPath = resolve(root, 'dist/components.json');
+  const docsIndexPath = resolve(root, 'docs/index.html');
+  const previewDir = resolve(root, 'preview');
+  if (existsSync(manifestPath) && existsSync(docsIndexPath) && existsSync(previewDir)) {
+    let manifest = null;
+    try {
+      manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+    } catch {
+      // malformed manifest is reported elsewhere (check-manifest.js); skip silently
+    }
+    if (manifest && Array.isArray(manifest.components)) {
+      const docsHtml = readFileSync(docsIndexPath, 'utf8');
+      const docsSectionRe = /<section\s+class="docs-section"\s+id="([^"]+)"/g;
+      const docsSectionIds = new Set();
+      for (const m of docsHtml.matchAll(docsSectionRe)) docsSectionIds.add(m[1]);
+
+      const previewBasenames = new Set();
+      for (const f of readdirSync(previewDir)) {
+        const m = /^components-([a-z][a-z0-9-]*)\.html$/.exec(f);
+        if (m) previewBasenames.add(m[1]);
+      }
+
+      const candidatesFor = (name) => {
+        const out = [name, `${name}s`, `${name}es`];
+        if (PLURAL_ALIASES[name]) out.push(...PLURAL_ALIASES[name]);
+        return out;
+      };
+
+      const matchedDocsIds = new Set();
+      const matchedPreviewBasenames = new Set();
+
+      for (const entry of manifest.components) {
+        if (!entry || typeof entry.name !== 'string') continue;
+        const name = entry.name;
+        if (AGGREGATED_PRIMITIVES.has(name)) continue;
+
+        const cands = candidatesFor(name);
+        let docsHit = null;
+        let previewHit = null;
+        for (const c of cands) {
+          if (!docsHit && docsSectionIds.has(c)) docsHit = c;
+          if (!previewHit && previewBasenames.has(c)) previewHit = c;
+        }
+        if (docsHit) matchedDocsIds.add(docsHit);
+        if (previewHit) matchedPreviewBasenames.add(previewHit);
+
+        if (!docsHit) {
+          issues.push({
+            type: 'SURFACE_COVERAGE_GAP',
+            file: 'docs/index.html',
+            message: `Component "${name}" has class+manifest but no docs section (expected one of: ${cands.join(', ')})`,
+          });
+        }
+        if (!previewHit) {
+          issues.push({
+            type: 'SURFACE_COVERAGE_GAP',
+            file: `preview/components-${name}.html`,
+            message: `Component "${name}" has class+manifest but no preview page (expected one of: ${cands.map(c => `components-${c}.html`).join(', ')})`,
+          });
+        }
+      }
+
+      // Orphan docs sections (id not matched by any manifest component, not in foundation allowlist)
+      for (const id of docsSectionIds) {
+        if (matchedDocsIds.has(id)) continue;
+        if (FOUNDATION_DOCS_IDS.has(id)) continue;
+        issues.push({
+          type: 'SURFACE_COVERAGE_GAP',
+          file: 'docs/index.html',
+          message: `Docs section "${id}" matches no manifest component (add to manifest or to FOUNDATION_DOCS_IDS allowlist)`,
+        });
+      }
+
+      // Orphan preview files (basename not matched, not in composite allowlist)
+      for (const basename of previewBasenames) {
+        if (matchedPreviewBasenames.has(basename)) continue;
+        if (COMPOSITE_PREVIEW_BASENAMES.has(basename)) continue;
+        issues.push({
+          type: 'SURFACE_COVERAGE_GAP',
+          file: `preview/components-${basename}.html`,
+          message: `Preview "${basename}" matches no manifest component (add to manifest or to COMPOSITE_PREVIEW_BASENAMES allowlist)`,
+        });
+      }
+
+      // DOCS_SECTION_SHAPE — every docs section should have <h2>, <p class="lead">,
+      // at least one <div class="docs-preview">, and at least one <pre class="docs-snippet">.
+      // Multi-preview / multi-snippet sections are allowed: pedagogical "docs-block"
+      // wrapped previews (e.g. progress) and paired (preview, snippet) examples
+      // separated by <h3> sub-headings (e.g. pagination) are both legitimate.
+      // Foundation sections are exempt entirely.
+      const sectionBodyRe = /<section\s+class="docs-section"\s+id="([^"]+)"[^>]*>([\s\S]*?)<\/section>/g;
+      for (const m of docsHtml.matchAll(sectionBodyRe)) {
+        const id = m[1];
+        const body = m[2];
+        if (FOUNDATION_DOCS_IDS.has(id)) continue;
+        const missing = [];
+        if (!/<h2[\s>]/.test(body)) missing.push('<h2>');
+        if (!/<p\s+class="lead"/.test(body)) missing.push('<p class="lead">');
+        const previewCount = (body.match(/<div\s+class="docs-preview(?:\s|")/g) || []).length;
+        if (previewCount === 0) missing.push('<div class="docs-preview">');
+        const snippetCount = (body.match(/<pre\s+class="docs-snippet"/g) || []).length;
+        if (snippetCount === 0) missing.push('<pre class="docs-snippet">');
+        if (missing.length > 0) {
+          issues.push({
+            type: 'DOCS_SECTION_SHAPE',
+            file: 'docs/index.html',
+            message: `Section "${id}" is missing/non-canonical: ${missing.join(', ')}`,
+          });
+        }
+      }
+
+      // SNIPPET_PREVIEW_DRIFT — the set of `.brut-<root>--<modifier>` fragments
+      // inside each section's <div class="docs-preview"> must equal the set
+      // inside its <pre class="docs-snippet"> (after HTML-decoding). The check is
+      // scoped to the section's OWN component root (derived from the section id
+      // and its singularizations / aliases) — incidental modifiers on nested
+      // helper components (e.g. a brut-btn--sm trigger inside a popover demo)
+      // are intentionally ignored. This is the core "Buttons preview shows 7
+      // variants, snippet shows 5" pain.
+      const decodeEntities = (s) => s
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&amp;/g, '&');
+      const sectionRoots = (id) => {
+        const cands = new Set([id]);
+        if (id.endsWith('es')) cands.add(id.slice(0, -2));
+        if (id.endsWith('s')) cands.add(id.slice(0, -1));
+        for (const [singular, plurals] of Object.entries(PLURAL_ALIASES)) {
+          if (plurals.includes(id)) cands.add(singular);
+        }
+        return [...cands];
+      };
+      const collectScopedModifiers = (chunk, roots) => {
+        const set = new Set();
+        for (const root of roots) {
+          const escaped = root.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const re = new RegExp(`\\b${prefix}-${escaped}--([a-z][a-z0-9-]*)`, 'g');
+          for (const mm of chunk.matchAll(re)) set.add(`${root}--${mm[1]}`);
+        }
+        return set;
+      };
+      // Multi-preview/multi-snippet sections are unioned: any modifier shown
+      // anywhere in the section's previews must appear somewhere in the section's
+      // snippets (and vice versa).
+      const allPreviewsRe = /<div\s+class="docs-preview[^"]*"[^>]*>([\s\S]*?)(?=<pre\s+class="docs-snippet"|<h3[\s>]|<\/section>|<div\s+class="docs-block")/g;
+      const allSnippetsRe = /<pre\s+class="docs-snippet"[^>]*>([\s\S]*?)<\/pre>/g;
+      for (const m of docsHtml.matchAll(sectionBodyRe)) {
+        const id = m[1];
+        const body = m[2];
+        if (FOUNDATION_DOCS_IDS.has(id)) continue;
+        const roots = sectionRoots(id);
+        const previewMods = new Set();
+        const snippetMods = new Set();
+        for (const pm of body.matchAll(allPreviewsRe)) {
+          for (const v of collectScopedModifiers(pm[1], roots)) previewMods.add(v);
+        }
+        for (const sm of body.matchAll(allSnippetsRe)) {
+          for (const v of collectScopedModifiers(decodeEntities(sm[1]), roots)) snippetMods.add(v);
+        }
+        if (previewMods.size === 0 && snippetMods.size === 0) continue;
+        const onlyPreview = [...previewMods].filter(x => !snippetMods.has(x));
+        const onlySnippet = [...snippetMods].filter(x => !previewMods.has(x));
+        if (onlyPreview.length === 0 && onlySnippet.length === 0) continue;
+        const parts = [];
+        if (onlyPreview.length) parts.push(`preview-only: ${onlyPreview.map(x => `--${x.split('--')[1]}`).join(', ')}`);
+        if (onlySnippet.length) parts.push(`snippet-only: ${onlySnippet.map(x => `--${x.split('--')[1]}`).join(', ')}`);
+        issues.push({
+          type: 'SNIPPET_PREVIEW_DRIFT',
+          file: 'docs/index.html',
+          message: `Section "${id}" preview/snippet modifier sets differ — ${parts.join('; ')}`,
+        });
       }
     }
   }

@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Range preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .stack { display: flex; flex-direction: column; gap: var(--sp-4); max-width: 480px; }
+</style>
+</head>
+<body>
+
+<h2>Default</h2>
+<div class="stack">
+  <input class="brut-range" type="range" min="0" max="100" value="32" />
+  <input class="brut-range" type="range" min="0" max="100" value="60" />
+  <input class="brut-range" type="range" min="0" max="100" value="85" />
+</div>
+
+<h2>Stepped</h2>
+<div class="stack">
+  <label>
+    Volume
+    <input class="brut-range" type="range" min="0" max="10" step="1" value="7" />
+  </label>
+  <label>
+    Brightness
+    <input class="brut-range" type="range" min="0" max="100" step="5" value="40" />
+  </label>
+</div>
+
+<h2>Disabled</h2>
+<div class="stack">
+  <input class="brut-range" type="range" min="0" max="100" value="50" disabled />
+</div>
+
+<div data-brut="theme-switcher"></div>
+</body></html>

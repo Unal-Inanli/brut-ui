@@ -545,7 +545,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- BUTTONS -->
       <section class="docs-section" id="buttons">
         <h2>Buttons</h2>
-        <p class="lead">Hard border, offset shadow, lifts on hover, stamps on press.</p>
+        <p class="lead">Brutalist button with thick border, shadow, and hover lift effect. Works on button, anchor, and input elements.</p>
         <div class="docs-preview">
           <button class="brut-btn">DEFAULT</button>
           <button class="brut-btn brut-btn--primary">PRIMARY</button>
@@ -558,6 +558,8 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;button class="brut-btn"&gt;DEFAULT&lt;/button&gt;
 &lt;button class="brut-btn brut-btn--primary"&gt;PRIMARY&lt;/button&gt;
 &lt;button class="brut-btn brut-btn--ink"&gt;INK&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--pink"&gt;PINK&lt;/button&gt;
+&lt;button class="brut-btn brut-btn--lime"&gt;LIME&lt;/button&gt;
 &lt;button class="brut-btn brut-btn--sm"&gt;SMALL&lt;/button&gt;
 &lt;button class="brut-btn brut-btn--lg"&gt;LARGE&lt;/button&gt;</pre>
       </section>
@@ -565,6 +567,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- BADGES -->
       <section class="docs-section" id="badges">
         <h2>Badges</h2>
+        <p class="lead">Compact inline label with semantic color variants for status, count, or category indicators.</p>
         <div class="docs-preview">
           <span class="brut-badge">DEFAULT</span>
           <span class="brut-badge brut-badge--ok">OK</span>
@@ -574,7 +577,9 @@ border: var(--bw-6) solid var(--ink);</pre>
         </div>
         <pre class="docs-snippet">&lt;span class="brut-badge"&gt;DEFAULT&lt;/span&gt;
 &lt;span class="brut-badge brut-badge--ok"&gt;OK&lt;/span&gt;
-&lt;span class="brut-badge brut-badge--err"&gt;ERR&lt;/span&gt;</pre>
+&lt;span class="brut-badge brut-badge--warn"&gt;WARN&lt;/span&gt;
+&lt;span class="brut-badge brut-badge--err"&gt;ERR&lt;/span&gt;
+&lt;span class="brut-badge brut-badge--info"&gt;INFO&lt;/span&gt;</pre>
       </section>
 
       <!-- CARDS -->
@@ -1066,6 +1071,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- TEXTAREA -->
       <section class="docs-section" id="textarea">
         <h2>Textarea</h2>
+        <p class="lead">Multi-line text input with the same brutalist border, focus ring, and validation states as brut-input.</p>
         <div class="docs-preview docs-preview--block">
           <textarea class="brut-textarea" placeholder="Make it loud." style="max-width:480px;">Ship loud. Ship today.</textarea>
         </div>
@@ -1174,18 +1180,26 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;label class="brut-switch" data-brut="switch"&gt;
   &lt;input type="checkbox" hidden /&gt;
   &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="brut-switch brut-switch--on" data-brut="switch"&gt;
+  &lt;input type="checkbox" hidden checked /&gt;
+  &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
 &lt;/label&gt;</pre>
       </section>
 
       <!-- CHECKBOXES -->
       <section class="docs-section" id="checkboxes">
         <h2>Checkboxes</h2>
+        <p class="lead">Visual checkbox label whose checked state is mirrored by an inner hidden &lt;input type="checkbox"&gt;, so it posts with the form natively.</p>
         <div class="docs-preview">
           <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden /></label>
           <label class="brut-checkbox brut-checkbox--on" data-brut="checkbox"><input type="checkbox" hidden checked /></label>
         </div>
         <pre class="docs-snippet">&lt;label class="brut-checkbox" data-brut="checkbox"&gt;
   &lt;input type="checkbox" hidden /&gt;
+&lt;/label&gt;
+&lt;label class="brut-checkbox brut-checkbox--on" data-brut="checkbox"&gt;
+  &lt;input type="checkbox" hidden checked /&gt;
 &lt;/label&gt;</pre>
       </section>
 
@@ -1199,12 +1213,16 @@ border: var(--bw-6) solid var(--ink);</pre>
         </div>
         <pre class="docs-snippet">&lt;label class="brut-radio" data-brut="radio"&gt;
   &lt;input type="radio" name="size" value="md" hidden /&gt;
+&lt;/label&gt;
+&lt;label class="brut-radio brut-radio--on" data-brut="radio"&gt;
+  &lt;input type="radio" name="size" value="md" hidden checked /&gt;
 &lt;/label&gt;</pre>
       </section>
 
       <!-- ALERTS -->
       <section class="docs-section" id="alerts">
         <h2>Alerts</h2>
+        <p class="lead">Notification banner with icon slot and semantic color variants for success, warning, error, and info states.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-alert brut-alert--ok">
             <div class="brut-alert__icon">✓</div>
@@ -1226,6 +1244,18 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;div class="brut-alert brut-alert--ok"&gt;
   &lt;div class="brut-alert__icon"&gt;✓&lt;/div&gt;
   &lt;div&gt;&lt;strong&gt;Shipped.&lt;/strong&gt; Build is live.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="brut-alert brut-alert--warn"&gt;
+  &lt;div class="brut-alert__icon"&gt;!&lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;Heads up.&lt;/strong&gt; This action is irreversible.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="brut-alert brut-alert--err"&gt;
+  &lt;div class="brut-alert__icon"&gt;✕&lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;Failed.&lt;/strong&gt; Try again or check logs.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="brut-alert brut-alert--info"&gt;
+  &lt;div class="brut-alert__icon"&gt;i&lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;FYI.&lt;/strong&gt; Maintenance window starts Sunday.&lt;/div&gt;
 &lt;/div&gt;</pre>
       </section>
 
@@ -1341,10 +1371,24 @@ border: var(--bw-6) solid var(--ink);</pre>
           </div>
         </div>
 
-        <pre class="docs-snippet">&lt;div class="brut-progress" style="--progress: 65;"&gt;
+        <pre class="docs-snippet">&lt;!-- Default with optional label --&gt;
+&lt;div class="brut-progress" style="--progress: 65;"&gt;
   &lt;div class="brut-progress__bar"&gt;&lt;/div&gt;
   &lt;span class="brut-progress__label"&gt;65%&lt;/span&gt;
 &lt;/div&gt;
+
+&lt;!-- Sizes: --sm | (default) | --lg --&gt;
+&lt;div class="brut-progress brut-progress--sm" style="--progress: 50;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="brut-progress brut-progress--lg" style="--progress: 50;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;!-- Semantic colors: --success | --danger | --info | --warning --&gt;
+&lt;div class="brut-progress brut-progress--success" style="--progress: 80;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="brut-progress brut-progress--danger"  style="--progress: 30;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="brut-progress brut-progress--info"    style="--progress: 60;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="brut-progress brut-progress--warning" style="--progress: 45;"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;!-- Indeterminate (no --progress value needed) --&gt;
+&lt;div class="brut-progress brut-progress--indeterminate"&gt;&lt;div class="brut-progress__bar"&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;!-- JS-driven --&gt;
 &lt;div class="brut-progress" data-brut="progress" data-brut-value="75"&gt;
@@ -1517,6 +1561,8 @@ border: var(--bw-6) solid var(--ink);</pre>
         <pre class="docs-snippet">&lt;div class="brut-tags"&gt;
   &lt;span class="brut-tag"&gt;UX&lt;/span&gt;
   &lt;span class="brut-tag brut-tag--lime"&gt;CSS&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--pink"&gt;DESIGN&lt;/span&gt;
+  &lt;span class="brut-tag brut-tag--ink"&gt;PRO&lt;/span&gt;
 &lt;/div&gt;
 &lt;div class="brut-tags"&gt;
   &lt;span class="brut-tag brut-tag--ok"&gt;OK&lt;/span&gt;
@@ -1893,6 +1939,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- TABS -->
       <section class="docs-section" id="tabs">
         <h2>Tabs</h2>
+        <p class="lead">One-of-N panel switcher: clicking or arrow-keying a tab reveals the panel whose id matches the tab's aria-controls attribute.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-tabs">
             <button class="brut-tab brut-tab--on">OVERVIEW</button>

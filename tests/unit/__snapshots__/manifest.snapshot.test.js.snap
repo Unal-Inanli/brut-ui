@@ -3,7 +3,7 @@
 exports[`dist/components.json schema snapshot > component counts are stable (interactive vs static) 1`] = `
 {
   "interactive": 35,
-  "static": 49,
+  "static": 53,
 }
 `;
 

@@ -230,6 +230,29 @@ const entries = [
     ],
   },
   {
+    name: 'badge',
+    description: 'Compact inline label with semantic color variants for status, count, or category indicators.',
+    useCases: ['status indicator', 'count or numeric tag', 'category label', 'inline tag', 'metadata pill'],
+    htmlElements: ['span', 'small', 'div'],
+    modifiers: [
+      { name: '--ok', description: 'Success state — green background' },
+      { name: '--warn', description: 'Warning state — amber background' },
+      { name: '--err', description: 'Error state — red background' },
+      { name: '--info', description: 'Informational state — blue background' },
+    ],
+    notes: 'Inline by default. Use semantic modifiers for status badges; default badge uses bone background for neutral counts or categories. Pair with text content or numbers — keep content short.',
+    examples: [
+      {
+        title: 'Status badge inline with text',
+        html: '<p>Build status: <span class="brut-badge brut-badge--ok">PASSING</span></p>',
+      },
+      {
+        title: 'Notification count badge',
+        html: '<button class="brut-btn">Inbox <span class="brut-badge brut-badge--err">3</span></button>',
+      },
+    ],
+  },
+  {
     name: 'alert',
     description: 'Notification banner with icon slot and semantic color variants for success, warning, error, and info states.',
     useCases: ['form validation message', 'system notification', 'success confirmation', 'error message', 'info callout'],
@@ -249,6 +272,171 @@ const entries = [
       {
         title: 'Error alert',
         html: '<div class="brut-alert brut-alert--err">\n  <div class="brut-alert__icon">!</div>\n  <div>Something went wrong. Please try again.</div>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'textarea',
+    description: 'Multi-line text input with the same brutalist border, focus ring, and validation states as brut-input.',
+    useCases: ['comment field', 'message body', 'description input', 'multi-line free-text', 'code paste area'],
+    htmlElements: ['textarea'],
+    modifiers: [
+      { name: '--sm', description: 'Small size — reduced padding and font size' },
+      { name: '--lg', description: 'Large size — increased padding and font size' },
+      { name: '--err', description: 'Error state — red border accent' },
+      { name: '--ok', description: 'Success state — green border accent' },
+    ],
+    notes: 'Always set a rows attribute or a height for predictable sizing. Validation state modifiers are also driven natively via :user-invalid / :user-valid.',
+    examples: [
+      {
+        title: 'Default textarea',
+        html: '<textarea class="brut-textarea" rows="4" placeholder="Type a message..."></textarea>',
+      },
+      {
+        title: 'Error state',
+        html: '<textarea class="brut-textarea brut-textarea--err" rows="4">Required.</textarea>',
+      },
+    ],
+  },
+  {
+    name: 'toast',
+    description: 'Transient banner notification with icon slot, semantic color variants, and dismiss affordance — auto-removed by the toast host.',
+    useCases: ['transient success message', 'undo prompt', 'background-task completion', 'soft error', 'system info'],
+    htmlElements: ['div'],
+    modifiers: [
+      { name: '--ok', description: 'Success state — green background' },
+      { name: '--warn', description: 'Warning state — amber background' },
+      { name: '--err', description: 'Error state — red background' },
+      { name: '--info', description: 'Informational state — blue background' },
+      { name: '--leaving', description: 'Exit state — fades to opacity 0; used by the toast host during teardown' },
+    ],
+    notes: 'Toasts mount inside a brut-toast-host container that handles stacking and auto-dismiss timers. The --leaving modifier is applied programmatically and should not appear in static markup.',
+    examples: [
+      {
+        title: 'Success toast',
+        html: '<div class="brut-toast brut-toast--ok">\n  <div class="brut-toast__icon">✓</div>\n  <div class="brut-toast__msg"><strong>Saved.</strong> Your changes are live.</div>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'tag',
+    description: 'Removable inline pill for filters, selections, or category labels — with semantic and accent color variants.',
+    useCases: ['active filter chip', 'selected category', 'inline metadata', 'taxonomy label', 'token in a filter bar'],
+    htmlElements: ['span', 'button', 'a'],
+    modifiers: [
+      { name: '--ink', description: 'Dark background with light text' },
+      { name: '--lime', description: 'Pop-lime accent background' },
+      { name: '--pink', description: 'Pop-pink accent background' },
+      { name: '--blue', description: 'Pop-blue accent background — light text' },
+      { name: '--ok', description: 'Success state — green background' },
+      { name: '--warn', description: 'Warning state — amber background' },
+      { name: '--err', description: 'Error state — red background — light text' },
+      { name: '--info', description: 'Informational state — blue background — light text' },
+    ],
+    notes: 'Tags are inline and content-sized. Use semantic modifiers for status pills; accent modifiers (ink/lime/pink/blue) for category or filter chips. Combine with brut-tag-input for chip-entry fields.',
+    examples: [
+      {
+        title: 'Filter chip',
+        html: '<span class="brut-tag brut-tag--lime">draft</span>',
+      },
+      {
+        title: 'Status pill',
+        html: '<span class="brut-tag brut-tag--ok">verified</span>',
+      },
+    ],
+  },
+  {
+    name: 'avatar-group',
+    description: 'Overlapping stack of brut-avatar elements for compact roster display, with an optional trailing overflow count.',
+    useCases: ['team roster', 'shared-with list', 'attendee preview', 'collaborator stack'],
+    htmlElements: ['span', 'div'],
+    modifiers: [],
+    notes: 'Wrap a row of brut-avatar children. Append a brut-avatar with brut-avatar-group__more to show the overflow count (+N).',
+    examples: [
+      {
+        title: 'Roster with overflow count',
+        html: '<span class="brut-avatar-group">\n  <span class="brut-avatar" style="background: var(--pop-pink);">JM</span>\n  <span class="brut-avatar" style="background: var(--pop-lime);">AD</span>\n  <span class="brut-avatar brut-avatar-group__more">+8</span>\n</span>',
+      },
+    ],
+  },
+  {
+    name: 'crumbs',
+    description: 'Hard-edged breadcrumb path navigation — ordered list with link, separator, and current-item slots.',
+    useCases: ['page path', 'navigation hierarchy', 'site location indicator', 'wizard step trail'],
+    htmlElements: ['ol', 'nav'],
+    modifiers: [
+      { name: '--sm', description: 'Small size — reduced padding and font size' },
+    ],
+    notes: 'Use ol > li.brut-crumbs__item with brut-crumbs__link, brut-crumbs__sep, and brut-crumbs__current sub-elements. Mark the current page with aria-current="page" on the last item.',
+    examples: [
+      {
+        title: 'Three-level breadcrumb',
+        html: '<ol class="brut-crumbs">\n  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="/">Home</a></li>\n  <li class="brut-crumbs__sep">/</li>\n  <li class="brut-crumbs__item"><a class="brut-crumbs__link" href="/settings">Settings</a></li>\n  <li class="brut-crumbs__sep">/</li>\n  <li class="brut-crumbs__item brut-crumbs__current" aria-current="page">Profile</li>\n</ol>',
+      },
+    ],
+  },
+  {
+    name: 'empty',
+    description: 'Empty-state placeholder with icon slot, title, body, and optional action button — for zero-data screens.',
+    useCases: ['no search results', 'empty inbox', 'unconfigured feature', 'first-time-user state'],
+    htmlElements: ['div', 'section'],
+    modifiers: [],
+    notes: 'Compose with brut-empty__icon, brut-empty__title, brut-empty__body, and an optional .brut-btn for the primary action.',
+    examples: [
+      {
+        title: 'No-results empty state',
+        html: '<div class="brut-empty">\n  <div class="brut-empty__icon">∅</div>\n  <h3 class="brut-empty__title">Nothing here yet</h3>\n  <p class="brut-empty__body">Try a different filter or add your first item.</p>\n  <button class="brut-btn brut-btn--primary">Add item</button>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'rows',
+    description: 'Settings-style list with leading slot, title and subtitle main, and trailing slot — for users, options, or configurable items.',
+    useCases: ['settings list', 'user/team list', 'notification preferences', 'feature toggles list'],
+    htmlElements: ['ul', 'ol'],
+    modifiers: [
+      { name: '--bordered', description: 'Outer ink frame with row dividers' },
+      { name: '--clickable', description: 'Highlights rows on hover for actionable lists' },
+    ],
+    notes: 'Each li.brut-rows__item contains a brut-rows__lead, brut-rows__main (with __title and __sub), and brut-rows__trail. Use --bordered + --clickable together for tappable settings rows.',
+    examples: [
+      {
+        title: 'Bordered settings row',
+        html: '<ul class="brut-rows brut-rows--bordered">\n  <li class="brut-rows__item">\n    <span class="brut-rows__lead"><span class="brut-avatar">JD</span></span>\n    <div class="brut-rows__main">\n      <span class="brut-rows__title">Jane Doe</span>\n      <span class="brut-rows__sub">jane@example.com</span>\n    </div>\n    <span class="brut-rows__trail"><span class="brut-badge brut-badge--ok">OK</span></span>\n  </li>\n</ul>',
+      },
+    ],
+  },
+  {
+    name: 'table-toolbar',
+    description: 'Header row above a brut-table with three slots — title, search, actions — anchoring filter and bulk-action affordances.',
+    useCases: ['data-table header', 'list page toolbar', 'search-and-filter strip', 'bulk-action bar'],
+    htmlElements: ['div'],
+    modifiers: [
+      { name: '--bare', description: 'No border or shadow — for use inside cards' },
+    ],
+    notes: 'Place above a brut-table. Compose with brut-table-toolbar__title, brut-table-toolbar__search, brut-table-toolbar__actions sub-elements.',
+    examples: [
+      {
+        title: 'Toolbar with search and actions',
+        html: '<div class="brut-table-toolbar">\n  <div class="brut-table-toolbar__title">Customers</div>\n  <div class="brut-table-toolbar__search">\n    <input class="brut-input" type="search" placeholder="Search…"/>\n  </div>\n  <div class="brut-table-toolbar__actions">\n    <button class="brut-btn brut-btn--primary">Add</button>\n  </div>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'row',
+    description: 'Bootstrap-parity 12-column grid row container — flex parent that holds .brut-col children with gap and gutter modifiers.',
+    useCases: ['12-column form layout', 'product grid row', 'dashboard widget row', 'nav segment row'],
+    htmlElements: ['div'],
+    modifiers: [
+      { name: '--tight', description: 'Tight gap (--sp-2) between columns' },
+      { name: '--loose', description: 'Loose gap (--sp-10) between columns' },
+      { name: '--no-gutter', description: 'Zero gap — flush columns' },
+    ],
+    notes: 'Pair with .brut-col / .brut-col--N child columns. Use brut-grid for non-12-column layouts.',
+    examples: [
+      {
+        title: 'Two-column row',
+        html: '<div class="brut-row">\n  <div class="brut-col brut-col--6">Left</div>\n  <div class="brut-col brut-col--6">Right</div>\n</div>',
       },
     ],
   },
