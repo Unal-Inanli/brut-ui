@@ -1,0 +1,67 @@
+# Manually regenerate visual regression baselines on the CI runner so they
+# match the OS that runs the diff. Trigger from the Actions tab → "Update
+# visual baselines" → Run workflow → pick the branch.
+#
+# Outputs: a commit on the same branch updating tests/visual/**/*.png.
+name: Update visual baselines
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to refresh baselines on
+        required: true
+        default: master
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+          lfs: true
+
+      - name: Setup pnpm
+        # Version is read from `packageManager` in package.json.
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build kit (emits dist/)
+        run: pnpm build
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Update baselines
+        run: pnpm test:visual:update
+
+      - name: Commit refreshed baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain tests/visual)" ]]; then
+            git add tests/visual
+            git commit -m "chore(visual): refresh Playwright baselines"
+            git push
+          else
+            echo "No baseline changes."
+          fi

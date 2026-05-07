@@ -9,3 +9,9 @@
 
 # node
 node_modules/
+
+# Playwright runtime artifacts (reports, screenshots from failed runs).
+# Visual regression baselines under tests/visual/**/*.png are TRACKED via LFS.
+test-results/
+playwright-report/
+

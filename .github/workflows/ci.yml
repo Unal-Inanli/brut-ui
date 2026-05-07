@@ -1,0 +1,103 @@
+# Continuous integration for the @sprtn/ui kit.
+#
+# Runs the build, hard-gate constraint checks (manifest + css-constraints),
+# the report-only `brut doctor` audit, and any package-level tests
+# (currently `packages/mcp` smoke; root unit tests land in Phase 2).
+#
+# Why doctor is report-only: today the workspace has ~200 pre-existing
+# UNKNOWN_CLASS / HARDCODED_PX findings that need a separate cleanup pass
+# before doctor can become a blocking gate. Once that backlog is zero,
+# flip `continue-on-error` to false on the doctor step.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # LFS becomes required in Phase 4 (visual baselines). Enabling now
+          # is a no-op for Phase 1 and avoids a workflow edit later.
+          lfs: true
+
+      - name: Setup pnpm
+        # Version is read from `packageManager` in package.json. Specifying
+        # `version:` here would conflict with that and fail with
+        # ERR_PNPM_BAD_PM_VERSION.
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build kit (emits dist/)
+        run: pnpm build
+
+      - name: Hard gates (manifest + css constraints)
+        run: pnpm check
+
+      - name: Doctor audit (report only)
+        run: pnpm check:doctor
+        continue-on-error: true
+
+      - name: Unit tests (root, happy-dom)
+        run: pnpm test
+
+      - name: Workspace tests (packages/mcp smoke)
+        run: pnpm -r test
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E smoke (console errors + 4xx/5xx, every preview page)
+        run: pnpm test:smoke
+
+      - name: E2E behavior (dialog focus, escape, scrim)
+        run: pnpm test:behavior
+
+      - name: A11y scan (axe WCAG 2.1 AA, report only)
+        run: pnpm test:a11y
+        continue-on-error: true
+
+      - name: Visual regression (pixel diff vs LFS baselines, report only)
+        run: pnpm test:visual
+        continue-on-error: true
+        # Report-only until first run of .github/workflows/update-baselines.yml
+        # produces linux-rendered baselines. Local mac/Windows baselines drift
+        # against ubuntu-latest font rendering. Once update-baselines.yml has
+        # committed proper baselines, flip continue-on-error to false.
+
+      - name: Bundle size budgets (brotli)
+        run: pnpm test:size
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

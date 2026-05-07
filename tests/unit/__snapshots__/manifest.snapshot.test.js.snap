@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`dist/components.json schema snapshot > component counts are stable (interactive vs static) 1`] = `
+{
+  "interactive": 35,
+  "static": 49,
+}
+`;
+
+exports[`dist/components.json schema snapshot > component entry shape is stable per kind 1`] = `
+{
+  "interactive": [
+    "a11y",
+    "class",
+    "dataAttributes",
+    "description",
+    "events",
+    "examples",
+    "formState",
+    "kind",
+    "modifiers",
+    "name",
+    "selector",
+    "useCases",
+  ],
+  "static": [
+    "class",
+    "description",
+    "examples",
+    "htmlElements",
+    "kind",
+    "modifiers",
+    "name",
+    "notes",
+    "selector",
+    "useCases",
+  ],
+}
+`;
+
+exports[`dist/components.json schema snapshot > top-level keys are stable 1`] = `
+[
+  "$schema",
+  "breakpoints",
+  "components",
+  "prefix",
+  "themes",
+  "utilities",
+  "version",
+]
+`;
