@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Segmented preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .stack { display: flex; flex-direction: column; gap: var(--sp-4); max-width: 480px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Two-option toggle</h2>
+<div class="brut-segmented" data-brut="segmented" data-brut-name="view">
+  <button class="brut-segmented__btn brut-segmented__btn--on" type="button" data-value="grid">Grid</button>
+  <button class="brut-segmented__btn" type="button" data-value="list">List</button>
+</div>
+
+<h2>Three-option scope</h2>
+<div class="brut-segmented" data-brut="segmented" data-brut-name="scope" style="margin-top: var(--sp-4);">
+  <button class="brut-segmented__btn brut-segmented__btn--on" type="button" data-value="all">All</button>
+  <button class="brut-segmented__btn" type="button" data-value="mine">Mine</button>
+  <button class="brut-segmented__btn" type="button" data-value="archived">Archived</button>
+</div>
+
+<h2>Five-option size</h2>
+<div class="brut-segmented" data-brut="segmented" data-brut-name="size" style="margin-top: var(--sp-4);">
+  <button class="brut-segmented__btn" type="button" data-value="xs">XS</button>
+  <button class="brut-segmented__btn" type="button" data-value="sm">S</button>
+  <button class="brut-segmented__btn brut-segmented__btn--on" type="button" data-value="md">M</button>
+  <button class="brut-segmented__btn" type="button" data-value="lg">L</button>
+  <button class="brut-segmented__btn" type="button" data-value="xl">XL</button>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Click a segment…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="segmented"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+<div data-brut="theme-switcher"></div>
+</body></html>

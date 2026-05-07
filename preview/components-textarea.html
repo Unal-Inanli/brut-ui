@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>BRUT — Textarea preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .stack { display: flex; flex-direction: column; gap: var(--sp-4); max-width: 520px; }
+</style>
+</head>
+<body>
+
+<h2>Default</h2>
+<div class="stack">
+  <textarea class="brut-textarea" rows="4" placeholder="Type a message…"></textarea>
+</div>
+
+<h2>Sizes</h2>
+<div class="stack">
+  <textarea class="brut-textarea brut-textarea--sm" rows="3" placeholder="Small"></textarea>
+  <textarea class="brut-textarea" rows="3" placeholder="Default"></textarea>
+  <textarea class="brut-textarea brut-textarea--lg" rows="3" placeholder="Large"></textarea>
+</div>
+
+<h2>States</h2>
+<div class="stack">
+  <textarea class="brut-textarea brut-textarea--err" rows="3">Required field is empty</textarea>
+  <textarea class="brut-textarea brut-textarea--ok" rows="3">Looks good — under the character limit</textarea>
+  <textarea class="brut-textarea" rows="3" disabled>Disabled — can't edit this</textarea>
+  <textarea class="brut-textarea" rows="3" readonly>Readonly — can select but not edit</textarea>
+</div>
+
+<div data-brut="theme-switcher"></div>
+</body></html>
