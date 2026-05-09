@@ -223,6 +223,29 @@
       minuteCtrl.refresh();
       if (!field.value) field.value = fmt();
       if (hidden && !hidden.value) hidden.value = fmt();
+
+      // Capture initial state for form.reset restoration.
+      var initialHour = hour, initialMinute = minute;
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          // form.reset fires before native input values revert; defer one tick.
+          setTimeout(function () {
+            hour = initialHour;
+            minute = initialMinute;
+            var s = fmt();
+            field.value = s;
+            if (hidden) hidden.value = s;
+            hourCtrl.refresh();
+            minuteCtrl.refresh();
+            if (amBtn && pmBtn) {
+              amBtn.classList.toggle('brut-segmented__btn--on', hour < 12);
+              pmBtn.classList.toggle('brut-segmented__btn--on', hour >= 12);
+            }
+          }, 0);
+        });
+      }
     }
   });
 })();
