@@ -37,12 +37,26 @@
         cells = el.querySelectorAll('.brut-otp__cell');
       }
 
+      var labelNoun = el.getAttribute('data-brut-label-cell') || 'Digit';
+      cells.forEach(function (cell, idx) {
+        if (!cell.hasAttribute('aria-label')) {
+          cell.setAttribute('aria-label', labelNoun + ' ' + (idx + 1) + ' of ' + cells.length);
+        }
+      });
+
+      var status = document.createElement('span');
+      status.setAttribute('aria-live', 'polite');
+      status.setAttribute('aria-atomic', 'true');
+      status.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;';
+      el.appendChild(status);
+
       function gather() {
         var v = '';
         cells.forEach(function (c) { v += c.value || ''; });
         hidden.value = v;
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: v } }));
         if (v.length === cells.length) {
+          status.textContent = 'Code complete';
           el.dispatchEvent(new CustomEvent('brut:complete', { detail: { value: v } }));
         }
       }
