@@ -1,6 +1,6 @@
 export default {
   name: 'accordion',
-  description: 'Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode.',
+  description: 'Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode. Each toggled item dispatches both brut:change (state-machine) and brut:open/brut:close (semantic disclosure) for compatibility with both consumer patterns.',
   useCases: ['FAQ section', 'shipping and returns details', 'settings panels', 'sidebar nav groups', 'product specifications'],
   kind: 'interactive',
   class: '.brut-accordion',
@@ -11,12 +11,14 @@ export default {
   ],
   events: [
     { name: 'brut:change', detail: { value: 'boolean (new open state of the toggled item)', open: 'boolean (new state of the toggled item)' } },
+    { name: 'brut:open', detail: { value: 'true' } },
+    { name: 'brut:close', detail: { value: 'false' } },
   ],
   formState: { hiddenInput: false },
   a11y: {
     keyboard: ['Enter', 'Space'],
     aria: ['aria-expanded (on each head)', 'aria-controls (on head, points to body id)', 'role="region" (on panel)', 'aria-labelledby (on panel → trigger id)'],
-    notes: 'Heads default to <button type="button"> and receive an auto-generated id when none is set so panels can reference them via aria-labelledby. Bodies receive an auto-generated id when none is set, plus role="region" and aria-labelledby pointing to the head id (consumer-supplied attributes are preserved). The brut:change event bubbles from the toggled item, not the accordion root.',
+    notes: 'Heads default to <button type="button"> and receive an auto-generated id when none is set so panels can reference them via aria-labelledby. Bodies receive an auto-generated id when none is set, plus role="region" and aria-labelledby pointing to the head id (consumer-supplied attributes are preserved). Each toggled item dispatches both brut:change (state-machine, with detail.value and detail.open) and brut:open/brut:close (semantic disclosure, with detail.value as the new open boolean) so consumers can subscribe to either pattern. All three events bubble from the toggled item, not the accordion root.',
   },
   examples: [
     {

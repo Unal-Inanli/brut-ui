@@ -61,6 +61,10 @@
           bubbles: true,
           detail: { value: open, open: open }
         }));
+        record.item.dispatchEvent(new CustomEvent(open ? 'brut:open' : 'brut:close', {
+          bubbles: true,
+          detail: { value: open }
+        }));
       }
 
       function toggle(record) {

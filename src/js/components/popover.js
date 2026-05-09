@@ -77,13 +77,13 @@
         el.removeAttribute('hidden');
         if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'true');
         position();
-        el.dispatchEvent(new CustomEvent('brut:open'));
+        el.dispatchEvent(new CustomEvent('brut:open', { bubbles: true, detail: { value: true } }));
       }
       function close() {
         if (el.hasAttribute('hidden')) return;
         el.setAttribute('hidden', '');
         if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'false');
-        el.dispatchEvent(new CustomEvent('brut:close'));
+        el.dispatchEvent(new CustomEvent('brut:close', { bubbles: true, detail: { value: false } }));
       }
 
       triggers.forEach(function (t) {
