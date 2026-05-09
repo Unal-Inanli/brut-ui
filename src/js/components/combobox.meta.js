@@ -11,14 +11,14 @@ export default {
     { name: 'data-value', values: 'string (on each .brut-combobox__opt)', description: 'Value written to the hidden input when this option is picked; falls back to option text content' },
   ],
   events: [
-    { name: 'brut:change', detail: { value: 'string (selected option value)', label: 'string (selected option label)' } },
+    { name: 'brut:change', detail: { value: 'string (selected option value, or "" when cleared)', label: 'string (selected option label, or "" when cleared)' }, bubbles: true, notes: 'Fires on selection, on text-field clear, and on blur when the current text matches no option label.' },
   ],
   formState: { hiddenInput: true, name: 'Hidden input is created automatically when data-brut-name is set; otherwise consumer supplies <input type="hidden">' },
   a11y: {
     role: 'combobox (on the text input); listbox (on the list); option (on each item)',
     keyboard: ['ArrowDown', 'ArrowUp', 'Enter', 'Escape'],
     aria: ['aria-autocomplete="list"', 'aria-expanded', 'aria-selected (on options)'],
-    notes: 'Outside click closes the list. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match.',
+    notes: 'Outside click closes the list. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match. Clearing the visible text field clears the hidden input and dispatches brut:change with empty value/label, so the form never submits a stale selection. Blurring the input while the text does not match any option label clears the hidden input the same way (simple "clear" semantics — the last valid selection is not restored).',
   },
   examples: [
     {
