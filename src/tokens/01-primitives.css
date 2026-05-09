@@ -106,6 +106,7 @@
   --r-1: 2px;
   --r-2: 4px;
   --r-3: 8px;
+  --radius-circle: 50%;   /* full circle — used for round thumbs/dots */
 
   /* ---------- SPACING ---------- */
 

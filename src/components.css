@@ -1414,7 +1414,7 @@
 .brut-radio {
   width: var(--control-icon); height: var(--control-icon);
   border: var(--bw-2) solid var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: var(--bone);
   box-shadow: var(--shadow-xs);
   position: relative;
@@ -1427,7 +1427,7 @@
   position: absolute;
   inset: var(--sp-1);
   background: var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
 }
 
 /* RANGE / SLIDER — native, restyled. */
