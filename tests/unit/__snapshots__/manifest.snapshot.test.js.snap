@@ -20,7 +20,9 @@ exports[`dist/components.json schema snapshot > component entry shape is stable 
     "kind",
     "modifiers",
     "name",
+    "responsive",
     "selector",
+    "status",
     "useCases",
   ],
   "static": [

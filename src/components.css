@@ -559,7 +559,7 @@
   width: 100%;
   box-sizing: border-box;
 }
-.brut-input:focus {
+.brut-input:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -1234,7 +1234,7 @@
   cursor: pointer;
 }
 .brut-menu__item:hover,
-.brut-menu__item:focus {
+.brut-menu__item:focus-visible {
   background: var(--primary);
   outline: 0;
 }
@@ -1242,7 +1242,7 @@
   color: var(--danger);
 }
 .brut-menu__item--danger:hover,
-.brut-menu__item--danger:focus {
+.brut-menu__item--danger:focus-visible {
   background: var(--danger);
   color: var(--paper);
 }
@@ -1280,6 +1280,8 @@
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--danger);
+  display: block;
+  margin-top: var(--sp-1);
 }
 .brut-field__success {
   font-size: var(--fs-xs);
@@ -1340,10 +1342,6 @@
 .brut-otp[aria-invalid="true"] {
   border-color: var(--danger);
 }
-.brut-field__error {
-  display: block;
-  margin-top: var(--sp-1);
-}
 
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
@@ -1356,7 +1354,7 @@
   border-color: var(--danger);
   background: var(--danger-bg);
 }
-.brut-input--err:focus { background: var(--danger-bg); }
+.brut-input--err:focus-visible { background: var(--danger-bg); }
 .brut-input--ok {
   border-color: var(--success);
   background: var(--success-bg);
@@ -1402,7 +1400,7 @@
   flex: 1;
   min-width: 0;
 }
-.brut-input-group > .brut-input:focus { background: transparent; box-shadow: none; }
+.brut-input-group > .brut-input:focus-visible { background: transparent; box-shadow: none; }
 .brut-input-group__addon {
   display: inline-flex;
   align-items: center;
@@ -1434,7 +1432,7 @@
   resize: vertical;
   min-height: var(--textarea-min-h);
 }
-.brut-textarea:focus {
+.brut-textarea:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -1449,7 +1447,7 @@
   border-color: var(--danger);
   background: var(--danger-bg);
 }
-.brut-textarea--err:focus { background: var(--danger-bg); }
+.brut-textarea--err:focus-visible { background: var(--danger-bg); }
 .brut-textarea--ok {
   border-color: var(--success);
   background: var(--success-bg);
@@ -1480,7 +1478,7 @@
   background-size: var(--sp-1h) var(--sp-1h), var(--sp-1h) var(--sp-1h);
   background-repeat: no-repeat;
 }
-.brut-select:focus {
+.brut-select:focus-visible {
   background-color: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -1589,7 +1587,7 @@
   padding: 0;
   outline: none;
 }
-.brut-range-dual__thumb:focus { background: var(--ink); box-shadow: var(--shadow-sm); }
+.brut-range-dual__thumb:focus-visible { background: var(--ink); box-shadow: var(--shadow-sm); }
 .brut-range-dual__thumb:active { cursor: grabbing; }
 
 /* FILE INPUT — chunky button + filename label. */
@@ -1745,7 +1743,7 @@
   padding: 0;
   color: var(--ink);
 }
-.brut-otp__cell:focus {
+.brut-otp__cell:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -2082,7 +2080,7 @@
 }
 .brut-date__day--selected { background: var(--ink); color: var(--paper); }
 .brut-date__day--selected::after { background: var(--paper); }
-.brut-date__day:focus { outline: var(--bw-2) solid var(--ink); outline-offset: calc(var(--bw-1) * -1); }
+.brut-date__day:focus-visible { outline: var(--bw-2) solid var(--ink); outline-offset: calc(var(--bw-1) * -1); }
 
 /* TIME — hour / minute steppers (reuses .brut-stepper) + optional 12/24 segmented. */
 .brut-time { position: relative; display: block; }
@@ -2708,12 +2706,11 @@ button.brut-sidebar__group-title::after {
   display: block;
 }
 
-/* Sanctioned exception: diagonal stripe pattern for scrim overlay — sole approved gradient outside checkmark glyph. */
 .brut-scrim {
   position: fixed;
   inset: 0;
-  background:
-    repeating-linear-gradient(45deg,
+  /* Sanctioned exception: scrim hatch drawn via gradient until an SVG sprite ships (see AGENTS.md §Carve-outs). Do NOT use gradients elsewhere. */
+  background: repeating-linear-gradient(45deg,
       var(--scrim-bg-soft) 0 var(--sp-px),
       transparent var(--sp-px) var(--sp-2)),
     var(--scrim-bg);
@@ -2762,8 +2759,7 @@ button.brut-sidebar__group-title::after {
   .brut-table--responsive thead { display: none; }
   .brut-table--responsive,
   .brut-table--responsive tbody,
-  .brut-table--responsive tr,
-  .brut-table--responsive td { display: block; width: 100%; }
+  .brut-table--responsive tr { display: block; width: 100%; }
   .brut-table--responsive tr {
     border: var(--bw-3) solid var(--ink);
     box-shadow: var(--shadow-sm);
@@ -2771,6 +2767,8 @@ button.brut-sidebar__group-title::after {
     margin-bottom: var(--sp-3);
   }
   .brut-table--responsive td {
+    display: block;
+    width: 100%;
     padding: var(--sp-3) var(--sp-4);
     border: 0;
     border-top: var(--bw-1) solid var(--concrete-200);

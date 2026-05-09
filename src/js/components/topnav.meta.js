@@ -10,7 +10,7 @@ export default {
     { name: '--open', description: 'Applied while the mobile link drawer is expanded' },
   ],
   dataAttributes: [
-    { name: 'data-brut-label-menu', description: 'Override for the burger button aria-label; falls back to "Toggle menu"' },
+    { name: 'data-brut-label-menu', values: 'string (default "Toggle menu")', description: 'Override for the burger button aria-label' },
   ],
   events: [
     { name: 'brut:open',  detail: {} },

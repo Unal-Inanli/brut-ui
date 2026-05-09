@@ -8,7 +8,7 @@ export default {
   selector: '[data-brut="file"]',
   modifiers: [],
   dataAttributes: [
-    { name: 'data-brut-accept-label', description: 'Optional human-readable hint describing accepted file types or constraints (e.g. "PNG or JPG, up to 5MB"). Rendered into a visually-hidden description element and wired to the input via aria-describedby. Falls back to a generic "Accepted: <accept>" derived from the native accept attribute when omitted.' },
+    { name: 'data-brut-accept-label', values: 'string', description: 'Optional human-readable hint describing accepted file types or constraints (e.g. "PNG or JPG, up to 5MB"). Rendered into a visually-hidden description element and wired to the input via aria-describedby. Falls back to a generic "Accepted: <accept>" derived from the native accept attribute when omitted.' },
   ],
   events: [
     { name: 'brut:change', detail: { value: 'FileList (the selected files)', files: 'FileList (the selected files)' } },
