@@ -26,6 +26,18 @@
         return el.querySelectorAll('.brut-menu__item');
       }
 
+      // Assign WAI-ARIA Menu pattern roles to children.
+      var initialItems = el.querySelectorAll('.brut-menu__item');
+      for (var ii = 0; ii < initialItems.length; ii++) {
+        var item = initialItems[ii];
+        if (!item.hasAttribute('role')) item.setAttribute('role', 'menuitem');
+        if (item.hasAttribute('disabled')) item.setAttribute('aria-disabled', 'true');
+      }
+      var seps = el.querySelectorAll('hr');
+      for (var si = 0; si < seps.length; si++) {
+        if (!seps[si].hasAttribute('role')) seps[si].setAttribute('role', 'separator');
+      }
+
       function position() {
         if (!lastTrigger) return;
         var r = lastTrigger.getBoundingClientRect();

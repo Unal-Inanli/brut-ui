@@ -19,8 +19,13 @@ export default {
   a11y: {
     role: 'menu',
     keyboard: ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'],
-    aria: ['aria-haspopup="menu" (auto-set on trigger)'],
-    notes: 'Trigger gets type="button" and aria-haspopup automatically. Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll.',
+    aria: [
+      'aria-haspopup="menu" (auto-set on trigger)',
+      'role="menuitem" (auto-set on each .brut-menu__item)',
+      'role="separator" (auto-set on each <hr> inside the menu)',
+      'aria-disabled="true" (auto-set on items with the disabled attribute)',
+    ],
+    notes: 'Trigger gets type="button" and aria-haspopup automatically. Items receive role="menuitem" and <hr> separators receive role="separator" during init (existing role attributes such as menuitemcheckbox/menuitemradio are preserved). Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll.',
   },
   examples: [
     {
