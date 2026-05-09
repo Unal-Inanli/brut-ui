@@ -15,8 +15,8 @@ export default {
   formState: { hiddenInput: false },
   a11y: {
     keyboard: ['Enter', 'Space'],
-    aria: ['aria-expanded (on each head)', 'aria-controls (on head, points to body id)'],
-    notes: 'Heads default to <button type="button">. Bodies receive an auto-generated id when none is set. The brut:change event bubbles from the toggled item, not the accordion root.',
+    aria: ['aria-expanded (on each head)', 'aria-controls (on head, points to body id)', 'role="region" (on panel)', 'aria-labelledby (on panel → trigger id)'],
+    notes: 'Heads default to <button type="button"> and receive an auto-generated id when none is set so panels can reference them via aria-labelledby. Bodies receive an auto-generated id when none is set, plus role="region" and aria-labelledby pointing to the head id (consumer-supplied attributes are preserved). The brut:change event bubbles from the toggled item, not the accordion root.',
   },
   examples: [
     {

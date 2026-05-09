@@ -16,6 +16,7 @@
    brut:change with { open: bool } on each toggled item. */
 (function () {
   if (!window.Brut) return;
+  var headIdCounter = 0;
   Brut.register('accordion', {
     selector: '[data-brut="accordion"]',
     init: function (el) {
@@ -34,13 +35,21 @@
           head.setAttribute('tabindex', '0');
         }
 
+        if (!head.id) {
+          head.id = 'brut-accordion-' + (++headIdCounter);
+        }
+
         var isOpen = item.classList.contains('brut-accordion__item--open');
         head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
         if (body && !body.id) {
           body.id = 'brut-acc-' + Math.random().toString(36).slice(2, 9);
         }
-        if (body) head.setAttribute('aria-controls', body.id);
+        if (body) {
+          head.setAttribute('aria-controls', body.id);
+          if (!body.hasAttribute('role')) body.setAttribute('role', 'region');
+          if (!body.hasAttribute('aria-labelledby')) body.setAttribute('aria-labelledby', head.id);
+        }
 
         heads.push({ item: item, head: head, body: body });
       });
