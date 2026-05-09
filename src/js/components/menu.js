@@ -112,6 +112,7 @@
       });
 
       document.addEventListener('keydown', function (e) {
+        if (!el.isConnected) return;
         if (e.key === 'Escape' && !el.hasAttribute('hidden')) {
           close();
           if (lastTrigger) {
@@ -121,6 +122,7 @@
       });
 
       document.addEventListener('click', function (e) {
+        if (!el.isConnected) return;
         if (el.hasAttribute('hidden')) return;
         if (el.contains(e.target)) return;
         for (var i = 0; i < triggers.length; i++) {
@@ -130,9 +132,11 @@
       });
 
       window.addEventListener('resize', function () {
+        if (!el.isConnected) return;
         if (!el.hasAttribute('hidden')) position();
       });
       window.addEventListener('scroll', function () {
+        if (!el.isConnected) return;
         if (!el.hasAttribute('hidden')) position();
       }, { capture: true, passive: true });
     }

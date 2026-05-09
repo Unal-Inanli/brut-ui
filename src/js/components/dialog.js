@@ -63,6 +63,7 @@
       });
 
       document.addEventListener('keydown', function (e) {
+        if (!el.isConnected) return;
         if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
       });
 
