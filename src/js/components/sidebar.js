@@ -30,8 +30,12 @@
           var willClose = !group.classList.contains('brut-sidebar__group--closed');
           group.classList.toggle('brut-sidebar__group--closed', willClose);
           btn.setAttribute('aria-expanded', willClose ? 'false' : 'true');
+          var open = !willClose;
           el.dispatchEvent(new CustomEvent('brut:change', {
-            detail: { value: !willClose, group: group, closed: willClose }
+            detail: { value: open, group: group, closed: willClose }
+          }));
+          el.dispatchEvent(new CustomEvent(open ? 'brut:open' : 'brut:close', {
+            detail: { value: open, group: group }
           }));
         });
       });
