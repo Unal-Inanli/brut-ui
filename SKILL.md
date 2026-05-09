@@ -31,6 +31,38 @@ All classes live in `src/components.css` (and bundled in `dist/brut.css`):
 - **Layout primitives:** `.brut-container`, `.brut-section`, `.brut-stack`, `.brut-cluster`, `.brut-bar`, `.brut-grid`, `.brut-split`, `.brut-rule`, `.brut-aspect`, `.brut-scrim`, `.brut-shape`, `.brut-spacer`. Compose pages without inline flexbox.
 - **Typography:** `.brut-display-1`/`-2`/`-3`, `.brut-h1`–`.brut-h6`, `.brut-lead`, `.brut-body`, `.brut-small`, `.brut-caption`, `.brut-eyebrow`, `.brut-kicker`, `.brut-overline`, `.brut-quote`, `.brut-pull-quote`, `.brut-link`, `.brut-code`, `.brut-kbd`, `.brut-pre`, `.brut-list` (+ `--ord`/`--check`), `.brut-drop-cap`, `.brut-highlight`, `.brut-num`, `.brut-prose`.
 
+## Responsive shapes
+
+Every BRUT interactive component declares **one** responsive shape in its `<name>.meta.js`. Pick from this catalog when adding or refining a component. Full glossary with CSS patterns + JS hooks: [docs/responsive-shapes.md](./docs/responsive-shapes.md).
+
+| Shape | When to pick it | Tier of the flip |
+|---|---|---|
+| `static` | Component layout doesn't change between viewport tiers (buttons, inputs, badges, tags, alerts, switches, checkboxes). | n/a |
+| `stack` | Multi-column layout collapses to a single column on smaller widths (forms, hero sections, footer, the 12-col grid, `.brut-split`). | `sm` or `md` |
+| `fullscreen-modal` | Centered modal becomes edge-to-edge on phones (`dialog`). | `sm` |
+| `bottom-sheet` | Trigger-anchored overlay re-anchors to the bottom edge with full viewport width on phones (`popover`, `menu`, `dropdown`, `combobox`, `multiselect`, `date`, `time`, `drawer`). | `sm` |
+| `horizontal-scroll` | A wide row of items scrolls horizontally with snap on phones (`tabs`, `segmented`, long `breadcrumb`, certain `table` modes). | `sm` or `md` |
+| `ellipsis-collapse` | Show only first + last + ellipsis on phones (`breadcrumb`, `pagination`). | `sm` |
+| `disclosure-toggle` | Hidden behind a hamburger button on phones (`topnav`, `sidebar`). | `md` |
+| `wrap` | Items flow onto multiple lines via `flex-wrap` from base — not tier-driven (`tag-input` chips, button clusters). | n/a |
+| `hover-fallback` | Hover-only UI degrades to tap-to-pin on coarse-pointer devices (`tooltip`). | n/a |
+
+Tier values: `sm` = 640px, `md` = 768px, `lg` = 1024px (`--bp-sm`, `--bp-md`, `--bp-lg`). Mobile-first base targets 320px. Touch-target floor on every interactive surface: 44px (`--touch-min`).
+
+Declare the shape like this:
+
+```js
+// src/js/components/dialog.meta.js
+export default {
+  // …other required fields…
+  responsive: {
+    shape: 'fullscreen-modal',
+    breakpoint: 'sm',
+    notes: 'Edge-to-edge sheet on phones; centered modal at sm and above.',
+  },
+};
+```
+
 ## Wiring an interactive component
 
 Every JS-bound component opts in via `data-brut="<name>"`. The runtime auto-initializes on `DOMContentLoaded`; for markup added later, call `Brut.init(root)` to wire any new instances. Re-init is a no-op.

@@ -32,7 +32,7 @@
     },
     "interactiveComponent": {
       "type": "object",
-      "required": ["name", "description", "useCases", "kind", "class", "selector", "modifiers", "dataAttributes", "events", "formState", "a11y", "examples"],
+      "required": ["name", "description", "useCases", "kind", "class", "selector", "modifiers", "dataAttributes", "events", "formState", "a11y", "examples", "responsive"],
       "properties": {
         "kind": { "const": "interactive" },
         "name": { "type": "string", "minLength": 1 },
@@ -45,7 +45,8 @@
         "events":         { "type": "array", "items": { "$ref": "#/$defs/event" } },
         "formState":      { "$ref": "#/$defs/formState" },
         "a11y":           { "$ref": "#/$defs/a11y" },
-        "examples":       { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/example" } }
+        "examples":       { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/example" } },
+        "responsive":     { "$ref": "#/$defs/responsive" }
       }
     },
     "staticComponent": {
@@ -61,7 +62,39 @@
         "htmlElements": { "type": "array", "items": { "type": "string" } },
         "modifiers":    { "type": "array", "items": { "$ref": "#/$defs/modifier" } },
         "notes":        { "type": "string" },
-        "examples":     { "type": "array", "items": { "$ref": "#/$defs/example" } }
+        "examples":     { "type": "array", "items": { "$ref": "#/$defs/example" } },
+        "responsive":   { "$ref": "#/$defs/responsive" }
+      }
+    },
+    "responsive": {
+      "type": "object",
+      "required": ["shape"],
+      "properties": {
+        "shape": {
+          "type": "string",
+          "enum": [
+            "static",
+            "stack",
+            "fullscreen-modal",
+            "bottom-sheet",
+            "horizontal-scroll",
+            "ellipsis-collapse",
+            "disclosure-toggle",
+            "wrap",
+            "hover-fallback"
+          ],
+          "description": "Canonical responsive shape. See docs/responsive-shapes.md for the behavior contract of each."
+        },
+        "breakpoint": {
+          "type": "string",
+          "enum": ["sm", "md", "lg"],
+          "description": "Tier at which the shape engages. Optional for shapes that don't flip (static, wrap)."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Plain-language note (≤120 chars) about the responsive behavior."
+        }
       }
     },
     "modifier": {

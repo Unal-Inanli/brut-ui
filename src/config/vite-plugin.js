@@ -14,6 +14,23 @@ function renamePrefix(code, from, to) {
 
 const REQUIRED_META_FIELDS = ['name', 'description', 'useCases', 'kind', 'class', 'examples'];
 
+// The nine canonical responsive shapes. See docs/responsive-shapes.md for the
+// behavior contract of each. Every interactive component must declare exactly
+// one; static components may omit the responsive block (treated as 'static').
+export const RESPONSIVE_SHAPES = [
+  'static',
+  'stack',
+  'fullscreen-modal',
+  'bottom-sheet',
+  'horizontal-scroll',
+  'ellipsis-collapse',
+  'disclosure-toggle',
+  'wrap',
+  'hover-fallback',
+];
+const RESPONSIVE_SHAPE_SET = new Set(RESPONSIVE_SHAPES);
+const RESPONSIVE_BREAKPOINT_SET = new Set(['sm', 'md', 'lg']);
+
 async function loadMetaFiles(root) {
   const dir = resolve(root, 'src/js/components');
   const map = new Map();
@@ -53,8 +70,25 @@ function validateMetaEntry(entry, ctx) {
       missing.push(field);
     }
   }
-  if (missing.length > 0 && ctx && typeof ctx.warn === 'function') {
-    ctx.warn(`[brut] ${entry.name || '(unnamed)'}.meta.js missing required field(s): ${missing.join(', ')}`);
+  const warn = ctx && typeof ctx.warn === 'function' ? ctx.warn.bind(ctx) : null;
+  const name = entry.name || '(unnamed)';
+  if (missing.length > 0 && warn) {
+    warn(`[brut] ${name}.meta.js missing required field(s): ${missing.join(', ')}`);
+  }
+
+  // Responsive shape — required on interactive components. See docs/responsive-shapes.md.
+  if (entry.kind === 'interactive') {
+    const r = entry.responsive;
+    if (!r || typeof r !== 'object' || Array.isArray(r)) {
+      if (warn) warn(`[brut] ${name}.meta.js missing responsive: declare one of {${RESPONSIVE_SHAPES.join(', ')}} — see docs/responsive-shapes.md`);
+    } else {
+      if (typeof r.shape !== 'string' || !RESPONSIVE_SHAPE_SET.has(r.shape)) {
+        if (warn) warn(`[brut] ${name}.meta.js responsive.shape "${r.shape}" not one of {${RESPONSIVE_SHAPES.join(', ')}}`);
+      }
+      if (r.breakpoint !== undefined && !RESPONSIVE_BREAKPOINT_SET.has(r.breakpoint)) {
+        if (warn) warn(`[brut] ${name}.meta.js responsive.breakpoint "${r.breakpoint}" not one of {sm, md, lg}`);
+      }
+    }
   }
 }
 
