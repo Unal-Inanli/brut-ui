@@ -1422,6 +1422,22 @@
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
+/* TEXTAREA — variants + states; mirrors .brut-input--sm/--lg/--err/--ok. */
+.brut-textarea--sm {
+  padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
+  border-width: var(--bw-2);
+  box-shadow: var(--shadow-xs);
+}
+.brut-textarea--lg { padding: var(--sp-4) var(--sp-4h); font-size: var(--fs-md); box-shadow: var(--shadow-sm); }
+.brut-textarea--err {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-textarea--err:focus { background: var(--danger-bg); }
+.brut-textarea--ok {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
 
 /* SELECT — styled native, hard chevron (no SVG, no font icon). */
 .brut-select {
