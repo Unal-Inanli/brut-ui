@@ -2762,3 +2762,29 @@ button.brut-sidebar__group-title::after {
 .brut-theme-switcher__btn:hover { background: var(--concrete-50); }
 .brut-theme-switcher__btn--on { background: var(--ink); color: var(--paper); }
 .brut-theme-switcher__btn--on:hover { background: var(--ink); color: var(--paper); }
+
+/* Honour prefers-reduced-motion: disable transitions and animations on motion-driven components. */
+@media (prefers-reduced-motion: reduce) {
+  .brut-link,
+  .brut-btn,
+  .brut-table__cell--sortable,
+  .brut-rows__item,
+  .brut-input,
+  .brut-switch__knob,
+  .brut-toast,
+  .brut-popover,
+  .brut-progress__bar,
+  .brut-tab--on,
+  .brut-drawer,
+  .brut-menu,
+  .brut-file__btn,
+  .brut-topnav__link,
+  .brut-sidebar__item,
+  .brut-footer__link,
+  .brut-crumbs__link,
+  .brut-pagination__btn,
+  .brut-theme-switcher__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
