@@ -20,6 +20,7 @@ export default {
     { name: 'data-brut-select-all',  values: 'boolean attribute', description: 'On a header element: toggles every [data-brut-row-select] in the table' },
     { name: 'data-brut-row-select',  values: 'boolean attribute', description: 'On a tbody row checkbox: marks the row as selectable by the header toggle' },
     { name: 'data-brut-col-label',   values: 'string',        description: 'On a td (responsive mode): label prefix shown before the cell value when stacked' },
+    { name: 'data-brut-role',        values: '"empty-state"', description: 'On a child element: opt-in empty-state slot. Auto-shown when tbody has zero visible rows; the table itself is hidden in that state. A MutationObserver on tbody re-syncs after row additions/removals; consumers do not need to call a refresh API.' },
   ],
   events: [
     { name: 'brut:change', detail: { value: 'boolean (select-all on/off state)', selectAll: 'true (only on select-all toggle)' } },
@@ -30,7 +31,7 @@ export default {
     role: 'table (native)',
     keyboard: ['Space', 'Enter'],
     aria: ['aria-sort (on sortable th: none|ascending|descending)', 'role="columnheader"', 'role="checkbox" (on select-all)', 'aria-checked (on select-all and rows)'],
-    notes: 'Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input.',
+    notes: 'Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input. Auto empty-state: when a [data-brut-role="empty-state"] child is present, it is automatically revealed (and the table hidden) whenever tbody has no visible rows; a MutationObserver keeps this in sync as rows are added or removed.',
   },
   examples: [
     {
