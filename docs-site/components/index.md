@@ -53,6 +53,4 @@ or wire up [`@sprtn/mcp`](https://github.com/Unal-Inanli/brut-ui/tree/main/packa
 ## Tables
 
 - [Table](/components/table) — base table styling
-- [Toolbar](/components/table-toolbar) · [Filter](/components/table-filter)
-- [Columns visibility](/components/table-columns) · [Sticky head/col](/components/table-sticky)
-- [Responsive](/components/table-responsive)
+- [Sticky head/col](/components/table-sticky) · [Responsive](/components/table-responsive)

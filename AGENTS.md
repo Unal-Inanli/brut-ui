@@ -2,7 +2,7 @@
 
 > **Direction of travel:** BRUT is mid-evolution to a Vite-built, themeable, configurable, AI-native framework. The "no build tools / no dependencies" hard constraints below remain authoritative for any task NOT explicitly tagged with one of the 1.0 milestones (M1–M8). The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See [CLAUDE.md](CLAUDE.md) "1.0 Roadmap" and the `project_brut_*` memory entries for locked decisions, rationale, and per-milestone activation rules for new workflows (Workflow C: add a theme, D: add utilities, E: bump a token, F: add a variant, G: generate a manifest entry).
 
-> **Before significant work, read [ARCHITECTURE.md](ARCHITECTURE.md).** It is the principal-engineer review of the kit post-M7 — covers structurally-sound patterns to preserve, accumulating debt, three known class-root convention violations (counter, table-columns, tooltip), and the prioritized next-quarter follow-ups. Tooling (`brut doctor`, `scripts/check-manifest.js`) catches surface drift; ARCHITECTURE.md catches the structural drift the tools can't yet see.
+> **Before significant work, read [ARCHITECTURE.md](ARCHITECTURE.md).** It is the principal-engineer review of the kit post-M7 — covers structurally-sound patterns to preserve, accumulating debt, two known class-root convention violations (counter, tooltip), and the prioritized next-quarter follow-ups. Tooling (`brut doctor`, `scripts/check-manifest.js`) catches surface drift; ARCHITECTURE.md catches the structural drift the tools can't yet see.
 
 ## What this project is
 
@@ -193,7 +193,6 @@ A "non-form component" (dialog, popover, tooltip, drawer, topnav, sidebar, toast
 | tag-input | yes | yes (one per tag) | `{ value: string[] }` | |
 | dropzone / file | yes | uses real `<input type="file">` | `{ value: File[] }` | |
 | password | exempt | uses real `<input type="password">` | none | toggle updates `aria-label` only |
-| table-filter | partial | yes | `{ value: query, visible, total }` | drives table visibility |
 | table sort | exempt | none | `{ value: key, key, dir }` | UI control, not a form value |
 | table select-all | exempt | none | `{ value: boolean, selectAll: true }` | UI control |
 | dialog / drawer / popover / tooltip / topnav / sidebar / toast | exempt | none | `brut:open`/`brut:close` | non-form |

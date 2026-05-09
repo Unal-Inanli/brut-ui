@@ -407,22 +407,6 @@ const entries = [
     ],
   },
   {
-    name: 'table-toolbar',
-    description: 'Header row above a brut-table with three slots — title, search, actions — anchoring filter and bulk-action affordances.',
-    useCases: ['data-table header', 'list page toolbar', 'search-and-filter strip', 'bulk-action bar'],
-    htmlElements: ['div'],
-    modifiers: [
-      { name: '--bare', description: 'No border or shadow — for use inside cards' },
-    ],
-    notes: 'Place above a brut-table. Compose with brut-table-toolbar__title, brut-table-toolbar__search, brut-table-toolbar__actions sub-elements.',
-    examples: [
-      {
-        title: 'Toolbar with search and actions',
-        html: '<div class="brut-table-toolbar">\n  <div class="brut-table-toolbar__title">Customers</div>\n  <div class="brut-table-toolbar__search">\n    <input class="brut-input" type="search" placeholder="Search…"/>\n  </div>\n  <div class="brut-table-toolbar__actions">\n    <button class="brut-btn brut-btn--primary">Add</button>\n  </div>\n</div>',
-      },
-    ],
-  },
-  {
     name: 'row',
     description: 'Bootstrap-parity 12-column grid row container — flex parent that holds .brut-col children with gap and gutter modifiers.',
     useCases: ['12-column form layout', 'product grid row', 'dashboard widget row', 'nav segment row'],
