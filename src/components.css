@@ -332,6 +332,32 @@
 .brut-btn--lg { padding: var(--sp-4) var(--sp-6); font-size: var(--fs-md);
                 box-shadow: var(--shadow-md); }
 
+/* COPY — inline value + copy-to-clipboard button. JS reads .brut-copy__value
+   (or data-brut-value), writes to navigator.clipboard, and flashes the label. */
+.brut-copy {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-2);
+  border: var(--bw-2) solid var(--ink);
+  background: var(--bone);
+  font-family: var(--font-mono);
+  max-width: 100%;
+}
+.brut-copy__value {
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.brut-copy__btn {
+  flex-shrink: 0;
+}
+
 /* BADGE */
 .brut-badge {
   font-family: var(--font-display);
