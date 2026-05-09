@@ -11,13 +11,24 @@
 
   var tipSeq = 0;
 
-  function position(tip, trigger, side) {
+  var SIDES = ['top', 'bottom', 'left', 'right'];
+
+  function position(tip, trigger, preferredSide) {
+    if (SIDES.indexOf(preferredSide) === -1) preferredSide = 'top';
+    var gap = 8;
+    // Flip the side first, before reading rects again, so the bubble's
+    // CURRENT size (already in the DOM) drives the fit decision.
+    var side = Brut.flipSide(trigger, tip, preferredSide, gap);
+    // Keep the visual arrow/styling consistent with the actual side.
+    for (var i = 0; i < SIDES.length; i++) {
+      tip.classList.remove('brut-tip--' + SIDES[i]);
+    }
+    tip.classList.add('brut-tip--' + side);
     var r = trigger.getBoundingClientRect();
     var sx = window.pageXOffset || document.documentElement.scrollLeft;
     var sy = window.pageYOffset || document.documentElement.scrollTop;
     var tw = tip.offsetWidth;
     var th = tip.offsetHeight;
-    var gap = 8;
     var top = 0, left = 0;
     switch (side) {
       case 'bottom':

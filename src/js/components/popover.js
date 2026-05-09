@@ -22,15 +22,54 @@
       var triggers = document.querySelectorAll('[data-brut-popover-open="' + el.id + '"]');
       var lastTrigger = null;
 
+      var SIDES = ['top', 'bottom', 'left', 'right'];
+      var currentSide = null;
+
+      function applySideClass(side) {
+        if (currentSide === side) return;
+        if (currentSide) el.classList.remove('brut-popover--' + currentSide);
+        el.classList.add('brut-popover--' + side);
+        currentSide = side;
+      }
+
       function position() {
         if (!lastTrigger) return;
+        var preferredSide = el.getAttribute('data-position') || 'bottom';
+        if (SIDES.indexOf(preferredSide) === -1) preferredSide = 'bottom';
+        var gap = 8;
+        // flipSide reads the bubble's current size, so make sure layout is
+        // available. The element may have just been un-hidden; offsetHeight
+        // forces a layout if needed.
+        var side = Brut.flipSide(lastTrigger, el, preferredSide, gap);
         var r = lastTrigger.getBoundingClientRect();
         var sx = window.pageXOffset || document.documentElement.scrollLeft;
         var sy = window.pageYOffset || document.documentElement.scrollTop;
-        var gap = 8;
+        var bH = el.offsetHeight;
+        var bW = el.offsetWidth;
+        var top = 0, left = 0;
+        switch (side) {
+          case 'top':
+            top  = r.top    + sy - bH - gap;
+            left = r.left   + sx;
+            break;
+          case 'left':
+            top  = r.top    + sy;
+            left = r.left   + sx - bW - gap;
+            break;
+          case 'right':
+            top  = r.top    + sy;
+            left = r.right  + sx + gap;
+            break;
+          case 'bottom':
+          default:
+            top  = r.bottom + sy + gap;
+            left = r.left   + sx;
+            break;
+        }
         el.style.position = 'absolute';
-        el.style.top  = Math.round(r.bottom + sy + gap) + 'px';
-        el.style.left = Math.round(r.left   + sx) + 'px';
+        el.style.top  = Math.round(top)  + 'px';
+        el.style.left = Math.round(left) + 'px';
+        applySideClass(side);
       }
 
       function open(trigger) {
