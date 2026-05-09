@@ -460,7 +460,7 @@
 .brut-table--sticky-head thead th {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: var(--z-table-sticky-header);
   background: var(--ink);
   border-bottom: var(--bw-3) solid var(--ink);
 }
@@ -470,14 +470,14 @@
 .brut-table--sticky-col th:first-child {
   position: sticky;
   left: 0;
-  z-index: 1;
+  z-index: var(--z-table-sticky-col);
   background: var(--paper-2);
   border-right: var(--bw-3) solid var(--ink);
 }
 
 /* Sticky-head thead th already has ink bg; keep it opaque over column content. */
 .brut-table--sticky-head.brut-table--sticky-col thead th:first-child {
-  z-index: 3;
+  z-index: var(--z-table-sticky-corner);
   background: var(--ink);
 }
 
@@ -902,7 +902,7 @@
   cursor: pointer;
   position: relative;
 }
-.brut-tab--on { background: var(--primary); z-index: 2; }
+.brut-tab--on { background: var(--primary); z-index: var(--z-sticky); }
 
 /* ACCORDION — stacked disclosure panels. JS toggles --open on items. */
 .brut-accordion {
@@ -2667,7 +2667,7 @@ button.brut-sidebar__group-title::after {
   background: var(--primary);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-md);
-  z-index: 0;
+  z-index: var(--z-base);
   pointer-events: none;
 }
 .brut-shape--pink   { background: var(--pop-pink); }
