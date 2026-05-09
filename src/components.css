@@ -1273,6 +1273,32 @@
 }
 .brut-field--valid .brut-field__label { color: var(--success); }
 
+/* VALIDATION
+   Native :invalid and aria-invalid are styled identically; the
+   .brut-field__error class displays an error message under the input.
+   Existing .brut-field__error (above) sets color + font-size; we only
+   add layout here so consumers can drop a <span class="brut-field__error">
+   directly under any input without an extra wrapper. */
+.brut-input:invalid,
+.brut-textarea:invalid,
+.brut-select:invalid {
+  border-color: var(--danger);
+}
+[aria-invalid="true"].brut-input,
+[aria-invalid="true"].brut-textarea,
+[aria-invalid="true"].brut-select,
+.brut-field[aria-invalid="true"] .brut-input,
+.brut-field[aria-invalid="true"] .brut-textarea,
+.brut-field[aria-invalid="true"] .brut-select,
+.brut-combobox[aria-invalid="true"],
+.brut-otp[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.brut-field__error {
+  display: block;
+  margin-top: var(--sp-1);
+}
+
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
   padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
