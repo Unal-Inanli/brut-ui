@@ -317,6 +317,7 @@
       <a href="#layout-section">Section</a>
       <a href="#layout-stack">Stack / Cluster / Bar</a>
       <a href="#layout-grid">Grid / Split</a>
+      <a href="#grid">Grid</a>
       <a href="#grid-12col">12-col Grid</a>
       <a href="#layout-misc">Rule / Aspect / Shape</a>
       <a href="#layout-spacer">Spacer</a>
@@ -2315,6 +2316,47 @@ border: var(--bw-6) solid var(--ink);</pre>
         </div>
         <pre class="docs-snippet">&lt;div class="brut-grid"&gt; … &lt;/div&gt;
 &lt;div class="brut-split"&gt; &lt;aside&gt;…&lt;/aside&gt; &lt;main&gt;…&lt;/main&gt; &lt;/div&gt;</pre>
+      </section>
+
+      <!-- GRID -->
+      <section class="docs-section" id="grid">
+        <h2>Grid</h2>
+        <p class="lead">A 12-column responsive grid built on <code>.brut-row</code> and <code>.brut-col-*</code>, with <code>sm</code> / <code>md</code> / <code>lg</code> breakpoint variants and offset utilities.</p>
+
+        <div class="docs-block">
+          <h3>Two-column split</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-6" style="background: var(--primary); color: var(--paper); padding: var(--sp-3); text-align: center;">col-6</div>
+              <div class="brut-col-6" style="background: var(--paper-2); padding: var(--sp-3); text-align: center;">col-6</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Three-up at md, stacks below</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-12 brut-col-md-4" style="background: var(--primary); color: var(--paper); padding: var(--sp-3); text-align: center;">md-4</div>
+              <div class="brut-col-12 brut-col-md-4" style="background: var(--paper-2); padding: var(--sp-3); text-align: center;">md-4</div>
+              <div class="brut-col-12 brut-col-md-4" style="background: var(--primary); color: var(--paper); padding: var(--sp-3); text-align: center;">md-4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Offset</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-md-6 brut-col-md-offset-3" style="background: var(--primary); color: var(--paper); padding: var(--sp-3); text-align: center;">md-6 offset-3</div>
+            </div>
+          </div>
+        </div>
+
+        <pre class="docs-snippet">&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-6"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-6"&gt;…&lt;/div&gt;
+&lt;/div&gt;</pre>
       </section>
 
       <!-- 12-COL GRID -->
