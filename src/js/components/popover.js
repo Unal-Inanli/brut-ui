@@ -81,7 +81,7 @@
       });
       window.addEventListener('scroll', function () {
         if (!el.hasAttribute('hidden')) position();
-      }, true);
+      }, { capture: true, passive: true });
     }
   });
 })();
