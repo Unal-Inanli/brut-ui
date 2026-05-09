@@ -91,6 +91,7 @@
   Brut.ready = ready;
   Brut.theme = theme;
   Brut._components = registered;
+  /* Version of the loaded BRUT runtime — replaced at build time by the Vite plugin from package.json. */
   Brut.version = __BRUT_VERSION__;
 
   // Shared body scroll-lock with reference counting so nested/stacked
@@ -155,6 +156,26 @@
       },
     };
   })();
+
+  // Pure helper: given a trigger and a floating bubble, return the side on
+  // which the bubble actually fits. Flips top<->bottom or left<->right when
+  // the preferred side would clip at the viewport edge. Reads layout only;
+  // does not mutate the DOM. Used by popover and tooltip for collision
+  // detection. `gap` is the same gap the caller will apply between trigger
+  // and bubble; default 8px. preferredSide is one of top|bottom|left|right.
+  Brut.flipSide = function (trigger, bubble, preferredSide, gap) {
+    if (!trigger || !bubble) return preferredSide;
+    gap = gap || 8;
+    var r = trigger.getBoundingClientRect();
+    var bH = bubble.offsetHeight;
+    var bW = bubble.offsetWidth;
+    var side = preferredSide;
+    if (side === 'top'    && r.top < bH + gap) side = 'bottom';
+    if (side === 'bottom' && (window.innerHeight - r.bottom) < bH + gap) side = 'top';
+    if (side === 'left'   && r.left < bW + gap) side = 'right';
+    if (side === 'right'  && (window.innerWidth - r.right) < bW + gap) side = 'left';
+    return side;
+  };
 
   // Restore persisted theme as early as possible to avoid flash
   restoreTheme();
