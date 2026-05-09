@@ -3,6 +3,7 @@ export default {
   description: 'Text-field combobox with a popover hour/minute stepper; emits HH:MM (24-hour ISO) with optional 12-hour AM/PM display and minute snapping.',
   useCases: ['meeting time picker', 'event scheduling form', 'doors-open input', 'reservation slot selector', 'availability range bound'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-time',
   selector: '[data-brut="time"]',
   modifiers: [

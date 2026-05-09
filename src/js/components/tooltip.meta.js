@@ -3,7 +3,8 @@ export default {
   description: 'Hover/focus-triggered ink bubble appended to <body> on show and removed on hide; positioned on one of four sides relative to the trigger.',
   useCases: ['button hint text', 'icon-only control labeling', 'truncated text on hover', 'form field helper hints', 'keyboard-shortcut reveal'],
   kind: 'interactive',
-  class: '.brut-tip',
+  status: 'stable',
+  class: '.brut-tooltip',
   selector: '[data-brut="tooltip"]',
   modifiers: [
     { name: '--top',    description: 'Bubble positioned above the trigger (default)' },

@@ -3,7 +3,8 @@ export default {
   description: 'Live character counter that mirrors the length of a paired input or textarea and flags overflow.',
   useCases: ['textarea character limit', 'tweet-style composer', 'bio field', 'comment box helper', 'SMS message length hint'],
   kind: 'interactive',
-  class: '.brut-field__counter',
+  status: 'experimental',
+  class: '.brut-counter',
   selector: '[data-brut="counter"]',
   modifiers: ['--over'],
   dataAttributes: [
@@ -21,11 +22,11 @@ export default {
   examples: [
     {
       title: 'Textarea with maxlength',
-      html: '<label class="brut-field__label" for="bio">Bio</label>\n<textarea id="bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>\n<span class="brut-field__counter" data-brut="counter" data-brut-for="bio"></span>',
+      html: '<label class="brut-field__label" for="bio">Bio</label>\n<textarea id="bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>\n<span class="brut-counter" data-brut="counter" data-brut-for="bio"></span>',
     },
     {
       title: 'Override max via data attribute',
-      html: '<input id="title" class="brut-input" type="text">\n<span class="brut-field__counter" data-brut="counter" data-brut-for="title" data-brut-max="60"></span>',
+      html: '<input id="title" class="brut-input" type="text">\n<span class="brut-counter" data-brut="counter" data-brut-for="title" data-brut-max="60"></span>',
     },
   ],
   responsive: {

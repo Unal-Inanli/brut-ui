@@ -247,6 +247,7 @@
       <a href="#accordion">Accordion</a>
       <a href="#tabs">Tabs</a>
       <a href="#avatars">Avatars</a>
+      <a href="#copy">Copy</a>
 
       <h2>Data</h2>
       <a href="#table">Table</a>
@@ -1468,7 +1469,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- OTP -->
       <section class="docs-section" id="otp">
-        <h2>OTP</h2>
+        <h2>OTP <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">One-cell-per-digit code input. Auto-advances on type, jumps back on Backspace, accepts paste. Cells are generated automatically when missing.</p>
         <div class="docs-preview">
           <div class="brut-otp" data-brut="otp" data-brut-len="6" data-brut-name="code"></div>
@@ -1527,7 +1528,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- COMBOBOX -->
       <section class="docs-section" id="combobox">
-        <h2>Combobox</h2>
+        <h2>Combobox <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">Searchable single-select. Filter, arrow-key, Enter to pick. Selection writes to a hidden input.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-combobox" data-brut="combobox" data-brut-name="city" style="max-width:360px;">
@@ -1555,23 +1556,23 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- COUNTER -->
       <section class="docs-section" id="counter">
-        <h2>Counter</h2>
+        <h2>Counter <span class="docs-status docs-status--experimental">EXPERIMENTAL</span></h2>
         <p class="lead">Live character counter that mirrors the length of a paired input or textarea and flags overflow with the <code>--over</code> modifier.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-field" style="max-width:520px;">
             <label class="brut-field__label" for="docs-counter-bio">Bio</label>
             <textarea id="docs-counter-bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>
-            <span class="brut-field__counter" data-brut="counter" data-brut-for="docs-counter-bio"></span>
+            <span class="brut-counter" data-brut="counter" data-brut-for="docs-counter-bio"></span>
           </div>
         </div>
         <pre class="docs-snippet">&lt;label class="brut-field__label" for="bio"&gt;Bio&lt;/label&gt;
 &lt;textarea id="bio" class="brut-textarea" maxlength="120"&gt;Make it loud.&lt;/textarea&gt;
-&lt;span class="brut-field__counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;</pre>
+&lt;span class="brut-counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;</pre>
       </section>
 
       <!-- RATING -->
       <section class="docs-section" id="rating">
-        <h2>Rating</h2>
+        <h2>Rating <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">Star row. Hover previews; click locks. Click the same star twice to clear. Writes to a hidden input named <code>data-brut-name</code>.</p>
         <div class="docs-preview">
           <div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3">
@@ -1622,7 +1623,7 @@ border: var(--bw-6) solid var(--ink);</pre>
             <div class="brut-field">
               <label class="brut-field__label" for="bio">Bio</label>
               <textarea id="bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>
-              <span class="brut-field__counter" data-brut="counter" data-brut-for="bio"></span>
+              <span class="brut-counter" data-brut="counter" data-brut-for="bio"></span>
               <span class="brut-field__hint">Plain text. Max 120 chars.</span>
             </div>
             <div class="brut-field">
@@ -1636,7 +1637,7 @@ border: var(--bw-6) solid var(--ink);</pre>
   &lt;div class="brut-field"&gt;
     &lt;label class="brut-field__label" for="bio"&gt;Bio&lt;/label&gt;
     &lt;textarea id="bio" class="brut-textarea" maxlength="120"&gt;…&lt;/textarea&gt;
-    &lt;span class="brut-field__counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;
+    &lt;span class="brut-counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;
     &lt;span class="brut-field__hint"&gt;Plain text.&lt;/span&gt;
   &lt;/div&gt;
 &lt;/form&gt;</pre>
@@ -1644,7 +1645,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- MULTISELECT -->
       <section class="docs-section" id="multiselect">
-        <h2>Multi-select</h2>
+        <h2>Multi-select <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">Combobox-style field that holds multiple values as chips. Click an option to toggle, Backspace at empty input pops the last chip. Mirrors as one hidden <code>&lt;input&gt;</code> per selected value, dispatches <code>brut:change</code> with <code>{ values: [...] }</code>.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-multiselect" data-brut="multiselect" data-brut-name="skills" style="max-width:520px;">
@@ -1675,7 +1676,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- DATE -->
       <section class="docs-section" id="date">
-        <h2>Date</h2>
+        <h2>Date <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Native <code>Date</code> only — no deps.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-grid brut-grid--2" style="max-width:640px;">
@@ -1734,7 +1735,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- RANGE DUAL -->
       <section class="docs-section" id="range-dual">
-        <h2>Range dual</h2>
+        <h2>Range dual <span class="docs-status docs-status--beta">BETA</span></h2>
         <p class="lead">Two-thumb range slider. Native <code>&lt;input type="range"&gt;</code> can't do this; JS owns drag + keyboard, CSS owns the chrome. Mirrors min/max to two hidden inputs (<code>data-brut-name-min</code> / <code>-max</code>); dispatches <code>brut:change</code> with <code>{ min, max }</code>.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-field" style="max-width:520px;">
@@ -1931,6 +1932,32 @@ border: var(--bw-6) solid var(--ink);</pre>
 &lt;/span&gt;</pre>
       </section>
 
+      <!-- COPY -->
+      <section class="docs-section" id="copy">
+        <h2>Copy <span class="docs-status docs-status--experimental">EXPERIMENTAL</span></h2>
+        <p class="lead">Inline value + button pair that copies the value to the clipboard, flashes a confirmation label, and announces the action through a visually-hidden <code>aria-live</code> region. Reads from <code>.brut-copy__value</code>'s text or the <code>data-brut-value</code> attribute.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-copy" data-brut="copy">
+            <code class="brut-copy__value">sk-proj-abc123xyz</code>
+            <button type="button" class="brut-btn brut-btn--sm brut-copy__btn">COPY</button>
+          </div>
+          <div class="brut-copy" data-brut="copy" data-brut-value="0xDEADBEEFCAFEBABE0123456789ABCDEF">
+            <code class="brut-copy__value">0xDEAD…CDEF</code>
+            <button type="button" class="brut-btn brut-btn--sm brut-copy__btn">COPY</button>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;div class="brut-copy" data-brut="copy"&gt;
+  &lt;code class="brut-copy__value"&gt;sk-proj-abc123xyz&lt;/code&gt;
+  &lt;button type="button" class="brut-btn brut-btn--sm brut-copy__btn"&gt;COPY&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Override copied text (e.g. truncated display) --&gt;
+&lt;div class="brut-copy" data-brut="copy" data-brut-value="0xDEADBEEFCAFEBABE0123456789ABCDEF"&gt;
+  &lt;code class="brut-copy__value"&gt;0xDEAD…CDEF&lt;/code&gt;
+  &lt;button type="button" class="brut-btn brut-btn--sm brut-copy__btn"&gt;COPY&lt;/button&gt;
+&lt;/div&gt;</pre>
+      </section>
+
       <!-- DIALOG -->
       <section class="docs-section" id="dialog">
         <h2>Dialog</h2>
@@ -2054,7 +2081,7 @@ border: var(--bw-6) solid var(--ink);</pre>
 
       <!-- THEME SWITCHER -->
       <section class="docs-section" id="theme-switcher">
-        <h2>Theme switcher</h2>
+        <h2>Theme switcher <span class="docs-status docs-status--experimental">EXPERIMENTAL</span></h2>
         <p class="lead">Radio group that flips the active theme via <code>Brut.theme()</code>; writes <code>[data-theme]</code> on the document root and persists the choice. The empty container auto-renders one button per theme.</p>
         <div class="docs-preview docs-preview--block">
           <div data-brut="theme-switcher"></div>

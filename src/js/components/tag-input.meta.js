@@ -3,6 +3,7 @@ export default {
   description: 'Chip-entry field. Enter or comma commits a tag, Backspace at empty input removes the last, and each chip has an x button to delete itself.',
   useCases: ['email recipients', 'topic tagging', 'skills picker', 'label editor on issue trackers', 'keyword filter input'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-tag-input',
   selector: '[data-brut="tag-input"]',
   modifiers: [],

@@ -310,7 +310,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-sm);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wide);
   padding: var(--sp-3) var(--sp-4h);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-sm);
@@ -327,17 +327,47 @@
 .brut-btn--ink     { background: var(--ink);      color: var(--paper); }
 .brut-btn--pink    { background: var(--pop-pink); color: var(--ink); }
 .brut-btn--lime    { background: var(--pop-lime); color: var(--ink); }
+.brut-btn--danger  { background: var(--danger);   color: var(--paper); border-color: var(--danger); }
+.brut-btn--danger:hover  { background: var(--danger-bg); color: var(--danger); }
+.brut-btn--outline { background: transparent;     color: var(--ink); }
+.brut-btn--outline:hover { background: var(--ink); color: var(--paper); }
 .brut-btn--sm { padding: var(--sp-2) var(--sp-3); font-size: var(--fs-xs); border-width: var(--bw-2);
                 box-shadow: var(--shadow-2xs); }
 .brut-btn--lg { padding: var(--sp-4) var(--sp-6); font-size: var(--fs-md);
                 box-shadow: var(--shadow-md); }
+
+/* COPY — inline value + copy-to-clipboard button. JS reads .brut-copy__value
+   (or data-brut-value), writes to navigator.clipboard, and flashes the label. */
+.brut-copy {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-2);
+  border: var(--bw-2) solid var(--ink);
+  background: var(--bone);
+  font-family: var(--font-mono);
+  max-width: 100%;
+}
+.brut-copy__value {
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.brut-copy__btn {
+  flex-shrink: 0;
+}
 
 /* BADGE */
 .brut-badge {
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
   padding: var(--badge-pad-v) var(--sp-2h);
   border: var(--bw-2) solid var(--ink);
   background: var(--bone);
@@ -515,7 +545,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
 }
 .brut-input {
   font-family: var(--font-sans);
@@ -662,7 +692,8 @@
 .brut-toast--info .brut-toast__icon { background: var(--info);    color: var(--paper); }
 
 /* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
-.brut-tip {
+.brut-tooltip,
+.brut-tip { /* @deprecated since 1.x — use .brut-tooltip; alias removed in 2.0. See MIGRATION.md. */
   position: absolute;
   z-index: var(--z-popover);
   background: var(--ink);
@@ -677,6 +708,16 @@
   white-space: nowrap;
   pointer-events: none;
 }
+/* Side modifiers — visual carve-outs are JS-positioned; classes exist so
+   styling hooks (and future arrows) can target each side. */
+.brut-tooltip--top,
+.brut-tip--top { /* @deprecated alias — use .brut-tooltip--top */ }
+.brut-tooltip--bottom,
+.brut-tip--bottom { /* @deprecated alias — use .brut-tooltip--bottom */ }
+.brut-tooltip--left,
+.brut-tip--left { /* @deprecated alias — use .brut-tooltip--left */ }
+.brut-tooltip--right,
+.brut-tip--right { /* @deprecated alias — use .brut-tooltip--right */ }
 
 /* POPOVER — anchored card opened by trigger. JS positions + toggles. */
 .brut-popover {
@@ -864,7 +905,7 @@
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: var(--fs-xs);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-2h) var(--sp-4);
   background: transparent;
   border: 0;
@@ -1245,13 +1286,18 @@
   font-weight: var(--fw-bold);
   color: var(--success);
 }
-.brut-field__counter {
+.brut-counter,
+.brut-field__counter { /* @deprecated since 1.x — use .brut-counter; alias removed in 2.0. See MIGRATION.md. */
   font-family: var(--font-mono);
   font-size: var(--fs-badge);
   color: var(--concrete-400);
   align-self: flex-end;
 }
-.brut-field__counter--over { color: var(--danger); font-weight: var(--fw-bold); }
+.brut-counter--over,
+.brut-field__counter--over { /* @deprecated alias — use .brut-counter--over */
+  color: var(--danger);
+  font-weight: var(--fw-bold);
+}
 .brut-field--inline {
   display: grid;
   grid-template-columns: var(--field-label-w) 1fr;
@@ -1391,6 +1437,22 @@
 .brut-textarea:focus {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
+}
+/* TEXTAREA — variants + states; mirrors .brut-input--sm/--lg/--err/--ok. */
+.brut-textarea--sm {
+  padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
+  border-width: var(--bw-2);
+  box-shadow: var(--shadow-xs);
+}
+.brut-textarea--lg { padding: var(--sp-4) var(--sp-4h); font-size: var(--fs-md); box-shadow: var(--shadow-sm); }
+.brut-textarea--err {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-textarea--err:focus { background: var(--danger-bg); }
+.brut-textarea--ok {
+  border-color: var(--success);
+  background: var(--success-bg);
 }
 
 /* SELECT — styled native, hard chevron (no SVG, no font icon). */
@@ -1550,7 +1612,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-2h) var(--sp-3h);
   border: var(--bw-3) solid var(--ink);
   background: var(--primary);
@@ -1642,7 +1704,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-2xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-1) var(--sp-2);
   cursor: pointer;
   line-height: 1;
@@ -1697,7 +1759,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-1) var(--sp-2);
   background: var(--primary);
   border: var(--bw-2) solid var(--ink);
@@ -2806,4 +2868,61 @@ button.brut-sidebar__group-title::after {
 .brut-skip-nav:focus-visible {
   top: var(--sp-2);
   left: var(--sp-2);
+}
+
+/* PRINT — hide interactive chrome and decorative ink-heavy elements; flatten overlays so their content stays accessible. */
+@media print {
+  /* Hide navigation and interactive chrome */
+  .brut-topnav,
+  .brut-sidebar,
+  .brut-toast-host,
+  .brut-toast,
+  .brut-spinner,
+  .brut-skeleton,
+  .brut-scrim,
+  .brut-skip-nav { display: none !important; }
+
+  /* Flatten overlays so their content prints inline if visible */
+  .brut-dialog,
+  .brut-drawer {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure tables print in full */
+  .brut-table-wrap { overflow: visible !important; }
+
+  /* Drop decorative shapes */
+  .brut-shape { display: none !important; }
+}
+
+/* ============================================================
+   DOCS-ONLY UTILITIES
+   ------------------------------------------------------------
+   Classes prefixed `.docs-*` are scoped to docs/index.html and
+   are NOT part of the consumer-facing API. Do not document
+   these in component sections or expose them in dist/components.json.
+   ============================================================ */
+
+/* COMPONENT STATUS BADGES — beta / experimental flags rendered in docs/. */
+.docs-status {
+  display: inline-block;
+  margin-left: var(--sp-2);
+  padding: var(--sp-1);
+  border: var(--bw-1) solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.docs-status--beta {
+  background: var(--accent);
+  color: var(--ink);
+}
+.docs-status--experimental {
+  background: var(--danger-bg);
+  color: var(--danger);
 }

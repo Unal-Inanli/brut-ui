@@ -3,15 +3,17 @@ export default {
   description: 'Searchable single-select with a text input that filters a static option list and a hidden input mirror for form submission.',
   useCases: ['country picker', 'tag-free single-tag selection', 'framework chooser', 'autocomplete dropdown', 'searchable enum field'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-combobox',
   selector: '[data-brut="combobox"]',
   modifiers: ['--open'],
   dataAttributes: [
     { name: 'data-brut-name', values: 'string', description: 'Name for the auto-injected hidden input when one is not supplied in markup' },
+    { name: 'data-brut-debounce', values: 'integer (milliseconds)', description: 'Optional integer milliseconds. When present and positive, the input handler is debounced by this many ms. Absent or 0 = immediate (default).' },
     { name: 'data-value', values: 'string (on each .brut-combobox__opt)', description: 'Value written to the hidden input when this option is picked; falls back to option text content' },
   ],
   events: [
-    { name: 'brut:change', detail: { value: 'string (selected option value, or "" when cleared)', label: 'string (selected option label, or "" when cleared)' }, bubbles: true, notes: 'Fires on selection, on text-field clear, and on blur when the current text matches no option label.' },
+    { name: 'brut:change', detail: { value: 'string (selected option value, or "" when cleared)', label: 'string (selected option label, or "" when cleared)' }, bubbles: true, notes: 'Fires on selection, on text-field clear, and on blur when the current text matches no option label. When data-brut-debounce="<ms>" is set on the wrapper, the typing/filter path is debounced by that many ms; selection (option click/Enter) and blur-clear stay immediate.' },
   ],
   formState: { hiddenInput: true, name: 'Hidden input is created automatically when data-brut-name is set; otherwise consumer supplies <input type="hidden">' },
   a11y: {

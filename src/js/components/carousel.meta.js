@@ -3,6 +3,7 @@ export default {
   description: 'Single-track slide carousel with prev/next, dots, keyboard, autoplay, optional loop, and pointer-driven swipe.',
   useCases: ['image gallery', 'feature showcase', 'testimonial rotator', 'onboarding screens', 'product highlights'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-carousel',
   selector: '[data-brut="carousel"]',
   modifiers: [],

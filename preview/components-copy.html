@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Copy preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .row { display: flex; flex-direction: column; gap: 16px; max-width: 640px; }
+  pre.log { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; min-height: 56px; }
+  pre.code { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; margin: 0; white-space: pre; overflow: auto; }
+</style>
+</head>
+<body>
+
+<h2>Token / API key</h2>
+<div class="row">
+  <div class="brut-copy" data-brut="copy">
+    <code class="brut-copy__value">sk-proj-abc123xyz</code>
+    <button type="button" class="brut-btn brut-btn--sm brut-copy__btn">COPY</button>
+  </div>
+</div>
+
+<h2>Multiline value via data-brut-value</h2>
+<div class="row">
+  <div class="brut-copy" data-brut="copy" data-brut-value="npm install @sprtn/ui&#10;import '@sprtn/ui/css';">
+    <pre class="code">npm install @sprtn/ui
+import '@sprtn/ui/css';</pre>
+    <button type="button" class="brut-btn brut-btn--sm brut-copy__btn">COPY</button>
+  </div>
+</div>
+
+<h2>Localized labels</h2>
+<div class="row">
+  <div class="brut-copy" data-brut="copy"
+       data-brut-label-copy="COPIER"
+       data-brut-label-copied="COPIÉ"
+       data-brut-label-announce="Copié dans le presse-papiers">
+    <code class="brut-copy__value">https://brut.example/share/abc123</code>
+    <button type="button" class="brut-btn brut-btn--sm brut-copy__btn"></button>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre class="log" id="log">// brut:change events appear here</pre>
+
+<script src="../dist/brut.js"></script>
+<script>
+  var log = document.getElementById('log');
+  document.addEventListener('brut:change', function (e) {
+    if (!e.target.classList || !e.target.classList.contains('brut-copy')) return;
+    var line = '[' + new Date().toLocaleTimeString() + '] copied: ' + JSON.stringify(e.detail.value);
+    log.textContent = line + '\n' + log.textContent;
+  });
+</script>
+</body></html>

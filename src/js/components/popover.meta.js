@@ -3,6 +3,7 @@ export default {
   description: 'Trigger-anchored card with optional head bar, dismissed by click-outside, Escape, or any [data-brut-close] inside.',
   useCases: ['filter panel', 'inline help', 'quick-edit form', 'detail card', 'tooltip-style content'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-popover',
   selector: '[data-brut="popover"]',
   modifiers: [],
@@ -11,8 +12,8 @@ export default {
     { name: 'data-brut-close',         values: 'boolean attribute',              description: 'On any element inside the popover; clicking it closes the popover' },
   ],
   events: [
-    { name: 'brut:open',  detail: {} },
-    { name: 'brut:close', detail: {} },
+    { name: 'brut:open',  detail: { value: 'true' } },
+    { name: 'brut:close', detail: { value: 'false' } },
   ],
   formState: { hiddenInput: false },
   a11y: {

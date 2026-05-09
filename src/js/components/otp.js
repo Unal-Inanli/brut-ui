@@ -16,6 +16,12 @@
       var len = parseInt(el.getAttribute('data-brut-len'), 10) || 6;
       var name = el.getAttribute('data-brut-name') || 'otp';
 
+      // Consumer can override autocomplete via data-brut-autocomplete on the wrapper.
+      // When set to 'off', no autocomplete attribute is applied at all.
+      var acOverride = el.getAttribute('data-brut-autocomplete');
+      var acOff = acOverride === 'off';
+      var acValue = acOverride && !acOff ? acOverride : 'one-time-code';
+
       var hidden = el.querySelector('input[type="hidden"]');
       if (!hidden) {
         hidden = document.createElement('input');
@@ -30,12 +36,17 @@
           var c = document.createElement('input');
           c.className = 'brut-otp__cell';
           c.maxLength = 1;
-          c.inputMode = 'numeric';
-          c.autocomplete = 'one-time-code';
           el.insertBefore(c, hidden);
         }
         cells = el.querySelectorAll('.brut-otp__cell');
       }
+
+      // Apply mobile-keyboard + SMS-autofill defaults to every cell.
+      // Guards ensure consumer-set values always win.
+      cells.forEach(function (cell) {
+        if (!cell.hasAttribute('inputmode')) cell.setAttribute('inputmode', 'numeric');
+        if (!acOff && !cell.hasAttribute('autocomplete')) cell.setAttribute('autocomplete', acValue);
+      });
 
       var labelNoun = el.getAttribute('data-brut-label-cell') || 'Digit';
       cells.forEach(function (cell, idx) {

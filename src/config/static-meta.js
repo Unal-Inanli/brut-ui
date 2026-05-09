@@ -192,6 +192,8 @@ const entries = [
       { name: '--ink', description: 'Dark background with light text' },
       { name: '--pink', description: 'Pop-pink accent background' },
       { name: '--lime', description: 'Pop-lime accent background' },
+      { name: '--danger', description: 'Destructive action — danger background, paper text; hover inverts to light tint' },
+      { name: '--outline', description: 'Ghost / outline — transparent fill with ink border; hover inverts to ink on paper' },
       { name: '--sm', description: 'Small size — reduced padding and font size' },
       { name: '--lg', description: 'Large size — increased padding and font size' },
     ],
@@ -421,6 +423,281 @@ const entries = [
       {
         title: 'Two-column row',
         html: '<div class="brut-row">\n  <div class="brut-col brut-col--6">Left</div>\n  <div class="brut-col brut-col--6">Right</div>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'aspect',
+    description: 'Fixed aspect-ratio media frame with ink border that crops img, video, or iframe children to cover the box.',
+    useCases: ['image thumbnail', 'video embed wrapper', 'media tile', 'gallery cell', 'oEmbed container'],
+    examples: [
+      {
+        title: 'Square image tile',
+        html: '<div class="brut-aspect brut-aspect--square">\n  <img src="/cover.jpg" alt="Cover">\n</div>',
+      },
+      {
+        title: '16:9 video embed',
+        html: '<div class="brut-aspect brut-aspect--video">\n  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'avatar',
+    description: 'Square ink-bordered identity tile sized for a single user, displaying initials, a portrait, or an icon.',
+    useCases: ['user profile mark', 'comment author', 'roster cell', 'team member tile', 'mention chip'],
+    examples: [
+      {
+        title: 'Initials avatar',
+        html: '<span class="brut-avatar">JD</span>',
+      },
+      {
+        title: 'Image avatar',
+        html: '<span class="brut-avatar"><img src="/users/jane.jpg" alt="Jane"></span>',
+      },
+    ],
+  },
+  {
+    name: 'bar',
+    description: 'Wrapping flex strip that pushes children to opposite ends with space-between for header, toolbar, or footer rows.',
+    useCases: ['page header strip', 'CTA banner row', 'toolbar with leading title and trailing actions', 'card footer row'],
+    examples: [
+      {
+        title: 'Header bar with title and action',
+        html: '<div class="brut-bar">\n  <h2 class="brut-h2">Dashboard</h2>\n  <button class="brut-btn brut-btn--primary">New</button>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'caption',
+    description: 'Extra-small muted text in concrete-400 for image captions, table footnotes, or inline metadata.',
+    useCases: ['image caption', 'table footnote', 'form helper text', 'metadata line', 'timestamp label'],
+    examples: [
+      {
+        title: 'Figure caption',
+        html: '<figure>\n  <img src="/cover.jpg" alt="Cover">\n  <figcaption class="brut-caption">Photo by R. Kray, 2026</figcaption>\n</figure>',
+      },
+    ],
+  },
+  {
+    name: 'code',
+    description: 'Inline monospace span with paper-2 background and thin ink border for short code fragments inside running text.',
+    useCases: ['inline code reference', 'API name in prose', 'shortcut key spelled out', 'CLI flag in docs'],
+    examples: [
+      {
+        title: 'Inline code in body copy',
+        html: '<p class="brut-body">Run <code class="brut-code">npm install</code> before building.</p>',
+      },
+    ],
+  },
+  {
+    name: 'col',
+    description: 'Single-column child for the 12-column .brut-row grid; -N variants span N of 12 with sm/md/lg overrides.',
+    useCases: ['12-column form field', 'half-width card', 'sidebar plus main split', 'responsive grid cell'],
+    htmlElements: ['div'],
+    modifiers: [
+      { name: '-1 through -12', description: 'Span N of 12 columns at all viewports' },
+      { name: '-sm-N', description: 'Span N columns at ≥640px' },
+      { name: '-md-N', description: 'Span N columns at ≥768px' },
+      { name: '-lg-N', description: 'Span N columns at ≥1024px' },
+      { name: '-offset-N', description: 'Start at column N+1 (offset by N)' },
+    ],
+    notes: 'Below 640px, columns inside a .brut-row collapse to full-width unless the parent has .brut-row--no-stack. Use .brut-col-sm-N / .brut-col-md-N / .brut-col-lg-N for tier-aware widths.',
+    examples: [
+      {
+        title: 'Three equal columns',
+        html: '<div class="brut-row">\n  <div class="brut-col-4">A</div>\n  <div class="brut-col-4">B</div>\n  <div class="brut-col-4">C</div>\n</div>',
+      },
+      {
+        title: 'Responsive sidebar + main',
+        html: '<div class="brut-row">\n  <aside class="brut-col-12 brut-col-md-3">Sidebar</aside>\n  <main class="brut-col-12 brut-col-md-9">Main</main>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'footer',
+    description: 'Inverted ink-on-paper page footer slab with brand mark, link list, and legal text laid out on a wrapping inner row.',
+    useCases: ['site footer', 'legal and copyright strip', 'global navigation footer', 'app shell bottom slab'],
+    htmlElements: ['footer'],
+    modifiers: [],
+    notes: 'Compose with .brut-footer__inner for the centered max-width wrapper; .brut-footer__brand for the lockup; .brut-footer__links + .brut-footer__link for nav; .brut-footer__legal for copyright text.',
+    examples: [
+      {
+        title: 'Site footer with brand, links, legal',
+        html: '<footer class="brut-footer">\n  <div class="brut-footer__inner">\n    <a class="brut-footer__brand" href="/"><span>BRUT UI</span></a>\n    <nav class="brut-footer__links">\n      <a class="brut-footer__link" href="/docs">Docs</a>\n      <a class="brut-footer__link" href="/github">GitHub</a>\n    </nav>\n    <span class="brut-footer__legal">&copy; 2026 MIT</span>\n  </div>\n</footer>',
+      },
+    ],
+  },
+  {
+    name: 'h1',
+    description: 'Largest in-flow heading — display font, 3xl size, uppercase, tight tracking, zero margin.',
+    useCases: ['page title', 'article headline', 'top-of-section heading', 'card title for hero card'],
+    htmlElements: ['h1', 'div'],
+    examples: [
+      {
+        title: 'Page heading',
+        html: '<h1 class="brut-h1">Dashboard</h1>',
+      },
+    ],
+  },
+  {
+    name: 'h2',
+    description: 'Second-level heading — display font, 2xl size, uppercase, tight tracking, zero margin.',
+    useCases: ['section heading', 'card title', 'modal title', 'group label above a stack'],
+    htmlElements: ['h2', 'div'],
+    examples: [
+      {
+        title: 'Section heading',
+        html: '<h2 class="brut-h2">Recent Activity</h2>',
+      },
+    ],
+  },
+  {
+    name: 'h3',
+    description: 'Third-level heading — sans font, xl size, bold weight, snug line-height, zero margin.',
+    useCases: ['sub-section heading', 'card subhead', 'list group label', 'feature block title'],
+    htmlElements: ['h3', 'div'],
+    examples: [
+      {
+        title: 'Card subhead',
+        html: '<h3 class="brut-h3">Open Pull Requests</h3>',
+      },
+    ],
+  },
+  {
+    name: 'h4',
+    description: 'Fourth-level heading — sans font, lg size, bold weight, snug line-height, zero margin.',
+    useCases: ['nested subsection title', 'sidebar group heading', 'minor card heading'],
+    htmlElements: ['h4', 'div'],
+    examples: [
+      {
+        title: 'Nested heading',
+        html: '<h4 class="brut-h4">Filter options</h4>',
+      },
+    ],
+  },
+  {
+    name: 'h5',
+    description: 'Fifth-level heading — sans font, md size, bold weight, snug line-height, zero margin.',
+    useCases: ['compact subhead', 'sidebar item heading', 'list section divider', 'menu group label'],
+    htmlElements: ['h5', 'div'],
+    examples: [
+      {
+        title: 'Sidebar group heading',
+        html: '<h5 class="brut-h5">Team</h5>',
+      },
+    ],
+  },
+  {
+    name: 'h6',
+    description: 'Smallest heading — sans font, sm size, bold, uppercase, wide tracking — used as a chunky eyebrow label.',
+    useCases: ['eyebrow heading', 'micro section label', 'meta heading', 'form fieldset legend'],
+    htmlElements: ['h6', 'legend', 'div'],
+    examples: [
+      {
+        title: 'Eyebrow label',
+        html: '<h6 class="brut-h6">Account settings</h6>',
+      },
+    ],
+  },
+  {
+    name: 'input',
+    description: 'Brutalist single-line text input with bone fill, thick ink border, focus ring that flips background to primary-soft.',
+    useCases: ['form text field', 'email input', 'search box', 'login field', 'inline editor'],
+    htmlElements: ['input'],
+    modifiers: [
+      { name: '--sm', description: 'Small size — reduced padding and font size' },
+      { name: '--lg', description: 'Large size — increased padding and font size' },
+      { name: '--err', description: 'Error state — danger border and background' },
+      { name: '--ok', description: 'Success state — green border accent' },
+    ],
+    notes: 'Width is 100% by default — wrap inside a sized parent or grid cell to constrain. Validation modifiers also resolve via :user-invalid / :user-valid for native form validation.',
+    examples: [
+      {
+        title: 'Default input with label',
+        html: '<label class="brut-label" for="email">Email</label>\n<input id="email" class="brut-input" type="email" placeholder="you@example.com">',
+      },
+      {
+        title: 'Error state',
+        html: '<input class="brut-input brut-input--err" value="not-an-email">',
+      },
+    ],
+  },
+  {
+    name: 'kbd',
+    description: 'Inline keycap glyph — bone fill, thin ink border, subtle drop shadow — for keyboard shortcuts in body or docs.',
+    useCases: ['keyboard shortcut hint', 'help text key reference', 'documentation hotkey', 'cheatsheet key'],
+    htmlElements: ['kbd', 'span'],
+    examples: [
+      {
+        title: 'Shortcut in prose',
+        html: '<p class="brut-body">Press <kbd class="brut-kbd">Ctrl</kbd> + <kbd class="brut-kbd">K</kbd> to open the command palette.</p>',
+      },
+    ],
+  },
+  {
+    name: 'label',
+    description: 'Display-font field label — extra-small, uppercase, wide tracking — paired above an input or select.',
+    useCases: ['form field label', 'fieldset caption', 'switch / checkbox label', 'small column header'],
+    htmlElements: ['label', 'span'],
+    examples: [
+      {
+        title: 'Label above input',
+        html: '<label class="brut-label" for="name">Full name</label>\n<input id="name" class="brut-input">',
+      },
+    ],
+  },
+  {
+    name: 'lead',
+    description: 'Lead paragraph — sans at lg size with normal line-height and a 60ch measure — for the intro under a headline.',
+    useCases: ['article opening paragraph', 'hero subhead', 'landing page intro', 'feature description blurb'],
+    htmlElements: ['p', 'div'],
+    examples: [
+      {
+        title: 'Article intro',
+        html: '<h1 class="brut-h1">Manifesto</h1>\n<p class="brut-lead">A concrete kit for builders who like edges to be edges and corners to be square.</p>',
+      },
+    ],
+  },
+  {
+    name: 'link',
+    description: 'Inline ink anchor with thick underline that fills with primary on hover and inverts to deep primary on active.',
+    useCases: ['inline body link', 'docs cross-reference', 'footnote anchor', 'breadcrumb tail link'],
+    htmlElements: ['a'],
+    examples: [
+      {
+        title: 'Inline link',
+        html: '<p class="brut-body">Read the <a class="brut-link" href="/docs">documentation</a> for details.</p>',
+      },
+    ],
+  },
+  {
+    name: 'list',
+    description: 'Sans-serif list with square bullets and indented padding; .brut-list--ord switches to decimal numbering.',
+    useCases: ['feature bullet list', 'checklist items', 'numbered steps', 'sidebar nav list'],
+    htmlElements: ['ul', 'ol'],
+    modifiers: [
+      { name: '--ord', description: 'Decimal numbering instead of square bullets — pair with <ol>' },
+    ],
+    examples: [
+      {
+        title: 'Bulleted list',
+        html: '<ul class="brut-list">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>',
+      },
+      {
+        title: 'Ordered list',
+        html: '<ol class="brut-list brut-list--ord">\n  <li>Install the package</li>\n  <li>Link the stylesheet</li>\n  <li>Drop in the script</li>\n</ol>',
+      },
+    ],
+  },
+  {
+    name: 'small',
+    description: 'Sans-serif body copy at sm size with an 80ch reading measure for fine print, helper text, or footnotes.',
+    useCases: ['fine print', 'helper text under inputs', 'disclaimer paragraph', 'metadata line under a card'],
+    htmlElements: ['small', 'p', 'span'],
+    examples: [
+      {
+        title: 'Form helper text',
+        html: '<input class="brut-input" type="password">\n<small class="brut-small">At least 12 characters with one symbol.</small>',
       },
     ],
   },

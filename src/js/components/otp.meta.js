@@ -3,6 +3,7 @@ export default {
   description: 'One-time-code input rendered as one cell per digit with auto-advance, paste-fill, and Backspace/Arrow navigation.',
   useCases: ['email verification', '2FA code', 'SMS one-time password', 'PIN entry', 'magic-link confirm'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-otp',
   selector: '[data-brut="otp"]',
   modifiers: [],
@@ -10,6 +11,7 @@ export default {
     { name: 'data-brut-len',  values: 'integer (default 6)', description: 'Number of cells to auto-generate when none are present' },
     { name: 'data-brut-name', values: 'string (default "otp")', description: 'name attribute on the hidden input that mirrors the joined value' },
     { name: 'data-brut-label-cell', values: 'string (default "Digit")', description: 'i18n override for the per-cell aria-label noun (e.g. "Ziffer" → "Ziffer 1 of 6")' },
+    { name: 'data-brut-autocomplete', values: 'string (default "one-time-code") | "off"', description: 'Override the per-cell autocomplete value; "off" suppresses the attribute entirely' },
   ],
   events: [
     { name: 'brut:change',   detail: { value: 'string (joined digits so far)' } },
@@ -20,7 +22,7 @@ export default {
     role: null,
     keyboard: ['ArrowLeft', 'ArrowRight', 'Backspace', 'Paste'],
     aria: ['aria-label (per cell)', 'aria-live (status region)'],
-    notes: 'Cells are real <input> elements with inputmode="numeric" and autocomplete="one-time-code", so iOS/Android suggest SMS codes. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell. Each cell gets aria-label="Digit N of M" (override the noun via data-brut-label-cell). A visually-hidden aria-live="polite" region announces "Code complete" when all cells are filled, in sync with the brut:complete dispatch.',
+    notes: 'At init, every cell receives inputmode="numeric" and autocomplete="one-time-code" by default (guarded so consumer-set values win); set data-brut-autocomplete on the wrapper to override the autocomplete value, or "off" to suppress it. Together these surface the numeric keypad and the iOS SMS one-time-code autofill shortcut. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell. Each cell gets aria-label="Digit N of M" (override the noun via data-brut-label-cell). A visually-hidden aria-live="polite" region announces "Code complete" when all cells are filled, in sync with the brut:complete dispatch.',
   },
   examples: [
     {

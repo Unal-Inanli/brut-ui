@@ -3,6 +3,7 @@ export default {
   description: 'Page navigation with prev/next, numbered buttons, first/last anchors, and ellipsis gaps for large page counts.',
   useCases: ['paginated table rows', 'search result pages', 'blog/article archives', 'data grid navigation', 'image gallery paging'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-pagination',
   selector: '[data-brut="pagination"]',
   modifiers: [],

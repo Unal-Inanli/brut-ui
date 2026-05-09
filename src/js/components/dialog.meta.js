@@ -3,6 +3,7 @@ export default {
   description: 'Modal dialog wired to external open triggers with optional scrim, escape-to-close, and any [data-brut-close] inside.',
   useCases: ['delete confirmation', 'keyboard shortcut help', 'login prompt', 'settings modal', 'destructive action confirmation'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-dialog',
   selector: '[data-brut="dialog"]',
   modifiers: [],
@@ -10,6 +11,7 @@ export default {
     { name: 'data-brut-scrim', values: 'id of a .brut-scrim element', description: 'Optional sibling scrim toggled in lockstep with the dialog' },
     { name: 'data-brut-open', values: 'id of a [data-brut="dialog"] (on a trigger)', description: 'Click target that opens the dialog with the matching id' },
     { name: 'data-brut-close', values: 'boolean attribute (on a child)', description: 'Marks any element inside the dialog as a close trigger' },
+    { name: 'data-brut-dialog-title', values: 'boolean attribute (on a child)', description: 'Optional override marking the element to wire as aria-labelledby when no h1–h6 is present in .brut-dialog__head' },
   ],
   events: [
     { name: 'brut:open', detail: { value: 'undefined' } },

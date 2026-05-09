@@ -18,6 +18,7 @@
    open transform. Dispatches brut:open / brut:close. */
 (function () {
   if (!window.Brut) return;
+  var titleCounter = 0;
   Brut.register('drawer', {
     selector: '[data-brut="drawer"]',
     init: function (el) {
@@ -29,6 +30,16 @@
 
       var scrimId = el.getAttribute('data-brut-scrim');
       var scrim = scrimId ? document.getElementById(scrimId) : null;
+
+      if (!el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
+        var head = el.querySelector('.brut-drawer__head');
+        var heading = (head && head.querySelector('h1, h2, h3, h4, h5, h6, [data-brut-drawer-title]'))
+          || el.querySelector('h1, h2, h3, h4, h5, h6, [data-brut-drawer-title]');
+        if (heading) {
+          if (!heading.id) heading.id = 'brut-drawer-title-' + (++titleCounter);
+          el.setAttribute('aria-labelledby', heading.id);
+        }
+      }
 
       var trap = null;
 

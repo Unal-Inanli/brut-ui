@@ -3,6 +3,7 @@ export default {
   description: 'Text field paired with a popover calendar; selecting a day writes ISO YYYY-MM-DD into the visible field and a hidden mirror.',
   useCases: ['due date picker', 'birthday field', 'reservation date', 'event scheduling', 'expiry date input'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-date',
   selector: '[data-brut="date"]',
   modifiers: ['--open'],
@@ -17,7 +18,7 @@ export default {
     role: 'combobox (on the field); grid (on the day grid); gridcell (on each day)',
     keyboard: ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Escape', 'PageUp', 'PageDown'],
     aria: ['aria-haspopup="dialog"', 'aria-expanded', 'aria-label (on prev/next nav buttons)'],
-    notes: 'Week starts on Monday. Outside-month days are rendered but visually muted via --out. Outside-click closes the popover. PageUp/PageDown shift the visible month and clamp the focused day to the new month\'s last day.',
+    notes: 'Week starts on Monday. Outside-month days are rendered but visually muted via --out. Outside-click closes the popover. PageUp/PageDown shift the visible month and clamp the focused day to the new month\'s last day. At init, any descendant numeric segment inputs (input[type="number"], .brut-date__year, .brut-date__month, .brut-date__day) receive inputmode="numeric" by default — guarded so consumer-set values win — so touch keyboards open in numeric mode.',
   },
   examples: [
     {

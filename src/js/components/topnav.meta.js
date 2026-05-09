@@ -3,6 +3,7 @@ export default {
   description: 'Sticky page header whose only behavior is the mobile burger toggle for the link list; outside-click and Escape close it.',
   useCases: ['marketing site header', 'docs site chrome', 'app shell top bar', 'mobile-friendly navigation', 'product landing nav'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-topnav',
   selector: '[data-brut="topnav"]',
   modifiers: [

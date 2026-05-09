@@ -3,6 +3,7 @@ export default {
   description: 'File picker that wraps a hidden <input type="file"> with a visible button and live filename label.',
   useCases: ['avatar upload', 'resume upload', 'attachment picker', 'image import', 'document submission'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-file',
   selector: '[data-brut="file"]',
   modifiers: [],

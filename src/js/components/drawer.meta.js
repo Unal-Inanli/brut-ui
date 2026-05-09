@@ -3,6 +3,7 @@ export default {
   description: 'Side sheet that slides in from any edge, opened by external triggers with optional scrim and escape-to-close.',
   useCases: ['cart panel', 'mobile navigation', 'filter panel', 'detail inspector', 'notifications drawer'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-drawer',
   selector: '[data-brut="drawer"]',
   modifiers: ['--right', '--left', '--top', '--bottom', '--open'],
@@ -11,6 +12,7 @@ export default {
     { name: 'data-brut-scrim', values: 'id of a .brut-scrim element', description: 'Optional sibling scrim toggled in lockstep with the drawer' },
     { name: 'data-brut-open', values: 'id of a [data-brut="drawer"] (on a trigger)', description: 'Click target that opens the drawer with the matching id' },
     { name: 'data-brut-close', values: 'boolean attribute (on a child)', description: 'Marks any element inside the drawer as a close trigger' },
+    { name: 'data-brut-drawer-title', values: 'boolean attribute (on a child)', description: 'Optional override marking the element to wire as aria-labelledby when no h1–h6 is present in .brut-drawer__head' },
   ],
   events: [
     { name: 'brut:open', detail: { value: 'undefined' } },
@@ -20,8 +22,8 @@ export default {
   a11y: {
     role: 'dialog',
     keyboard: ['Escape', 'Tab', 'Shift+Tab'],
-    aria: ['aria-label (consumer-supplied)'],
-    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the drawer (first focusable child, or the drawer itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The drawer id is required — components without an id are skipped.',
+    aria: ['aria-labelledby', 'aria-label (consumer-supplied)'],
+    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. On init, if the drawer has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-drawer-title]) inside .brut-drawer__head, auto-assigning an id when needed. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the drawer (first focusable child, or the drawer itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The drawer id is required — components without an id are skipped.',
   },
   examples: [
     {

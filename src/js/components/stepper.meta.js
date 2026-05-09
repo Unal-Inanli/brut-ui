@@ -3,6 +3,7 @@ export default {
   description: 'Numeric input flanked by minus / plus buttons; reads min, max, and step from the inner <input type="number"> and clamps to the step grid.',
   useCases: ['quantity selector', 'guest / passenger count', 'unit count in checkout', 'configurable numeric setting', 'paginated page size'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-stepper',
   selector: '[data-brut="stepper"]',
   modifiers: [],
@@ -17,7 +18,7 @@ export default {
     role: 'spinbutton (on the wrapper)',
     keyboard: ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown'],
     aria: ['aria-valuenow', 'aria-valuemin', 'aria-valuemax'],
-    notes: 'PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min.',
+    notes: 'At init the inner input receives inputmode="numeric" by default ("decimal" when its step contains a fractional part), guarded so a consumer-set inputmode wins; this surfaces a numeric soft keyboard on touch devices. PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min.',
   },
   examples: [
     {
