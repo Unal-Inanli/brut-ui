@@ -2797,3 +2797,21 @@ button.brut-sidebar__group-title::after {
     animation: none !important;
   }
 }
+
+/* Skip-to-main-content link — visually hidden until keyboard focus reveals it. */
+.brut-skip-nav {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: var(--z-toast);
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font: inherit;
+}
+.brut-skip-nav:focus,
+.brut-skip-nav:focus-visible {
+  top: var(--sp-2);
+  left: var(--sp-2);
+}
