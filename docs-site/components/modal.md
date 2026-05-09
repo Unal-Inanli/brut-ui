@@ -9,14 +9,14 @@ Modal dialog wired to external open triggers with optional scrim, escape-to-clos
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-modal.html"
+  src="../preview/components-dialog.html"
   loading="lazy"
   style="height: 720px;"
   title="Modal / Dialog preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-modal.html` —
+The preview above is served from `preview/components-dialog.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::
