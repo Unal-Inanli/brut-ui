@@ -29,7 +29,9 @@
       "Bash(git commit -m ' *)",
       "Bash(pnpm --filter @sprtn/mcp test)",
       "Bash(ls .github/PULL_REQUEST_TEMPLATE* .github/pull_request_template*)",
-      "Bash(ls .github/)"
+      "Bash(ls .github/)",
+      "Read(//root/.claude/**)",
+      "Bash(mkdir -p /root/.claude/plans)"
     ]
   }
 }
