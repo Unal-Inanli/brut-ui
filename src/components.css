@@ -1,6 +1,15 @@
 /* Shared component styles for docs page — these classes are referenced
    by the inline previews AND by the code snippets the user copies. */
 
+/* Global focus-visible — keyboard users always see a ring; mouse focus stays clean. */
+:where(:focus-visible) {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+:where(:focus:not(:focus-visible)) {
+  outline: none;
+}
+
 /* ============================================================
    TYPOGRAPHY
    Component-level classes that compose the type tokens into
