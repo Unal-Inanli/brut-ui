@@ -31,4 +31,9 @@ export default {
       html: '<button class="brut-btn" type="button" data-brut-popover-open="po-info">WHAT IS THIS?</button>\n<div class="brut-popover" id="po-info" data-brut="popover" hidden>\n  <div class="brut-popover__body">\n    A popover is a small anchored card. Click the trigger again, click outside, or press Esc to close.\n  </div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Bottom-sheet on phones; anchored to trigger at sm and above.',
+  },
 };

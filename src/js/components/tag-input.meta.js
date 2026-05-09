@@ -34,4 +34,8 @@ export default {
       html: '<div class="brut-tag-input" data-brut="tag-input" data-brut-name="labels">\n  <span class="brut-tag" data-value="bug">bug <button class="brut-tag__x">×</button></span>\n  <span class="brut-tag" data-value="feature">feature <button class="brut-tag__x">×</button></span>\n  <span class="brut-tag" data-value="docs">docs <button class="brut-tag__x">×</button></span>\n  <input class="brut-tag-input__field" placeholder="Add a label…">\n</div>',
     },
   ],
+  responsive: {
+    shape: 'wrap',
+    notes: 'Tag chips wrap to new lines via flex-wrap at every tier.',
+  },
 };

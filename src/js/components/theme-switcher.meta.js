@@ -36,4 +36,8 @@ export default {
       html: '<header class="brut-topnav" data-brut="topnav">\n  <div class="brut-topnav__inner">\n    <a class="brut-topnav__brand" href="/">BRUT</a>\n    <div data-brut="theme-switcher" style="margin-left:auto;"></div>\n  </div>\n</header>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Inline control; no viewport flip.',
+  },
 };

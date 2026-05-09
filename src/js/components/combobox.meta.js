@@ -30,4 +30,9 @@ export default {
       html: '<div class="brut-combobox" data-brut="combobox" data-brut-name="framework">\n  <input class="brut-input" type="text" value="Vanilla JS" placeholder="Search…">\n  <input type="hidden" name="framework" value="vanilla">\n  <ul class="brut-combobox__list">\n    <li class="brut-combobox__opt" data-value="vanilla">Vanilla JS</li>\n    <li class="brut-combobox__opt" data-value="svelte">Svelte</li>\n    <li class="brut-combobox__opt" data-value="solid">Solid</li>\n    <li class="brut-combobox__opt" data-value="lit">Lit</li>\n    <li class="brut-combobox__empty">No matches.</li>\n  </ul>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Listbox docks to bottom edge on phones; anchored below input at sm and above.',
+  },
 };

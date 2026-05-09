@@ -36,4 +36,9 @@ export default {
       html: '<nav class="brut-pagination" data-brut="pagination" data-total="1000" data-page-size="50" data-page="7" data-sibling-count="2"></nav>',
     },
   ],
+  responsive: {
+    shape: 'ellipsis-collapse',
+    breakpoint: 'sm',
+    notes: 'Middle pages collapse to an ellipsis on phones; full row visible at sm and above.',
+  },
 };

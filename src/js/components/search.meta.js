@@ -29,4 +29,8 @@ export default {
       html: '<div class="brut-search" data-brut="search">\n  <input class="brut-input" type="search" value="button" placeholder="Search…">\n  <button class="brut-search__clear" aria-label="Clear">×</button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form input; no viewport flip.',
+  },
 };

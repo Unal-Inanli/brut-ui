@@ -35,4 +35,8 @@ export default {
       html: '<div class="brut-otp" data-brut="otp" data-brut-name="partial">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="4">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="2">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Cell row keeps width across tiers within its container.',
+  },
 };

@@ -33,4 +33,8 @@ export default {
       html: '<div class="brut-stepper" data-brut="stepper">\n  <button class="brut-stepper__btn" data-brut-step="down">−</button>\n  <input class="brut-stepper__input" type="number" min="0" max="5" step="0.1" value="1.0">\n  <button class="brut-stepper__btn" data-brut-step="up">+</button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Numeric input with controls; no viewport flip.',
+  },
 };

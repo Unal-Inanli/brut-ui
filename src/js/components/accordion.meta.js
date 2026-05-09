@@ -28,4 +28,8 @@ export default {
       html: '<div class="brut-accordion" data-brut="accordion" data-brut-allow-multi>\n  <div class="brut-accordion__item brut-accordion__item--open">\n    <button class="brut-accordion__head" type="button">\n      <span>ONE</span>\n      <span class="brut-accordion__icon" aria-hidden="true"></span>\n    </button>\n    <div class="brut-accordion__body">First panel body.</div>\n  </div>\n  <div class="brut-accordion__item brut-accordion__item--open">\n    <button class="brut-accordion__head" type="button">\n      <span>TWO</span>\n      <span class="brut-accordion__icon" aria-hidden="true"></span>\n    </button>\n    <div class="brut-accordion__body">Second panel body.</div>\n  </div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Disclosure is shape-invariant; no viewport flip.',
+  },
 };

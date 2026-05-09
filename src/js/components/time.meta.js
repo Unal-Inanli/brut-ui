@@ -37,4 +37,9 @@ export default {
       html: '<div class="brut-time" data-brut="time" data-brut-name="slot" data-brut-minute-step="15">\n  <input class="brut-input brut-time__field" type="text" readonly value="14:00" />\n  <input type="hidden" />\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Time picker docks to bottom edge on phones; anchored at sm and above.',
+  },
 };

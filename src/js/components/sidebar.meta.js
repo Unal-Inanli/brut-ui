@@ -26,4 +26,9 @@ export default {
       html: '<aside class="brut-sidebar" data-brut="sidebar">\n  <a class="brut-sidebar__brand" href="#">BRUT</a>\n  <div class="brut-sidebar__group">\n    <button class="brut-sidebar__group-title" type="button">Main</button>\n    <a class="brut-sidebar__item brut-sidebar__item--active" href="#">Dashboard</a>\n    <a class="brut-sidebar__item" href="#">Projects</a>\n    <a class="brut-sidebar__item" href="#">Inbox</a>\n  </div>\n  <div class="brut-sidebar__group brut-sidebar__group--closed">\n    <button class="brut-sidebar__group-title" type="button">Archived</button>\n    <a class="brut-sidebar__item" href="#">Old project</a>\n  </div>\n</aside>',
     },
   ],
+  responsive: {
+    shape: 'disclosure-toggle',
+    breakpoint: 'md',
+    notes: 'Hidden behind a toggle button below md; visible inline at md and above.',
+  },
 };

@@ -32,4 +32,8 @@ export default {
       html: '<div class="brut-rating" data-brut="rating" data-brut-name="quality" data-brut-value="3">\n  <button class="brut-rating__star"></button>\n  <button class="brut-rating__star"></button>\n  <button class="brut-rating__star"></button>\n  <button class="brut-rating__star"></button>\n  <button class="brut-rating__star"></button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Star row keeps intrinsic size at any tier.',
+  },
 };

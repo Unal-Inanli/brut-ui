@@ -44,4 +44,9 @@ export default {
       html: '<table class="brut-table brut-table--compact brut-table--bordered">\n  <thead class="brut-table__head">\n    <tr class="brut-table__row">\n      <th class="brut-table__cell">SKU</th>\n      <th class="brut-table__cell">Title</th>\n      <th class="brut-table__cell brut-table__cell--num">Stock</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class="brut-table__row"><td class="brut-table__cell">A-001</td><td class="brut-table__cell">Bone-white tee</td><td class="brut-table__cell brut-table__cell--num">122</td></tr>\n  </tbody>\n</table>',
     },
   ],
+  responsive: {
+    shape: 'horizontal-scroll',
+    breakpoint: 'md',
+    notes: 'Wide tables scroll horizontally below md; expanded layout at md and above.',
+  },
 };

@@ -27,4 +27,8 @@ export default {
       html: '<label class="brut-checkbox" data-brut="checkbox">\n  <input type="checkbox" name="agree" value="yes" hidden/>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form control; lays out with its parent at any tier.',
+  },
 };

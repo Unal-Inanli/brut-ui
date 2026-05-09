@@ -33,4 +33,8 @@ export default {
       html: '<label class="brut-switch" data-brut="switch">\n  <input type="checkbox" name="notifications" hidden>\n  <span class="brut-switch__knob"></span>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form control; no viewport flip.',
+  },
 };

@@ -27,4 +27,8 @@ export default {
       html: '<label class="brut-file" data-brut="file">\n  <input type="file" name="attachments" multiple>\n  <span class="brut-file__btn">CHOOSE FILES</span>\n  <span class="brut-file__name">No file selected</span>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form file picker; no viewport flip.',
+  },
 };

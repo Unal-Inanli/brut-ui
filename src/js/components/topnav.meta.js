@@ -32,4 +32,9 @@ export default {
       html: '<header class="brut-topnav" data-brut="topnav">\n  <div class="brut-topnav__inner">\n    <a class="brut-topnav__brand" href="/">BRUT</a>\n    <nav class="brut-topnav__links">\n      <a class="brut-topnav__link" href="#">Home</a>\n      <a class="brut-topnav__link" href="#">About</a>\n    </nav>\n    <button class="brut-topnav__burger" aria-label="Menu">≡</button>\n  </div>\n</header>',
     },
   ],
+  responsive: {
+    shape: 'disclosure-toggle',
+    breakpoint: 'md',
+    notes: 'Burger-toggled menu below md; horizontal nav at md and above.',
+  },
 };

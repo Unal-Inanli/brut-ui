@@ -28,4 +28,8 @@ export default {
       html: '<input id="title" class="brut-input" type="text">\n<span class="brut-field__counter" data-brut="counter" data-brut-for="title" data-brut-max="60"></span>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Inline character/word count; no responsive flip.',
+  },
 };

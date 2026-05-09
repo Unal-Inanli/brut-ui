@@ -32,4 +32,9 @@ export default {
       html: '<button class="brut-btn" type="button" data-brut-menu-open="m-links" aria-label="More">…</button>\n<div class="brut-menu" id="m-links" data-brut="menu" hidden>\n  <a class="brut-menu__item" href="#">Profile</a>\n  <a class="brut-menu__item" href="#">Settings</a>\n  <a class="brut-menu__item" href="#">Help</a>\n  <hr class="brut-menu__sep"/>\n  <a class="brut-menu__item brut-menu__item--danger" href="#">Sign out</a>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Anchored menu docks to bottom edge on phones; anchored to trigger at sm and above.',
+  },
 };

@@ -27,4 +27,8 @@ export default {
       html: '<label class="brut-dropzone" data-brut="dropzone">\n  <input type="file" name="assets" multiple accept="image/*,.pdf">\n  <span class="brut-dropzone__hint">Drop images or PDFs here.</span>\n  <span class="brut-dropzone__sub">Or click to browse. Multiple allowed.</span>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Drop target sizes to its container at any tier.',
+  },
 };

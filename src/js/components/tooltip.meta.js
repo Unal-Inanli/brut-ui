@@ -37,4 +37,9 @@ export default {
       html: '<input class="brut-input" type="text" placeholder="Email"\n       data-brut="tooltip"\n       data-brut-tip="We never share email"\n       data-brut-tip-side="bottom" />',
     },
   ],
+  responsive: {
+    shape: 'hover-fallback',
+    breakpoint: 'sm',
+    notes: 'Hover-on-pointer; tap-to-pin on coarse pointer / phones.',
+  },
 };
