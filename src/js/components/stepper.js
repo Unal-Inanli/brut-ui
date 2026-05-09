@@ -18,6 +18,13 @@
       var input = el.querySelector('input');
       if (!input) return;
 
+      // Mobile-keyboard default: numeric keypad for integer steps, decimal pad
+      // when step contains a fractional part. Guard preserves consumer overrides.
+      if (!input.hasAttribute('inputmode')) {
+        var stepAttr = input.getAttribute('step') || '';
+        input.setAttribute('inputmode', stepAttr.indexOf('.') !== -1 ? 'decimal' : 'numeric');
+      }
+
       function read(attr, fallback) {
         var v = input.getAttribute(attr);
         return v === null || v === '' ? fallback : parseFloat(v);

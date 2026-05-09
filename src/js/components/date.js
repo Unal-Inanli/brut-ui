@@ -41,6 +41,15 @@
       var field = el.querySelector('.brut-date__field') || el.querySelector('input[type="text"], input[type="date"], input:not([type])');
       if (!field) return;
 
+      // If consumers wire numeric segment inputs (year / month / day), surface
+      // the numeric soft keyboard on touch devices. Guard preserves overrides.
+      var segments = el.querySelectorAll(
+        'input[type="number"], .brut-date__year, .brut-date__month, .brut-date__day'
+      );
+      segments.forEach(function (seg) {
+        if (!seg.hasAttribute('inputmode')) seg.setAttribute('inputmode', 'numeric');
+      });
+
       // Hidden mirror
       var hidden = el.querySelector('input[type="hidden"]');
       if (!hidden && el.getAttribute('data-brut-name')) {

@@ -17,7 +17,7 @@ export default {
     role: 'spinbutton (on the wrapper)',
     keyboard: ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown'],
     aria: ['aria-valuenow', 'aria-valuemin', 'aria-valuemax'],
-    notes: 'PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min.',
+    notes: 'At init the inner input receives inputmode="numeric" by default ("decimal" when its step contains a fractional part), guarded so a consumer-set inputmode wins; this surfaces a numeric soft keyboard on touch devices. PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min.',
   },
   examples: [
     {
