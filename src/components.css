@@ -329,8 +329,8 @@
   background: var(--bone);
   color: var(--ink);
   line-height: 1;
-  transition: transform 80ms cubic-bezier(.2,.8,.2,1),
-              box-shadow 80ms cubic-bezier(.2,.8,.2,1);
+  transition: transform var(--dur-fast) cubic-bezier(.2,.8,.2,1),
+              box-shadow var(--dur-fast) cubic-bezier(.2,.8,.2,1);
 }
 .brut-btn:hover  { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--shadow-md); }
 .brut-btn:active { transform: translate(var(--bw-1), var(--bw-1)); box-shadow: 0 0 0 0 var(--ink); }
@@ -559,7 +559,7 @@
   position: absolute; top: var(--bw-1); left: var(--bw-1);
   width: var(--control-sm); height: var(--control-sm);
   background: var(--ink);
-  transition: left 100ms cubic-bezier(.2,.8,.2,1);
+  transition: left var(--dur-snap) cubic-bezier(.2,.8,.2,1);
 }
 .brut-switch--on .brut-switch__knob { left: var(--switch-knob-on); }
 
@@ -632,7 +632,7 @@
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink);
-  animation: brut-toast-in 120ms var(--ease-snap);
+  animation: brut-toast-in var(--dur-notice) var(--ease-snap);
 }
 .brut-toast--leaving { opacity: 0; transition: opacity var(--dur-base) var(--ease-snap); }
 @keyframes brut-toast-in {
