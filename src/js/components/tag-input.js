@@ -22,6 +22,26 @@
         el.appendChild(hidden);
       }
 
+      // Accessible name for the text input — honor existing aria-* first,
+      // then data-brut-label, then default to 'Tags'. Mirrors the i18n
+      // pattern used by menu's data-brut-label-menu fix.
+      if (!field.hasAttribute('aria-label') && !field.hasAttribute('aria-labelledby')) {
+        var labelText = el.getAttribute('data-brut-label') || 'Tags';
+        field.setAttribute('aria-label', labelText);
+      }
+
+      // Visually-hidden polite live region for add/remove announcements.
+      var live = document.createElement('span');
+      live.setAttribute('aria-live', 'polite');
+      live.setAttribute('aria-atomic', 'true');
+      live.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;';
+      el.appendChild(live);
+
+      function announce(msg) {
+        live.textContent = msg;
+        setTimeout(function () { live.textContent = ''; }, 1000);
+      }
+
       function values() {
         var out = [];
         el.querySelectorAll('.brut-tag').forEach(function (t) {
@@ -38,11 +58,22 @@
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current, tags: current } }));
       }
 
+      function tagValueOf(node) {
+        var v = node && node.getAttribute && node.getAttribute('data-value');
+        if (!v && node) v = (node.textContent || '').replace('×', '').trim();
+        return v || '';
+      }
+
       function bindClose(btn) {
         if (!btn.hasAttribute('type')) btn.setAttribute('type', 'button');
+        var parentTag = btn.parentElement;
+        var tagValue = tagValueOf(parentTag);
+        if (tagValue) btn.setAttribute('aria-label', 'Remove ' + tagValue);
         btn.addEventListener('click', function (e) {
           e.stopPropagation();
+          var removedValue = tagValueOf(btn.parentElement);
           if (btn.parentElement) btn.parentElement.remove();
+          if (removedValue) announce('Tag ' + removedValue + ' removed');
           sync();
           field.focus();
         });
@@ -61,10 +92,12 @@
         var x = document.createElement('button');
         x.className = 'brut-tag__x';
         x.textContent = '×';
-        bindClose(x);
+        x.setAttribute('aria-label', 'Remove ' + text);
         tag.appendChild(x);
+        bindClose(x);
 
         el.insertBefore(tag, field);
+        announce('Tag ' + text + ' added');
         sync();
       }
 
@@ -76,7 +109,10 @@
         } else if (e.key === 'Backspace' && !field.value) {
           var existing = el.querySelectorAll('.brut-tag');
           if (existing.length) {
-            existing[existing.length - 1].remove();
+            var last = existing[existing.length - 1];
+            var removedValue = tagValueOf(last);
+            last.remove();
+            if (removedValue) announce('Tag ' + removedValue + ' removed');
             sync();
           }
         }
