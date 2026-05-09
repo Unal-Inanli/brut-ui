@@ -39,7 +39,7 @@
       }
 
       function bindClose(btn) {
-        btn.setAttribute('type', 'button');
+        if (!btn.hasAttribute('type')) btn.setAttribute('type', 'button');
         btn.addEventListener('click', function (e) {
           e.stopPropagation();
           if (btn.parentElement) btn.parentElement.remove();
