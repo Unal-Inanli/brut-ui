@@ -2640,8 +2640,7 @@ button.brut-sidebar__group-title::after {
   display: block;
 }
 
-/* SCRIM — diagonal-striped overlay for modals. The only sanctioned
-   use of transparency in the kit. */
+/* Sanctioned exception: diagonal stripe pattern for scrim overlay — sole approved gradient outside checkmark glyph. */
 .brut-scrim {
   position: fixed;
   inset: 0;
