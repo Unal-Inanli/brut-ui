@@ -93,6 +93,28 @@
   Brut._components = registered;
   Brut.version = __BRUT_VERSION__;
 
+  // Shared body scroll-lock with reference counting so nested/stacked
+  // overlays (dialog, drawer, …) only restore the body's overflow once
+  // the LAST overlay closes. acquire() on open, release() on close.
+  Brut.scrollLock = (function () {
+    var count = 0;
+    var prevOverflow = '';
+    return {
+      acquire: function () {
+        if (count === 0) {
+          prevOverflow = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
+        }
+        count++;
+      },
+      release: function () {
+        if (count === 0) return;
+        count--;
+        if (count === 0) document.body.style.overflow = prevOverflow;
+      },
+    };
+  })();
+
   // Restore persisted theme as early as possible to avoid flash
   restoreTheme();
 

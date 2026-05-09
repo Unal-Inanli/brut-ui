@@ -21,7 +21,7 @@ export default {
     role: 'dialog',
     keyboard: ['Escape'],
     aria: ['aria-label (consumer-supplied)'],
-    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. The drawer id is required — components without an id are skipped.',
+    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). The drawer id is required — components without an id are skipped.',
   },
   examples: [
     {

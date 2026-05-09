@@ -37,6 +37,7 @@
         // Force layout so the transition runs from the closed transform.
         void el.offsetWidth;
         el.classList.add('brut-drawer--open');
+        if (Brut.scrollLock) Brut.scrollLock.acquire();
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
@@ -44,6 +45,7 @@
         el.classList.remove('brut-drawer--open');
         el.setAttribute('hidden', '');
         if (scrim) scrim.setAttribute('hidden', '');
+        if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 

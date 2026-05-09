@@ -33,15 +33,19 @@
       }
 
       function open() {
+        if (!el.hasAttribute('hidden')) return;
         el.removeAttribute('hidden');
         el.setAttribute('aria-modal', 'true');
         if (scrim) scrim.removeAttribute('hidden');
+        if (Brut.scrollLock) Brut.scrollLock.acquire();
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
+        if (el.hasAttribute('hidden')) return;
         el.setAttribute('hidden', '');
         el.removeAttribute('aria-modal');
         if (scrim) scrim.setAttribute('hidden', '');
+        if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 
