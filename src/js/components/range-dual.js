@@ -29,6 +29,9 @@
       var nameMin = el.getAttribute('data-brut-name-min');
       var nameMax = el.getAttribute('data-brut-name-max');
 
+      var prefix = el.getAttribute('data-brut-prefix') || '';
+      var suffix = el.getAttribute('data-brut-suffix') || '';
+
       // Build internal DOM if not present.
       var track = el.querySelector('.brut-range-dual__track');
       if (!track) {
@@ -106,9 +109,11 @@
         thumbMin.setAttribute('aria-valuemin', String(min));
         thumbMin.setAttribute('aria-valuemax', String(vMax));
         thumbMin.setAttribute('aria-valuenow', String(vMin));
+        thumbMin.setAttribute('aria-valuetext', prefix + String(vMin) + suffix);
         thumbMax.setAttribute('aria-valuemin', String(vMin));
         thumbMax.setAttribute('aria-valuemax', String(max));
         thumbMax.setAttribute('aria-valuenow', String(vMax));
+        thumbMax.setAttribute('aria-valuetext', prefix + String(vMax) + suffix);
         if (hMin) hMin.value = String(vMin);
         if (hMax) hMax.value = String(vMax);
       }

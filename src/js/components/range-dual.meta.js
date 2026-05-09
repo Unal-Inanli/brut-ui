@@ -15,6 +15,8 @@ export default {
     { name: 'data-brut-value-max',  values: 'number',               description: 'Initial position of the upper thumb' },
     { name: 'data-brut-name-min',   values: 'string',               description: 'Form name for the auto-created hidden input mirroring the lower value' },
     { name: 'data-brut-name-max',   values: 'string',               description: 'Form name for the auto-created hidden input mirroring the upper value' },
+    { name: 'data-brut-prefix',     values: 'string',               description: 'Prepended to the announced thumb value (e.g. "$") for screen-reader unit context' },
+    { name: 'data-brut-suffix',     values: 'string',               description: 'Appended to the announced thumb value (e.g. " kg") for screen-reader unit context' },
   ],
   events: [
     { name: 'brut:change', detail: { value: '{ min: number, max: number }' } },
@@ -23,8 +25,8 @@ export default {
   a11y: {
     role: 'slider (one per thumb)',
     keyboard: ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'],
-    aria: ['aria-label (per thumb)', 'aria-valuemin', 'aria-valuemax', 'aria-valuenow'],
-    notes: 'The lower thumb is clamped at the upper thumb and vice versa via aria-valuemin/aria-valuemax. PageUp/PageDown move by 10× step. Home/End collapse to the opposite thumb or to min/max.',
+    aria: ['aria-label (per thumb)', 'aria-valuemin', 'aria-valuemax', 'aria-valuenow', 'aria-valuetext'],
+    notes: 'The lower thumb is clamped at the upper thumb and vice versa via aria-valuemin/aria-valuemax. PageUp/PageDown move by 10× step. Home/End collapse to the opposite thumb or to min/max. aria-valuetext wraps the raw number with data-brut-prefix and data-brut-suffix so screen readers announce unit-aware values (e.g. "$120" instead of "120").',
   },
   examples: [
     {
