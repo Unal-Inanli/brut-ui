@@ -3,6 +3,7 @@ export default {
   description: 'Boolean toggle backed by a hidden <input type="checkbox"> that posts with the surrounding form; click and Space/Enter both flip state.',
   useCases: ['settings toggle', 'feature flag', 'notification opt-in', 'dark mode switch', 'inline form boolean'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-switch',
   selector: '[data-brut="switch"]',
   modifiers: [

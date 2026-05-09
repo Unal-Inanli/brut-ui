@@ -3,6 +3,7 @@ export default {
   description: 'Combobox-style field that holds chips for selected values with type-to-filter, keyboard toggle, and Backspace removal.',
   useCases: ['skill picker', 'tag picker', 'category filter', 'recipient list', 'faceted search'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-multiselect',
   selector: '[data-brut="multiselect"]',
   modifiers: [

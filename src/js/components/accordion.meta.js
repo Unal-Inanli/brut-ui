@@ -3,6 +3,7 @@ export default {
   description: 'Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode. Each toggled item dispatches both brut:change (state-machine) and brut:open/brut:close (semantic disclosure) for compatibility with both consumer patterns.',
   useCases: ['FAQ section', 'shipping and returns details', 'settings panels', 'sidebar nav groups', 'product specifications'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-accordion',
   selector: '[data-brut="accordion"]',
   modifiers: [],

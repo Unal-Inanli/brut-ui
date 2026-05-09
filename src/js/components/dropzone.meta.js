@@ -3,6 +3,7 @@ export default {
   description: 'Drag-and-drop file region wrapping a hidden <input type="file">, with click-to-browse, keyboard activation, and a drag-over state class.',
   useCases: ['image upload', 'document attachment', 'asset import', 'avatar picker', 'bulk file upload form'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-dropzone',
   selector: '[data-brut="dropzone"]',
   modifiers: ['--drag'],

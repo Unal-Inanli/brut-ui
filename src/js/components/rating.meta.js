@@ -3,6 +3,7 @@ export default {
   description: 'Row of 1–N star buttons that records an integer score, with hover preview, click-to-toggle, and full keyboard control.',
   useCases: ['product rating', 'review score', 'feedback survey', 'satisfaction prompt', 'quality scoring'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-rating',
   selector: '[data-brut="rating"]',
   modifiers: [

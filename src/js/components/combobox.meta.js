@@ -3,6 +3,7 @@ export default {
   description: 'Searchable single-select with a text input that filters a static option list and a hidden input mirror for form submission.',
   useCases: ['country picker', 'tag-free single-tag selection', 'framework chooser', 'autocomplete dropdown', 'searchable enum field'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-combobox',
   selector: '[data-brut="combobox"]',
   modifiers: ['--open'],

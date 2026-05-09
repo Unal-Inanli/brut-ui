@@ -3,6 +3,7 @@ export default {
   description: 'One-of-N panel switcher: clicking or arrow-keying a tab reveals the panel whose data-brut-panel matches the tab\'s data-brut-tab.',
   useCases: ['settings sections', 'product detail subviews', 'log/console panels', 'docs subsections', 'wizard or report views'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-tabs',
   selector: '[data-brut="tabs"]',
   modifiers: [

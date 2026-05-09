@@ -3,6 +3,7 @@ export default {
   description: 'Trigger-anchored card with optional head bar, dismissed by click-outside, Escape, or any [data-brut-close] inside.',
   useCases: ['filter panel', 'inline help', 'quick-edit form', 'detail card', 'tooltip-style content'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-popover',
   selector: '[data-brut="popover"]',
   modifiers: [],

@@ -3,6 +3,7 @@ export default {
   description: 'Live character counter that mirrors the length of a paired input or textarea and flags overflow.',
   useCases: ['textarea character limit', 'tweet-style composer', 'bio field', 'comment box helper', 'SMS message length hint'],
   kind: 'interactive',
+  status: 'experimental',
   class: '.brut-field__counter',
   selector: '[data-brut="counter"]',
   modifiers: ['--over'],

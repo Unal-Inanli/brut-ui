@@ -3,6 +3,7 @@ export default {
   description: 'Text input wrapper with a clear (×) button that appears only when the field has a value and resets the input on click.',
   useCases: ['site search field', 'list filter input', 'command palette trigger', 'inline lookup', 'table toolbar search'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-search',
   selector: '[data-brut="search"]',
   modifiers: [

@@ -3,6 +3,7 @@ export default {
   description: 'Password input with a SHOW/HIDE toggle button that flips the input type between password and text.',
   useCases: ['login form', 'sign-up form', 'change-password field', 'confirm-password field', 'API key entry'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-password',
   selector: '[data-brut="password"]',
   modifiers: [],

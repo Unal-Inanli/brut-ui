@@ -3,6 +3,7 @@ export default {
   description: 'Visual radio control synced to an inner hidden <input type="radio">, grouped by name, with Space/Enter activation.',
   useCases: ['size picker', 'plan selector', 'one-of-N option', 'survey question', 'shipping method'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-radio',
   selector: '[data-brut="radio"]',
   modifiers: [

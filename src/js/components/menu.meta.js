@@ -3,6 +3,7 @@ export default {
   description: 'Trigger-anchored dropdown menu with click-outside, Escape, and arrow-key focus navigation.',
   useCases: ['row actions', 'overflow menu', 'user account menu', 'context actions', 'kebab menu'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-menu',
   selector: '[data-brut="menu"]',
   modifiers: [

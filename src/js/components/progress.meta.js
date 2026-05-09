@@ -3,6 +3,7 @@ export default {
   description: 'Determinate or indeterminate horizontal progress bar driven by a CSS --progress variable, with a JS API for live updates.',
   useCases: ['file upload progress', 'multi-step form completion', 'background job status', 'media buffering', 'onboarding completion'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-progress',
   selector: '[data-brut="progress"]',
   modifiers: [

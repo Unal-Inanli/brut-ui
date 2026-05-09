@@ -2860,3 +2860,33 @@ button.brut-sidebar__group-title::after {
   /* Drop decorative shapes */
   .brut-shape { display: none !important; }
 }
+
+/* ============================================================
+   DOCS-ONLY UTILITIES
+   ------------------------------------------------------------
+   Classes prefixed `.docs-*` are scoped to docs/index.html and
+   are NOT part of the consumer-facing API. Do not document
+   these in component sections or expose them in dist/components.json.
+   ============================================================ */
+
+/* COMPONENT STATUS BADGES — beta / experimental flags rendered in docs/. */
+.docs-status {
+  display: inline-block;
+  margin-left: var(--sp-2);
+  padding: var(--sp-1);
+  border: var(--bw-1) solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.docs-status--beta {
+  background: var(--accent);
+  color: var(--ink);
+}
+.docs-status--experimental {
+  background: var(--danger-bg);
+  color: var(--danger);
+}

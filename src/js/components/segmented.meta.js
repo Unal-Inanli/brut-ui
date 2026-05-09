@@ -3,6 +3,7 @@ export default {
   description: 'Exclusive choice button group that behaves like a horizontal radio set, with roving tabindex and arrow-key navigation.',
   useCases: ['view mode switcher (day / week / month)', 'unit toggle', 'filter scope picker', 'compact one-of-N selector', 'chart granularity control'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-segmented',
   selector: '[data-brut="segmented"]',
   modifiers: [

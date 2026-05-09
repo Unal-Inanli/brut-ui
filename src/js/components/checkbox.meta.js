@@ -3,6 +3,7 @@ export default {
   description: 'Visual checkbox label whose checked state is mirrored by an inner hidden <input type="checkbox">.',
   useCases: ['form consent', 'multi-select filter list', 'task completion toggle', 'settings toggles', 'table row selection'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-checkbox',
   selector: '[data-brut="checkbox"]',
   modifiers: ['--on'],

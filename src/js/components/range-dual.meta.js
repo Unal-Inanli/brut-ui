@@ -3,6 +3,7 @@ export default {
   description: 'Two-thumb range slider that emits a min/max pair, with pointer drag, click-to-jump on the track, and keyboard nudging.',
   useCases: ['price filter', 'budget range', 'date or year window', 'numeric histogram filter', 'duration bracket'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-range-dual',
   selector: '[data-brut="range-dual"]',
   modifiers: [],

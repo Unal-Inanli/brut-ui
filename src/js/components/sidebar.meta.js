@@ -3,6 +3,7 @@ export default {
   description: 'Vertical app navigation rail with optional collapsible groups; clicking a button-typed group title toggles its closed state.',
   useCases: ['app shell navigation', 'admin dashboard rail', 'settings nav', 'docs site index', 'workspace switcher'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-sidebar',
   selector: '[data-brut="sidebar"]',
   modifiers: [

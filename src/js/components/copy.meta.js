@@ -3,6 +3,7 @@ export default {
   description: 'Inline value + button pair that copies the value to the clipboard, flashes a confirmation label, and announces the action to assistive tech.',
   useCases: ['API key reveal', 'share URL', 'install command snippet', 'token / hash display', 'invoice or order ID'],
   kind: 'interactive',
+  status: 'experimental',
   class: '.brut-copy',
   selector: '[data-brut="copy"]',
   modifiers: [],

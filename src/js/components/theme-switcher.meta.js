@@ -3,6 +3,7 @@ export default {
   description: 'Radio group that flips the active theme via Brut.theme(); writes [data-theme] on the document root and persists the choice.',
   useCases: ['site-wide theme toggle in header', 'demo-page theme picker', 'storybook-style preview toolbar', 'docs page chrome', 'app settings panel'],
   kind: 'interactive',
+  status: 'experimental',
   class: '.brut-theme-switcher',
   selector: '[data-brut="theme-switcher"]',
   modifiers: [

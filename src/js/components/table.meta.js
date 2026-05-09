@@ -3,6 +3,7 @@ export default {
   description: 'Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.',
   useCases: ['admin dashboards', 'inventory lists', 'user management grids', 'analytics reports', 'spreadsheet-like data'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-table',
   selector: '[data-brut="table"]',
   modifiers: [

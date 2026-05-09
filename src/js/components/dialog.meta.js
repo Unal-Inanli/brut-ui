@@ -3,6 +3,7 @@ export default {
   description: 'Modal dialog wired to external open triggers with optional scrim, escape-to-close, and any [data-brut-close] inside.',
   useCases: ['delete confirmation', 'keyboard shortcut help', 'login prompt', 'settings modal', 'destructive action confirmation'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-dialog',
   selector: '[data-brut="dialog"]',
   modifiers: [],

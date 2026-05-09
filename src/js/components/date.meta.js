@@ -3,6 +3,7 @@ export default {
   description: 'Text field paired with a popover calendar; selecting a day writes ISO YYYY-MM-DD into the visible field and a hidden mirror.',
   useCases: ['due date picker', 'birthday field', 'reservation date', 'event scheduling', 'expiry date input'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-date',
   selector: '[data-brut="date"]',
   modifiers: ['--open'],

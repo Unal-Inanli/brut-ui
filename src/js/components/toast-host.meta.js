@@ -3,6 +3,7 @@ export default {
   description: 'Container that anchors transient .brut-toast notifications spawned by the imperative Brut.toast() API; auto-creates itself if absent.',
   useCases: ['save-success notifications', 'background-job status', 'form validation flash messages', 'undo prompts', 'non-blocking error banners'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-toast-host',
   selector: '[data-brut="toast-host"]',
   modifiers: [

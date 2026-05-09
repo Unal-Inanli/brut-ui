@@ -3,6 +3,7 @@ export default {
   description: 'Numeric input flanked by minus / plus buttons; reads min, max, and step from the inner <input type="number"> and clamps to the step grid.',
   useCases: ['quantity selector', 'guest / passenger count', 'unit count in checkout', 'configurable numeric setting', 'paginated page size'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-stepper',
   selector: '[data-brut="stepper"]',
   modifiers: [],

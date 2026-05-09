@@ -3,6 +3,7 @@ export default {
   description: 'Side sheet that slides in from any edge, opened by external triggers with optional scrim and escape-to-close.',
   useCases: ['cart panel', 'mobile navigation', 'filter panel', 'detail inspector', 'notifications drawer'],
   kind: 'interactive',
+  status: 'stable',
   class: '.brut-drawer',
   selector: '[data-brut="drawer"]',
   modifiers: ['--right', '--left', '--top', '--bottom', '--open'],

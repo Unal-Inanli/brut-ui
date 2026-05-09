@@ -3,6 +3,7 @@ export default {
   description: 'One-time-code input rendered as one cell per digit with auto-advance, paste-fill, and Backspace/Arrow navigation.',
   useCases: ['email verification', '2FA code', 'SMS one-time password', 'PIN entry', 'magic-link confirm'],
   kind: 'interactive',
+  status: 'beta',
   class: '.brut-otp',
   selector: '[data-brut="otp"]',
   modifiers: [],
