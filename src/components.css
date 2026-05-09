@@ -692,7 +692,8 @@
 .brut-toast--info .brut-toast__icon { background: var(--info);    color: var(--paper); }
 
 /* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
-.brut-tip {
+.brut-tooltip,
+.brut-tip { /* @deprecated since 1.x — use .brut-tooltip; alias removed in 2.0. See MIGRATION.md. */
   position: absolute;
   z-index: var(--z-popover);
   background: var(--ink);
@@ -707,6 +708,16 @@
   white-space: nowrap;
   pointer-events: none;
 }
+/* Side modifiers — visual carve-outs are JS-positioned; classes exist so
+   styling hooks (and future arrows) can target each side. */
+.brut-tooltip--top,
+.brut-tip--top { /* @deprecated alias — use .brut-tooltip--top */ }
+.brut-tooltip--bottom,
+.brut-tip--bottom { /* @deprecated alias — use .brut-tooltip--bottom */ }
+.brut-tooltip--left,
+.brut-tip--left { /* @deprecated alias — use .brut-tooltip--left */ }
+.brut-tooltip--right,
+.brut-tip--right { /* @deprecated alias — use .brut-tooltip--right */ }
 
 /* POPOVER — anchored card opened by trigger. JS positions + toggles. */
 .brut-popover {
@@ -1275,13 +1286,18 @@
   font-weight: var(--fw-bold);
   color: var(--success);
 }
-.brut-field__counter {
+.brut-counter,
+.brut-field__counter { /* @deprecated since 1.x — use .brut-counter; alias removed in 2.0. See MIGRATION.md. */
   font-family: var(--font-mono);
   font-size: var(--fs-badge);
   color: var(--concrete-400);
   align-self: flex-end;
 }
-.brut-field__counter--over { color: var(--danger); font-weight: var(--fw-bold); }
+.brut-counter--over,
+.brut-field__counter--over { /* @deprecated alias — use .brut-counter--over */
+  color: var(--danger);
+  font-weight: var(--fw-bold);
+}
 .brut-field--inline {
   display: grid;
   grid-template-columns: var(--field-label-w) 1fr;

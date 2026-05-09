@@ -3,7 +3,7 @@
      <button class="brut-btn" data-brut="tooltip"
              data-brut-tip="Saved at 12:04"
              data-brut-tip-side="top">SAVE</button>
-   The bubble is a separate <div class="brut-tip"> appended to <body>
+   The bubble is a separate <div class="brut-tooltip"> appended to <body>
    on show and removed on hide. Side is top|bottom|left|right (top default).
    Esc removes any visible tip; aria-describedby links trigger to bubble id. */
 (function () {
@@ -21,9 +21,9 @@
     var side = Brut.flipSide(trigger, tip, preferredSide, gap);
     // Keep the visual arrow/styling consistent with the actual side.
     for (var i = 0; i < SIDES.length; i++) {
-      tip.classList.remove('brut-tip--' + SIDES[i]);
+      tip.classList.remove('brut-tooltip--' + SIDES[i]);
     }
-    tip.classList.add('brut-tip--' + side);
+    tip.classList.add('brut-tooltip--' + side);
     var r = trigger.getBoundingClientRect();
     var sx = window.pageXOffset || document.documentElement.scrollLeft;
     var sy = window.pageYOffset || document.documentElement.scrollTop;
@@ -66,9 +66,9 @@
         if (!text) return;
         var side = el.getAttribute('data-brut-tip-side') || 'top';
         tip = document.createElement('div');
-        tip.className = 'brut-tip brut-tip--' + side;
+        tip.className = 'brut-tooltip brut-tooltip--' + side;
         tip.setAttribute('role', 'tooltip');
-        tip.id = 'brut-tip-' + (++tipSeq);
+        tip.id = 'brut-tooltip-' + (++tipSeq);
         tip.textContent = text;
         document.body.appendChild(tip);
         el.setAttribute('aria-describedby', tip.id);

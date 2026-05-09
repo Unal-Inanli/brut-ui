@@ -16,21 +16,21 @@
 <div class="brut-field" style="max-width:380px;">
   <label class="brut-field__label" for="notes">Notes</label>
   <textarea id="notes" class="brut-textarea" rows="3">Type freely.</textarea>
-  <span class="brut-field__counter" data-brut="counter" data-brut-for="notes"></span>
+  <span class="brut-counter" data-brut="counter" data-brut-for="notes"></span>
 </div>
 
 <h2>With maxlength — under the limit</h2>
 <div class="brut-field" style="max-width:380px;">
   <label class="brut-field__label" for="bio-under">Bio</label>
   <textarea id="bio-under" class="brut-textarea" rows="3" maxlength="120">Make it loud.</textarea>
-  <span class="brut-field__counter" data-brut="counter" data-brut-for="bio-under"></span>
+  <span class="brut-counter" data-brut="counter" data-brut-for="bio-under"></span>
 </div>
 
 <h2>With data-brut-max override — starts over</h2>
 <div class="brut-field" style="max-width:380px;">
   <label class="brut-field__label" for="title-over">Title (max 20)</label>
   <input id="title-over" class="brut-input" type="text" value="This headline is way too long for the limit">
-  <span class="brut-field__counter" data-brut="counter" data-brut-for="title-over" data-brut-max="20"></span>
+  <span class="brut-counter" data-brut="counter" data-brut-for="title-over" data-brut-max="20"></span>
 </div>
 
 <h2>Inside a field with hint and label</h2>
@@ -39,13 +39,13 @@
     <label class="brut-field__label" for="tweet">Tweet</label>
     <textarea id="tweet" class="brut-textarea" rows="4" maxlength="280">Hello world.</textarea>
     <span class="brut-field__hint">Keep it punchy.</span>
-    <span class="brut-field__counter" data-brut="counter" data-brut-for="tweet"></span>
+    <span class="brut-counter" data-brut="counter" data-brut-for="tweet"></span>
   </div>
 
   <div class="brut-field">
     <label class="brut-field__label" for="sms">SMS body</label>
     <textarea id="sms" class="brut-textarea" rows="4" maxlength="160"></textarea>
-    <span class="brut-field__counter" data-brut="counter" data-brut-for="sms"></span>
+    <span class="brut-counter" data-brut="counter" data-brut-for="sms"></span>
   </div>
 </div>
 

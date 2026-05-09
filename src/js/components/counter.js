@@ -1,7 +1,7 @@
 /* counter — character count for a paired input or textarea.
    Markup:
      <textarea id="bio" class="brut-textarea" maxlength="120"></textarea>
-     <span class="brut-field__counter" data-brut="counter" data-brut-for="bio"></span>
+     <span class="brut-counter" data-brut="counter" data-brut-for="bio"></span>
    The maxlength attribute on the target is honored if present.
    Override with data-brut-max="<n>" on the counter element. */
 (function () {
@@ -19,7 +19,7 @@
         var n = (target.value || '').length;
         el.textContent = max ? (n + ' / ' + max) : String(n);
         var over = max ? (n > max) : false;
-        if (max) el.classList.toggle('brut-field__counter--over', over);
+        if (max) el.classList.toggle('brut-counter--over', over);
         el.dispatchEvent(new CustomEvent('brut:change', {
           bubbles: true,
           detail: { value: n, max: max, over: over }

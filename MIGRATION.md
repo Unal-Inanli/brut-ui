@@ -38,6 +38,24 @@ class root matches the `data-brut="pagination"` hook (see
 | `.brut-pager__btn`    | `.brut-pagination__btn`  | Sub-element follows the root rename. |
 | `data-brut="pager"`   | `data-brut="pagination"` | Update both the class and the hook. |
 
+### Class renames (1.x — tooltip + counter hook/class parity)
+
+Tooltip and counter both registered against `data-brut` hooks whose name did
+not match their CSS class root, the lone remaining violations of the
+"class root === `data-brut` hook" convention. Both are now renamed; the old
+class names ship as `@deprecated` aliases that share each rule via
+comma-list selectors and will be removed in 2.0.
+
+| Old class                       | New class               | Notes |
+|---------------------------------|-------------------------|-------|
+| `.brut-tip`                     | `.brut-tooltip`         | Renamed for hook/class parity with `data-brut="tooltip"`. |
+| `.brut-tip--top`                | `.brut-tooltip--top`    | Side modifier follows the root rename. |
+| `.brut-tip--bottom`             | `.brut-tooltip--bottom` | Side modifier follows the root rename. |
+| `.brut-tip--left`               | `.brut-tooltip--left`   | Side modifier follows the root rename. |
+| `.brut-tip--right`              | `.brut-tooltip--right`  | Side modifier follows the root rename. |
+| `.brut-field__counter`          | `.brut-counter`         | Promoted from BEM sub-element to top-level root for hook/class parity with `data-brut="counter"`. The `<div class="brut-field">` wrapper is unchanged; only the counter element's class is renamed. |
+| `.brut-field__counter--over`    | `.brut-counter--over`   | Overflow modifier follows the root rename. |
+
 ### Removed components (1.3.1)
 
 Three table sub-components were dropped because they encoded
@@ -83,10 +101,8 @@ yet shipped. They will appear in this guide when the rename lands; consumers
 adopting the new name now will receive an automatic alias for one minor
 release after the rename.
 
-| Pending class              | Direction              | Reason |
-|----------------------------|------------------------|--------|
-| `.brut-tip`                | → `.brut-tooltip`      | Class root should match the `data-brut="tooltip"` hook. |
-| `.brut-field__counter`     | → `.brut-counter`      | Counter is registered as `data-brut="counter"` but lives under a BEM sub-element class; hook/class parity demands a top-level root. |
+_None at this time — `.brut-tip` and `.brut-field__counter` shipped under
+"Class renames (1.x — tooltip + counter hook/class parity)" above._
 
 ## Automated migration
 

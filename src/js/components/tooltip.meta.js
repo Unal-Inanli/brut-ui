@@ -4,7 +4,7 @@ export default {
   useCases: ['button hint text', 'icon-only control labeling', 'truncated text on hover', 'form field helper hints', 'keyboard-shortcut reveal'],
   kind: 'interactive',
   status: 'stable',
-  class: '.brut-tip',
+  class: '.brut-tooltip',
   selector: '[data-brut="tooltip"]',
   modifiers: [
     { name: '--top',    description: 'Bubble positioned above the trigger (default)' },
