@@ -87,6 +87,14 @@
           gather();
         });
       });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(gather, 0);
+        });
+      }
     }
   });
 })();

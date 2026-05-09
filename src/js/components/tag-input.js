@@ -130,6 +130,19 @@
         if (e.target === el) field.focus();
       });
 
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // No native input to mirror — clear all chips and the field.
+            el.querySelectorAll('.brut-tag').forEach(function (t) { t.remove(); });
+            field.value = '';
+            sync();
+          }, 0);
+        });
+      }
+
       sync();
     }
   });

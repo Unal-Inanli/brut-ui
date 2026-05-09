@@ -46,6 +46,15 @@
       });
 
       if (input) input.addEventListener('change', function () { sync(); emit(); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(sync, 0);
+        });
+      }
+
       sync();
     }
   });

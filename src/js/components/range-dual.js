@@ -182,6 +182,21 @@
       vMax = snap(vMax);
       if (vMin > vMax) { var t = vMin; vMin = vMax; vMax = t; }
       render();
+
+      var initialMin = vMin;
+      var initialMax = vMax;
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // Hidden mirrors don't carry defaults — re-derive from data-* attrs.
+            vMin = initialMin;
+            vMax = initialMax;
+            render();
+          }, 0);
+        });
+      }
     }
   });
 })();

@@ -151,6 +151,31 @@
       });
 
       document.addEventListener('click', function (e) { if (!el.contains(e.target)) close(); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // Mirror the now-reset hidden input back into the visible field.
+            // If hidden has a value, find the matching option label; otherwise clear.
+            close();
+            if (hidden && hidden.value) {
+              var match = null;
+              for (var i = 0; i < opts.length; i++) {
+                var v = opts[i].getAttribute('data-value') || opts[i].textContent.trim();
+                if (v === hidden.value) { match = opts[i]; break; }
+              }
+              input.value = match ? match.textContent.trim() : '';
+            } else {
+              input.value = '';
+            }
+            // Reset filter visibility so the list is whole next open.
+            opts.forEach(function (o) { o.style.display = ''; });
+            if (emptyEl) emptyEl.style.display = 'none';
+          }, 0);
+        });
+      }
     }
   });
 })();

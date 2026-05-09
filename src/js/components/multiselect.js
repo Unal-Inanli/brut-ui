@@ -155,6 +155,25 @@
 
       document.addEventListener('mousedown', function (e) { if (!el.contains(e.target)) close(); });
 
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // No single native input to mirror — deselect all.
+            Object.keys(selected).forEach(function (k) { delete selected[k]; });
+            input.value = '';
+            renderChips();
+            renderOpts();
+            syncHidden();
+            // Reset filter visibility so the list is whole next open.
+            opts.forEach(function (o) { o.style.display = ''; });
+            if (emptyEl) emptyEl.style.display = 'none';
+            close();
+          }, 0);
+        });
+      }
+
       // Initial paint
       renderChips();
       renderOpts();

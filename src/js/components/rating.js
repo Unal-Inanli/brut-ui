@@ -153,6 +153,22 @@
 
       el.addEventListener('mouseleave', function () { paint(current); });
       el.addEventListener('focusout',   function () { paint(current); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // No native input drives state — restore the initial value.
+            var n = isFinite(initial) ? initial : 0;
+            current = Math.max(0, Math.min(max, n));
+            if (hidden) hidden.value = String(current);
+            paint(current);
+            updateTabindex(current > 0 ? current - 1 : 0);
+          }, 0);
+        });
+      }
+
       paint(current);
     }
   });
