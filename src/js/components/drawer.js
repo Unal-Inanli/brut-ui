@@ -30,6 +30,8 @@
       var scrimId = el.getAttribute('data-brut-scrim');
       var scrim = scrimId ? document.getElementById(scrimId) : null;
 
+      var trap = null;
+
       function open() {
         if (!el.hasAttribute('hidden') && el.classList.contains('brut-drawer--open')) return;
         el.removeAttribute('hidden');
@@ -38,10 +40,12 @@
         void el.offsetWidth;
         el.classList.add('brut-drawer--open');
         if (Brut.scrollLock) Brut.scrollLock.acquire();
+        if (Brut.focusTrap) trap = Brut.focusTrap.activate(el);
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
         if (el.hasAttribute('hidden')) return;
+        if (trap) { trap.release(); trap = null; }
         el.classList.remove('brut-drawer--open');
         el.setAttribute('hidden', '');
         if (scrim) scrim.setAttribute('hidden', '');

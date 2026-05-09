@@ -18,9 +18,9 @@ export default {
   formState: { hiddenInput: false },
   a11y: {
     role: 'dialog',
-    keyboard: ['Escape'],
+    keyboard: ['Escape', 'Tab', 'Shift+Tab'],
     aria: ['aria-modal="true"', 'aria-labelledby'],
-    notes: 'Toggles the [hidden] attribute rather than display:none, and toggles aria-modal="true" in lockstep with open/close. On init, if the dialog has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-dialog-title]) inside .brut-dialog__head, auto-assigning an id when needed. Scrim closes only on direct click (not on bubbling from inner content). Body scroll is locked while the dialog is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). The dialog id is required — components without an id are skipped.',
+    notes: 'Toggles the [hidden] attribute rather than display:none, and toggles aria-modal="true" in lockstep with open/close. On init, if the dialog has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-dialog-title]) inside .brut-dialog__head, auto-assigning an id when needed. Scrim closes only on direct click (not on bubbling from inner content). Body scroll is locked while the dialog is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the dialog (first focusable child, or the dialog itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The dialog id is required — components without an id are skipped.',
   },
   examples: [
     {

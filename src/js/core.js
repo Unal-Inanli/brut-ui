@@ -115,6 +115,47 @@
     };
   })();
 
+  // Shared focus trap for modal-style overlays (dialog, drawer, …).
+  // activate(root) moves focus into root, cycles Tab/Shift+Tab within it,
+  // and returns { release } which restores focus to the previously focused
+  // element. WAI-ARIA Modal Dialog Pattern (WCAG 2.1.2). Per-instance —
+  // call activate() on open and release() on close.
+  Brut.focusTrap = (function () {
+    var FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable]';
+    function focusables(root) {
+      return Array.prototype.slice.call(root.querySelectorAll(FOCUSABLE))
+        .filter(function (n) { return n.offsetParent !== null || n === document.activeElement; });
+    }
+    return {
+      activate: function (root) {
+        var prev = document.activeElement;
+        var addedTabindex = false;
+        if (!root.hasAttribute('tabindex')) {
+          root.setAttribute('tabindex', '-1');
+          addedTabindex = true;
+        }
+        var list = focusables(root);
+        (list[0] || root).focus();
+        function onKey(e) {
+          if (e.key !== 'Tab') return;
+          var current = focusables(root);
+          if (!current.length) { e.preventDefault(); root.focus(); return; }
+          var first = current[0], last = current[current.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+        root.addEventListener('keydown', onKey);
+        return {
+          release: function () {
+            root.removeEventListener('keydown', onKey);
+            if (addedTabindex) root.removeAttribute('tabindex');
+            if (prev && typeof prev.focus === 'function') prev.focus();
+          },
+        };
+      },
+    };
+  })();
+
   // Restore persisted theme as early as possible to avoid flash
   restoreTheme();
 

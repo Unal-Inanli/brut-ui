@@ -32,16 +32,20 @@
         }
       }
 
+      var trap = null;
+
       function open() {
         if (!el.hasAttribute('hidden')) return;
         el.removeAttribute('hidden');
         el.setAttribute('aria-modal', 'true');
         if (scrim) scrim.removeAttribute('hidden');
         if (Brut.scrollLock) Brut.scrollLock.acquire();
+        if (Brut.focusTrap) trap = Brut.focusTrap.activate(el);
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
         if (el.hasAttribute('hidden')) return;
+        if (trap) { trap.release(); trap = null; }
         el.setAttribute('hidden', '');
         el.removeAttribute('aria-modal');
         if (scrim) scrim.setAttribute('hidden', '');

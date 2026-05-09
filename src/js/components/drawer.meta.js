@@ -19,9 +19,9 @@ export default {
   formState: { hiddenInput: false },
   a11y: {
     role: 'dialog',
-    keyboard: ['Escape'],
+    keyboard: ['Escape', 'Tab', 'Shift+Tab'],
     aria: ['aria-label (consumer-supplied)'],
-    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). The drawer id is required — components without an id are skipped.',
+    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the drawer (first focusable child, or the drawer itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The drawer id is required — components without an id are skipped.',
   },
   examples: [
     {
