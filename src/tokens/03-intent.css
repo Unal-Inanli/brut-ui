@@ -12,6 +12,11 @@
   --control-lg:   36px;
   --control-xl:   44px;
 
+  /* ---------- TOUCH MINIMUM ---------- */
+  /* WCAG 2.5.5 / iOS HIG / Material — every interactive surface must meet this floor.
+     Aliased to --control-xl so the two move together. Doctor enforces via visual run. */
+  --touch-min:    var(--control-xl);
+
   /* ---------- COMPONENT INTENT ---------- */
   --switch-track-w:   56px;
   --switch-track-h:   30px;
@@ -29,9 +34,10 @@
   --shape-size:       120px;
 
   /* ---------- LAYOUT ---------- */
-  --container-w:    1200px;
+  --container-w:    1200px;          /* legacy alias of --container-lg; consumers should migrate */
   --container-sm:   720px;
   --container-md:   960px;
+  --container-lg:   1200px;          /* fills the missing tier between --container-md and --container-xl */
   --container-xl:   1440px;
   --sidebar-w:      240px;
   --split-side-w:   220px;
@@ -56,4 +62,16 @@
   --carousel-track-transition: var(--dur-base);  /* 140ms — at the limit, never above */
   --carousel-bw:               var(--bw-3);
   --carousel-shadow:           var(--shadow-sm);
+
+  /* ---------- FLUID TYPE ---------- */
+  /* Optional clamp() scales for headings and section type that should grow with the
+     viewport while staying within the existing --fs-* steps. Components opt in by
+     using these tokens in place of a fixed --fs-* value; no consumer-visible
+     change unless adopted. The base styles in src/tokens/index.css adopt them
+     for headings as part of the responsive rollout. */
+  --fs-fluid-sm:  clamp(var(--fs-sm),   0.875rem + 0.25vw, var(--fs-md));
+  --fs-fluid-md:  clamp(var(--fs-md),   1rem     + 0.5vw,  var(--fs-lg));
+  --fs-fluid-lg:  clamp(var(--fs-lg),   1.125rem + 1vw,    var(--fs-2xl));
+  --fs-fluid-xl:  clamp(var(--fs-xl),   1.25rem  + 1.5vw,  var(--fs-3xl));
+  --fs-fluid-2xl: clamp(var(--fs-2xl),  1.5rem   + 2vw,    var(--fs-4xl));
 }

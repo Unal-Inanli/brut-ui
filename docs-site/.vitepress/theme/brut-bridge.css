@@ -6,7 +6,22 @@
    `html.dark` overrides are authored here.
 
    Tokens consumed live in src/tokens/01-primitives.css and 02-semantic.css
-   and are loaded via dist/brut.css from theme/index.ts. */
+   and are loaded via dist/brut.css from theme/index.ts.
+
+   ---------------------------------------------------------------------
+   Responsive doctrine
+   VitePress's default theme bakes its responsive breakpoints into
+   compiled Sass (768 / 960 / 1280) and exposes no override variables.
+   BRUT runs on a different three-tier scale — sm 640, md 768, lg 1024
+   (driven by --bp-sm, --bp-md, --bp-lg). The two scales align at md
+   (768) but diverge above: VitePress's "show sidebar" flips at 960,
+   BRUT components flip behaviors at 1024.
+
+   This file overrides the responsive layout pieces we ship ourselves
+   (homepage hero, feature cards, .brut-preview-frame iframes) onto BRUT
+   tiers. Deep VPSidebar / VPNav re-tiering is tracked separately as
+   RR6 of the Responsive Rollout. See docs/responsive-shapes.md for the
+   shape glossary referenced by every component. */
 
 :root {
   /* ---------- SURFACES ---------- */

@@ -75,8 +75,9 @@ Static visuals (button, input) need no JS. Anything carrying `data-brut="…"` (
 
 - **One CSS file** — `dist/brut.css`. 80+ design tokens, every component styled, no preprocessor.
 - **Optional JS runtime** — `dist/brut.js`. Adds keyboard, ARIA, and form-mirroring to interactive components. Skip the file if you only use static visuals.
-- **AI-native manifest** — `dist/components.json` enumerates every component, its modifiers, events, and copy-paste examples. Backed by `dist/manifest-schema.json`.
+- **AI-native manifest** — `dist/components.json` enumerates every component, its modifiers, events, copy-paste examples, and **declared responsive shape**. Backed by `dist/manifest-schema.json`.
 - **Themeable** — three layers of CSS variables. Swap visual identity via a single `data-theme` attribute or by overriding tokens in your own stylesheet.
+- **Responsive by default** — every interactive component declares one of nine canonical responsive shapes (fullscreen-modal on phones, bottom-sheet for anchored overlays, horizontal-scroll for wide rows, …) and is verified at 320/375/640/768/1024/1440 in CI. See [docs/responsive-shapes.md](./docs/responsive-shapes.md).
 
 ---
 

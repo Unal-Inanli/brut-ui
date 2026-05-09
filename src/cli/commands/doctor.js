@@ -11,14 +11,42 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { resolve, extname, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { defineConfig, KNOWN_COMPONENTS, INTERACTIVE_COMPONENTS } from '../../config/define.js';
+import { RESPONSIVE_SHAPES } from '../../config/vite-plugin.js';
 
 const WARNING_TYPES = new Set([
   'MISSING_META',
   'SURFACE_COVERAGE_GAP',
   'DOCS_SECTION_SHAPE',
   'SNIPPET_PREVIEW_DRIFT',
+  // Responsive rollout (RR1) — landed as warnings during backfill (RR2–RR4).
+  // Promote RESPONSIVE_META_MISSING + VIEWPORT_META_MISSING to failure once
+  // backfill is complete.
+  'RESPONSIVE_META_MISSING',
+  'RESPONSIVE_SHAPE_INVALID',
+  'RESPONSIVE_BREAKPOINT_INVALID',
+  'VIEWPORT_META_MISSING',
+  'BREAKPOINT_NON_TIER',
+  'MAX_WIDTH_AT_TIER',
+  'UNGUARDED_LAYOUT_DIM',
 ]);
 const INFO_TYPES = new Set(['META_DRIFT', 'CLASS_ROOT_EXCEPTION', 'EXAMPLE_DRIFT']);
+
+const RESPONSIVE_SHAPE_SET = new Set(RESPONSIVE_SHAPES);
+const RESPONSIVE_BREAKPOINT_SET = new Set(['sm', 'md', 'lg']);
+
+// Numeric breakpoint tier values — any media query value outside this set is
+// non-tier drift. Tracked as numbers for fast equality.
+const TIER_VALUES = new Set([640, 768, 1024]);
+
+// Layout-dimension tokens consumed by absolute/fixed overlays whose value is >=320px.
+// On absolutely-positioned elements, `max-width: 360px` can still overflow when the
+// trigger sits near the viewport edge — so these MUST wrap with min(token, calc(100vw - …))
+// or be paired with a tier media query. Centered wrapper tokens (--container-*) are NOT
+// in this set because `max-width` on a block-level container is always a safe ceiling
+// at narrow viewports.
+const GUARDED_LAYOUT_TOKENS = new Set([
+  '--drawer-w', '--dialog-max-w', '--popover-max-w',
+]);
 
 // Manifest names whose docs id / preview basename uses an irregular plural.
 // Regular plurals (+s, +es) are auto-derived; only list exceptions here.
@@ -176,16 +204,153 @@ export default async function doctor(args) {
   const dataPrefixRe = new RegExp(`data-${prefix}=`);
   const scriptJsRe = new RegExp(`<script[^>]+${prefix}(\\.min)?\\.js`);
   const scriptEsmRe = new RegExp(`<script[^>]+${prefix}\\.esm\\.js`);
+  const viewportMetaRe = /<meta\s+name=["']viewport["']\s+content=["']([^"']+)["']/i;
+  const RESPONSIVE_HTML_DIRS = new Set(['preview', 'docs', 'demos', 'site']);
   for (const file of htmlFiles) {
     const content = readFileSync(file, 'utf8');
+    const rel = relative(root, file);
     if (dataPrefixRe.test(content)) {
       const hasJS = scriptJsRe.test(content) || scriptEsmRe.test(content);
       if (!hasJS) {
         issues.push({
           type: 'MISSING_JS',
-          file: relative(root, file),
+          file: rel,
           message: `Uses data-${prefix} attributes but does not include ${prefix}.js`,
         });
+      }
+    }
+
+    // VIEWPORT_META_MISSING — full HTML pages under preview/docs/demos/site must
+    // declare a width=device-width viewport meta and must not disable zoom. Skip
+    // partials/fragments (no <html element) and dirs outside the rollout scope.
+    const topDir = rel.split('/')[0];
+    if (RESPONSIVE_HTML_DIRS.has(topDir) && /<html[\s>]/i.test(content)) {
+      const m = viewportMetaRe.exec(content);
+      if (!m) {
+        issues.push({
+          type: 'VIEWPORT_META_MISSING',
+          file: rel,
+          message: 'No <meta name="viewport"> — mobile browsers fall back to ~980px and zoom out',
+        });
+      } else {
+        const c = m[1];
+        if (!/width\s*=\s*device-width/i.test(c)) {
+          issues.push({
+            type: 'VIEWPORT_META_MISSING',
+            file: rel,
+            message: `Viewport meta lacks width=device-width (got "${c}")`,
+          });
+        } else if (/user-scalable\s*=\s*no|maximum-scale\s*=\s*1(?:\.0)?\b/i.test(c)) {
+          issues.push({
+            type: 'VIEWPORT_META_MISSING',
+            file: rel,
+            message: 'Viewport meta disables zoom (WCAG 1.4.4 violation)',
+          });
+        }
+      }
+    }
+  }
+
+  // BREAKPOINT_NON_TIER + MAX_WIDTH_AT_TIER — every @media query in CSS files
+  // and inside <style> blocks must use a tier value (640/768/1024 px or the
+  // sub-tier .98 sentinel). max-width values that exactly equal a tier are
+  // flagged separately because they collide with the corresponding min-width
+  // tier at the boundary pixel (768px max + 768px min both fire at 768).
+  const TIER_PX = new Set([640, 768, 1024]);
+  const SUB_TIER_PX = new Set([639.98, 767.98, 1023.98]);
+  function pushMediaIssues(content, file, baseLine) {
+    const mediaRe = /@media\s*([^{]+)\{/g;
+    const widthRe = /\((min|max)-width\s*:\s*(\d+(?:\.\d+)?)px\)/g;
+    for (const mm of content.matchAll(mediaRe)) {
+      const condition = mm[1];
+      const lineNumber = baseLine + (content.slice(0, mm.index).match(/\n/g) || []).length + 1;
+      for (const wm of condition.matchAll(widthRe)) {
+        const dir = wm[1];
+        const px = parseFloat(wm[2]);
+        const isTier = TIER_PX.has(px);
+        const isSubTier = SUB_TIER_PX.has(px);
+        if (dir === 'max' && isTier) {
+          issues.push({
+            type: 'MAX_WIDTH_AT_TIER',
+            file: `${file}:${lineNumber}`,
+            message: `(max-width: ${wm[2]}px) collides with tier boundary — use (max-width: ${px - 0.02}px) or invert to mobile-first`,
+          });
+        }
+        if (!isTier && !isSubTier) {
+          issues.push({
+            type: 'BREAKPOINT_NON_TIER',
+            file: `${file}:${lineNumber}`,
+            message: `(${dir}-width: ${wm[2]}px) — use a tier value (640/768/1024) or sub-tier sentinel (639.98/767.98/1023.98)`,
+          });
+        }
+      }
+    }
+  }
+  for (const file of cssFiles) {
+    const rel = relative(root, file);
+    if (rel.startsWith('src/tokens') || rel.startsWith('src/themes') || rel.startsWith('node_modules')) continue;
+    pushMediaIssues(readFileSync(file, 'utf8'), rel, 0);
+  }
+  for (const file of htmlFiles) {
+    const rel = relative(root, file);
+    const content = readFileSync(file, 'utf8');
+    const styleRe = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+    for (const sm of content.matchAll(styleRe)) {
+      const before = content.slice(0, sm.index);
+      const baseLine = (before.match(/\n/g) || []).length;
+      pushMediaIssues(sm[1], rel, baseLine);
+    }
+  }
+
+  // UNGUARDED_LAYOUT_DIM — any consumption of a layout-dimension token whose
+  // value is >=320px (containers, drawer, dialog, popover) must be wrapped in
+  // min(token, …) or sit inside a tier media query. The walk strips @media
+  // bodies first (replacing them with whitespace to preserve line numbers)
+  // then scans the residual for width/max-width/min-width usage of the tokens.
+  function stripMediaBlocks(css) {
+    let out = '';
+    let i = 0;
+    while (i < css.length) {
+      const idx = css.indexOf('@media', i);
+      if (idx < 0) { out += css.slice(i); break; }
+      out += css.slice(i, idx);
+      const open = css.indexOf('{', idx);
+      if (open < 0) { out += css.slice(idx); break; }
+      let depth = 1;
+      let j = open + 1;
+      while (j < css.length && depth > 0) {
+        if (css[j] === '{') depth++;
+        else if (css[j] === '}') depth--;
+        j++;
+      }
+      const block = css.slice(idx, j);
+      out += block.replace(/[^\n]/g, ' ');
+      i = j;
+    }
+    return out;
+  }
+  const componentsCssPathForGuard = resolve(root, 'src/components.css');
+  if (existsSync(componentsCssPathForGuard)) {
+    const css = readFileSync(componentsCssPathForGuard, 'utf8');
+    const stripped = stripMediaBlocks(css);
+    const lines = stripped.split('\n');
+    const dimRe = /\b(width|max-width|min-width|height|max-height|min-height)\s*:\s*([^;]+);/g;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+      if (trimmed.startsWith('/*') || trimmed.startsWith('*')) continue;
+      if (/^\s*--[a-z]/.test(line)) continue;
+      for (const dm of line.matchAll(dimRe)) {
+        const value = dm[2];
+        for (const tok of GUARDED_LAYOUT_TOKENS) {
+          if (!value.includes(`var(${tok})`)) continue;
+          if (/min\s*\(/.test(value)) continue;
+          issues.push({
+            type: 'UNGUARDED_LAYOUT_DIM',
+            file: `src/components.css:${i + 1}`,
+            message: `${dm[1]}: var(${tok}) used outside @media and without min() guard — narrow viewports may overflow`,
+          });
+        }
       }
     }
   }
@@ -267,6 +432,33 @@ export default async function doctor(args) {
           file: metaRel,
           message: `Selector "${entry.selector}" should be "${expectedSelector}" for interactive components`,
         });
+      }
+
+      // Responsive check: interactive components must declare a responsive shape
+      // from the canonical 9-shape glossary (see docs/responsive-shapes.md).
+      // breakpoint is optional but, when present, must be sm|md|lg.
+      const r = entry.responsive;
+      if (!r || typeof r !== 'object' || Array.isArray(r)) {
+        issues.push({
+          type: 'RESPONSIVE_META_MISSING',
+          file: metaRel,
+          message: `Interactive component lacks responsive: declare one of {${RESPONSIVE_SHAPES.join(', ')}} — see docs/responsive-shapes.md`,
+        });
+      } else {
+        if (typeof r.shape !== 'string' || !RESPONSIVE_SHAPE_SET.has(r.shape)) {
+          issues.push({
+            type: 'RESPONSIVE_SHAPE_INVALID',
+            file: metaRel,
+            message: `responsive.shape "${r.shape}" not one of {${RESPONSIVE_SHAPES.join(', ')}}`,
+          });
+        }
+        if (r.breakpoint !== undefined && !RESPONSIVE_BREAKPOINT_SET.has(r.breakpoint)) {
+          issues.push({
+            type: 'RESPONSIVE_BREAKPOINT_INVALID',
+            file: metaRel,
+            message: `responsive.breakpoint "${r.breakpoint}" not one of {sm, md, lg}`,
+          });
+        }
       }
     }
 

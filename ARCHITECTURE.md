@@ -164,6 +164,22 @@ Lift these into CLAUDE.md / AGENTS.md so future contributors and agents share th
 4. **Single source of truth, derived views.** Parallel arrays (D1) are smells. If two lists must agree, derive one from the other.
 5. **Plugins decompose along concerns, not along files.** Every Vite-plugin lifecycle hook is a separate concern. Don't pile.
 
+## Responsive doctrine
+
+Responsiveness is a first-class promise on the same tier as "no rgba shadows" and "no transitions over 140ms". The doctrine, condensed:
+
+1. **Mobile-first, three tiers, min-width only at boundaries.** `sm` 640, `md` 768, `lg` 1024 — driven by `--bp-sm/md/lg`. No fourth tier without ARCHITECTURE.md justification.
+2. **Every interactive component declares one of nine canonical responsive shapes.** `static`, `stack`, `fullscreen-modal`, `bottom-sheet`, `horizontal-scroll`, `ellipsis-collapse`, `disclosure-toggle`, `wrap`, `hover-fallback`. The shape is declared in the meta sidecar (`responsive: { shape, breakpoint, notes }`) and surfaces verbatim in `dist/components.json`. Predictable for humans, mechanical for agents — same property "class root === hook" buys for markup, but for cross-tier behavior.
+3. **Doctor enforces the constraints.** `RESPONSIVE_META_MISSING`, `RESPONSIVE_SHAPE_INVALID`, `RESPONSIVE_BREAKPOINT_INVALID`, `VIEWPORT_META_MISSING`, `BREAKPOINT_NON_TIER`, `MAX_WIDTH_AT_TIER`, `UNGUARDED_LAYOUT_DIM` — landed in `src/cli/commands/doctor.js` as part of the rollout. The visual harness (`tests/visual/`) layers on `TOUCH_MIN_VIOLATION`, `HORIZONTAL_SCROLL`, and `SHAPE_DRIFT` since those need a rendered DOM.
+4. **One shared positioner, not per-component drift.** Anchored overlays (popover, menu, tooltip, combobox/multiselect dropdowns, date/time pickers) flip to bottom-sheet at `< sm` via a single shared module. Component JS files don't reinvent positioning.
+5. **44px touch-target floor everywhere.** `--touch-min` aliases `--control-xl`. Visual harness verifies computed height for every `[data-brut]` interactive surface at every tested viewport.
+6. **VitePress and BRUT use the same breakpoints.** `docs-site/.vitepress/theme/brut-bridge.css` maps VitePress's responsive layer onto `--bp-*` so the docs site collapses on the same boundaries as the kit it documents.
+
+Authoritative references:
+- [docs/responsive-shapes.md](./docs/responsive-shapes.md) — the nine-shape glossary with CSS patterns and JS hooks.
+- [AGENTS.md](./AGENTS.md) — Responsive constraints section (paste-quotable for subagent briefs).
+- [CLAUDE.md](./CLAUDE.md) — Workflow H ("Add or refine a component's responsive shape") + extended orchestrator guardrails.
+
 ## Recommended next-quarter work, prioritized
 
 | # | Item | Effort | Impact |

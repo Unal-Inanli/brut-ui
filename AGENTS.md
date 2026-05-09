@@ -83,6 +83,7 @@ Mirror `src/js/components/carousel.meta.js` exactly — field order, schema, nam
 - `kind` — `'interactive'` for components with JS, `'static'` for CSS-only.
 - `class` — the component's root class, with leading dot. Example: `'.brut-switch'`.
 - `examples` — array of `{ title, html }`. Each `html` is a complete copy-pasteable markup snippet.
+- `responsive` — interactive components only. Object with `shape` (one of the nine canonical shapes — `static | stack | fullscreen-modal | bottom-sheet | horizontal-scroll | ellipsis-collapse | disclosure-toggle | wrap | hover-fallback`), optional `breakpoint` (`sm | md | lg`), optional `notes` (≤120 chars). See [docs/responsive-shapes.md](./docs/responsive-shapes.md) for the full glossary.
 
 **Optional but recommended fields:**
 
@@ -219,6 +220,31 @@ The hard rules above have a small, explicit set of carve-outs. These are the ONL
 - **`rgba()`** is allowed only via the `--scrim-bg` and `--scrim-bg-soft` tokens in `src/tokens/02-semantic.css`. Components must reference those tokens — raw `rgba()` literals in `src/components.css` are forbidden.
 - **Animations longer than 140ms** are allowed only for *loaders* (skeleton sweep, spinner). The 140ms cap applies to **transitions**, not loops. New loaders must be commented `/* Sanctioned exception: loader animations may exceed --dur-base */` so the carve-out is visible.
 - **Gradients** are allowed only for the checkbox checkmark glyph until a 24px stroke-based SVG sprite ships. Do not use gradients anywhere else; new gradients require user approval.
+
+## Responsive constraints
+
+BRUT is **responsive by default**. Every component works at 320px and scales upward. Responsiveness is a first-class promise, not a polish step. The rules:
+
+1. **Mobile-first.** Base styles target 320px. Tier media queries add affordances upward — never strip them downward.
+2. **Three tiers, no more.** `sm` ≥ 640px, `md` ≥ 768px, `lg` ≥ 1024px — driven by `--bp-sm`, `--bp-md`, `--bp-lg`. New breakpoints require a justification in [ARCHITECTURE.md](ARCHITECTURE.md) and a token rename.
+3. **Min-width only at tier boundaries.** Use `(min-width: var(--bp-md))`. For genuine "desktop-only undo" cases use the sub-tier sentinel `(max-width: 767.98px)` and justify in a comment. Never `(max-width: 768px)` — it collides with the corresponding min-width tier.
+4. **Every interactive component declares one responsive shape.** The shape is one of nine canonical values (`static`, `stack`, `fullscreen-modal`, `bottom-sheet`, `horizontal-scroll`, `ellipsis-collapse`, `disclosure-toggle`, `wrap`, `hover-fallback`) listed in [docs/responsive-shapes.md](./docs/responsive-shapes.md). Doctor refuses missing or drifted declarations.
+5. **44px touch-target floor on every interactive surface.** Token: `--touch-min` (alias of `--control-xl`). The visual harness verifies computed height in headless renders.
+6. **Layout dimensions guard against narrow viewports.** Any token `≥ 320px` consumed as a width/max-width MUST be wrapped in `min(token, calc(100vw - var(--sp-N)))` or paired with a tier media query. Tracked tokens: `--container-*`, `--drawer-w`, `--dialog-max-w`, `--popover-max-w`. Doctor enforces.
+7. **Container width tokens drive page wrappers.** No raw `max-width: 1200px` outside `src/tokens/`.
+8. **Anchored overlays collision-detect against the viewport.** `popover`, `menu`, `tooltip`, `dropdown`-style menus share one positioner module — no per-component drift.
+9. **Hover-only UI must have a touch fallback.** Tooltips, hover-driven popovers degrade to tap-to-pin on `(hover: none) and (pointer: coarse)`.
+10. **VitePress and BRUT use the same breakpoints.** `docs-site/.vitepress/theme/brut-bridge.css` maps VitePress's responsive layer onto `--bp-*`.
+
+### Sanctioned responsive exceptions
+
+- The 12-col grid's `(max-width: 639px)` stack-below-sm rule is grandfathered — it pairs cleanly with `(min-width: 640px)` because the boundary at 640 belongs entirely to the min-width tier (CSS specificity wins).
+- `topnav` may use `(max-width: 767.98px)` while the mobile-first refactor is pending (RR2.4); see plan.
+
+### Verification
+
+- `npx brut doctor` enforces `RESPONSIVE_META_MISSING`, `RESPONSIVE_SHAPE_INVALID`, `RESPONSIVE_BREAKPOINT_INVALID`, `VIEWPORT_META_MISSING`, `BREAKPOINT_NON_TIER`, `MAX_WIDTH_AT_TIER`, `UNGUARDED_LAYOUT_DIM`. Land any new responsive rule with its doctor check.
+- `pnpm test:visual` (Playwright) renders every preview at 320, 375, 640, 768, 1024, 1440 and asserts no horizontal scroll, every `[data-brut]` surface ≥ 44×44, declared shape matches DOM evidence.
 
 ## Verifying changes
 

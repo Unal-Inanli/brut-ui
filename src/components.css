@@ -627,7 +627,7 @@
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-sm);
   padding: var(--sp-3) var(--sp-4);
-  max-width: var(--popover-max-w);
+  max-width: min(var(--popover-max-w), calc(100vw - var(--sp-4)));
   min-width: var(--popover-min-w);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
@@ -694,7 +694,7 @@
   position: absolute;
   z-index: var(--z-popover);
   min-width: var(--popover-min-w);
-  max-width: var(--popover-max-w);
+  max-width: min(var(--popover-max-w), calc(100vw - var(--sp-4)));
   background: var(--bone);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-md);
@@ -2094,11 +2094,22 @@
   font-size: var(--fs-base);
   color: var(--ink);
 }
+/* Mobile-first: links collapse into an absolutely-positioned panel revealed by
+   the burger button. CTA hidden on mobile (mirror it as a link in the panel
+   if it must be reachable). At md and above, links go inline and the burger
+   disappears. Disclosure-toggle shape — see docs/responsive-shapes.md. */
 .brut-topnav__links {
-  display: flex;
-  gap: var(--sp-6);
-  margin-left: var(--sp-8);
+  display: none;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  background: var(--paper);
+  border-bottom: var(--bw-3) solid var(--ink);
+  padding: var(--sp-3) var(--sp-6);
 }
+.brut-topnav--open .brut-topnav__links { display: flex; }
 .brut-topnav__link {
   font-family: var(--font-display);
   font-size: var(--fs-xs);
@@ -2106,16 +2117,19 @@
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
-  padding: var(--sp-1) var(--bw-1);
+  padding: var(--sp-2) 0;
+  border-bottom: var(--bw-1) dashed var(--concrete-200);
   transition: background var(--dur-fast) var(--ease-snap);
 }
 .brut-topnav__link:hover { background: var(--primary); }
 .brut-topnav__link--active {
   box-shadow: inset 0 calc(var(--bw-2) * -1) 0 0 var(--ink);
 }
-.brut-topnav__cta { margin-left: auto; }
+.brut-topnav__cta { display: none; margin-left: auto; }
 .brut-topnav__burger {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   width: var(--sp-10); height: var(--control-lg);
   background: var(--bone);
@@ -2128,25 +2142,23 @@
   padding: 0;
   line-height: 1;
 }
-@media (max-width: 768px) { /* var(--bp-md) */
+@media (min-width: 768px) { /* var(--bp-md) — links inline, burger hidden */
   .brut-topnav__links {
-    display: none;
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    flex-direction: column;
-    gap: 0;
-    margin: 0;
-    background: var(--paper);
-    border-bottom: var(--bw-3) solid var(--ink);
-    padding: var(--sp-3) var(--sp-6);
+    display: flex;
+    position: static;
+    flex-direction: row;
+    gap: var(--sp-6);
+    margin: 0 0 0 var(--sp-8);
+    background: transparent;
+    border-bottom: 0;
+    padding: 0;
   }
-  .brut-topnav__links .brut-topnav__link {
-    padding: var(--sp-2) 0;
-    border-bottom: var(--bw-1) dashed var(--concrete-200);
+  .brut-topnav__link {
+    padding: var(--sp-1) var(--bw-1);
+    border-bottom: 0;
   }
-  .brut-topnav__cta { display: none; }
-  .brut-topnav__burger { display: inline-flex; align-items: center; justify-content: center; }
-  .brut-topnav--open .brut-topnav__links { display: flex; }
+  .brut-topnav__cta { display: revert; }
+  .brut-topnav__burger { display: none; }
 }
 
 /* SIDEBAR — vertical app nav for dashboards. */
@@ -2326,7 +2338,7 @@ button.brut-sidebar__group-title::after {
   letter-spacing: var(--tracking-wide);
 }
 .brut-crumbs--sm .brut-crumbs__link { padding: var(--sp-px) var(--sp-1); }
-@media (max-width: 640px) { /* --bp-sm */
+@media (max-width: 639.98px) { /* sub-tier sentinel — disjoint from (min-width: 640px) */
   .brut-crumbs--responsive .brut-crumbs__item {
     display: none;
   }
@@ -2524,8 +2536,9 @@ button.brut-sidebar__group-title::after {
 .brut-col-offset-10 { grid-column-start: 11; }
 .brut-col-offset-11 { grid-column-start: 12; }
 
-/* Default: stack below sm */
-@media (max-width: 639px) {
+/* Default: stack below sm. Sub-tier sentinel keeps the boundary disjoint
+   from the (min-width: 640px) opener at exactly 640px. */
+@media (max-width: 639.98px) {
   .brut-row:not(.brut-row--no-stack) > [class*="brut-col"] {
     grid-column: 1 / -1;
   }
@@ -2683,7 +2696,7 @@ button.brut-sidebar__group-title::after {
    Pure CSS — no JS required.
    ============================================================ */
 
-@media (max-width: 640px) { /* var(--bp-sm) */
+@media (max-width: 639.98px) { /* sub-tier sentinel — disjoint from (min-width: 640px) */
   .brut-table--responsive thead { display: none; }
   .brut-table--responsive,
   .brut-table--responsive tbody,

@@ -44,6 +44,7 @@ Every interactive component carries every field listed below. There are no optio
 | `formState` | object | yes | How the component participates in form submission. |
 | `a11y` | object | yes | Accessibility surface — only the dimensions the component actively manages. |
 | `examples` | object[] (≥1) | yes | Authoritative HTML snippets. At least one. |
+| `responsive` | object | yes | Declared responsive shape (one of nine canonical values) + the tier at which it engages. See sub-shape below and [responsive-shapes.md](./responsive-shapes.md). |
 
 ### `dataAttributes[]`
 
@@ -110,6 +111,18 @@ Every interactive component carries every field listed below. There are no optio
 | `title` | string | yes | Short label distinguishing this example from siblings. |
 | `html` | string | yes | Raw HTML markup. Newlines preserved. Markup only — no `<style>` or `<script>`. |
 
+### `responsive`
+
+```js
+{ shape: 'fullscreen-modal', breakpoint: 'sm', notes: 'Edge-to-edge sheet on phones; centered modal at sm and above.' }
+```
+
+| Field | Type | Required | Purpose |
+|---|---|---|---|
+| `shape` | string | yes | One of nine canonical shapes: `static`, `stack`, `fullscreen-modal`, `bottom-sheet`, `horizontal-scroll`, `ellipsis-collapse`, `disclosure-toggle`, `wrap`, `hover-fallback`. See [responsive-shapes.md](./responsive-shapes.md) for the behavior contract of each. |
+| `breakpoint` | string | no | Tier at which the shape engages: `sm` (640px), `md` (768px), or `lg` (1024px). Required for shapes that flip; omitted for `static` and `wrap`. |
+| `notes` | string | no | Plain-language note (≤120 chars) describing the responsive behavior in this component. |
+
 ## Static component fields
 
 Static components (purely CSS, no runtime — `alert`, `badge`, `card`, `divider`, …) ship the 4-field stub in M7. Richer metadata is backfilled in a follow-up.
@@ -152,9 +165,12 @@ The Vite plugin (`src/config/vite-plugin.js#generateManifest`) globs `src/js/com
 Two automated checks gate the manifest:
 
 - **`scripts/check-manifest.js`** — manifest-completeness assertion. Walks every interactive component and exits non-zero if any required field is missing or empty. Run via `pnpm check:manifest`.
-- **`npx brut doctor`** — surfaces two manifest-related findings:
+- **`npx brut doctor`** — surfaces these manifest-related findings:
   - `MISSING_META` — interactive component has no `.meta.js`. Warning in M7, error in M8.
   - `META_DRIFT` — `.meta.js` declares modifiers, events, or data-attributes not present in source. Informational.
+  - `RESPONSIVE_META_MISSING` — interactive component meta has no `responsive` block. Warning during the responsive rollout (RR1–RR4); promotes to failure once backfill is complete.
+  - `RESPONSIVE_SHAPE_INVALID` — `responsive.shape` is set but not one of the nine canonical values. Warning.
+  - `RESPONSIVE_BREAKPOINT_INVALID` — `responsive.breakpoint` is set but not `sm`/`md`/`lg`. Warning.
 
 Both checks read `docs/manifest-schema.json` for structural validation. Hand-edit the schema only when bumping the manifest's major version.
 

@@ -18,7 +18,7 @@
 
 ## Hard constraints (orchestrator-level guardrails)
 
-Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) for the full list. **Package carve-out:** the zero-dependency rule applies to the runtime `brut` package and the source under `src/`. Standalone packages under `packages/*` (e.g., `@sprtn/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers using `brut` never install a bundler or framework — is permanent.
+Reject any subtask that would: add a dependency, introduce JSX/React/jQuery/Alpine/htmx, add a build-time tool, hardcode a color/px/rem outside `src/tokens/`, use raw `rgba()` (use `--scrim-bg` / `--scrim-bg-soft` tokens instead), introduce gradients (the checkmark glyph is the sole sanctioned exception until the SVG sprite ships), introduce a *transition* longer than 140ms (loader *animations* may exceed; comment the carve-out), use rounded corners beyond input/tag radii, hardcode z-index integers (use `--z-*` tokens), introduce a media query at a non-tier value (use 640/768/1024 px or sub-tier sentinel 639.98/767.98/1023.98), use `(max-width: 640|768|1024 px)` for a tier boundary (collides with the corresponding min-width tier), hardcode a width ≥ 320px without a `min()` guard or paired media variant, add an interactive component without a `responsive` declaration in its meta sidecar, ship a preview/docs/demos/site HTML page without `<meta name="viewport" content="width=device-width, initial-scale=1">`, or hand-edit `dist/`. Class roots must match the `data-brut` hook name (`.brut-checkbox`, never `.brut-cb`). See [AGENTS.md §Hard constraints](AGENTS.md) and [AGENTS.md §Responsive constraints](AGENTS.md) for the full lists. **Package carve-out:** the zero-dependency rule applies to the runtime `brut` package and the source under `src/`. Standalone packages under `packages/*` (e.g., `@sprtn/mcp`) may declare their own dependencies in their own `package.json`. The spirit — consumers using `brut` never install a bundler or framework — is permanent.
 
 > **Note for milestone work:** the "no build-time tool" and "no dependency" constraints above are scheduled to relax at milestone **M3** (Vite migration) and milestone **M6** (config + CLI). They remain in force for any task NOT explicitly tagged with one of those milestones. The *spirit* — consumer never installs a bundler, runtime stays framework-free — is permanent. See "1.0 Roadmap" below.
 
@@ -273,6 +273,60 @@ Validation rules (paste-quoted from `src/config/vite-plugin.js`'s `validateMetaE
 2. `node scripts/check-manifest.js` — exits 0 for this component.
 3. `npx brut doctor` — no `MISSING_META` or `META_DRIFT` warning for this component.
 4. The entry's class and selector are byte-identical to the runtime contract.
+
+---
+
+## Workflow H — Add or refine a component's responsive shape
+
+**Trigger:** "make `<name>` responsive", "add a mobile pattern to `<name>`", "the `<name>` overflows at 320px", "declare `<name>`'s responsive shape", `npx brut doctor` reports `RESPONSIVE_META_MISSING` or `RESPONSIVE_SHAPE_INVALID`.
+
+### Phase 1 — Scope (no delegation)
+1. Pick the canonical shape from the nine in [docs/responsive-shapes.md](docs/responsive-shapes.md). Don't invent a tenth — if none fit, that's an architecture decision; pause and ask.
+2. Pick the tier at which the shape engages: `sm` (640px), `md` (768px), or `lg` (1024px). Most flips are at `sm`. Disclosure-style nav uses `md`.
+3. Identify the analogue. State the file path so subagents copy the shape:
+   - `fullscreen-modal` → `dialog` (after RR3.1)
+   - `bottom-sheet` → `popover`/`menu` (after RR3.3/RR3.4 land the shared positioner)
+   - `horizontal-scroll` → `tabs` (after RR3.10)
+   - `ellipsis-collapse` → existing `.brut-crumbs--responsive` rule
+   - `disclosure-toggle` → `topnav` (after RR2.4 mobile-first refactor)
+   - `stack` → `.brut-row` 12-col grid stack rule
+   - `wrap` → `.brut-tag-input` wrap pattern
+   - `hover-fallback` → `tooltip` (after RR3.5)
+   - `static` → no analogue needed; just declare
+4. Confirm no new tokens are required. If the flip needs a new layout dimension, run Workflow E (token bump) first.
+
+### Phase 2 — Atomic tasks
+
+| # | Task | Subagent | Files written | Verify |
+|---|---|---|---|---|
+| 1 | Add the responsive CSS rule(s) to the component's class block | general-purpose | `src/components.css` | doctor `BREAKPOINT_NON_TIER` and `MAX_WIDTH_AT_TIER` are 0 for the new rule; renders correctly at the tier boundary |
+| 2 | If the shape needs JS (`bottom-sheet` positioner branch, `disclosure-toggle` toggle helper, `hover-fallback` pointer listener), edit the component JS — DO NOT introduce a new resize/scroll listener pattern; reuse the shared positioner / disclosure helper | general-purpose | `src/js/components/<name>.js` | no new global listeners; touch + keyboard both work |
+| 3 | Update the preview page to demonstrate the responsive variant — viewport-meta is already required; add a frame at the relevant width so reviewers can see the flip | general-purpose | `preview/components-<name>.html` | renders correctly at 320, 375, 640, 768, 1024 |
+| 4 | Update the docs section to note the shape — typically a one-line callout near the top of the section | general-purpose | `docs/index.html` | section renders; new shape callout visible |
+| 5 | Declare `responsive: { shape, breakpoint, notes }` in the meta sidecar | general-purpose | `src/js/components/<name>.meta.js` | `node scripts/check-manifest.js` exits 0; `npx brut doctor` shows no `RESPONSIVE_META_MISSING` or `*_INVALID` for this component |
+| 6 | Build | (self) | `dist/brut.css`, `dist/brut.js`, `dist/components.json` | `pnpm build` exits 0; manifest entry includes the new `responsive` block |
+| 7 | Visual harness | (self) | `tests/visual/<name>.spec.js` (extend if exists; create otherwise — model on existing specs) | `pnpm test:visual` passes at 320, 375, 640, 768, 1024, 1440 — no horizontal scroll, every interactive surface ≥ 44×44, declared shape matches DOM evidence |
+
+### Phase 3 — Final gate (orchestrator runs)
+```bash
+pnpm build
+node scripts/check-manifest.js
+npx brut doctor                       # zero RESPONSIVE_* / VIEWPORT_META_MISSING / BREAKPOINT_NON_TIER for this component
+pnpm test:visual                      # passes at all six tested viewports
+grep -nE "@media\s*\([^)]*(max|min)-width:\s*[0-9.]+px" src/components.css | grep -vE "(640|768|1024|639\.98|767\.98|1023\.98)px"   # must be empty
+```
+
+Then open `preview/components-<name>.html` in a browser and exercise the flip with devtools responsive at 320/375/640/768/1024.
+
+### Subagent brief template (Workflow H)
+```
+Goal: {one sentence}. Apply responsive shape `{shape}` at tier `{tier}` to `{component}`.
+Edit only: {single file path}.
+Read for reference: AGENTS.md §Responsive constraints, docs/responsive-shapes.md, and {analogue file path}.
+Constraints (paste-quoted): mobile-first, three tiers only (sm/md/lg via --bp-*), min-width at boundaries (use sub-tier .98 sentinel for "below" overrides), 44px touch-target floor (--touch-min), guard layout dims ≥320px with min() or media variant, no new global resize/scroll listeners.
+Output: the diff only. Do not run the build. Do not edit any other file.
+Verify locally before reporting done: {grep or syntax check that proves the change landed}.
+```
 
 ---
 
