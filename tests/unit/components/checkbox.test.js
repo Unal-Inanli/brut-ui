@@ -31,7 +31,7 @@ describe('checkbox', () => {
     const events = captureEvent(el, 'brut:change');
     el.click();
     expect(events).toHaveLength(1);
-    expect(events[0].detail).toEqual({ checked: true });
+    expect(events[0].detail).toEqual({ value: true, checked: true });
   });
 
   it('responds to Space and Enter', () => {
