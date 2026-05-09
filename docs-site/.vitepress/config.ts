@@ -49,6 +49,7 @@ export default defineConfig({
         text: 'Reference',
         items: [
           { text: 'Manifest schema', link: '/reference/manifest' },
+          { text: 'Responsive shapes', link: '/reference/responsive-shapes' },
         ],
       },
     ],
@@ -90,6 +91,7 @@ export default defineConfig({
           text: 'Reference',
           items: [
             { text: 'Manifest schema', link: '/reference/manifest' },
+            { text: 'Responsive shapes', link: '/reference/responsive-shapes' },
           ],
         },
       ],
