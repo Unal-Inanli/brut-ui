@@ -8,7 +8,9 @@ export default {
   modifiers: [
     { name: '--open', description: 'Applied while the mobile link drawer is expanded' },
   ],
-  dataAttributes: [],
+  dataAttributes: [
+    { name: 'data-brut-label-menu', description: 'Override for the burger button aria-label; falls back to "Toggle menu"' },
+  ],
   events: [
     { name: 'brut:open',  detail: {} },
     { name: 'brut:close', detail: {} },
