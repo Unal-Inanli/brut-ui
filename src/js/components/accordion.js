@@ -17,6 +17,7 @@
 (function () {
   if (!window.Brut) return;
   var headIdCounter = 0;
+  var bodyIdCounter = 0;
   Brut.register('accordion', {
     selector: '[data-brut="accordion"]',
     init: function (el) {
@@ -43,7 +44,7 @@
         head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
         if (body && !body.id) {
-          body.id = 'brut-acc-' + Math.random().toString(36).slice(2, 9);
+          body.id = 'brut-acc-body-' + (++bodyIdCounter);
         }
         if (body) {
           head.setAttribute('aria-controls', body.id);
