@@ -32,8 +32,22 @@
       var emptyEl = list.querySelector('.brut-combobox__empty');
       var activeIdx = -1;
 
-      function open()  { el.classList.add('brut-combobox--open');    input.setAttribute('aria-expanded', 'true'); }
-      function close() { el.classList.remove('brut-combobox--open'); input.setAttribute('aria-expanded', 'false'); setActive(-1); }
+      function onScroll() {
+        if (!el.isConnected) return;
+        close();
+      }
+
+      function open() {
+        el.classList.add('brut-combobox--open');
+        input.setAttribute('aria-expanded', 'true');
+        document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+      }
+      function close() {
+        el.classList.remove('brut-combobox--open');
+        input.setAttribute('aria-expanded', 'false');
+        setActive(-1);
+        document.removeEventListener('scroll', onScroll, { capture: true });
+      }
 
       function setActive(i) {
         opts.forEach(function (o, j) { o.setAttribute('aria-selected', i === j ? 'true' : 'false'); });

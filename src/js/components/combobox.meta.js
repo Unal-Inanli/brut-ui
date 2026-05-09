@@ -18,7 +18,7 @@ export default {
     role: 'combobox (on the text input); listbox (on the list); option (on each item)',
     keyboard: ['ArrowDown', 'ArrowUp', 'Enter', 'Escape'],
     aria: ['aria-autocomplete="list"', 'aria-expanded', 'aria-selected (on options)'],
-    notes: 'Outside click closes the list. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match. Clearing the visible text field clears the hidden input and dispatches brut:change with empty value/label, so the form never submits a stale selection. Blurring the input while the text does not match any option label clears the hidden input the same way (simple "clear" semantics — the last valid selection is not restored).',
+    notes: 'The dropdown closes on Escape, outside-click, or any ancestor scroll. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match. Clearing the visible text field clears the hidden input and dispatches brut:change with empty value/label, so the form never submits a stale selection. Blurring the input while the text does not match any option label clears the hidden input the same way (simple "clear" semantics — the last valid selection is not restored).',
   },
   examples: [
     {
