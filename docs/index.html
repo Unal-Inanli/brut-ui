@@ -263,8 +263,11 @@
       <a href="#password">Password</a>
       <a href="#stepper">Stepper</a>
       <a href="#toggles">Toggles</a>
+      <a href="#switch">Switch</a>
       <a href="#checkboxes">Checkboxes</a>
+      <a href="#checkbox">Checkbox</a>
       <a href="#radios">Radios</a>
+      <a href="#radio">Radio</a>
       <a href="#segmented">Segmented</a>
       <a href="#range">Range</a>
       <a href="#color">Color</a>
@@ -274,6 +277,7 @@
       <a href="#tags">Tags</a>
       <a href="#tag-input">Tag input</a>
       <a href="#combobox">Combobox</a>
+      <a href="#counter">Counter</a>
       <a href="#multiselect">Multi-select</a>
       <a href="#date">Date</a>
       <a href="#time">Time</a>
@@ -287,6 +291,7 @@
       <h2>Feedback</h2>
       <a href="#alerts">Alerts</a>
       <a href="#toast">Toast</a>
+      <a href="#toast-host">Toast host</a>
       <a href="#tooltip">Tooltip</a>
       <a href="#popover">Popover</a>
       <a href="#skeleton">Skeleton</a>
@@ -300,6 +305,7 @@
 
       <h2>Navigation</h2>
       <a href="#topnav">Topnav</a>
+      <a href="#theme-switcher">Theme switcher</a>
       <a href="#sidebar">Sidebar nav</a>
       <a href="#footer">Footer</a>
       <a href="#breadcrumbs">Breadcrumbs</a>
@@ -1026,6 +1032,38 @@ border: var(--bw-6) solid var(--ink);</pre>
 &lt;/label&gt;</pre>
       </section>
 
+      <!-- SWITCH -->
+      <section class="docs-section" id="switch">
+        <h2>Switch</h2>
+        <p class="lead">Boolean toggle backed by a hidden <code>&lt;input type="checkbox"&gt;</code> that posts with the surrounding form; click and Space/Enter both flip state.</p>
+        <div class="docs-preview">
+          <label class="brut-switch" data-brut="switch">
+            <input type="checkbox" hidden>
+            <span class="brut-switch__knob"></span>
+          </label>
+          <label class="brut-switch brut-switch--on" data-brut="switch">
+            <input type="checkbox" checked hidden>
+            <span class="brut-switch__knob"></span>
+          </label>
+          <label class="brut-switch" data-brut="switch">
+            <input type="checkbox" name="notifications" hidden>
+            <span class="brut-switch__knob"></span>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-switch" data-brut="switch"&gt;
+  &lt;input type="checkbox" hidden&gt;
+  &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="brut-switch brut-switch--on" data-brut="switch"&gt;
+  &lt;input type="checkbox" checked hidden&gt;
+  &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="brut-switch" data-brut="switch"&gt;
+  &lt;input type="checkbox" name="notifications" hidden&gt;
+  &lt;span class="brut-switch__knob"&gt;&lt;/span&gt;
+&lt;/label&gt;</pre>
+      </section>
+
       <!-- CHECKBOXES -->
       <section class="docs-section" id="checkboxes">
         <h2>Checkboxes</h2>
@@ -1042,6 +1080,24 @@ border: var(--bw-6) solid var(--ink);</pre>
 &lt;/label&gt;</pre>
       </section>
 
+      <!-- CHECKBOX -->
+      <section class="docs-section" id="checkbox">
+        <h2>Checkbox</h2>
+        <p class="lead">Visual checkbox label whose checked state is mirrored by an inner hidden <code>&lt;input type="checkbox"&gt;</code>.</p>
+        <div class="docs-preview">
+          <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden checked/></label>
+          <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden/></label>
+          <label class="brut-checkbox" data-brut="checkbox">
+            <input type="checkbox" name="agree" value="yes" hidden/>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-checkbox" data-brut="checkbox"&gt;&lt;input type="checkbox" hidden checked/&gt;&lt;/label&gt;
+&lt;label class="brut-checkbox" data-brut="checkbox"&gt;&lt;input type="checkbox" hidden/&gt;&lt;/label&gt;
+&lt;label class="brut-checkbox" data-brut="checkbox"&gt;
+  &lt;input type="checkbox" name="agree" value="yes" hidden/&gt;
+&lt;/label&gt;</pre>
+      </section>
+
       <!-- RADIOS -->
       <section class="docs-section" id="radios">
         <h2>Radios</h2>
@@ -1055,6 +1111,26 @@ border: var(--bw-6) solid var(--ink);</pre>
 &lt;/label&gt;
 &lt;label class="brut-radio brut-radio--on" data-brut="radio"&gt;
   &lt;input type="radio" name="size" value="md" hidden checked /&gt;
+&lt;/label&gt;</pre>
+      </section>
+
+      <!-- RADIO -->
+      <section class="docs-section" id="radio">
+        <h2>Radio</h2>
+        <p class="lead">Visual radio control synced to an inner hidden <code>&lt;input type="radio"&gt;</code>, grouped by name, with Space/Enter activation.</p>
+        <div class="docs-preview">
+          <label class="brut-radio brut-radio--on" data-brut="radio">
+            <input type="radio" name="size" value="md" hidden checked/>
+          </label>
+          <label class="brut-radio" data-brut="radio">
+            <input type="radio" name="size" value="lg" hidden/>
+          </label>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-radio brut-radio--on" data-brut="radio"&gt;
+  &lt;input type="radio" name="size" value="md" hidden checked/&gt;
+&lt;/label&gt;
+&lt;label class="brut-radio" data-brut="radio"&gt;
+  &lt;input type="radio" name="size" value="lg" hidden/&gt;
 &lt;/label&gt;</pre>
       </section>
 
@@ -1114,6 +1190,26 @@ border: var(--bw-6) solid var(--ink);</pre>
 &lt;script&gt;
   Brut.toast({ kind: 'ok', message: 'Saved.', timeout: 4000 });
 &lt;/script&gt;</pre>
+      </section>
+
+      <!-- TOAST HOST -->
+      <section class="docs-section" id="toast-host">
+        <h2>Toast host</h2>
+        <p class="lead">Container that anchors transient <code>.brut-toast</code> notifications spawned by the imperative <code>Brut.toast()</code> API; auto-creates itself if absent. Pick a corner via the <code>--top-right</code> / <code>--top-left</code> / <code>--bottom-right</code> / <code>--bottom-left</code> modifiers.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"></div>
+          <button class="brut-btn" type="button"
+                  onclick="Brut.toast({ kind: 'ok', message: 'Saved!', timeout: 4000 })">SAVE</button>
+        </div>
+        <pre class="docs-snippet">&lt;!-- Top-right host (default) --&gt;
+&lt;div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"&gt;&lt;/div&gt;
+
+&lt;!-- Bottom-left host --&gt;
+&lt;div class="brut-toast-host brut-toast-host--bottom-left" data-brut="toast-host"&gt;&lt;/div&gt;
+
+&lt;!-- Programmatic spawn (after host is present) --&gt;
+&lt;button class="brut-btn" type="button"
+        onclick="Brut.toast({ kind: 'ok', message: 'Saved!', timeout: 4000 })"&gt;SAVE&lt;/button&gt;</pre>
       </section>
 
       <!-- TOOLTIP -->
@@ -1454,6 +1550,22 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;li class="brut-combobox__empty"&gt;No matches.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;</pre>
+      </section>
+
+      <!-- COUNTER -->
+      <section class="docs-section" id="counter">
+        <h2>Counter</h2>
+        <p class="lead">Live character counter that mirrors the length of a paired input or textarea and flags overflow with the <code>--over</code> modifier.</p>
+        <div class="docs-preview docs-preview--block">
+          <div class="brut-field" style="max-width:520px;">
+            <label class="brut-field__label" for="docs-counter-bio">Bio</label>
+            <textarea id="docs-counter-bio" class="brut-textarea" maxlength="120">Make it loud.</textarea>
+            <span class="brut-field__counter" data-brut="counter" data-brut-for="docs-counter-bio"></span>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;label class="brut-field__label" for="bio"&gt;Bio&lt;/label&gt;
+&lt;textarea id="bio" class="brut-textarea" maxlength="120"&gt;Make it loud.&lt;/textarea&gt;
+&lt;span class="brut-field__counter" data-brut="counter" data-brut-for="bio"&gt;&lt;/span&gt;</pre>
       </section>
 
       <!-- RATING -->
@@ -1937,6 +2049,20 @@ border: var(--bw-6) solid var(--ink);</pre>
     &lt;button class="brut-topnav__burger" type="button" aria-label="Toggle menu"&gt;&amp;equiv;&lt;/button&gt;
   &lt;/div&gt;
 &lt;/header&gt;</pre>
+      </section>
+
+      <!-- THEME SWITCHER -->
+      <section class="docs-section" id="theme-switcher">
+        <h2>Theme switcher</h2>
+        <p class="lead">Radio group that flips the active theme via <code>Brut.theme()</code>; writes <code>[data-theme]</code> on the document root and persists the choice. The empty container auto-renders one button per theme.</p>
+        <div class="docs-preview docs-preview--block">
+          <div data-brut="theme-switcher"></div>
+        </div>
+        <pre class="docs-snippet">&lt;!-- Default three-way switcher --&gt;
+&lt;div data-brut="theme-switcher"&gt;&lt;/div&gt;
+
+&lt;!-- Custom theme list --&gt;
+&lt;div data-brut="theme-switcher" data-brut-themes="brutalist,minimal"&gt;&lt;/div&gt;</pre>
       </section>
 
       <!-- SIDEBAR -->
