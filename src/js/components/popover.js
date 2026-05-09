@@ -12,10 +12,12 @@
    Position is computed under the trigger via getBoundingClientRect(). */
 (function () {
   if (!window.Brut) return;
+  var idCounter = 0;
   Brut.register('popover', {
     selector: '[data-brut="popover"]',
     init: function (el) {
-      if (!el.id) return;
+      if (!el.id) el.id = 'brut-popover-' + (++idCounter);
+      if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
 
       var triggers = document.querySelectorAll('[data-brut-popover-open="' + el.id + '"]');
       var lastTrigger = null;
@@ -34,17 +36,22 @@
       function open(trigger) {
         lastTrigger = trigger || lastTrigger;
         el.removeAttribute('hidden');
+        if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'true');
         position();
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
         if (el.hasAttribute('hidden')) return;
         el.setAttribute('hidden', '');
+        if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'false');
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 
       triggers.forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
+        if (!t.hasAttribute('aria-haspopup')) t.setAttribute('aria-haspopup', 'dialog');
+        if (!t.hasAttribute('aria-expanded')) t.setAttribute('aria-expanded', 'false');
+        if (!t.hasAttribute('aria-controls')) t.setAttribute('aria-controls', el.id);
         t.addEventListener('click', function (e) {
           e.preventDefault();
           if (el.hasAttribute('hidden')) open(t); else close();

@@ -16,10 +16,10 @@ export default {
   ],
   formState: { hiddenInput: false },
   a11y: {
-    role: null,
+    role: 'dialog',
     keyboard: ['Escape (close)'],
-    aria: ['aria-label on .brut-popover__x close button'],
-    notes: 'Trigger gets type="button" automatically. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger.',
+    aria: ['role="dialog"', 'aria-haspopup="dialog"', 'aria-expanded', 'aria-controls', 'aria-label on .brut-popover__x close button'],
+    notes: 'Trigger gets type="button" automatically and is wired with aria-haspopup="dialog", aria-expanded, and aria-controls pointing at the popover id (auto-generated if missing). The popover element gets role="dialog" unless the consumer set a different role. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger.',
   },
   examples: [
     {
