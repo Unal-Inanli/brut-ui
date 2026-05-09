@@ -1,0 +1,82 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Switch preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .row { display: flex; gap: var(--sp-4); align-items: center; flex-wrap: wrap; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Default — off + on</h2>
+<div class="row">
+  <label class="brut-switch" data-brut="switch">
+    <input type="checkbox" hidden>
+    <span class="brut-switch__knob"></span>
+  </label>
+  <label class="brut-switch brut-switch--on" data-brut="switch">
+    <input type="checkbox" checked hidden>
+    <span class="brut-switch__knob"></span>
+  </label>
+</div>
+
+<h2>Disabled — off + on</h2>
+<div class="row">
+  <label class="brut-switch" data-brut="switch">
+    <input type="checkbox" hidden disabled>
+    <span class="brut-switch__knob"></span>
+  </label>
+  <label class="brut-switch brut-switch--on" data-brut="switch">
+    <input type="checkbox" checked hidden disabled>
+    <span class="brut-switch__knob"></span>
+  </label>
+</div>
+
+<h2>Inline label group</h2>
+<div class="row" style="gap: var(--sp-6);">
+  <label style="display:inline-flex; gap:var(--sp-3); align-items:center;">
+    <span class="brut-switch" data-brut="switch">
+      <input type="checkbox" name="darkmode" hidden>
+      <span class="brut-switch__knob"></span>
+    </span>
+    <span>Dark mode</span>
+  </label>
+  <label style="display:inline-flex; gap:var(--sp-3); align-items:center;">
+    <span class="brut-switch brut-switch--on" data-brut="switch">
+      <input type="checkbox" name="notifications" checked hidden>
+      <span class="brut-switch__knob"></span>
+    </span>
+    <span>Notifications</span>
+  </label>
+</div>
+
+<h2>Inside a brut-field</h2>
+<div class="brut-field" style="max-width:380px;">
+  <label class="brut-field__label" for="newsletter">Email subscriptions</label>
+  <label class="brut-switch" data-brut="switch">
+    <input type="checkbox" id="newsletter" name="newsletter" hidden>
+    <span class="brut-switch__knob"></span>
+  </label>
+  <span class="brut-field__hint">We send at most one email a month.</span>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Toggle a switch…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="switch"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+<div data-brut="theme-switcher"></div>
+</body></html>
