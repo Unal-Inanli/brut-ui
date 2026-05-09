@@ -11,6 +11,11 @@
     init: function (el) {
       var target = document.getElementById(el.getAttribute('data-brut-for'));
       if (!target) return;
+
+      // Announce count changes to screen readers; consumer overrides win.
+      if (!el.hasAttribute('aria-live')) el.setAttribute('aria-live', 'polite');
+      if (!el.hasAttribute('aria-atomic')) el.setAttribute('aria-atomic', 'true');
+
       var attrMax = parseInt(target.getAttribute('maxlength'), 10);
       var dataMax = parseInt(el.getAttribute('data-brut-max'), 10);
       var max = isFinite(attrMax) ? attrMax : (isFinite(dataMax) ? dataMax : 0);
