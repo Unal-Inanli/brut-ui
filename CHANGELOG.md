@@ -4,6 +4,34 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] — 2026-05-09
+
+### Added
+
+- **`brut init` scaffolds `.mcp.json`.** Running `npx brut init` now
+  creates both `brut.config.js` and `.mcp.json` in one command.
+  Idempotent — merges into an existing `.mcp.json` without overwriting
+  other server entries.
+- **Layered test pipeline.** Vitest unit tests, Playwright smoke and
+  behavior tests, axe-core accessibility audits, size-limit bundle
+  checks, and visual regression snapshots — all wired through
+  `pnpm test*` scripts.
+
+### Removed
+
+- **`table-toolbar`, `table-filter`, `table-columns` sub-components.**
+  These three were application-level concerns (toolbar layout, search
+  filtering, column visibility) rather than UI primitives. The core
+  `table` component is unchanged.
+
+### Fixed
+
+- **Token overrides work in dev mode.** `brut.config.js` token overrides
+  previously only applied during `vite build`. The override CSS injection
+  now runs in the `transform` hook, so `vite dev` respects config too.
+- **CI reads pnpm version from `package.json`.** The `pnpm/action-setup`
+  step no longer hard-codes a version string.
+
 ## [1.2.0] — 2026-05-07
 
 ### Added
@@ -157,5 +185,9 @@ zero dependencies.
   mirror state to a hidden input, support keyboard navigation, and
   initialize idempotently.
 
+[1.3.1]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.3.1
+[1.2.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.2.0
+[1.1.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.1.0
+[1.0.1]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.0.0
 [0.1.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v0.1.0
