@@ -131,7 +131,7 @@ If a request would require any of the above, **pause and ask the user** rather t
 ### Build + verify before declaring done
 
 ```bash
-npm run build     # or: bash build.sh
+pnpm build
 ```
 
 - Build exits 0 and prints non-zero byte counts for both `dist/brut.css` and `dist/brut.js`.

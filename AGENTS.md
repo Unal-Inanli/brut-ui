@@ -43,8 +43,7 @@ dist/                 # built bundles — DO NOT hand-edit
 docs/index.html       # static Bootstrap-style docs page — links ../dist/brut.css and ../dist/brut.js
 preview/*.html        # per-component playground demos — each links the dist bundles it needs
 assets/               # brand marks (logo.svg, monogram.svg)
-build.sh              # build script (concatenates CSS and JS sources into dist/)
-package.json          # exposes `npm run build` (which calls bash build.sh)
+package.json          # exposes `pnpm build` (Vite lib-mode build)
 README.md             # human docs — design philosophy, install, usage
 SKILL.md              # agent skill manifest
 ```
@@ -54,7 +53,7 @@ SKILL.md              # agent skill manifest
 After **any** edit to `src/`, rebuild:
 
 ```bash
-npm run build      # or: bash build.sh
+pnpm build
 ```
 
 The build is intentionally trivial — it concatenates `tokens/*.css + components.css` into `dist/brut.css`, and `core.js + components/*.js` (alphabetical) into `dist/brut.js`, with a version banner on each. There are no preprocessors, no minifiers, no bundlers, no transpilers. If you find yourself wanting one, stop and ask the user first.
@@ -226,7 +225,7 @@ The hard rules above have a small, explicit set of carve-outs. These are the ONL
 
 Before declaring work done:
 
-1. `bash build.sh` exits 0 and prints non-zero byte counts for both `dist/brut.css` and `dist/brut.js`.
+1. `pnpm build` exits 0 and produces non-zero byte counts for both `dist/brut.css` and `dist/brut.js`.
 2. `docs/index.html` opens in a browser and every section renders. No 404s in the network panel, no console errors.
 3. JS-bound components in the docs page actually respond to clicks/keys. The hidden inputs reflect state changes.
 4. The component's `preview/*.html` opens and renders.

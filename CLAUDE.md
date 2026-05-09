@@ -53,7 +53,7 @@ When picking up a milestone, read the milestone's row, the relevant memory entri
    - `Explore` — locate a class/token/usage, list preview files referencing X, find untokenized values. Read-only.
    - `general-purpose` — multi-file changes that need coordinated edits.
    - `Plan` — only if the request is ambiguous about which workflow applies.
-6. **Never delegate verification.** Run `bash build.sh` and the grep checks yourself; only delegate the work that produced the diff.
+6. **Never delegate verification.** Run `pnpm build` and the grep checks yourself; only delegate the work that produced the diff.
 
 ---
 
@@ -77,7 +77,7 @@ Decide before fanning out:
 | 3 | Add sidecar `<name>.meta.js` (interactive only) | general-purpose | `src/js/components/<name>.meta.js` | 2 | `node -e "import('./src/js/components/<name>.meta.js').then(m=>{const e=m.default;if(!e.name||!e.description||!e.useCases?.length||!e.kind||!e.class||!e.examples?.length)throw 0;console.log('ok')})"` prints `ok`; `pnpm build` emits no validateMetaEntry warnings for this component |
 | 4 | Create preview page | general-purpose | `preview/components-<name>.html` | 1, 2 | links `../dist/brut.css` (and `../dist/brut.js` if interactive); renders every variant |
 | 5 | Add docs section | general-purpose | `docs/index.html` | 1, 2 | sidebar anchor + `<section class="docs-section" id="<name>">` with live preview and escaped `<pre class="docs-snippet">` |
-| 6 | Build | (self) | `dist/brut.css`, `dist/brut.js` | 1–5 | `bash build.sh` exits 0; both files non-zero bytes |
+| 6 | Build | (self) | `dist/brut.css`, `dist/brut.js` | 1–5 | `pnpm build` exits 0; both files non-zero bytes |
 | 7 | Browser verify | (self) | — | 6 | open `docs/index.html` and `preview/components-<name>.html`; no 404s, no console errors; JS components respond to click + Space/Enter; hidden input reflects state |
 
 **Subagent brief template (copy verbatim, fill `{…}`):**
@@ -94,7 +94,7 @@ For interactive components, a sidecar `src/js/components/<name>.meta.js` is also
 
 ### Phase 3 — Final gate (orchestrator runs)
 ```bash
-bash build.sh
+pnpm build
 grep -rE "ui_kits|jsx|text/babel|React|require\(|import .* from " src/ docs/ preview/ AGENTS.md SKILL.md README.md   # must be empty
 ```
 Then open `docs/index.html` + the new preview page in a browser.
@@ -145,7 +145,7 @@ Use the same subagent brief template as Workflow A, with two additions:
 
 ### Phase 4 — Final gate (orchestrator)
 ```bash
-bash build.sh
+pnpm build
 grep -rE "ui_kits|jsx|text/babel|React|require\(|import .* from " src/ docs/ preview/ AGENTS.md SKILL.md README.md
 wc -c dist/brut.css dist/brut.js
 ```
