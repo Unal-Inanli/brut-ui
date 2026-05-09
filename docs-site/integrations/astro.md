@@ -1,3 +1,7 @@
+---
+title: Astro
+---
+
 # Use BRUT with Astro
 
 Astro is a near-perfect fit for BRUT — both ship as much static HTML

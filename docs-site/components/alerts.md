@@ -1,8 +1,11 @@
 ---
 title: Alerts
+description: Notification banner with icon slot and semantic color variants for success, warning, error, and info states.
 ---
 
 # Alerts
+
+Notification banner with icon slot and semantic color variants for success, warning, error, and info states.
 
 <iframe
   class="brut-preview-frame"

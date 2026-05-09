@@ -1,8 +1,11 @@
 ---
 title: Pagination
+description: Page navigation with prev/next, numbered buttons, first/last anchors, and ellipsis gaps for large page counts.
 ---
 
 # Pagination
+
+Page navigation with prev/next, numbered buttons, first/last anchors, and ellipsis gaps for large page counts.
 
 <iframe
   class="brut-preview-frame"

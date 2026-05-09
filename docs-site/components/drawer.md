@@ -1,8 +1,11 @@
 ---
 title: Drawer
+description: Side sheet that slides in from any edge, opened by external triggers with optional scrim and escape-to-close.
 ---
 
 # Drawer
+
+Side sheet that slides in from any edge, opened by external triggers with optional scrim and escape-to-close.
 
 <iframe
   class="brut-preview-frame"

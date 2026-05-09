@@ -1,8 +1,11 @@
 ---
 title: Dropzone
+description: "Drag-and-drop file region wrapping a hidden <input type=\"file\">, with click-to-browse, keyboard activation, and a drag-over state class."
 ---
 
 # Dropzone
+
+Drag-and-drop file region wrapping a hidden `<input type="file">`, with click-to-browse, keyboard activation, and a drag-over state class.
 
 <iframe
   class="brut-preview-frame"

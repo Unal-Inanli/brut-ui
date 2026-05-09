@@ -1,3 +1,7 @@
+---
+title: Nuxt
+---
+
 # Use BRUT with Nuxt
 
 Add the stylesheet to Nuxt's `css` array. Register the JS runtime as

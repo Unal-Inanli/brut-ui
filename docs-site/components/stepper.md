@@ -1,8 +1,11 @@
 ---
 title: Stepper
+description: "Numeric input flanked by minus / plus buttons; reads min, max, and step from the inner <input type=\"number\"> and clamps to the step grid."
 ---
 
 # Stepper
+
+Numeric input flanked by minus / plus buttons; reads min, max, and step from the inner `<input type="number">` and clamps to the step grid.
 
 <iframe
   class="brut-preview-frame"

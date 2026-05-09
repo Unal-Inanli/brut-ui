@@ -1,8 +1,11 @@
 ---
 title: Tooltip
+description: Hover/focus-triggered ink bubble appended to <body> on show and removed on hide; positioned on one of four sides relative to the trigger.
 ---
 
 # Tooltip
+
+Hover/focus-triggered ink bubble appended to `<body>` on show and removed on hide; positioned on one of four sides relative to the trigger.
 
 <iframe
   class="brut-preview-frame"

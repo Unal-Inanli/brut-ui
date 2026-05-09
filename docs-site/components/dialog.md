@@ -1,8 +1,11 @@
 ---
 title: Dialog
+description: Modal dialog wired to external open triggers with optional scrim, escape-to-close, and any [data-brut-close] inside.
 ---
 
 # Dialog
+
+Modal dialog wired to external open triggers with optional scrim, escape-to-close, and any [data-brut-close] inside.
 
 <iframe
   class="brut-preview-frame"

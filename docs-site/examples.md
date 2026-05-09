@@ -1,3 +1,7 @@
+---
+title: Examples
+---
+
 # Examples
 
 Full-page templates and demo compositions, all built with BRUT.

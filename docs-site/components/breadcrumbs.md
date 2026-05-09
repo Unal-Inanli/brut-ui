@@ -1,8 +1,11 @@
 ---
 title: Breadcrumbs
+description: Hard-edged breadcrumb path navigation — ordered list with link, separator, and current-item slots.
 ---
 
 # Breadcrumbs
+
+Hard-edged breadcrumb path navigation — ordered list with link, separator, and current-item slots.
 
 <iframe
   class="brut-preview-frame"

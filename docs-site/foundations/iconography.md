@@ -1,3 +1,7 @@
+---
+title: Iconography
+---
+
 # Iconography
 
 ## Status

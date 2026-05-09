@@ -1,8 +1,11 @@
 ---
 title: Time picker
+description: Text-field combobox with a popover hour/minute stepper; emits HH:MM (24-hour ISO) with optional 12-hour AM/PM display and minute snapping.
 ---
 
 # Time picker
+
+Text-field combobox with a popover hour/minute stepper; emits HH:MM (24-hour ISO) with optional 12-hour AM/PM display and minute snapping.
 
 <iframe
   class="brut-preview-frame"

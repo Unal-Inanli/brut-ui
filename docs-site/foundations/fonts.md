@@ -1,3 +1,7 @@
+---
+title: Fonts
+---
+
 # Fonts
 
 The kit ships with three font families loaded from Google Fonts. They

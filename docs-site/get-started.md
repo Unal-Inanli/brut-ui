@@ -1,3 +1,7 @@
+---
+title: Get started
+---
+
 # Get started
 
 BRUT ships as two flat files — one CSS file and one optional JS runtime.
@@ -59,8 +63,8 @@ The package exposes five subpaths:
 | `@sprtn/ui` | `dist/brut.esm.js` | The JS runtime (interactive components). |
 | `@sprtn/ui/css` | `dist/brut.css` | The single stylesheet. Always load this. |
 | `@sprtn/ui/manifest` | `dist/components.json` | Component metadata for tooling and AI agents. |
-| `@sprtn/ui/vite` | `src/config/vite-plugin.js` | Optional Vite plugin (config-driven builds). |
-| `@sprtn/ui/config` | `src/config/define.js` | `defineConfig` helper for `brut.config.js`. |
+| `@sprtn/ui/vite` | `src/config/vite-plugin.js` | Optional Vite plugin — see [Configuration](/configuration). |
+| `@sprtn/ui/config` | `src/config/define.js` | `defineConfig` helper for `brut.config.js` — see [Configuration](/configuration). |
 
 For stack-specific walkthroughs (Vite, Next.js, Astro, SvelteKit,
 Nuxt, plain HTML), see the **[Integrations](/integrations/)** pages.
@@ -115,11 +119,9 @@ can wire them up automatically on `DOMContentLoaded`.
 ### A toggle switch (interactive)
 
 ```html
-<label class="brut-cluster brut-cluster--sm" style="cursor:pointer">
-  <span class="brut-switch" data-brut="switch">
-    <input type="checkbox" hidden />
-    <span class="brut-switch__knob"></span>
-  </span>
+<label class="brut-switch" data-brut="switch">
+  <input type="checkbox" hidden />
+  <span class="brut-switch__knob"></span>
   Enable notifications
 </label>
 ```
@@ -239,6 +241,7 @@ these instead, depending on your setup:
 ## What's next?
 
 - **[Integrations](/integrations/)** — Vite, Next.js, Astro, SvelteKit, Nuxt, plain HTML.
+- **[Configuration](/configuration)** — rename the prefix, add variants, override tokens at build time.
 - **[Components](/components/)** — 150+ components, organized by category.
 - **[Examples](/examples)** — full-page templates built with BRUT.
 - **[Foundations](/foundations/visual)** — the visual rules every screen obeys.

@@ -1,8 +1,11 @@
 ---
 title: Toast
+description: Transient banner notification with icon slot, semantic color variants, and dismiss affordance — auto-removed by the toast host.
 ---
 
 # Toast
+
+Transient banner notification with icon slot, semantic color variants, and dismiss affordance — auto-removed by the toast host.
 
 <iframe
   class="brut-preview-frame"

@@ -1,8 +1,11 @@
 ---
 title: Tags
+description: Removable inline pill for filters, selections, or category labels — with semantic and accent color variants.
 ---
 
 # Tags
+
+Removable inline pill for filters, selections, or category labels — with semantic and accent color variants.
 
 <iframe
   class="brut-preview-frame"

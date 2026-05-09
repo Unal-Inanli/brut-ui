@@ -1,7 +1,13 @@
+---
+title: Integrations
+---
+
 # Integrations
 
 Pick your stack. Every page is a copy-paste starter — the snippets shown
 are the actual config a fresh project needs, with no abridgements.
+
+For build-time customization (renaming the class prefix, defining variants, overriding tokens), see [Configuration](/configuration).
 
 ## Bundlers and frameworks
 
@@ -27,8 +33,8 @@ The `package.json` `exports` map defines five subpaths.
 | `@sprtn/ui` | `dist/brut.esm.js` | The JS runtime — `data-brut` auto-init for interactive components. |
 | `@sprtn/ui/css` | `dist/brut.css` | The single stylesheet. Always load this. |
 | `@sprtn/ui/manifest` | `dist/components.json` | Component metadata for tooling and AI agents. |
-| `@sprtn/ui/vite` | `src/config/vite-plugin.js` | Optional Vite plugin for config-driven builds (prefix renaming, opt-out). |
-| `@sprtn/ui/config` | `src/config/define.js` | `defineConfig` helper for `brut.config.js`. |
+| `@sprtn/ui/vite` | `src/config/vite-plugin.js` | Optional Vite plugin for config-driven builds (prefix renaming, opt-out) — see [Configuration](/configuration). |
+| `@sprtn/ui/config` | `src/config/define.js` | `defineConfig` helper for `brut.config.js` — see [Configuration](/configuration). |
 
 `require('@sprtn/ui')` works too (CommonJS resolves to `dist/brut.js`).
 

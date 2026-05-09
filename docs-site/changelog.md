@@ -1,3 +1,7 @@
+---
+title: Changelog
+---
+
 # Changelog
 
 The release history for `@sprtn/ui`. Mirrored from the root

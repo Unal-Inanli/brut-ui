@@ -1,3 +1,7 @@
+---
+title: Plain HTML
+---
+
 # Use BRUT in plain HTML
 
 No bundler, no framework, no build step. Just a static page. There are
@@ -46,7 +50,7 @@ exact (`@1.0.1`) for production-stable.
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.css" />
   </head>
   <body>
-    <button class="brut-btn brut-btn--primary">SHIP IT.</button>
+    <button type="button" class="brut-btn brut-btn--primary">SHIP IT.</button>
     <script src="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.js" defer></script>
   </body>
 </html>
@@ -54,7 +58,7 @@ exact (`@1.0.1`) for production-stable.
 
 Both jsDelivr and unpkg work. Swap the host if you have a preference:
 
-```
+```text
 https://unpkg.com/@sprtn/ui@1/dist/brut.css
 https://unpkg.com/@sprtn/ui@1/dist/brut.js
 ```

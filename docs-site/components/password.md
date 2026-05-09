@@ -1,8 +1,11 @@
 ---
 title: Password
+description: Password input with a SHOW/HIDE toggle button that flips the input type between password and text.
 ---
 
 # Password
+
+Password input with a SHOW/HIDE toggle button that flips the input type between password and text.
 
 <iframe
   class="brut-preview-frame"

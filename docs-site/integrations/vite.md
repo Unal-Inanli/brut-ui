@@ -1,3 +1,7 @@
+---
+title: Vite
+---
+
 # Use BRUT with Vite
 
 Works with vanilla Vite, Vue, React, Svelte, Solid, Preact, Lit — any
@@ -18,7 +22,7 @@ import '@sprtn/ui'
 
 ```html
 <!-- anywhere in your markup -->
-<button class="brut-btn brut-btn--primary">SHIP IT.</button>
+<button type="button" class="brut-btn brut-btn--primary">SHIP IT.</button>
 ```
 
 That's it. `npm run dev` and you're styled.
@@ -60,7 +64,7 @@ your own stylesheet so your `--primary` overrides win.
 In `index.html`:
 
 ```html
-<button class="brut-btn brut-btn--primary">CLICK ME</button>
+<button type="button" class="brut-btn brut-btn--primary">CLICK ME</button>
 
 <label class="brut-switch" data-brut="switch">
   <input type="checkbox" hidden />

@@ -1,8 +1,11 @@
 ---
 title: Menu
+description: Trigger-anchored dropdown menu with click-outside, Escape, and arrow-key focus navigation.
 ---
 
 # Menu
+
+Trigger-anchored dropdown menu with click-outside, Escape, and arrow-key focus navigation.
 
 <iframe
   class="brut-preview-frame"

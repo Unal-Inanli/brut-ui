@@ -1,8 +1,11 @@
 ---
 title: Range slider — dual thumb
+description: Two-thumb range slider that emits a min/max pair, with pointer drag, click-to-jump on the track, and keyboard nudging.
 ---
 
 # Range slider — dual thumb
+
+Two-thumb range slider that emits a min/max pair, with pointer drag, click-to-jump on the track, and keyboard nudging.
 
 <iframe
   class="brut-preview-frame"

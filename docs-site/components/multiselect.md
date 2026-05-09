@@ -1,8 +1,11 @@
 ---
 title: Multi-select
+description: Combobox-style field that holds chips for selected values with type-to-filter, keyboard toggle, and Backspace removal.
 ---
 
 # Multi-select
+
+Combobox-style field that holds chips for selected values with type-to-filter, keyboard toggle, and Backspace removal.
 
 <iframe
   class="brut-preview-frame"

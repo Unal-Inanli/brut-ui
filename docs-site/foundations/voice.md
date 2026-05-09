@@ -1,3 +1,7 @@
+---
+title: Voice
+---
+
 # Voice & content
 
 How BRUT talks. Use these rules whenever you write copy that ships
@@ -40,7 +44,7 @@ render with the same hard-edged feeling.
 
 ## Examples that match
 
-```
+```text
 ✅  Ship loud. Ship today.
 ✅  9 colors. 0 gradients.
 ✅  Snap, never ease.

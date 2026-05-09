@@ -1,8 +1,11 @@
 ---
 title: Sidebar nav
+description: Vertical app navigation rail with optional collapsible groups; clicking a button-typed group title toggles its closed state.
 ---
 
 # Sidebar nav
+
+Vertical app navigation rail with optional collapsible groups; clicking a button-typed group title toggles its closed state.
 
 <iframe
   class="brut-preview-frame"

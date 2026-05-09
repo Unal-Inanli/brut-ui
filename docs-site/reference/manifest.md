@@ -1,3 +1,7 @@
+---
+title: Manifest schema
+---
+
 # Manifest schema
 
 The full schema reference for `dist/components.json` — what every field

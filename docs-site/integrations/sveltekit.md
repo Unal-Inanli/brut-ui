@@ -1,3 +1,7 @@
+---
+title: SvelteKit
+---
+
 # Use BRUT with SvelteKit
 
 Import the CSS once in `+layout.svelte`. Use `.brut-*` classes in any
