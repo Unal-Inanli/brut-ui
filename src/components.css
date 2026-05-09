@@ -239,7 +239,7 @@
 .brut-pre .tok-string  { color: var(--pop-lime); }
 .brut-pre .tok-num     { color: var(--primary); }
 
-/* LISTS — square bullets, hard counters, optional check. */
+/* LISTS — square bullets, hard counters. */
 .brut-list {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
@@ -249,26 +249,6 @@
   margin: 0;
 }
 .brut-list--ord { list-style: decimal; }
-.brut-list--check {
-  list-style: none;
-  padding-left: 0;
-}
-.brut-list--check li {
-  position: relative;
-  padding-left: var(--switch-track-h);
-}
-.brut-list--check li::before {
-  content: "✓";
-  position: absolute; left: 0; top: 0;
-  width: var(--control-sm); height: var(--control-sm);
-  font-family: var(--font-display);
-  font-size: var(--fs-sm);
-  background: var(--primary);
-  border: var(--bw-1) solid var(--ink);
-  display: inline-flex;
-  align-items: center; justify-content: center;
-  line-height: 1;
-}
 .brut-list li + li { margin-top: var(--sp-1); }
 
 /* DROP CAP — first letter as a hard ink block. */
@@ -1244,8 +1224,6 @@
 
 /* FORM container — vertical stack of fields. */
 .brut-form        { display: flex; flex-direction: column; gap: var(--sp-5); }
-.brut-form--tight { gap: var(--sp-3); }
-.brut-form--loose { gap: var(--sp-8); }
 
 /* FIELD — label + control + hint/error/counter wrapper. */
 .brut-field       { display: flex; flex-direction: column; gap: var(--sp-1); }
@@ -2445,7 +2423,6 @@ button.brut-sidebar__group-title::after {
   background: var(--paper);
 }
 .brut-section--tight   { padding-block: var(--sp-8); }
-.brut-section--loose   { padding-block: var(--sp-20); }
 .brut-section--flush   { border-bottom: 0; }
 .brut-section--paper   { background: var(--paper); }
 .brut-section--paper-2 { background: var(--paper-2); }
@@ -2476,12 +2453,9 @@ button.brut-sidebar__group-title::after {
   align-items: center;
   gap: var(--sp-3);
 }
-.brut-cluster--xs  { gap: var(--sp-1); }
 .brut-cluster--sm  { gap: var(--sp-2); }
 .brut-cluster--md  { gap: var(--sp-3); }
 .brut-cluster--lg  { gap: var(--sp-4); }
-.brut-cluster--xl  { gap: var(--sp-6); }
-.brut-cluster--end     { justify-content: flex-end; }
 .brut-cluster--center  { justify-content: center; }
 .brut-cluster--between { justify-content: space-between; }
 
@@ -2506,8 +2480,6 @@ button.brut-sidebar__group-title::after {
 .brut-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .brut-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.brut-grid--tight { gap: var(--sp-2); }
-.brut-grid--loose { gap: var(--sp-10); }
 
 /* 12-COLUMN GRID — Bootstrap-parity. Use .brut-row as parent,
    .brut-col-{1-12} for explicit widths, .brut-col for equal-width auto. */
@@ -2609,7 +2581,6 @@ button.brut-sidebar__group-title::after {
 }
 .brut-split__main { flex: 1; min-width: 0; }
 .brut-split__side { flex: none; width: var(--split-side-w); }
-.brut-split--reverse { flex-direction: row-reverse; }
 
 /* RULE — var(--bw-3) ink divider. Replaces hand-rolled <hr>s. */
 .brut-rule {
@@ -2682,14 +2653,9 @@ button.brut-sidebar__group-title::after {
 .brut-shape--pink   { background: var(--pop-pink); }
 .brut-shape--lime   { background: var(--pop-lime); }
 .brut-shape--blue   { background: var(--pop-blue); }
-.brut-shape--orange { background: var(--pop-orange); }
-.brut-shape--purple { background: var(--pop-purple); }
-.brut-shape--mint   { background: var(--pop-mint); }
 .brut-shape--rot-l  { transform: rotate(-8deg); }
 .brut-shape--rot-r  { transform: rotate(8deg); }
 .brut-shape--offset-tr { top: calc(var(--sp-6) * -1);    right: calc(var(--sp-6) * -1);  }
-.brut-shape--offset-tl { top: calc(var(--sp-6) * -1);    left: calc(var(--sp-6) * -1);   }
-.brut-shape--offset-br { bottom: calc(var(--sp-6) * -1); right: calc(var(--sp-6) * -1);  }
 .brut-shape--offset-bl { bottom: calc(var(--sp-6) * -1); left: calc(var(--sp-6) * -1);   }
 
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
