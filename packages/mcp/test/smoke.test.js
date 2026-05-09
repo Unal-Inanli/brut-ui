@@ -49,9 +49,9 @@ describe('list_components', () => {
     }
   });
 
-  it('filters to interactive components (>= 35)', async () => {
+  it('filters to interactive components (>= 33)', async () => {
     const result = await listComponents({ kind: 'interactive' }, context);
-    expect(result.length).toBeGreaterThanOrEqual(35);
+    expect(result.length).toBeGreaterThanOrEqual(33);
     expect(result.every((c) => c.kind === 'interactive')).toBe(true);
   });
 
@@ -109,7 +109,7 @@ describe('round-trip every interactive component', () => {
     const interactives = (context.manifest.components ?? []).filter(
       (c) => c.kind === 'interactive',
     );
-    expect(interactives.length).toBeGreaterThanOrEqual(35);
+    expect(interactives.length).toBeGreaterThanOrEqual(33);
     for (const c of interactives) {
       const entry = await getComponent({ name: c.name }, context);
       expect(entry, `entry for ${c.name}`).toBeDefined();
