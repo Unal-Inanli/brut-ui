@@ -40,9 +40,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup pnpm
+        # Version is read from `packageManager` in package.json. Specifying
+        # `version:` here would conflict with that and fail with
+        # ERR_PNPM_BAD_PM_VERSION.
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
