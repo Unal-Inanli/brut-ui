@@ -18,7 +18,18 @@
         el.dispatchEvent(new CustomEvent('brut:change', { bubbles: true, detail: { value: input.value } }));
       }
 
-      input.addEventListener('input', function () { refresh(); emit(); });
+      // Opt-in debounce: data-brut-debounce="<ms>" wraps the typing path only.
+      // Absent / 0 / invalid → immediate (byte-identical to pre-#137 behaviour).
+      var debounceMs = parseInt(el.getAttribute('data-brut-debounce'), 10);
+      if (isNaN(debounceMs) || debounceMs < 0) debounceMs = 0;
+      var debounceTimer = null;
+      function runDebounced(fn) {
+        if (debounceMs === 0) { fn(); return; }
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function () { debounceTimer = null; fn(); }, debounceMs);
+      }
+
+      input.addEventListener('input', function () { runDebounced(function () { refresh(); emit(); }); });
       if (btn) {
         btn.setAttribute('type', 'button');
         btn.addEventListener('click', function () {

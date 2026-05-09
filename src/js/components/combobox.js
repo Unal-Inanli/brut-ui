@@ -109,8 +109,20 @@
       list.setAttribute('role', 'listbox');
       opts.forEach(function (o) { o.setAttribute('role', 'option'); });
 
+      // Opt-in debounce: data-brut-debounce="<ms>" wraps the typing/filter path only.
+      // Selection (pick) and blur-clear stay immediate. Absent / 0 / invalid →
+      // immediate (byte-identical to pre-#137 behaviour).
+      var debounceMs = parseInt(el.getAttribute('data-brut-debounce'), 10);
+      if (isNaN(debounceMs) || debounceMs < 0) debounceMs = 0;
+      var debounceTimer = null;
+      function runDebounced(fn) {
+        if (debounceMs === 0) { fn(); return; }
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function () { debounceTimer = null; fn(); }, debounceMs);
+      }
+
       input.addEventListener('focus', open);
-      input.addEventListener('input', filter);
+      input.addEventListener('input', function () { runDebounced(filter); });
       input.addEventListener('blur', function () {
         // If the visible text doesn't match any option label, clear the
         // hidden value rather than keep a stale selection. Simple "clear"
