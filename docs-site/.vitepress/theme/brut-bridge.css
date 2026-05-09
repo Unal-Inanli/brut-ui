@@ -1,20 +1,204 @@
-/* brut-bridge.css — minimal CSS that lets brut tokens apply within the
-   VitePress default theme without overriding VitePress chrome.
+/* brut-bridge.css — maps VitePress's default-theme color variables onto
+   BRUT design tokens so the docs site reads "BRUT" everywhere, not just
+   inside iframed component previews.
 
-   Rule of thumb: scope brut visuals to .brut-* classes (which they already
-   are) and only nudge the docs container so iframes/snippets read clean.
-*/
+   Site is locked to light mode (`appearance: false` in config.ts), so no
+   `html.dark` overrides are authored here.
+
+   Tokens consumed live in src/tokens/01-primitives.css and 02-semantic.css
+   and are loaded via dist/brut.css from theme/index.ts. */
+
+:root {
+  /* ---------- SURFACES ---------- */
+  --vp-c-bg:        var(--bg-1);   /* page background */
+  --vp-c-bg-alt:    var(--bg-2);   /* sidebar, alt blocks */
+  --vp-c-bg-elv:    var(--bg-3);   /* elevated: search modal, popovers */
+  --vp-c-bg-soft:   var(--bg-2);   /* code block backgrounds */
+
+  /* ---------- TEXT ---------- */
+  --vp-c-text-1: var(--fg-1);
+  --vp-c-text-2: var(--fg-2);
+  --vp-c-text-3: var(--fg-3);
+
+  /* ---------- DIVIDERS / BORDERS ---------- */
+  --vp-c-divider:      var(--ink);
+  --vp-c-gutter:       var(--ink);
+  --vp-c-border:       var(--ink);
+  --vp-c-default-1:    var(--concrete-100);
+  --vp-c-default-2:    var(--concrete-200);
+  --vp-c-default-3:    var(--concrete-300);
+  --vp-c-default-soft: var(--concrete-50);
+
+  /* ---------- BRAND (sidebar active, links, "On this page") ---------- */
+  --vp-c-brand-1:    var(--ink);          /* link / active text */
+  --vp-c-brand-2:    var(--accent-deep);  /* hover */
+  --vp-c-brand-3:    var(--accent);       /* highlight bg */
+  --vp-c-brand-soft: var(--accent-soft);
+
+  /* ---------- CUSTOM BLOCKS (:::tip / :::warning / :::danger / :::info) ---------- */
+  --vp-custom-block-tip-bg:     var(--bg-success);
+  --vp-custom-block-tip-text:   var(--fg-1);
+  --vp-custom-block-tip-border: var(--success);
+  --vp-custom-block-tip-code-bg: var(--bg-3);
+
+  --vp-custom-block-warning-bg:     var(--bg-warning);
+  --vp-custom-block-warning-text:   var(--fg-1);
+  --vp-custom-block-warning-border: var(--warning);
+  --vp-custom-block-warning-code-bg: var(--bg-3);
+
+  --vp-custom-block-danger-bg:     var(--bg-error);
+  --vp-custom-block-danger-text:   var(--fg-1);
+  --vp-custom-block-danger-border: var(--danger);
+  --vp-custom-block-danger-code-bg: var(--bg-3);
+
+  --vp-custom-block-info-bg:     var(--bg-info);
+  --vp-custom-block-info-text:   var(--fg-1);
+  --vp-custom-block-info-border: var(--info);
+  --vp-custom-block-info-code-bg: var(--bg-3);
+
+  --vp-custom-block-note-bg:     var(--bg-2);
+  --vp-custom-block-note-text:   var(--fg-1);
+  --vp-custom-block-note-border: var(--ink);
+
+  --vp-custom-block-important-bg:     var(--accent-soft);
+  --vp-custom-block-important-text:   var(--fg-1);
+  --vp-custom-block-important-border: var(--ink);
+
+  --vp-custom-block-caution-bg:     var(--bg-error);
+  --vp-custom-block-caution-text:   var(--fg-1);
+  --vp-custom-block-caution-border: var(--danger);
+
+  /* ---------- CODE ---------- */
+  --vp-code-color:                var(--fg-1);
+  --vp-code-bg:                   var(--paper-2);
+  --vp-code-block-color:          var(--fg-1);
+  --vp-code-block-bg:             var(--concrete-500);
+  --vp-code-block-divider-color:  var(--ink);
+  --vp-code-line-highlight-color: var(--scrim-bg-soft);
+  --vp-code-line-number-color:    var(--fg-3);
+  --vp-code-tab-divider:          var(--ink);
+  --vp-code-tab-text-color:       var(--fg-2);
+  --vp-code-tab-hover-text-color: var(--fg-1);
+  --vp-code-tab-active-text-color: var(--fg-1);
+  --vp-code-tab-active-bar-color: var(--accent);
+
+  /* ---------- BUTTONS (homepage hero actions) ---------- */
+  --vp-button-brand-bg:           var(--accent);
+  --vp-button-brand-hover-bg:     var(--accent-deep);
+  --vp-button-brand-active-bg:    var(--accent-deep);
+  --vp-button-brand-text:         var(--ink);
+  --vp-button-brand-hover-text:   var(--ink);
+  --vp-button-brand-border:       var(--ink);
+  --vp-button-brand-hover-border: var(--ink);
+
+  --vp-button-alt-bg:           var(--bg-3);
+  --vp-button-alt-hover-bg:     var(--paper-2);
+  --vp-button-alt-active-bg:    var(--paper-2);
+  --vp-button-alt-text:         var(--ink);
+  --vp-button-alt-hover-text:   var(--ink);
+  --vp-button-alt-border:       var(--ink);
+  --vp-button-alt-hover-border: var(--ink);
+
+  /* ---------- SHADOWS (search modal, popovers) ---------- */
+  --vp-shadow-1: var(--shadow-xs);
+  --vp-shadow-2: var(--shadow-sm);
+  --vp-shadow-3: var(--shadow-md);
+  --vp-shadow-4: var(--shadow-lg);
+  --vp-shadow-5: var(--shadow-xl);
+}
+
+/* ---------- PREVIEW IFRAME (component demos) ---------- */
 
 .brut-preview-frame {
   display: block;
   width: 100%;
-  border: var(--bw-3, 4px) solid var(--ink, #0a0a0a);
-  box-shadow: 6px 6px 0 0 var(--ink, #0a0a0a);
-  background: var(--paper, #f5f1e8);
+  border: var(--bw-3) solid var(--ink);
+  box-shadow: var(--shadow-md);
+  background: var(--paper);
 }
 
 /* VitePress wraps content in <div class="vp-doc">. Don't fight it — but
    make sure brut buttons/inputs inside markdown demos keep their family. */
 .vp-doc :where(.brut-btn, .brut-input, .brut-badge, .brut-tag, .brut-card) {
   font-family: var(--font-sans);
+}
+
+/* ---------- HOMEPAGE HERO + FEATURES (brutalist treatment) ---------- */
+
+/* Hero name uses the display face. */
+.VPHero .name,
+.VPHero .text {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tightest);
+}
+
+/* Action buttons: hard ink border, offset shadow, no rounded corners. */
+.VPHero .VPButton,
+.VPButton {
+  border-radius: 0 !important;
+  border-width: var(--bw-3) !important;
+  font-weight: var(--fw-bold);
+  transition: transform var(--dur-base) var(--ease-snap),
+              box-shadow var(--dur-base) var(--ease-snap);
+}
+
+.VPHero .VPButton.brand,
+.VPButton.brand {
+  box-shadow: var(--shadow-sm);
+}
+
+.VPHero .VPButton.alt,
+.VPButton.alt {
+  box-shadow: var(--shadow-xs);
+}
+
+.VPHero .VPButton.brand:hover,
+.VPHero .VPButton.alt:hover,
+.VPButton.brand:hover,
+.VPButton.alt:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-md);
+}
+
+.VPHero .VPButton.brand:active,
+.VPHero .VPButton.alt:active,
+.VPButton.brand:active,
+.VPButton.alt:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Feature cards — ink border + offset shadow, no soft drop. */
+.VPFeature {
+  border-radius: 0 !important;
+  border: var(--bw-3) solid var(--ink) !important;
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-3);
+  transition: transform var(--dur-base) var(--ease-snap),
+              box-shadow var(--dur-base) var(--ease-snap);
+}
+
+.VPFeature:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--ink) !important;
+}
+
+.VPFeature .title {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ---------- CHROME TWEAKS ---------- */
+
+/* Sidebar active item: ink left rule via brand mapping is enough; force
+   the active label to bold so it reads at brutalist weight. */
+.VPSidebarItem.is-active > .item .text,
+.VPSidebarItem.is-active > .item .link .text {
+  font-weight: var(--fw-bold);
+}
+
+/* Local search modal: replace VitePress's soft shadow with offset block. */
+.VPLocalSearchBox {
+  --vp-shadow-3: var(--shadow-lg);
 }
