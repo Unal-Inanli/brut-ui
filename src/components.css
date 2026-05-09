@@ -327,6 +327,10 @@
 .brut-btn--ink     { background: var(--ink);      color: var(--paper); }
 .brut-btn--pink    { background: var(--pop-pink); color: var(--ink); }
 .brut-btn--lime    { background: var(--pop-lime); color: var(--ink); }
+.brut-btn--danger  { background: var(--danger);   color: var(--paper); border-color: var(--danger); }
+.brut-btn--danger:hover  { background: var(--danger-bg); color: var(--danger); }
+.brut-btn--outline { background: transparent;     color: var(--ink); }
+.brut-btn--outline:hover { background: var(--ink); color: var(--paper); }
 .brut-btn--sm { padding: var(--sp-2) var(--sp-3); font-size: var(--fs-xs); border-width: var(--bw-2);
                 box-shadow: var(--shadow-2xs); }
 .brut-btn--lg { padding: var(--sp-4) var(--sp-6); font-size: var(--fs-md);

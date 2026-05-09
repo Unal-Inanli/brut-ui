@@ -192,6 +192,8 @@ const entries = [
       { name: '--ink', description: 'Dark background with light text' },
       { name: '--pink', description: 'Pop-pink accent background' },
       { name: '--lime', description: 'Pop-lime accent background' },
+      { name: '--danger', description: 'Destructive action — danger background, paper text; hover inverts to light tint' },
+      { name: '--outline', description: 'Ghost / outline — transparent fill with ink border; hover inverts to ink on paper' },
       { name: '--sm', description: 'Small size — reduced padding and font size' },
       { name: '--lg', description: 'Large size — increased padding and font size' },
     ],
