@@ -48,6 +48,28 @@
     "node": ">=20"
   },
   "packageManager": "pnpm@10.33.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Unal-Inanli/brut-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Unal-Inanli/brut-ui/issues"
+  },
+  "homepage": "https://unal-inanli.github.io/brut-ui/",
+  "keywords": [
+    "ui-kit",
+    "css-framework",
+    "design-system",
+    "brutalist",
+    "vanilla-css",
+    "vanilla-js",
+    "no-build",
+    "no-dependencies",
+    "components",
+    "accessibility",
+    "tokens",
+    "html-first"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
