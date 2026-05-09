@@ -2807,3 +2807,30 @@ button.brut-sidebar__group-title::after {
   top: var(--sp-2);
   left: var(--sp-2);
 }
+
+/* PRINT — hide interactive chrome and decorative ink-heavy elements; flatten overlays so their content stays accessible. */
+@media print {
+  /* Hide navigation and interactive chrome */
+  .brut-topnav,
+  .brut-sidebar,
+  .brut-toast-host,
+  .brut-toast,
+  .brut-spinner,
+  .brut-skeleton,
+  .brut-scrim,
+  .brut-skip-nav { display: none !important; }
+
+  /* Flatten overlays so their content prints inline if visible */
+  .brut-dialog,
+  .brut-drawer {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure tables print in full */
+  .brut-table-wrap { overflow: visible !important; }
+
+  /* Drop decorative shapes */
+  .brut-shape { display: none !important; }
+}
