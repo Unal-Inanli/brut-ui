@@ -220,7 +220,7 @@ The hard rules above have a small, explicit set of carve-outs. These are the ONL
 
 - **`rgba()`** is allowed only via the `--scrim-bg` and `--scrim-bg-soft` tokens in `src/tokens/02-semantic.css`. Components must reference those tokens — raw `rgba()` literals in `src/components.css` are forbidden.
 - **Animations longer than 140ms** are allowed only for *loaders* (skeleton sweep, spinner). The 140ms cap applies to **transitions**, not loops. New loaders must be commented `/* Sanctioned exception: loader animations may exceed --dur-base */` so the carve-out is visible.
-- **Gradients** are allowed only for the checkbox checkmark glyph until a 24px stroke-based SVG sprite ships (TODO.md Tier 6.1). Do not use gradients anywhere else; new gradients require user approval.
+- **Gradients** are allowed only for the checkbox checkmark glyph until a 24px stroke-based SVG sprite ships. Do not use gradients anywhere else; new gradients require user approval.
 
 ## Verifying changes
 

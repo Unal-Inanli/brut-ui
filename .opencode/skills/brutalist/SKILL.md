@@ -9,13 +9,13 @@ metadata:
   output: html-css-js
 ---
 
-Read the README.md, AGENTS.md, and TODO.md at the repo root before making non-trivial changes. This file is a quick-reference; those three are authoritative.
+Read the README.md and AGENTS.md at the repo root before making non-trivial changes. This file is a quick-reference; those two are authoritative.
 
 ## Two modes — pick the right one
 
 **Mode A — Designing with the kit** (mocks, prototypes, marketing pages, app screens). Link `dist/brut.css` and `dist/brut.js`, compose with the `.brut-*` classes and `data-brut="<name>"` hooks documented below. Don't hand-edit anything in `dist/`.
 
-**Mode B — Working on the kit itself** (adding or refining components). Edit sources under `src/`, then rebuild. The full add-component recipe is in [AGENTS.md](../../../AGENTS.md); the queued-up work is in [TODO.md](../../../TODO.md). See "Build-phase rules" at the bottom of this file.
+**Mode B — Working on the kit itself** (adding or refining components). Edit sources under `src/`, then rebuild. The full add-component recipe is in [AGENTS.md](../../../AGENTS.md). See "Build-phase rules" at the bottom of this file.
 
 If the user invokes the skill without guidance, ask which mode and what they want to build.
 
@@ -92,7 +92,7 @@ All JS-bound components dispatch `CustomEvent('brut:change', { detail })` on com
 
 ## Build-phase rules (Mode B — adding/refining components)
 
-When editing the kit itself, [AGENTS.md](../../../AGENTS.md) is the authoritative recipe and [TODO.md](../../../TODO.md) is the queued work. The constraints below are the ones most often violated mid-build — keep them green.
+When editing the kit itself, [AGENTS.md](../../../AGENTS.md) is the authoritative recipe. The constraints below are the ones most often violated mid-build — keep them green.
 
 ### File layout — what goes where
 

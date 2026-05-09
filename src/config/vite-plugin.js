@@ -81,6 +81,30 @@ function generateVariantCSS(variants, prefix) {
   return css;
 }
 
+function buildOverrideCSS(cfg) {
+  const { override, extend } = cfg.tokens;
+  const hasOverrides = Object.keys(override).length > 0;
+  const hasExtensions = Object.keys(extend).length > 0;
+  const hasVariants = Object.keys(cfg.variants).length > 0;
+  if (!hasOverrides && !hasExtensions && !hasVariants) return '';
+  let extra = '';
+  if (hasOverrides) {
+    extra += `:root {\n${Object.entries(override).map(([k, v]) => `  ${k}: ${v};`).join('\n')}\n}\n`;
+  }
+  if (hasExtensions) {
+    extra += `:root {\n${Object.entries(extend).map(([k, v]) => `  ${k}: ${v};`).join('\n')}\n}\n`;
+  }
+  if (hasVariants) {
+    extra += generateVariantCSS(cfg.variants, cfg.prefix);
+  }
+  return extra;
+}
+
+function isBrutEntryCSS(id) {
+  const normalized = id.replace(/\\/g, '/');
+  return normalized.endsWith('/src/main.css') || normalized.endsWith('/dist/brut.css');
+}
+
 async function generateManifest(cfg, version, root, ctx) {
   const metaMap = await loadMetaFiles(root);
   const components = KNOWN_COMPONENTS.map(name => {
@@ -152,9 +176,23 @@ export default function brutPlugin(inlineConfig) {
     },
 
     transform(code, id) {
-      if (cfg.prefix === 'brut') return;
-      if (id.endsWith('.css') || (id.endsWith('.js') && code.includes('brut-'))) {
-        return { code: renamePrefix(code, 'brut', cfg.prefix), map: null };
+      const isCSS = id.endsWith('.css');
+      const isJS = id.endsWith('.js') && code.includes('brut-');
+      if (!isCSS && !isJS) return;
+
+      let result = code;
+
+      if (cfg.prefix !== 'brut') {
+        result = renamePrefix(result, 'brut', cfg.prefix);
+      }
+
+      if (isCSS && isBrutEntryCSS(id)) {
+        const extra = buildOverrideCSS(cfg);
+        if (extra) result += '\n' + extra;
+      }
+
+      if (result !== code) {
+        return { code: result, map: null };
       }
     },
 
@@ -169,29 +207,6 @@ export default function brutPlugin(inlineConfig) {
         const first = without.search(/\t?\/\/#region/);
         if (first === -1) continue;
         chunk.code = without.slice(0, first) + core + without.slice(first);
-      }
-
-      const { override, extend } = cfg.tokens;
-      const hasOverrides = Object.keys(override).length > 0;
-      const hasExtensions = Object.keys(extend).length > 0;
-      const hasVariants = Object.keys(cfg.variants).length > 0;
-
-      if (hasOverrides || hasExtensions || hasVariants) {
-        for (const asset of Object.values(bundle)) {
-          if (asset.type !== 'asset' || !asset.fileName.endsWith('.css')) continue;
-          let src = typeof asset.source === 'string' ? asset.source : new TextDecoder().decode(asset.source);
-          let extra = '';
-          if (hasOverrides) {
-            extra += `:root {\n${Object.entries(override).map(([k, v]) => `  ${k}: ${v};`).join('\n')}\n}\n`;
-          }
-          if (hasExtensions) {
-            extra += `:root {\n${Object.entries(extend).map(([k, v]) => `  ${k}: ${v};`).join('\n')}\n}\n`;
-          }
-          if (hasVariants) {
-            extra += generateVariantCSS(cfg.variants, cfg.prefix);
-          }
-          asset.source = src + '\n' + extra;
-        }
       }
 
       if (cfg.output.manifest) {
