@@ -8,7 +8,7 @@ export default {
   modifiers: ['--on'],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { checked: 'boolean (current checked state)' } },
+    { name: 'brut:change', detail: { value: 'boolean (current checked state)', checked: 'boolean (current checked state)' } },
   ],
   formState: { hiddenInput: true, name: 'Wraps a real <input type="checkbox" hidden> which carries name/value for native form submission' },
   a11y: {
@@ -27,4 +27,8 @@ export default {
       html: '<label class="brut-checkbox" data-brut="checkbox">\n  <input type="checkbox" name="agree" value="yes" hidden/>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form control; lays out with its parent at any tier.',
+  },
 };

@@ -19,9 +19,9 @@ export default {
   formState: { hiddenInput: false },
   a11y: {
     role: 'dialog',
-    keyboard: ['Escape'],
+    keyboard: ['Escape', 'Tab', 'Shift+Tab'],
     aria: ['aria-label (consumer-supplied)'],
-    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. The drawer id is required — components without an id are skipped.',
+    notes: 'Forces a layout flush before adding --open so the slide transition runs from the closed transform. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the drawer (first focusable child, or the drawer itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The drawer id is required — components without an id are skipped.',
   },
   examples: [
     {
@@ -33,4 +33,9 @@ export default {
       html: '<button class="brut-btn" type="button" data-brut-open="dr-bottom">BOTTOM DRAWER</button>\n<div class="brut-scrim" id="dr-bottom-scrim" hidden></div>\n<div class="brut-drawer" id="dr-bottom" data-brut="drawer" data-brut-side="bottom" data-brut-scrim="dr-bottom-scrim" hidden role="dialog" aria-label="Bottom drawer">\n  <div class="brut-drawer__head">\n    <span>BOTTOM DRAWER</span>\n    <button class="brut-drawer__x" data-brut-close type="button" aria-label="Close">&times;</button>\n  </div>\n  <div class="brut-drawer__body">\n    <p>Bottom drawer is full-width and clamped to 80vh.</p>\n  </div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Left/right drawers re-anchor to bottom edge on phones; anchored side at sm and above.',
+  },
 };

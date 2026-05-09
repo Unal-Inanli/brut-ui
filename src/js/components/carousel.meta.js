@@ -36,4 +36,8 @@ export default {
       html: '<div class="brut-carousel" data-brut="carousel" data-current="0">\n  <div class="brut-carousel__viewport">\n    <div class="brut-carousel__track">\n      <div class="brut-carousel__slide"><img src="/img/1.jpg" alt="First"></div>\n      <div class="brut-carousel__slide"><img src="/img/2.jpg" alt="Second"></div>\n      <div class="brut-carousel__slide"><img src="/img/3.jpg" alt="Third"></div>\n    </div>\n  </div>\n  <div class="brut-carousel__nav">\n    <button class="brut-carousel__btn brut-carousel__btn--prev" aria-label="Previous slide"></button>\n    <button class="brut-carousel__btn brut-carousel__btn--next" aria-label="Next slide"></button>\n  </div>\n  <div class="brut-carousel__dots" role="tablist"></div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Track sized to viewport at any tier; no layout flip.',
+  },
 };

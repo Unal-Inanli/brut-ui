@@ -19,8 +19,13 @@ export default {
   a11y: {
     role: 'menu',
     keyboard: ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'],
-    aria: ['aria-haspopup="menu" (auto-set on trigger)'],
-    notes: 'Trigger gets type="button" and aria-haspopup automatically. Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll.',
+    aria: [
+      'aria-haspopup="menu" (auto-set on trigger)',
+      'role="menuitem" (auto-set on each .brut-menu__item)',
+      'role="separator" (auto-set on each <hr> inside the menu)',
+      'aria-disabled="true" (auto-set on items with the disabled attribute)',
+    ],
+    notes: 'Trigger gets type="button" and aria-haspopup automatically. Items receive role="menuitem" and <hr> separators receive role="separator" during init (existing role attributes such as menuitemcheckbox/menuitemradio are preserved). Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll.',
   },
   examples: [
     {
@@ -32,4 +37,9 @@ export default {
       html: '<button class="brut-btn" type="button" data-brut-menu-open="m-links" aria-label="More">…</button>\n<div class="brut-menu" id="m-links" data-brut="menu" hidden>\n  <a class="brut-menu__item" href="#">Profile</a>\n  <a class="brut-menu__item" href="#">Settings</a>\n  <a class="brut-menu__item" href="#">Help</a>\n  <hr class="brut-menu__sep"/>\n  <a class="brut-menu__item brut-menu__item--danger" href="#">Sign out</a>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Anchored menu docks to bottom edge on phones; anchored to trigger at sm and above.',
+  },
 };

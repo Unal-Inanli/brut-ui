@@ -32,4 +32,9 @@ export default {
       html: '<div class="brut-segmented" data-brut="segmented" data-brut-name="range">\n  <button class="brut-segmented__btn brut-segmented__btn--on" data-value="7d">7D</button>\n  <button class="brut-segmented__btn" data-value="30d">30D</button>\n  <button class="brut-segmented__btn" data-value="90d">90D</button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'horizontal-scroll',
+    breakpoint: 'sm',
+    notes: 'Segments scroll horizontally on phones; full row at sm and above.',
+  },
 };

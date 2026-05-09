@@ -20,7 +20,7 @@
 
       if (burger.tagName === 'BUTTON') burger.setAttribute('type', 'button');
       if (!burger.hasAttribute('aria-expanded')) burger.setAttribute('aria-expanded', 'false');
-      if (!burger.hasAttribute('aria-label'))    burger.setAttribute('aria-label', 'Toggle menu');
+      if (!burger.hasAttribute('aria-label'))    burger.setAttribute('aria-label', el.getAttribute('data-brut-label-menu') || 'Toggle menu');
 
       var links = el.querySelector('.brut-topnav__links');
       if (links && !links.id) links.id = 'brut-topnav-nav';

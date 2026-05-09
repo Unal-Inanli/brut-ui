@@ -1,6 +1,15 @@
 /* Shared component styles for docs page — these classes are referenced
    by the inline previews AND by the code snippets the user copies. */
 
+/* Global focus-visible — keyboard users always see a ring; mouse focus stays clean. */
+:where(:focus-visible) {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+:where(:focus:not(:focus-visible)) {
+  outline: none;
+}
+
 /* ============================================================
    TYPOGRAPHY
    Component-level classes that compose the type tokens into
@@ -230,7 +239,7 @@
 .brut-pre .tok-string  { color: var(--pop-lime); }
 .brut-pre .tok-num     { color: var(--primary); }
 
-/* LISTS — square bullets, hard counters, optional check. */
+/* LISTS — square bullets, hard counters. */
 .brut-list {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
@@ -240,26 +249,6 @@
   margin: 0;
 }
 .brut-list--ord { list-style: decimal; }
-.brut-list--check {
-  list-style: none;
-  padding-left: 0;
-}
-.brut-list--check li {
-  position: relative;
-  padding-left: var(--switch-track-h);
-}
-.brut-list--check li::before {
-  content: "✓";
-  position: absolute; left: 0; top: 0;
-  width: var(--control-sm); height: var(--control-sm);
-  font-family: var(--font-display);
-  font-size: var(--fs-sm);
-  background: var(--primary);
-  border: var(--bw-1) solid var(--ink);
-  display: inline-flex;
-  align-items: center; justify-content: center;
-  line-height: 1;
-}
 .brut-list li + li { margin-top: var(--sp-1); }
 
 /* DROP CAP — first letter as a hard ink block. */
@@ -329,8 +318,8 @@
   background: var(--bone);
   color: var(--ink);
   line-height: 1;
-  transition: transform 80ms cubic-bezier(.2,.8,.2,1),
-              box-shadow 80ms cubic-bezier(.2,.8,.2,1);
+  transition: transform var(--dur-fast) cubic-bezier(.2,.8,.2,1),
+              box-shadow var(--dur-fast) cubic-bezier(.2,.8,.2,1);
 }
 .brut-btn:hover  { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--shadow-md); }
 .brut-btn:active { transform: translate(var(--bw-1), var(--bw-1)); box-shadow: 0 0 0 0 var(--ink); }
@@ -460,7 +449,7 @@
 .brut-table--sticky-head thead th {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: var(--z-table-sticky-header);
   background: var(--ink);
   border-bottom: var(--bw-3) solid var(--ink);
 }
@@ -470,14 +459,14 @@
 .brut-table--sticky-col th:first-child {
   position: sticky;
   left: 0;
-  z-index: 1;
+  z-index: var(--z-table-sticky-col);
   background: var(--paper-2);
   border-right: var(--bw-3) solid var(--ink);
 }
 
 /* Sticky-head thead th already has ink bg; keep it opaque over column content. */
 .brut-table--sticky-head.brut-table--sticky-col thead th:first-child {
-  z-index: 3;
+  z-index: var(--z-table-sticky-corner);
   background: var(--ink);
 }
 
@@ -559,7 +548,7 @@
   position: absolute; top: var(--bw-1); left: var(--bw-1);
   width: var(--control-sm); height: var(--control-sm);
   background: var(--ink);
-  transition: left 100ms cubic-bezier(.2,.8,.2,1);
+  transition: left var(--dur-snap) cubic-bezier(.2,.8,.2,1);
 }
 .brut-switch--on .brut-switch__knob { left: var(--switch-knob-on); }
 
@@ -632,7 +621,7 @@
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink);
-  animation: brut-toast-in 120ms var(--ease-snap);
+  animation: brut-toast-in var(--dur-notice) var(--ease-snap);
 }
 .brut-toast--leaving { opacity: 0; transition: opacity var(--dur-base) var(--ease-snap); }
 @keyframes brut-toast-in {
@@ -902,7 +891,7 @@
   cursor: pointer;
   position: relative;
 }
-.brut-tab--on { background: var(--primary); z-index: 2; }
+.brut-tab--on { background: var(--primary); z-index: var(--z-sticky); }
 
 /* ACCORDION — stacked disclosure panels. JS toggles --open on items. */
 .brut-accordion {
@@ -1235,8 +1224,6 @@
 
 /* FORM container — vertical stack of fields. */
 .brut-form        { display: flex; flex-direction: column; gap: var(--sp-5); }
-.brut-form--tight { gap: var(--sp-3); }
-.brut-form--loose { gap: var(--sp-8); }
 
 /* FIELD — label + control + hint/error/counter wrapper. */
 .brut-field       { display: flex; flex-direction: column; gap: var(--sp-1); }
@@ -1285,6 +1272,32 @@
   background: var(--success-bg);
 }
 .brut-field--valid .brut-field__label { color: var(--success); }
+
+/* VALIDATION
+   Native :invalid and aria-invalid are styled identically; the
+   .brut-field__error class displays an error message under the input.
+   Existing .brut-field__error (above) sets color + font-size; we only
+   add layout here so consumers can drop a <span class="brut-field__error">
+   directly under any input without an extra wrapper. */
+.brut-input:invalid,
+.brut-textarea:invalid,
+.brut-select:invalid {
+  border-color: var(--danger);
+}
+[aria-invalid="true"].brut-input,
+[aria-invalid="true"].brut-textarea,
+[aria-invalid="true"].brut-select,
+.brut-field[aria-invalid="true"] .brut-input,
+.brut-field[aria-invalid="true"] .brut-textarea,
+.brut-field[aria-invalid="true"] .brut-select,
+.brut-combobox[aria-invalid="true"],
+.brut-otp[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.brut-field__error {
+  display: block;
+  margin-top: var(--sp-1);
+}
 
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
@@ -1414,7 +1427,7 @@
 .brut-radio {
   width: var(--control-icon); height: var(--control-icon);
   border: var(--bw-2) solid var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: var(--bone);
   box-shadow: var(--shadow-xs);
   position: relative;
@@ -1427,7 +1440,7 @@
   position: absolute;
   inset: var(--sp-1);
   background: var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
 }
 
 /* RANGE / SLIDER — native, restyled. */
@@ -2436,7 +2449,6 @@ button.brut-sidebar__group-title::after {
   background: var(--paper);
 }
 .brut-section--tight   { padding-block: var(--sp-8); }
-.brut-section--loose   { padding-block: var(--sp-20); }
 .brut-section--flush   { border-bottom: 0; }
 .brut-section--paper   { background: var(--paper); }
 .brut-section--paper-2 { background: var(--paper-2); }
@@ -2467,12 +2479,9 @@ button.brut-sidebar__group-title::after {
   align-items: center;
   gap: var(--sp-3);
 }
-.brut-cluster--xs  { gap: var(--sp-1); }
 .brut-cluster--sm  { gap: var(--sp-2); }
 .brut-cluster--md  { gap: var(--sp-3); }
 .brut-cluster--lg  { gap: var(--sp-4); }
-.brut-cluster--xl  { gap: var(--sp-6); }
-.brut-cluster--end     { justify-content: flex-end; }
 .brut-cluster--center  { justify-content: center; }
 .brut-cluster--between { justify-content: space-between; }
 
@@ -2497,8 +2506,6 @@ button.brut-sidebar__group-title::after {
 .brut-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .brut-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.brut-grid--tight { gap: var(--sp-2); }
-.brut-grid--loose { gap: var(--sp-10); }
 
 /* 12-COLUMN GRID — Bootstrap-parity. Use .brut-row as parent,
    .brut-col-{1-12} for explicit widths, .brut-col for equal-width auto. */
@@ -2600,7 +2607,6 @@ button.brut-sidebar__group-title::after {
 }
 .brut-split__main { flex: 1; min-width: 0; }
 .brut-split__side { flex: none; width: var(--split-side-w); }
-.brut-split--reverse { flex-direction: row-reverse; }
 
 /* RULE — var(--bw-3) ink divider. Replaces hand-rolled <hr>s. */
 .brut-rule {
@@ -2640,8 +2646,7 @@ button.brut-sidebar__group-title::after {
   display: block;
 }
 
-/* SCRIM — diagonal-striped overlay for modals. The only sanctioned
-   use of transparency in the kit. */
+/* Sanctioned exception: diagonal stripe pattern for scrim overlay — sole approved gradient outside checkmark glyph. */
 .brut-scrim {
   position: fixed;
   inset: 0;
@@ -2668,20 +2673,15 @@ button.brut-sidebar__group-title::after {
   background: var(--primary);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-md);
-  z-index: 0;
+  z-index: var(--z-base);
   pointer-events: none;
 }
 .brut-shape--pink   { background: var(--pop-pink); }
 .brut-shape--lime   { background: var(--pop-lime); }
 .brut-shape--blue   { background: var(--pop-blue); }
-.brut-shape--orange { background: var(--pop-orange); }
-.brut-shape--purple { background: var(--pop-purple); }
-.brut-shape--mint   { background: var(--pop-mint); }
 .brut-shape--rot-l  { transform: rotate(-8deg); }
 .brut-shape--rot-r  { transform: rotate(8deg); }
 .brut-shape--offset-tr { top: calc(var(--sp-6) * -1);    right: calc(var(--sp-6) * -1);  }
-.brut-shape--offset-tl { top: calc(var(--sp-6) * -1);    left: calc(var(--sp-6) * -1);   }
-.brut-shape--offset-br { bottom: calc(var(--sp-6) * -1); right: calc(var(--sp-6) * -1);  }
 .brut-shape--offset-bl { bottom: calc(var(--sp-6) * -1); left: calc(var(--sp-6) * -1);   }
 
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
@@ -2763,3 +2763,47 @@ button.brut-sidebar__group-title::after {
 .brut-theme-switcher__btn:hover { background: var(--concrete-50); }
 .brut-theme-switcher__btn--on { background: var(--ink); color: var(--paper); }
 .brut-theme-switcher__btn--on:hover { background: var(--ink); color: var(--paper); }
+
+/* Honour prefers-reduced-motion: disable transitions and animations on motion-driven components. */
+@media (prefers-reduced-motion: reduce) {
+  .brut-link,
+  .brut-btn,
+  .brut-table__cell--sortable,
+  .brut-rows__item,
+  .brut-input,
+  .brut-switch__knob,
+  .brut-toast,
+  .brut-popover,
+  .brut-progress__bar,
+  .brut-tab--on,
+  .brut-drawer,
+  .brut-menu,
+  .brut-file__btn,
+  .brut-topnav__link,
+  .brut-sidebar__item,
+  .brut-footer__link,
+  .brut-crumbs__link,
+  .brut-pagination__btn,
+  .brut-theme-switcher__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Skip-to-main-content link — visually hidden until keyboard focus reveals it. */
+.brut-skip-nav {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: var(--z-toast);
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font: inherit;
+}
+.brut-skip-nav:focus,
+.brut-skip-nav:focus-visible {
+  top: var(--sp-2);
+  left: var(--sp-2);
+}

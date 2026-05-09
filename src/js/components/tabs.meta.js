@@ -33,4 +33,9 @@ export default {
       html: '<div class="brut-tabs" data-brut="tabs" data-brut-panels="#detail-panels">\n  <button class="brut-tab brut-tab--on" data-brut-tab="info">INFO</button>\n  <button class="brut-tab" data-brut-tab="logs">LOGS</button>\n</div>\n<div id="detail-panels">\n  <section data-brut-panel="info">Info</section>\n  <section data-brut-panel="logs" hidden>Logs</section>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'horizontal-scroll',
+    breakpoint: 'sm',
+    notes: 'Tabs scroll horizontally on phones; full row at sm and above.',
+  },
 };

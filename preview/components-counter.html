@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Counter preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>No max — pure character count</h2>
+<div class="brut-field" style="max-width:380px;">
+  <label class="brut-field__label" for="notes">Notes</label>
+  <textarea id="notes" class="brut-textarea" rows="3">Type freely.</textarea>
+  <span class="brut-field__counter" data-brut="counter" data-brut-for="notes"></span>
+</div>
+
+<h2>With maxlength — under the limit</h2>
+<div class="brut-field" style="max-width:380px;">
+  <label class="brut-field__label" for="bio-under">Bio</label>
+  <textarea id="bio-under" class="brut-textarea" rows="3" maxlength="120">Make it loud.</textarea>
+  <span class="brut-field__counter" data-brut="counter" data-brut-for="bio-under"></span>
+</div>
+
+<h2>With data-brut-max override — starts over</h2>
+<div class="brut-field" style="max-width:380px;">
+  <label class="brut-field__label" for="title-over">Title (max 20)</label>
+  <input id="title-over" class="brut-input" type="text" value="This headline is way too long for the limit">
+  <span class="brut-field__counter" data-brut="counter" data-brut-for="title-over" data-brut-max="20"></span>
+</div>
+
+<h2>Inside a field with hint and label</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label" for="tweet">Tweet</label>
+    <textarea id="tweet" class="brut-textarea" rows="4" maxlength="280">Hello world.</textarea>
+    <span class="brut-field__hint">Keep it punchy.</span>
+    <span class="brut-field__counter" data-brut="counter" data-brut-for="tweet"></span>
+  </div>
+
+  <div class="brut-field">
+    <label class="brut-field__label" for="sms">SMS body</label>
+    <textarea id="sms" class="brut-textarea" rows="4" maxlength="160"></textarea>
+    <span class="brut-field__counter" data-brut="counter" data-brut-for="sms"></span>
+  </div>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Type into a field…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="counter"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] ' + el.getAttribute('data-brut-for') + ' → ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+<div data-brut="theme-switcher"></div>
+</body></html>

@@ -36,4 +36,8 @@ export default {
       html: '<div class="brut-toast-host brut-toast-host--top-right" data-brut="toast-host"></div>\n<button class="brut-btn" type="button"\n        onclick="Brut.toast({ kind: \'ok\', message: \'Saved!\', timeout: 4000 })">SAVE</button>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Fixed overlay; positioning unchanged across tiers.',
+  },
 };

@@ -32,8 +32,22 @@
       var emptyEl = list.querySelector('.brut-combobox__empty');
       var activeIdx = -1;
 
-      function open()  { el.classList.add('brut-combobox--open');    input.setAttribute('aria-expanded', 'true'); }
-      function close() { el.classList.remove('brut-combobox--open'); input.setAttribute('aria-expanded', 'false'); setActive(-1); }
+      function onScroll() {
+        if (!el.isConnected) return;
+        close();
+      }
+
+      function open() {
+        el.classList.add('brut-combobox--open');
+        input.setAttribute('aria-expanded', 'true');
+        document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+      }
+      function close() {
+        el.classList.remove('brut-combobox--open');
+        input.setAttribute('aria-expanded', 'false');
+        setActive(-1);
+        document.removeEventListener('scroll', onScroll, { capture: true });
+      }
 
       function setActive(i) {
         opts.forEach(function (o, j) { o.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
@@ -45,18 +59,37 @@
         return opts.filter(function (o) { return o.style.display !== 'none'; });
       }
 
+      function clearValue() {
+        if (hidden) hidden.value = '';
+        el.dispatchEvent(new CustomEvent('brut:change', {
+          bubbles: true,
+          detail: { value: '', label: '' }
+        }));
+      }
+
+      function matchesOption(text) {
+        var t = (text || '').trim().toLowerCase();
+        if (!t) return false;
+        for (var i = 0; i < opts.length; i++) {
+          if (opts[i].textContent.trim().toLowerCase() === t) return true;
+        }
+        return false;
+      }
+
       function pick(opt) {
         if (!opt) return;
         input.value = opt.textContent.trim();
         if (hidden) hidden.value = opt.getAttribute('data-value') || opt.textContent.trim();
         el.dispatchEvent(new CustomEvent('brut:change', {
+          bubbles: true,
           detail: { value: hidden ? hidden.value : input.value, label: input.value }
         }));
         close();
       }
 
       function filter() {
-        var q = (input.value || '').toLowerCase();
+        var raw = input.value || '';
+        var q = raw.toLowerCase();
         var any = false;
         opts.forEach(function (o) {
           var match = o.textContent.toLowerCase().indexOf(q) !== -1;
@@ -64,6 +97,9 @@
           if (match) any = true;
         });
         if (emptyEl) emptyEl.style.display = any ? 'none' : 'block';
+        // Clearing the visible field clears the hidden value so the form
+        // never submits a stale selection.
+        if (raw.trim() === '' && hidden && hidden.value !== '') clearValue();
         open();
       }
 
@@ -75,6 +111,14 @@
 
       input.addEventListener('focus', open);
       input.addEventListener('input', filter);
+      input.addEventListener('blur', function () {
+        // If the visible text doesn't match any option label, clear the
+        // hidden value rather than keep a stale selection. Simple "clear"
+        // semantics — we do not restore the last valid pick.
+        if (!matchesOption(input.value) && hidden && hidden.value !== '') {
+          clearValue();
+        }
+      });
       input.addEventListener('keydown', function (e) {
         var v = visibleOpts();
         if (!v.length && e.key !== 'Escape') return;
@@ -107,6 +151,31 @@
       });
 
       document.addEventListener('click', function (e) { if (!el.contains(e.target)) close(); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // Mirror the now-reset hidden input back into the visible field.
+            // If hidden has a value, find the matching option label; otherwise clear.
+            close();
+            if (hidden && hidden.value) {
+              var match = null;
+              for (var i = 0; i < opts.length; i++) {
+                var v = opts[i].getAttribute('data-value') || opts[i].textContent.trim();
+                if (v === hidden.value) { match = opts[i]; break; }
+              }
+              input.value = match ? match.textContent.trim() : '';
+            } else {
+              input.value = '';
+            }
+            // Reset filter visibility so the list is whole next open.
+            opts.forEach(function (o) { o.style.display = ''; });
+            if (emptyEl) emptyEl.style.display = 'none';
+          }, 0);
+        });
+      }
     }
   });
 })();

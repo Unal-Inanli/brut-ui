@@ -7,12 +7,15 @@
        <!-- buttons rendered by JS -->
      </nav>
 
-   data-total         total items in the dataset (required, > 0)
-   data-page-size     items per page (required, > 0)
-   data-page          current page, 1-based (default 1)
-   data-sibling-count pages on each side of current (default 1)
+   data-total                   total items in the dataset (required, > 0)
+   data-page-size               items per page (required, > 0)
+   data-page                    current page, 1-based (default 1)
+   data-sibling-count           pages on each side of current (default 1)
+   data-page-sizes              optional comma-separated integers, e.g. "10,25,50,100".
+                                When present, renders a per-page <select>.
+   data-brut-label-page-size    optional label for the page-size select (default "Per page:")
 
-   Dispatches `brut:change` with detail = { page, pageSize, total }. */
+   Dispatches `brut:change` with detail = { value, page, pageSize, total }. */
 (function () {
   if (!window.Brut) return;
   Brut.register('pagination', {
@@ -31,6 +34,50 @@
 
       if (!el.hasAttribute('role'))       el.setAttribute('role', 'navigation');
       if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', 'Pagination');
+
+      // Optional page-size selector — only when data-page-sizes is present.
+      var pageSizesAttr = el.getAttribute('data-page-sizes');
+      var pageSizeSelect = null;
+      var pageSizeLabel  = null;
+      if (pageSizesAttr) {
+        var sizes = pageSizesAttr.split(',').map(function (s) {
+          return parseInt(s, 10);
+        }).filter(function (n) {
+          return !isNaN(n) && n > 0;
+        });
+        sizes.sort(function (a, b) { return a - b; });
+        if (sizes.indexOf(pageSize) === -1) {
+          sizes.unshift(pageSize);
+          sizes.sort(function (a, b) { return a - b; });
+        }
+        var labelText = el.getAttribute('data-brut-label-page-size') || 'Per page:';
+        pageSizeLabel = document.createElement('label');
+        pageSizeLabel.className = 'brut-pagination__page-size';
+        pageSizeLabel.appendChild(document.createTextNode(labelText + ' '));
+        pageSizeSelect = document.createElement('select');
+        pageSizeSelect.className = 'brut-select';
+        for (var si = 0; si < sizes.length; si++) {
+          var opt = document.createElement('option');
+          opt.value = String(sizes[si]);
+          opt.textContent = String(sizes[si]);
+          if (sizes[si] === pageSize) opt.selected = true;
+          pageSizeSelect.appendChild(opt);
+        }
+        pageSizeLabel.appendChild(pageSizeSelect);
+
+        pageSizeSelect.addEventListener('change', function () {
+          var newSize = parseInt(pageSizeSelect.value, 10);
+          if (isNaN(newSize) || newSize <= 0) return;
+          pageSize = newSize;
+          totalPages = Math.max(1, Math.ceil(total / pageSize));
+          page = 1;
+          el.setAttribute('data-page-size', String(pageSize));
+          render();
+          el.dispatchEvent(new CustomEvent('brut:change', {
+            detail: { value: page, page: page, pageSize: pageSize, total: total }
+          }));
+        });
+      }
 
       function pagesToShow() {
         // Always include 1 and totalPages, plus current ± siblings.
@@ -87,6 +134,8 @@
 
         el.appendChild(makeBtn('›', 'Next page', page + 1,
           'brut-pagination__btn--next', false, page >= totalPages));
+
+        if (pageSizeLabel) el.appendChild(pageSizeLabel);
       }
 
       function goTo(target) {
@@ -96,7 +145,7 @@
         page = target;
         render();
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { page: page, pageSize: pageSize, total: total }
+          detail: { value: page, page: page, pageSize: pageSize, total: total }
         }));
       }
 

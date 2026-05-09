@@ -69,6 +69,30 @@
   </div>
 </div>
 
+<h2>Validation states</h2>
+<div class="grid">
+  <div class="brut-field">
+    <label class="brut-field__label" for="v-default">Default</label>
+    <input id="v-default" class="brut-input" type="text" value="rex@brut.dev"/>
+    <span class="brut-field__hint">Looks fine.</span>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label" for="v-aria">Aria-invalid</label>
+    <input id="v-aria" class="brut-input" type="text" aria-invalid="true" value="not-an-email"/>
+    <span class="brut-field__error">Enter a valid email.</span>
+  </div>
+  <div class="brut-field">
+    <label class="brut-field__label" for="v-native">Native :invalid (required)</label>
+    <input id="v-native" class="brut-input" type="email" required value="bogus"/>
+    <span class="brut-field__error">Email is required and must be valid.</span>
+  </div>
+  <div class="brut-field" aria-invalid="true">
+    <label class="brut-field__label" for="v-wrap">Field-level aria-invalid</label>
+    <input id="v-wrap" class="brut-input" type="text" value="x"/>
+    <span class="brut-field__error">Field wrapper carries the invalid state.</span>
+  </div>
+</div>
+
 <h2>Selection</h2>
 <div class="row">
   <label class="brut-checkbox" data-brut="checkbox"><input type="checkbox" hidden checked/></label>

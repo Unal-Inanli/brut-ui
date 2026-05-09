@@ -55,6 +55,12 @@
   --progress-h-sm: var(--sp-3);
   --progress-h-lg: var(--sp-8);
 
+  /* ---------- TABLE STICKY STACK ---------- */
+  /* Table sticky cells stack above the base sticky layer. */
+  --z-table-sticky-col:    var(--z-sticky);
+  --z-table-sticky-header: calc(var(--z-sticky) + 1);
+  --z-table-sticky-corner: calc(var(--z-sticky) + 2);
+
   /* ---------- CAROUSEL ---------- */
   --carousel-gap:              var(--sp-2);
   --carousel-dot-size:         var(--sp-3);

@@ -96,6 +96,14 @@
         e.preventDefault();
         bump(mult);
       });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(syncAria, 0);
+        });
+      }
     }
   });
 })();

@@ -52,6 +52,17 @@
 <p>Same dataset as above but with <code>data-sibling-count="2"</code>, exposing more neighbours around the current page.</p>
 <nav class="brut-pagination" data-brut="pagination" data-total="500" data-page-size="20" data-page="13" data-sibling-count="2"></nav>
 
+<h3>Interactive &mdash; with page-size selector</h3>
+<p>Adding <code>data-page-sizes="10,25,50,100"</code> renders a native <code>.brut-select</code> picker. Changing it resets to page&nbsp;1 and dispatches <code>brut:change</code>.</p>
+<nav class="brut-pagination" data-brut="pagination" data-total="500" data-page-size="25" data-page="1" data-page-sizes="10,25,50,100"></nav>
+<pre><code>&lt;nav class=&quot;brut-pagination&quot; data-brut=&quot;pagination&quot;
+     data-total=&quot;500&quot; data-page-size=&quot;25&quot; data-page=&quot;1&quot;
+     data-page-sizes=&quot;10,25,50,100&quot;&gt;&lt;/nav&gt;</code></pre>
+
+<h3>Interactive &mdash; localized page-size label</h3>
+<p>Use <code>data-brut-label-page-size</code> to override the default &ldquo;Per page:&rdquo; label.</p>
+<nav class="brut-pagination" data-brut="pagination" data-total="200" data-page-size="20" data-page="1" data-page-sizes="10,20,50" data-brut-label-page-size="Items:"></nav>
+
 <div data-brut="theme-switcher"></div>
 <script src="../dist/brut.js"></script>
 </body></html>

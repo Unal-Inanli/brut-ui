@@ -39,4 +39,8 @@ export default {
       html: '<div class="brut-range-dual"\n     data-brut="range-dual"\n     data-brut-min="2000" data-brut-max="2026" data-brut-step="1"\n     data-brut-value-min="2010" data-brut-value-max="2020"\n     data-brut-name-min="year_min" data-brut-name-max="year_max"></div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Slider track stretches to its container at any tier.',
+  },
 };

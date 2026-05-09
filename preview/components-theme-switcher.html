@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Theme switcher preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .row { display: flex; gap: var(--sp-4); align-items: center; flex-wrap: wrap; }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+  .swatch { display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center; padding: var(--sp-4); border: 3px solid var(--ink); background: var(--paper-2); max-width: 720px; }
+</style>
+</head>
+<body>
+
+<h2>Default three-way switcher (brutalist / corporate / minimal)</h2>
+<div class="row">
+  <div data-brut="theme-switcher"></div>
+</div>
+
+<h2>Custom theme list</h2>
+<div class="row">
+  <div data-brut="theme-switcher" data-brut-themes="brutalist,minimal"></div>
+</div>
+
+<h2>Inside a topnav</h2>
+<header class="brut-topnav" data-brut="topnav">
+  <div class="brut-topnav__inner">
+    <a class="brut-topnav__brand" href="#">BRUT</a>
+    <div data-brut="theme-switcher" style="margin-left:auto;"></div>
+  </div>
+</header>
+
+<h2>Live theme preview surface</h2>
+<p>Use the switcher above. Components below restyle the moment <code>[data-theme]</code> changes on the document root.</p>
+<div class="swatch">
+  <button class="brut-btn">Default button</button>
+  <button class="brut-btn brut-btn--primary">Primary</button>
+  <button class="brut-btn brut-btn--danger">Danger</button>
+  <span class="brut-badge brut-badge--lime">Lime</span>
+  <span class="brut-tag">Tag</span>
+  <label class="brut-switch brut-switch--on" data-brut="switch">
+    <input type="checkbox" checked hidden>
+    <span class="brut-switch__knob"></span>
+  </label>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Pick a theme…</pre>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-brut="theme-switcher"]').forEach(function (el) {
+      el.addEventListener('brut:change', function (e) {
+        document.getElementById('log').textContent =
+          '[' + new Date().toLocaleTimeString() + '] theme → ' + JSON.stringify(e.detail);
+      });
+    });
+  });
+</script>
+</body></html>

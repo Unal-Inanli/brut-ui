@@ -28,4 +28,8 @@ export default {
       html: '<label class="brut-radio brut-radio--on" data-brut="radio">\n  <input type="radio" name="size" value="md" hidden checked/>\n</label>\n<label class="brut-radio" data-brut="radio">\n  <input type="radio" name="size" value="lg" hidden/>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form control; lays out with its parent at any tier.',
+  },
 };

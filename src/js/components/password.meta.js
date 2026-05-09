@@ -25,4 +25,8 @@ export default {
       html: '<div class="brut-password" data-brut="password">\n  <input class="brut-input" type="password" name="current" value="hunter2secret">\n  <button class="brut-password__toggle">SHOW</button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form input; no viewport flip.',
+  },
 };

@@ -21,7 +21,7 @@ export default {
     role: 'tooltip (on the bubble)',
     keyboard: ['focus to show', 'blur to hide', 'Escape to dismiss'],
     aria: ['role="tooltip"', 'aria-describedby (set on trigger while bubble is visible)'],
-    notes: 'Trigger can be any element; if it is a <button> the script forces type="button". Bubble is created on show and removed on hide; only one bubble per trigger. Position is computed from getBoundingClientRect with an 8px gap.',
+    notes: 'Trigger can be any element; if it is a <button> the script forces type="button". Bubble is created on show and removed on hide; only one bubble per trigger. Position is computed from getBoundingClientRect with an 8px gap. Position auto-flips to the opposite side when the preferred side would clip at the viewport edge.',
   },
   examples: [
     {
@@ -37,4 +37,9 @@ export default {
       html: '<input class="brut-input" type="text" placeholder="Email"\n       data-brut="tooltip"\n       data-brut-tip="We never share email"\n       data-brut-tip-side="bottom" />',
     },
   ],
+  responsive: {
+    shape: 'hover-fallback',
+    breakpoint: 'sm',
+    notes: 'Hover-on-pointer; tap-to-pin on coarse pointer / phones.',
+  },
 };

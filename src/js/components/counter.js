@@ -18,7 +18,12 @@
       function refresh() {
         var n = (target.value || '').length;
         el.textContent = max ? (n + ' / ' + max) : String(n);
-        if (max) el.classList.toggle('brut-field__counter--over', n > max);
+        var over = max ? (n > max) : false;
+        if (max) el.classList.toggle('brut-field__counter--over', over);
+        el.dispatchEvent(new CustomEvent('brut:change', {
+          bubbles: true,
+          detail: { value: n, max: max, over: over }
+        }));
       }
 
       target.addEventListener('input',  refresh);

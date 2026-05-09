@@ -10,15 +10,14 @@ export default {
   ],
   dataAttributes: [],
   events: [
-    { name: 'input',  detail: { value: 'string (current input value, native event on the inner input)' } },
-    { name: 'change', detail: { value: 'string (fires on blur and after the clear button is pressed)' } },
+    { name: 'brut:change', detail: { value: 'string (current input value)' } },
   ],
   formState: { hiddenInput: false, name: 'the inner <input type="search"> is the canonical form value' },
   a11y: {
     role: 'native search input',
     keyboard: ['standard text input keys'],
     aria: ['aria-label (on the clear button)'],
-    notes: 'Clearing dispatches both input and change events on the inner field, then refocuses the input so typing can continue uninterrupted.',
+    notes: 'Clearing the input refocuses it so typing can continue uninterrupted.',
   },
   examples: [
     {
@@ -30,4 +29,8 @@ export default {
       html: '<div class="brut-search" data-brut="search">\n  <input class="brut-input" type="search" value="button" placeholder="Search…">\n  <button class="brut-search__clear" aria-label="Clear">×</button>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Form input; no viewport flip.',
+  },
 };

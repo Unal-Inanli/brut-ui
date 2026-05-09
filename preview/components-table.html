@@ -68,6 +68,48 @@
     </tbody>
   </table>
 
+  <h3>Empty-state (auto-wired)</h3>
+  <p style="max-width: 60ch;">When a child element with <code>data-brut-role="empty-state"</code> is present, BRUT toggles it automatically based on tbody contents. Click the button to clear the rows and see the swap.</p>
+  <table class="brut-table brut-table--bordered" data-brut="table" id="empty-demo-table">
+    <thead class="brut-table__head">
+      <tr class="brut-table__row">
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="sku">SKU</th>
+        <th class="brut-table__cell brut-table__cell--sortable" data-sort-key="title">Title</th>
+        <th class="brut-table__cell brut-table__cell--sortable brut-table__cell--num" data-sort-key="stock">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="brut-table__row"><td class="brut-table__cell" data-sort-value="b-001">B-001</td><td class="brut-table__cell" data-sort-value="raw concrete mug">Raw concrete mug</td><td class="brut-table__cell brut-table__cell--num" data-sort-value="9">9</td></tr>
+      <tr class="brut-table__row"><td class="brut-table__cell" data-sort-value="b-002">B-002</td><td class="brut-table__cell" data-sort-value="bone-white tee">Bone-white tee</td><td class="brut-table__cell brut-table__cell--num" data-sort-value="44">44</td></tr>
+    </tbody>
+    <tfoot data-brut-role="empty-state" hidden>
+      <tr><td colspan="3">
+        <div class="brut-empty">
+          <div class="brut-empty__shape" aria-hidden="true"></div>
+          <h4 class="brut-empty__title">No items yet</h4>
+          <p class="brut-empty__body">Your inventory list is empty. Add an item to get started.</p>
+          <div class="brut-empty__action">
+            <button type="button" class="brut-button" id="empty-demo-restore">Restore rows</button>
+          </div>
+        </div>
+      </td></tr>
+    </tfoot>
+  </table>
+  <p><button type="button" class="brut-button" id="empty-demo-clear">Clear rows</button></p>
+  <script>
+    (function () {
+      var table = document.getElementById('empty-demo-table');
+      var tbody = table.querySelector('tbody');
+      var initial = tbody.innerHTML;
+      document.getElementById('empty-demo-clear').addEventListener('click', function () {
+        tbody.innerHTML = '';
+      });
+      document.getElementById('empty-demo-restore').addEventListener('click', function () {
+        tbody.innerHTML = initial;
+      });
+    })();
+  </script>
+
   <h3>Compact + Bordered</h3>
   <table class="brut-table brut-table--compact brut-table--bordered">
     <thead class="brut-table__head">
@@ -85,5 +127,25 @@
 </div>
 
 <script src="../dist/brut.js"></script>
+
+<h3>brut:sort listener</h3>
+<pre class="brut-table__cell" style="white-space: pre-wrap;">// Re-fetch sorted rows from a server endpoint when a header is clicked.
+document.querySelector('[data-brut="table"]').addEventListener('brut:sort', function (e) {
+  var key = e.detail.key;
+  var direction = e.detail.direction; // "ascending" | "descending" | "none"
+  // e.detail.value === { key, direction } — canonical state object.
+  fetch('/api/rows?sort=' + encodeURIComponent(key) + '&dir=' + encodeURIComponent(direction))
+    .then(function (r) { return r.json(); })
+    .then(function (rows) { /* re-render tbody from rows */ });
+});</pre>
+<script>
+  document.querySelectorAll('[data-brut="table"]').forEach(function (t) {
+    t.addEventListener('brut:sort', function (e) {
+      // Demo: log the canonical state object.
+      console.log('brut:sort', e.detail.value);
+    });
+  });
+</script>
+
 <div data-brut="theme-switcher"></div>
 </body></html>

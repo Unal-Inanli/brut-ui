@@ -48,7 +48,7 @@
         thumbMin.className = 'brut-range-dual__thumb';
         el.appendChild(thumbMin);
       }
-      thumbMin.setAttribute('type', 'button');
+      if (!thumbMin.hasAttribute('type')) thumbMin.setAttribute('type', 'button');
       thumbMin.setAttribute('role', 'slider');
       thumbMin.setAttribute('aria-label', 'Minimum');
 
@@ -58,7 +58,7 @@
         thumbMax.className = 'brut-range-dual__thumb brut-range-dual__thumb--max';
         el.appendChild(thumbMax);
       }
-      thumbMax.setAttribute('type', 'button');
+      if (!thumbMax.hasAttribute('type')) thumbMax.setAttribute('type', 'button');
       thumbMax.setAttribute('role', 'slider');
       thumbMax.setAttribute('aria-label', 'Maximum');
 
@@ -182,6 +182,21 @@
       vMax = snap(vMax);
       if (vMin > vMax) { var t = vMin; vMin = vMax; vMax = t; }
       render();
+
+      var initialMin = vMin;
+      var initialMax = vMax;
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // Hidden mirrors don't carry defaults — re-derive from data-* attrs.
+            vMin = initialMin;
+            vMax = initialMax;
+            render();
+          }, 0);
+        });
+      }
     }
   });
 })();

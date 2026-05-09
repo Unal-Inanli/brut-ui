@@ -41,4 +41,8 @@ export default {
       html: '<div class="brut-progress brut-progress--indeterminate" aria-label="Loading…">\n  <div class="brut-progress__bar"></div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Linear bar fills its container at any tier.',
+  },
 };

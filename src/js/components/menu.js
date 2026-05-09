@@ -26,6 +26,18 @@
         return el.querySelectorAll('.brut-menu__item');
       }
 
+      // Assign WAI-ARIA Menu pattern roles to children.
+      var initialItems = el.querySelectorAll('.brut-menu__item');
+      for (var ii = 0; ii < initialItems.length; ii++) {
+        var item = initialItems[ii];
+        if (!item.hasAttribute('role')) item.setAttribute('role', 'menuitem');
+        if (item.hasAttribute('disabled')) item.setAttribute('aria-disabled', 'true');
+      }
+      var seps = el.querySelectorAll('hr');
+      for (var si = 0; si < seps.length; si++) {
+        if (!seps[si].hasAttribute('role')) seps[si].setAttribute('role', 'separator');
+      }
+
       function position() {
         if (!lastTrigger) return;
         var r = lastTrigger.getBoundingClientRect();
@@ -100,6 +112,7 @@
       });
 
       document.addEventListener('keydown', function (e) {
+        if (!el.isConnected) return;
         if (e.key === 'Escape' && !el.hasAttribute('hidden')) {
           close();
           if (lastTrigger) {
@@ -109,6 +122,7 @@
       });
 
       document.addEventListener('click', function (e) {
+        if (!el.isConnected) return;
         if (el.hasAttribute('hidden')) return;
         if (el.contains(e.target)) return;
         for (var i = 0; i < triggers.length; i++) {
@@ -118,11 +132,13 @@
       });
 
       window.addEventListener('resize', function () {
+        if (!el.isConnected) return;
         if (!el.hasAttribute('hidden')) position();
       });
       window.addEventListener('scroll', function () {
+        if (!el.isConnected) return;
         if (!el.hasAttribute('hidden')) position();
-      }, true);
+      }, { capture: true, passive: true });
     }
   });
 })();

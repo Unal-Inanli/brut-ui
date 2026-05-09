@@ -8,7 +8,7 @@ export default {
   modifiers: ['--drag'],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { files: 'FileList (the input.files reference after assignment)' } },
+    { name: 'brut:change', detail: { value: 'FileList (the input.files reference after assignment)', files: 'FileList (the input.files reference after assignment)' } },
   ],
   formState: { hiddenInput: false, name: 'Wraps a real <input type="file"> — its name attribute carries the upload field on form submission' },
   a11y: {
@@ -27,4 +27,8 @@ export default {
       html: '<label class="brut-dropzone" data-brut="dropzone">\n  <input type="file" name="assets" multiple accept="image/*,.pdf">\n  <span class="brut-dropzone__hint">Drop images or PDFs here.</span>\n  <span class="brut-dropzone__sub">Or click to browse. Multiple allowed.</span>\n</label>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Drop target sizes to its container at any tier.',
+  },
 };

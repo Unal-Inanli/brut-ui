@@ -14,16 +14,18 @@
       if (!input) return;
 
       function refresh() { el.classList.toggle('brut-search--has-value', !!input.value); }
+      function emit() {
+        el.dispatchEvent(new CustomEvent('brut:change', { bubbles: true, detail: { value: input.value } }));
+      }
 
-      input.addEventListener('input', refresh);
+      input.addEventListener('input', function () { refresh(); emit(); });
       if (btn) {
         btn.setAttribute('type', 'button');
         btn.addEventListener('click', function () {
           input.value = '';
-          input.dispatchEvent(new Event('input',  { bubbles: true }));
-          input.dispatchEvent(new Event('change', { bubbles: true }));
           input.focus();
           refresh();
+          emit();
         });
       }
       refresh();

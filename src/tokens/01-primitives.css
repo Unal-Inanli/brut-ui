@@ -106,6 +106,7 @@
   --r-1: 2px;
   --r-2: 4px;
   --r-3: 8px;
+  --radius-circle: 50%;   /* full circle — used for round thumbs/dots */
 
   /* ---------- SPACING ---------- */
 
@@ -134,6 +135,8 @@
   --ease-snap:    cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-instant: steps(1, end);
   --dur-fast:   80ms;
+  --dur-snap:   100ms;  /* between fast and base — interactive knob slides */
+  --dur-notice: 120ms;  /* short notice animations like toast entrance */
   --dur-base:   140ms;
   --dur-slow:   220ms;
 

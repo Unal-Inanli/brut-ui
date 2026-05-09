@@ -10,13 +10,13 @@ export default {
     { name: 'data-brut-allow-multi', values: 'boolean attribute', description: 'When present, multiple items can stay open at once; otherwise opening one closes the others' },
   ],
   events: [
-    { name: 'brut:change', detail: { open: 'boolean (new state of the toggled item)' } },
+    { name: 'brut:change', detail: { value: 'boolean (new open state of the toggled item)', open: 'boolean (new state of the toggled item)' } },
   ],
   formState: { hiddenInput: false },
   a11y: {
     keyboard: ['Enter', 'Space'],
-    aria: ['aria-expanded (on each head)', 'aria-controls (on head, points to body id)'],
-    notes: 'Heads default to <button type="button">. Bodies receive an auto-generated id when none is set. The brut:change event bubbles from the toggled item, not the accordion root.',
+    aria: ['aria-expanded (on each head)', 'aria-controls (on head, points to body id)', 'role="region" (on panel)', 'aria-labelledby (on panel → trigger id)'],
+    notes: 'Heads default to <button type="button"> and receive an auto-generated id when none is set so panels can reference them via aria-labelledby. Bodies receive an auto-generated id when none is set, plus role="region" and aria-labelledby pointing to the head id (consumer-supplied attributes are preserved). The brut:change event bubbles from the toggled item, not the accordion root.',
   },
   examples: [
     {
@@ -28,4 +28,8 @@ export default {
       html: '<div class="brut-accordion" data-brut="accordion" data-brut-allow-multi>\n  <div class="brut-accordion__item brut-accordion__item--open">\n    <button class="brut-accordion__head" type="button">\n      <span>ONE</span>\n      <span class="brut-accordion__icon" aria-hidden="true"></span>\n    </button>\n    <div class="brut-accordion__body">First panel body.</div>\n  </div>\n  <div class="brut-accordion__item brut-accordion__item--open">\n    <button class="brut-accordion__head" type="button">\n      <span>TWO</span>\n      <span class="brut-accordion__icon" aria-hidden="true"></span>\n    </button>\n    <div class="brut-accordion__body">Second panel body.</div>\n  </div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Disclosure is shape-invariant; no viewport flip.',
+  },
 };

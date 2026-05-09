@@ -10,11 +10,14 @@
    A hidden <input type="hidden" name="…"> is created automatically
    when data-brut-name is set. Hover previews the score; click locks it.
 
-   Keyboard (on the wrapper):
-     ArrowRight / ArrowUp   — +1 (cap at max)
-     ArrowLeft  / ArrowDown — −1 (floor at 0)
-     Home                   — 0
-     End                    — max */
+   ARIA: container is a radiogroup; each star is a radio with roving
+   tabindex (only one star is in the tab order at a time).
+
+   Keyboard (on the radiogroup / focused star):
+     ArrowRight / ArrowDown — next star (wraps)
+     ArrowLeft  / ArrowUp   — previous star (wraps)
+     Home                   — first star
+     End                    — last star */
 (function () {
   if (!window.Brut) return;
   Brut.register('rating', {
@@ -36,18 +39,40 @@
       var current = isFinite(initial) ? initial : 0;
       if (hidden) hidden.value = String(current);
 
-      // Wrapper a11y: slider, focusable.
-      el.setAttribute('role', 'slider');
-      el.setAttribute('aria-valuemin', '0');
-      el.setAttribute('aria-valuemax', String(max));
-      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      // Wrapper a11y: radiogroup with an accessible name. Don't override a
+      // consumer-supplied label.
+      el.setAttribute('role', 'radiogroup');
+      if (!el.hasAttribute('aria-label') && !el.hasAttribute('aria-labelledby')) {
+        el.setAttribute('aria-label', 'Rating');
+      }
+
+      var labelStar = el.getAttribute('data-brut-label-star');
+
+      function starLabel(i) {
+        var n = i + 1;
+        if (labelStar) return n + ' ' + labelStar;
+        return n + ' star' + (n === 1 ? '' : 's');
+      }
 
       function paint(n) {
         stars.forEach(function (s, i) {
           s.classList.toggle('brut-rating__star--on', i < n);
           s.setAttribute('aria-checked', i + 1 === n ? 'true' : 'false');
         });
-        el.setAttribute('aria-valuenow', String(n));
+      }
+
+      function updateTabindex(focusIndex) {
+        stars.forEach(function (s, i) {
+          s.setAttribute('tabindex', i === focusIndex ? '0' : '-1');
+        });
+      }
+
+      function focusedIndex() {
+        // Roving tabindex pointer: the star currently in the tab order.
+        for (var i = 0; i < stars.length; i++) {
+          if (stars[i].getAttribute('tabindex') === '0') return i;
+        }
+        return current > 0 ? current - 1 : 0;
       }
 
       function set(n) {
@@ -58,36 +83,92 @@
           hidden.dispatchEvent(new Event('change', { bubbles: true }));
         }
         paint(current);
+        // Keep the tab stop on the active star (or first star when cleared).
+        updateTabindex(current > 0 ? current - 1 : 0);
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current } }));
       }
 
       stars.forEach(function (star, i) {
         star.setAttribute('type', 'button');
-        star.setAttribute('role', 'radio');
+        if (!star.hasAttribute('role')) star.setAttribute('role', 'radio');
+        if (!star.hasAttribute('aria-label')) star.setAttribute('aria-label', starLabel(i));
         star.addEventListener('mouseenter', function () { paint(i + 1); });
         star.addEventListener('focus',      function () { paint(i + 1); });
         star.addEventListener('click', function () {
           set(current === i + 1 ? 0 : i + 1);
         });
+        star.addEventListener('keydown', function (e) {
+          var idx = i;
+          var nextIdx = null;
+          switch (e.key) {
+            case 'ArrowRight':
+            case 'ArrowDown':
+              nextIdx = (idx + 1) % max;
+              break;
+            case 'ArrowLeft':
+            case 'ArrowUp':
+              nextIdx = (idx - 1 + max) % max;
+              break;
+            case 'Home':
+              nextIdx = 0;
+              break;
+            case 'End':
+              nextIdx = max - 1;
+              break;
+            default:
+              return;
+          }
+          e.preventDefault();
+          set(nextIdx + 1);
+          updateTabindex(nextIdx);
+          stars[nextIdx].focus();
+        });
       });
 
+      // Roving tabindex: place the single tab stop on the current star, or
+      // the first star if nothing is selected.
+      updateTabindex(current > 0 ? current - 1 : 0);
+
+      // Wrapper-level fallback: if the radiogroup itself receives a key
+      // (e.g. focus is on the container before any roving has happened),
+      // route arrows to the appropriate star.
       el.addEventListener('keydown', function (e) {
-        var next = null;
+        if (e.target !== el) return;
+        var idx = focusedIndex();
+        var nextIdx = null;
         switch (e.key) {
           case 'ArrowRight':
-          case 'ArrowUp':    next = current + 1; break;
+          case 'ArrowDown':  nextIdx = (idx + 1) % max; break;
           case 'ArrowLeft':
-          case 'ArrowDown':  next = current - 1; break;
-          case 'Home':       next = 0; break;
-          case 'End':        next = max; break;
+          case 'ArrowUp':    nextIdx = (idx - 1 + max) % max; break;
+          case 'Home':       nextIdx = 0; break;
+          case 'End':        nextIdx = max - 1; break;
           default: return;
         }
         e.preventDefault();
-        set(next);
+        set(nextIdx + 1);
+        updateTabindex(nextIdx);
+        stars[nextIdx].focus();
       });
 
       el.addEventListener('mouseleave', function () { paint(current); });
       el.addEventListener('focusout',   function () { paint(current); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // No native input drives state — restore the initial value.
+            var n = isFinite(initial) ? initial : 0;
+            current = Math.max(0, Math.min(max, n));
+            if (hidden) hidden.value = String(current);
+            paint(current);
+            updateTabindex(current > 0 ? current - 1 : 0);
+          }, 0);
+        });
+      }
+
       paint(current);
     }
   });

@@ -9,6 +9,7 @@ export default {
   dataAttributes: [
     { name: 'data-brut-len',  values: 'integer (default 6)', description: 'Number of cells to auto-generate when none are present' },
     { name: 'data-brut-name', values: 'string (default "otp")', description: 'name attribute on the hidden input that mirrors the joined value' },
+    { name: 'data-brut-label-cell', values: 'string (default "Digit")', description: 'i18n override for the per-cell aria-label noun (e.g. "Ziffer" → "Ziffer 1 of 6")' },
   ],
   events: [
     { name: 'brut:change',   detail: { value: 'string (joined digits so far)' } },
@@ -18,8 +19,8 @@ export default {
   a11y: {
     role: null,
     keyboard: ['ArrowLeft', 'ArrowRight', 'Backspace', 'Paste'],
-    aria: [],
-    notes: 'Cells are real <input> elements with inputmode="numeric" and autocomplete="one-time-code", so iOS/Android suggest SMS codes. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell.',
+    aria: ['aria-label (per cell)', 'aria-live (status region)'],
+    notes: 'Cells are real <input> elements with inputmode="numeric" and autocomplete="one-time-code", so iOS/Android suggest SMS codes. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell. Each cell gets aria-label="Digit N of M" (override the noun via data-brut-label-cell). A visually-hidden aria-live="polite" region announces "Code complete" when all cells are filled, in sync with the brut:complete dispatch.',
   },
   examples: [
     {
@@ -35,4 +36,8 @@ export default {
       html: '<div class="brut-otp" data-brut="otp" data-brut-name="partial">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="4">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric" value="2">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n  <input class="brut-otp__cell" maxlength="1" inputmode="numeric">\n</div>',
     },
   ],
+  responsive: {
+    shape: 'static',
+    notes: 'Cell row keeps width across tiers within its container.',
+  },
 };

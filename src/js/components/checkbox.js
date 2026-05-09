@@ -21,8 +21,9 @@
       if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
 
       function emit() {
+        var on = el.classList.contains('brut-checkbox--on');
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { checked: el.classList.contains('brut-checkbox--on') }
+          detail: { value: on, checked: on }
         }));
       }
 
@@ -45,6 +46,15 @@
       });
 
       if (input) input.addEventListener('change', function () { sync(); emit(); });
+
+      var form = el.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(sync, 0);
+        });
+      }
+
       sync();
     }
   });

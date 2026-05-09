@@ -7,18 +7,23 @@ export default {
   selector: '[data-brut="tag-input"]',
   modifiers: [],
   dataAttributes: [
-    { name: 'data-brut-name', values: 'string (default "tags")', description: 'Name attribute for the auto-created hidden input that mirrors comma-joined tag values' },
-    { name: 'data-value',     values: 'string',                  description: 'Set on each .brut-tag chip to provide the canonical tag value; falls back to chip textContent' },
+    { name: 'data-brut-name',  values: 'string (default "tags")', description: 'Name attribute for the auto-created hidden input that mirrors comma-joined tag values' },
+    { name: 'data-brut-label', values: 'string (default "Tags")', description: 'Override the accessible name applied to the text input when no aria-label or aria-labelledby is present (i18n hook)' },
+    { name: 'data-value',      values: 'string',                  description: 'Set on each .brut-tag chip to provide the canonical tag value; falls back to chip textContent' },
   ],
   events: [
-    { name: 'brut:change', detail: { tags: 'string[] (current tag values)' } },
+    { name: 'brut:change', detail: { value: 'string[] (current tag values)', tags: 'string[] (current tag values)' } },
   ],
   formState: { hiddenInput: true, name: 'Auto-creates <input type="hidden"> with comma-joined values; name is data-brut-name or "tags"' },
   a11y: {
     role: 'group (implicit via wrapping element)',
     keyboard: ['Enter (commit)', ',', 'Backspace (when input empty, removes last)'],
-    aria: [],
-    notes: 'Duplicate values are silently rejected. On blur with non-empty input the pending value is committed. Clicking the wrapper outside the field focuses the field.',
+    aria: [
+      'aria-live="polite" region appended inside the wrapper announces "Tag X added" / "Tag X removed" on every change',
+      'aria-label on the text input — defaults to "Tags", overridable via data-brut-label, skipped if aria-label or aria-labelledby is already set',
+      'aria-label="Remove <tagValue>" on each .brut-tag__x close button so screen readers identify which chip the action targets',
+    ],
+    notes: 'Duplicate values are silently rejected. On blur with non-empty input the pending value is committed. Clicking the wrapper outside the field focuses the field. Each add/remove dispatches into the live region in addition to firing brut:change.',
   },
   examples: [
     {
@@ -34,4 +39,8 @@ export default {
       html: '<div class="brut-tag-input" data-brut="tag-input" data-brut-name="labels">\n  <span class="brut-tag" data-value="bug">bug <button class="brut-tag__x">×</button></span>\n  <span class="brut-tag" data-value="feature">feature <button class="brut-tag__x">×</button></span>\n  <span class="brut-tag" data-value="docs">docs <button class="brut-tag__x">×</button></span>\n  <input class="brut-tag-input__field" placeholder="Add a label…">\n</div>',
     },
   ],
+  responsive: {
+    shape: 'wrap',
+    notes: 'Tag chips wrap to new lines via flex-wrap at every tier.',
+  },
 };

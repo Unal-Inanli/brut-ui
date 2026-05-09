@@ -29,4 +29,9 @@ export default {
       html: '<div class="brut-date" data-brut="date" data-brut-name="start">\n  <input class="brut-input brut-date__field" type="text" readonly value="2026-05-15" />\n  <input type="hidden" />\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Calendar popover docks to bottom edge on phones; anchored at sm and above.',
+  },
 };

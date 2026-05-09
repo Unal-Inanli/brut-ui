@@ -25,6 +25,9 @@
    Numeric values sort numerically; otherwise string-locale sort.
    Select-all: the [data-brut-select-all] header element toggles every
    [data-brut-row-select] in the same table.
+   Empty-state: opt-in. If the table contains a child element with
+   [data-brut-role="empty-state"], it is shown when tbody has no visible
+   rows and hidden otherwise (the table itself is also toggled).
 */
 (function () {
   if (!window.Brut) return;
@@ -51,9 +54,11 @@
     for (var i = 0; i < headers.length; i++) {
       var h = headers[i];
       var isThis = h.getAttribute('data-sort-key') === key;
+      var thDir = isThis ? dir : 'none';
       h.classList.toggle('brut-table__cell--sorted',      isThis && dir === 'ascending');
       h.classList.toggle('brut-table__cell--sorted-desc', isThis && dir === 'descending');
-      h.setAttribute('aria-sort', isThis ? dir : 'none');
+      h.setAttribute('aria-sort', thDir);
+      h.setAttribute('data-sort-direction', thDir);
     }
 
     // Find the column index for this key by matching the header position.
@@ -80,6 +85,38 @@
       var tbody = el.querySelector('tbody');
       if (!thead) return;
 
+      // Empty-state wiring (opt-in).
+      // If the table contains a [data-brut-role="empty-state"] child, toggle
+      // it (and the <table>) based on the count of visible tbody rows.
+      // A row counts as visible when it does NOT have the `hidden` attribute.
+      var emptyEl = el.querySelector('[data-brut-role="empty-state"]');
+      function syncEmpty() {
+        if (!emptyEl || !tbody) return;
+        var rows = tbody.children;
+        var visible = 0;
+        for (var i = 0; i < rows.length; i++) {
+          if (!rows[i].hasAttribute('hidden')) visible++;
+        }
+        if (visible === 0) {
+          emptyEl.hidden = false;
+          el.hidden = true;
+        } else {
+          emptyEl.hidden = true;
+          el.hidden = false;
+        }
+      }
+
+      // MutationObserver watches tbody childList so consumers can mutate rows
+      // freely (append, remove, innerHTML rewrite) without calling a refresh API.
+      // Disconnect when el leaves the document — same defensive pattern as #91.
+      if (emptyEl && tbody && typeof MutationObserver === 'function') {
+        var mo = new MutationObserver(function () {
+          if (!el.isConnected) { mo.disconnect(); return; }
+          syncEmpty();
+        });
+        mo.observe(tbody, { childList: true, attributes: true, subtree: true, attributeFilter: ['hidden'] });
+      }
+
       // Sortable header wiring.
       var sortables = thead.querySelectorAll('.brut-table__cell--sortable');
       for (var i = 0; i < sortables.length; i++) {
@@ -92,10 +129,12 @@
             var key = h.getAttribute('data-sort-key');
             if (!key) return;
             var current = h.getAttribute('aria-sort');
-            var dir = current === 'ascending' ? 'descending' : 'ascending';
-            sortBy(el, key, dir);
-            el.dispatchEvent(new CustomEvent('brut:change', {
-              detail: { value: key, key: key, dir: dir }
+            var direction = current === 'ascending' ? 'descending' : 'ascending';
+            sortBy(el, key, direction);
+            syncEmpty();
+            el.dispatchEvent(new CustomEvent('brut:sort', {
+              bubbles: true,
+              detail: { key: key, direction: direction, value: { key: key, direction: direction } }
             }));
           }
 
@@ -145,6 +184,7 @@
           var next = !isOn();
           syncHeader(next);
           applyAll(next);
+          syncEmpty();
           el.dispatchEvent(new CustomEvent('brut:change', {
             detail: { value: next, selectAll: true }
           }));
@@ -187,6 +227,9 @@
         var initPageSize = parseInt(pager.getAttribute('data-page-size'), 10) || allRows.length || 1;
         applyPage(initPage, initPageSize);
       }
+
+      // Initial render — runs after pagination has set its initial hidden flags.
+      syncEmpty();
     }
   });
 })();

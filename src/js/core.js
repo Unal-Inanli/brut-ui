@@ -91,7 +91,91 @@
   Brut.ready = ready;
   Brut.theme = theme;
   Brut._components = registered;
+  /* Version of the loaded BRUT runtime — replaced at build time by the Vite plugin from package.json. */
   Brut.version = __BRUT_VERSION__;
+
+  // Shared body scroll-lock with reference counting so nested/stacked
+  // overlays (dialog, drawer, …) only restore the body's overflow once
+  // the LAST overlay closes. acquire() on open, release() on close.
+  Brut.scrollLock = (function () {
+    var count = 0;
+    var prevOverflow = '';
+    return {
+      acquire: function () {
+        if (count === 0) {
+          prevOverflow = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
+        }
+        count++;
+      },
+      release: function () {
+        if (count === 0) return;
+        count--;
+        if (count === 0) document.body.style.overflow = prevOverflow;
+      },
+    };
+  })();
+
+  // Shared focus trap for modal-style overlays (dialog, drawer, …).
+  // activate(root) moves focus into root, cycles Tab/Shift+Tab within it,
+  // and returns { release } which restores focus to the previously focused
+  // element. WAI-ARIA Modal Dialog Pattern (WCAG 2.1.2). Per-instance —
+  // call activate() on open and release() on close.
+  Brut.focusTrap = (function () {
+    var FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable]';
+    function focusables(root) {
+      return Array.prototype.slice.call(root.querySelectorAll(FOCUSABLE))
+        .filter(function (n) { return n.offsetParent !== null || n === document.activeElement; });
+    }
+    return {
+      activate: function (root) {
+        var prev = document.activeElement;
+        var addedTabindex = false;
+        if (!root.hasAttribute('tabindex')) {
+          root.setAttribute('tabindex', '-1');
+          addedTabindex = true;
+        }
+        var list = focusables(root);
+        (list[0] || root).focus();
+        function onKey(e) {
+          if (e.key !== 'Tab') return;
+          var current = focusables(root);
+          if (!current.length) { e.preventDefault(); root.focus(); return; }
+          var first = current[0], last = current[current.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+        root.addEventListener('keydown', onKey);
+        return {
+          release: function () {
+            root.removeEventListener('keydown', onKey);
+            if (addedTabindex) root.removeAttribute('tabindex');
+            if (prev && typeof prev.focus === 'function') prev.focus();
+          },
+        };
+      },
+    };
+  })();
+
+  // Pure helper: given a trigger and a floating bubble, return the side on
+  // which the bubble actually fits. Flips top<->bottom or left<->right when
+  // the preferred side would clip at the viewport edge. Reads layout only;
+  // does not mutate the DOM. Used by popover and tooltip for collision
+  // detection. `gap` is the same gap the caller will apply between trigger
+  // and bubble; default 8px. preferredSide is one of top|bottom|left|right.
+  Brut.flipSide = function (trigger, bubble, preferredSide, gap) {
+    if (!trigger || !bubble) return preferredSide;
+    gap = gap || 8;
+    var r = trigger.getBoundingClientRect();
+    var bH = bubble.offsetHeight;
+    var bW = bubble.offsetWidth;
+    var side = preferredSide;
+    if (side === 'top'    && r.top < bH + gap) side = 'bottom';
+    if (side === 'bottom' && (window.innerHeight - r.bottom) < bH + gap) side = 'top';
+    if (side === 'left'   && r.left < bW + gap) side = 'right';
+    if (side === 'right'  && (window.innerWidth - r.right) < bW + gap) side = 'left';
+    return side;
+  };
 
   // Restore persisted theme as early as possible to avoid flash
   restoreTheme();

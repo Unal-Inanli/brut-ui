@@ -34,4 +34,9 @@ export default {
       html: '<div class="brut-multiselect" data-brut="multiselect" data-brut-name="tags">\n  <div class="brut-multiselect__field">\n    <input class="brut-multiselect__input" placeholder="Add a tag…" />\n  </div>\n  <ul class="brut-multiselect__list">\n    <li class="brut-multiselect__opt" data-value="news"  data-selected>News</li>\n    <li class="brut-multiselect__opt" data-value="press" data-selected>Press</li>\n    <li class="brut-multiselect__opt" data-value="brand">Brand</li>\n    <li class="brut-multiselect__empty">No matches.</li>\n  </ul>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Dropdown docks to bottom edge on phones; anchored to control at sm and above.',
+  },
 };

@@ -16,10 +16,10 @@ export default {
   ],
   formState: { hiddenInput: false },
   a11y: {
-    role: null,
+    role: 'dialog',
     keyboard: ['Escape (close)'],
-    aria: ['aria-label on .brut-popover__x close button'],
-    notes: 'Trigger gets type="button" automatically. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger.',
+    aria: ['role="dialog"', 'aria-haspopup="dialog"', 'aria-expanded', 'aria-controls', 'aria-label on .brut-popover__x close button'],
+    notes: 'Trigger gets type="button" automatically and is wired with aria-haspopup="dialog", aria-expanded, and aria-controls pointing at the popover id (auto-generated if missing). The popover element gets role="dialog" unless the consumer set a different role. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger. Position auto-flips to the opposite side when the preferred side would clip at the viewport edge.',
   },
   examples: [
     {
@@ -31,4 +31,9 @@ export default {
       html: '<button class="brut-btn" type="button" data-brut-popover-open="po-info">WHAT IS THIS?</button>\n<div class="brut-popover" id="po-info" data-brut="popover" hidden>\n  <div class="brut-popover__body">\n    A popover is a small anchored card. Click the trigger again, click outside, or press Esc to close.\n  </div>\n</div>',
     },
   ],
+  responsive: {
+    shape: 'bottom-sheet',
+    breakpoint: 'sm',
+    notes: 'Bottom-sheet on phones; anchored to trigger at sm and above.',
+  },
 };

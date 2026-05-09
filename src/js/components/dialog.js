@@ -14,6 +14,7 @@
    Escape closes any open dialog; clicking the scrim closes it. */
 (function () {
   if (!window.Brut) return;
+  var titleCounter = 0;
   Brut.register('dialog', {
     selector: '[data-brut="dialog"]',
     init: function (el) {
@@ -21,14 +22,34 @@
       var scrimId = el.getAttribute('data-brut-scrim');
       var scrim = scrimId ? document.getElementById(scrimId) : null;
 
+      if (!el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
+        var head = el.querySelector('.brut-dialog__head');
+        var heading = (head && head.querySelector('h1, h2, h3, h4, h5, h6, [data-brut-dialog-title]'))
+          || el.querySelector('h1, h2, h3, h4, h5, h6, [data-brut-dialog-title]');
+        if (heading) {
+          if (!heading.id) heading.id = 'brut-dialog-title-' + (++titleCounter);
+          el.setAttribute('aria-labelledby', heading.id);
+        }
+      }
+
+      var trap = null;
+
       function open() {
+        if (!el.hasAttribute('hidden')) return;
         el.removeAttribute('hidden');
+        el.setAttribute('aria-modal', 'true');
         if (scrim) scrim.removeAttribute('hidden');
+        if (Brut.scrollLock) Brut.scrollLock.acquire();
+        if (Brut.focusTrap) trap = Brut.focusTrap.activate(el);
         el.dispatchEvent(new CustomEvent('brut:open'));
       }
       function close() {
+        if (el.hasAttribute('hidden')) return;
+        if (trap) { trap.release(); trap = null; }
         el.setAttribute('hidden', '');
+        el.removeAttribute('aria-modal');
         if (scrim) scrim.setAttribute('hidden', '');
+        if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 
@@ -42,6 +63,7 @@
       });
 
       document.addEventListener('keydown', function (e) {
+        if (!el.isConnected) return;
         if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
       });
 

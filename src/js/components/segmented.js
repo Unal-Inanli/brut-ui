@@ -78,6 +78,17 @@
           hidden.value = initial.getAttribute('data-value') || initial.textContent.trim();
         }
       }
+
+      var form = el.closest('form');
+      if (form && initial) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(function () {
+            // No native input drives this — re-derive from the initial --on button.
+            select(initial);
+          }, 0);
+        });
+      }
     }
   });
 })();

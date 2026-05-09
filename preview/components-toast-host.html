@@ -1,0 +1,103 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Toast host preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 32px; background: var(--paper); font-family: var(--font-sans); min-height: 100vh; }
+  h2 { font-family: var(--font-display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; margin: 32px 0 12px; }
+  .row { display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center; margin-bottom: var(--sp-3); }
+  pre { background: var(--paper-2); border: 3px solid var(--ink); padding: 12px; font-family: var(--font-mono); font-size: 12px; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<h2>Spawn into the default top-right host</h2>
+<div class="row">
+  <button class="brut-btn brut-btn--primary" type="button" id="btn-ok">Success toast</button>
+  <button class="brut-btn brut-btn--danger" type="button" id="btn-err">Error toast</button>
+  <button class="brut-btn brut-btn--lime" type="button" id="btn-info">Info toast</button>
+  <button class="brut-btn" type="button" id="btn-warn">Warn toast</button>
+  <button class="brut-btn" type="button" id="btn-sticky">Sticky (no timeout)</button>
+</div>
+
+<h2>Spawn into the bottom-left host</h2>
+<div class="row">
+  <button class="brut-btn" type="button" id="btn-bl-ok">Success → bottom-left</button>
+  <button class="brut-btn" type="button" id="btn-bl-err">Error → bottom-left</button>
+</div>
+
+<h2>Spawn into the top-left host</h2>
+<div class="row">
+  <button class="brut-btn" type="button" id="btn-tl-info">Info → top-left</button>
+</div>
+
+<h2>Spawn into the bottom-right host</h2>
+<div class="row">
+  <button class="brut-btn" type="button" id="btn-br-ok">Success → bottom-right</button>
+</div>
+
+<h2>Event log</h2>
+<pre id="log">Click a button to dispatch a toast…</pre>
+
+<!-- Four anchored hosts, one per corner modifier -->
+<div class="brut-toast-host brut-toast-host--top-right"    data-brut="toast-host" id="host-tr"></div>
+<div class="brut-toast-host brut-toast-host--top-left"     data-brut="toast-host" id="host-tl"></div>
+<div class="brut-toast-host brut-toast-host--bottom-right" data-brut="toast-host" id="host-br"></div>
+<div class="brut-toast-host brut-toast-host--bottom-left"  data-brut="toast-host" id="host-bl"></div>
+
+<script src="../dist/brut.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var log = document.getElementById('log');
+    function note(msg) {
+      log.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+    }
+
+    document.getElementById('btn-ok').addEventListener('click', function () {
+      Brut.toast({ kind: 'ok', message: 'Saved successfully.', host: '#host-tr' });
+      note('spawned ok → top-right');
+    });
+    document.getElementById('btn-err').addEventListener('click', function () {
+      Brut.toast({ kind: 'err', message: 'Build failed — check logs.', host: '#host-tr' });
+      note('spawned err → top-right');
+    });
+    document.getElementById('btn-info').addEventListener('click', function () {
+      Brut.toast({ kind: 'info', message: 'Cache cleared.', host: '#host-tr' });
+      note('spawned info → top-right');
+    });
+    document.getElementById('btn-warn').addEventListener('click', function () {
+      Brut.toast({ kind: 'warn', message: 'Heads up — irreversible.', host: '#host-tr' });
+      note('spawned warn → top-right');
+    });
+    document.getElementById('btn-sticky').addEventListener('click', function () {
+      Brut.toast({ kind: 'ok', message: 'Sticks until you close it.', timeout: 0, host: '#host-tr' });
+      note('spawned sticky → top-right');
+    });
+
+    document.getElementById('btn-bl-ok').addEventListener('click', function () {
+      Brut.toast({ kind: 'ok', message: 'Done.', host: '#host-bl' });
+      note('spawned ok → bottom-left');
+    });
+    document.getElementById('btn-bl-err').addEventListener('click', function () {
+      Brut.toast({ kind: 'err', message: 'Connection lost.', host: '#host-bl' });
+      note('spawned err → bottom-left');
+    });
+    document.getElementById('btn-tl-info').addEventListener('click', function () {
+      Brut.toast({ kind: 'info', message: 'Maintenance window starts Sunday.', host: '#host-tl' });
+      note('spawned info → top-left');
+    });
+    document.getElementById('btn-br-ok').addEventListener('click', function () {
+      Brut.toast({ kind: 'ok', message: 'Uploaded.', host: '#host-br' });
+      note('spawned ok → bottom-right');
+    });
+
+    document.querySelectorAll('[data-brut="toast-host"]').forEach(function (el) {
+      el.addEventListener('brut:close', function () {
+        note('toast dismissed in ' + el.id);
+      });
+    });
+  });
+</script>
+<div data-brut="theme-switcher"></div>
+</body></html>
