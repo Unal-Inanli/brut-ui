@@ -13,7 +13,7 @@ export default {
     { name: 'data-sibling-count', values: 'integer (default 1)',         description: 'Pages shown on each side of the current page before collapsing into an ellipsis' },
   ],
   events: [
-    { name: 'brut:change', detail: { page: 'integer (new current page)', pageSize: 'integer', total: 'integer' } },
+    { name: 'brut:change', detail: { value: 'integer (new current page)', page: 'integer (new current page)', pageSize: 'integer', total: 'integer' } },
   ],
   formState: { hiddenInput: false },
   a11y: {

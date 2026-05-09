@@ -25,7 +25,7 @@
           input.files = fileList;
         }
         input.dispatchEvent(new Event('change', { bubbles: true }));
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { files: input.files } }));
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: input.files, files: input.files } }));
       }
 
       el.addEventListener('click', function (e) {

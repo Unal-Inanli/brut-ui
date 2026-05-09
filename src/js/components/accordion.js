@@ -50,7 +50,7 @@
         record.head.setAttribute('aria-expanded', open ? 'true' : 'false');
         record.item.dispatchEvent(new CustomEvent('brut:change', {
           bubbles: true,
-          detail: { open: open }
+          detail: { value: open, open: open }
         }));
       }
 

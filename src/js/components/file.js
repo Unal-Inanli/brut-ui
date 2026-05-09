@@ -29,7 +29,7 @@
       input.addEventListener('change', function () {
         refresh();
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { files: input.files }
+          detail: { value: input.files, files: input.files }
         }));
       });
       refresh();

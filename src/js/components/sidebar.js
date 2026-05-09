@@ -31,7 +31,7 @@
           group.classList.toggle('brut-sidebar__group--closed', willClose);
           btn.setAttribute('aria-expanded', willClose ? 'false' : 'true');
           el.dispatchEvent(new CustomEvent('brut:change', {
-            detail: { group: group, closed: willClose }
+            detail: { value: !willClose, group: group, closed: willClose }
           }));
         });
       });

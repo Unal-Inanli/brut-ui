@@ -8,7 +8,7 @@ export default {
   modifiers: [],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { value: 'FileList (event.detail.files)' } },
+    { name: 'brut:change', detail: { value: 'FileList (the selected files)', files: 'FileList (the selected files)' } },
   ],
   formState: { hiddenInput: false, name: 'submits via the wrapped native <input type="file">' },
   a11y: {

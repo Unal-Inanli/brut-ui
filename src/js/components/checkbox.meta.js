@@ -8,7 +8,7 @@ export default {
   modifiers: ['--on'],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { checked: 'boolean (current checked state)' } },
+    { name: 'brut:change', detail: { value: 'boolean (current checked state)', checked: 'boolean (current checked state)' } },
   ],
   formState: { hiddenInput: true, name: 'Wraps a real <input type="checkbox" hidden> which carries name/value for native form submission' },
   a11y: {

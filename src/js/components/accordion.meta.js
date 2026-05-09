@@ -10,7 +10,7 @@ export default {
     { name: 'data-brut-allow-multi', values: 'boolean attribute', description: 'When present, multiple items can stay open at once; otherwise opening one closes the others' },
   ],
   events: [
-    { name: 'brut:change', detail: { open: 'boolean (new state of the toggled item)' } },
+    { name: 'brut:change', detail: { value: 'boolean (new open state of the toggled item)', open: 'boolean (new state of the toggled item)' } },
   ],
   formState: { hiddenInput: false },
   a11y: {

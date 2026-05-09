@@ -96,7 +96,7 @@
         page = target;
         render();
         el.dispatchEvent(new CustomEvent('brut:change', {
-          detail: { page: page, pageSize: pageSize, total: total }
+          detail: { value: page, page: page, pageSize: pageSize, total: total }
         }));
       }
 

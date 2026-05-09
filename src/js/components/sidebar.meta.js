@@ -11,7 +11,7 @@ export default {
   ],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { value: '{ group: HTMLElement, closed: boolean }' } },
+    { name: 'brut:change', detail: { value: 'boolean (true when the toggled group is open)', group: 'HTMLElement (the toggled group)', closed: 'boolean (new closed state of the group)' } },
   ],
   formState: { hiddenInput: false },
   a11y: {

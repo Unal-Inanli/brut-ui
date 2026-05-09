@@ -8,7 +8,7 @@ export default {
   modifiers: ['--drag'],
   dataAttributes: [],
   events: [
-    { name: 'brut:change', detail: { files: 'FileList (the input.files reference after assignment)' } },
+    { name: 'brut:change', detail: { value: 'FileList (the input.files reference after assignment)', files: 'FileList (the input.files reference after assignment)' } },
   ],
   formState: { hiddenInput: false, name: 'Wraps a real <input type="file"> — its name attribute carries the upload field on form submission' },
   a11y: {

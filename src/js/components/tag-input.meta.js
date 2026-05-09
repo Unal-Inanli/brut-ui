@@ -11,7 +11,7 @@ export default {
     { name: 'data-value',     values: 'string',                  description: 'Set on each .brut-tag chip to provide the canonical tag value; falls back to chip textContent' },
   ],
   events: [
-    { name: 'brut:change', detail: { tags: 'string[] (current tag values)' } },
+    { name: 'brut:change', detail: { value: 'string[] (current tag values)', tags: 'string[] (current tag values)' } },
   ],
   formState: { hiddenInput: true, name: 'Auto-creates <input type="hidden"> with comma-joined values; name is data-brut-name or "tags"' },
   a11y: {

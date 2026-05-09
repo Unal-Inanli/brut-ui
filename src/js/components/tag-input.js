@@ -33,8 +33,9 @@
       }
 
       function sync() {
-        hidden.value = values().join(',');
-        el.dispatchEvent(new CustomEvent('brut:change', { detail: { tags: values() } }));
+        var current = values();
+        hidden.value = current.join(',');
+        el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current, tags: current } }));
       }
 
       function bindClose(btn) {
