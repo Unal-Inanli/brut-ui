@@ -4,6 +4,30 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] — 2026-05-09
+
+### Added
+
+- **Responsive foundations (RR1+RR2).** Mobile-first responsive shape
+  system: nine canonical shapes (`fullscreen-modal`, `bottom-sheet`,
+  `horizontal-scroll`, `ellipsis-collapse`, `disclosure-toggle`,
+  `stack`, `wrap`, `hover-fallback`, `static`), three tier breakpoints
+  (`sm`/`md`/`lg` at 640/768/1024px), `responsive` meta field on every
+  interactive component, `npx brut doctor` codes for missing/invalid
+  shapes, and a Playwright visual harness at 320/375/640/768/1024/1440px.
+  Critical surfaces (dialog, popover, menu, tabs, topnav, tooltip,
+  crumbs) ship the new shapes.
+
+### Documentation
+
+- **Configuration guide.** New VitePress page documenting
+  `brut.config.js` options (prefix, components, theme, tokens.override,
+  tokens.extend, variants), plus an audit-driven cleanup of stale
+  references across the docs site.
+- **VitePress chrome on BRUT tokens.** Docs site chrome now sources
+  `--paper`/`--ink`/`--accent-*` from the kit and is locked to light
+  mode for visual consistency.
+
 ## [1.3.1] — 2026-05-09
 
 ### Added
@@ -185,6 +209,7 @@ zero dependencies.
   mirror state to a hidden input, support keyboard navigation, and
   initialize idempotently.
 
+[1.3.2]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.3.2
 [1.3.1]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.3.1
 [1.2.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Unal-Inanli/brut-ui/releases/tag/v1.1.0
