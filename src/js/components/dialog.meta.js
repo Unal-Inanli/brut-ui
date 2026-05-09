@@ -19,8 +19,8 @@ export default {
   a11y: {
     role: 'dialog',
     keyboard: ['Escape'],
-    aria: ['aria-modal (consumer-supplied)', 'aria-labelledby (consumer-supplied)'],
-    notes: 'Toggles the [hidden] attribute rather than display:none. Scrim closes only on direct click (not on bubbling from inner content). The dialog id is required — components without an id are skipped.',
+    aria: ['aria-modal="true"', 'aria-labelledby'],
+    notes: 'Toggles the [hidden] attribute rather than display:none, and toggles aria-modal="true" in lockstep with open/close. On init, if the dialog has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-dialog-title]) inside .brut-dialog__head, auto-assigning an id when needed. Scrim closes only on direct click (not on bubbling from inner content). The dialog id is required — components without an id are skipped.',
   },
   examples: [
     {
