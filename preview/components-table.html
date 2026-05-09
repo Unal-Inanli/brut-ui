@@ -85,5 +85,25 @@
 </div>
 
 <script src="../dist/brut.js"></script>
+
+<h3>brut:sort listener</h3>
+<pre class="brut-table__cell" style="white-space: pre-wrap;">// Re-fetch sorted rows from a server endpoint when a header is clicked.
+document.querySelector('[data-brut="table"]').addEventListener('brut:sort', function (e) {
+  var key = e.detail.key;
+  var direction = e.detail.direction; // "ascending" | "descending" | "none"
+  // e.detail.value === { key, direction } — canonical state object.
+  fetch('/api/rows?sort=' + encodeURIComponent(key) + '&dir=' + encodeURIComponent(direction))
+    .then(function (r) { return r.json(); })
+    .then(function (rows) { /* re-render tbody from rows */ });
+});</pre>
+<script>
+  document.querySelectorAll('[data-brut="table"]').forEach(function (t) {
+    t.addEventListener('brut:sort', function (e) {
+      // Demo: log the canonical state object.
+      console.log('brut:sort', e.detail.value);
+    });
+  });
+</script>
+
 <div data-brut="theme-switcher"></div>
 </body></html>

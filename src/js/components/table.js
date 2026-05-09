@@ -51,9 +51,11 @@
     for (var i = 0; i < headers.length; i++) {
       var h = headers[i];
       var isThis = h.getAttribute('data-sort-key') === key;
+      var thDir = isThis ? dir : 'none';
       h.classList.toggle('brut-table__cell--sorted',      isThis && dir === 'ascending');
       h.classList.toggle('brut-table__cell--sorted-desc', isThis && dir === 'descending');
-      h.setAttribute('aria-sort', isThis ? dir : 'none');
+      h.setAttribute('aria-sort', thDir);
+      h.setAttribute('data-sort-direction', thDir);
     }
 
     // Find the column index for this key by matching the header position.
@@ -92,10 +94,11 @@
             var key = h.getAttribute('data-sort-key');
             if (!key) return;
             var current = h.getAttribute('aria-sort');
-            var dir = current === 'ascending' ? 'descending' : 'ascending';
-            sortBy(el, key, dir);
-            el.dispatchEvent(new CustomEvent('brut:change', {
-              detail: { value: key, key: key, dir: dir }
+            var direction = current === 'ascending' ? 'descending' : 'ascending';
+            sortBy(el, key, direction);
+            el.dispatchEvent(new CustomEvent('brut:sort', {
+              bubbles: true,
+              detail: { key: key, direction: direction, value: { key: key, direction: direction } }
             }));
           }
 

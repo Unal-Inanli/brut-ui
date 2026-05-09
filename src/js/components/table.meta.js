@@ -16,12 +16,14 @@ export default {
   dataAttributes: [
     { name: 'data-sort-key',         values: 'string',        description: 'On a th.brut-table__cell--sortable: identifier for the sortable column' },
     { name: 'data-sort-value',       values: 'string|number', description: 'On a td: explicit value used for sorting (falls back to text content)' },
+    { name: 'data-sort-direction',   values: '"ascending" | "descending" | "none"', description: 'On a sortable th: written by the JS after each sort to reflect the active direction (every other sortable th gets "none")' },
     { name: 'data-brut-select-all',  values: 'boolean attribute', description: 'On a header element: toggles every [data-brut-row-select] in the table' },
     { name: 'data-brut-row-select',  values: 'boolean attribute', description: 'On a tbody row checkbox: marks the row as selectable by the header toggle' },
     { name: 'data-brut-col-label',   values: 'string',        description: 'On a td (responsive mode): label prefix shown before the cell value when stacked' },
   ],
   events: [
-    { name: 'brut:change', detail: { value: 'string (sort key) or boolean (when selectAll is true)', key: 'string (sort key, when sorting)', dir: '"ascending" | "descending"', selectAll: 'true (only on select-all toggle)' } },
+    { name: 'brut:change', detail: { value: 'boolean (select-all on/off state)', selectAll: 'true (only on select-all toggle)' } },
+    { name: 'brut:sort',   detail: { value: '{ key, direction }', key: 'string', direction: '"ascending" | "descending" | "none"' } },
   ],
   formState: { hiddenInput: false, name: 'Row checkboxes own their own form state; the table itself does not mirror to a hidden input' },
   a11y: {
