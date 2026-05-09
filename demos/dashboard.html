@@ -253,20 +253,11 @@
 
       <!-- Orders panel -->
       <div data-brut-panel="orders">
-        <div class="brut-table-toolbar">
-          <div class="brut-table-toolbar__title">Recent Orders <span>(248)</span></div>
-          <div class="brut-table-toolbar__search">
-            <input class="brut-input" type="search" placeholder="Search orders…" autocomplete="off"/>
-          </div>
-          <div class="brut-table-toolbar__actions">
-            <button class="brut-btn brut-btn--sm" type="button">Export</button>
-          </div>
-        </div>
-
-        <div class="brut-table-filter" data-brut="table-filter" data-brut-table="orders-table">
-          <label class="brut-field__label" for="q-orders" style="margin:0;">Filter</label>
-          <input id="q-orders" class="brut-input" type="search" placeholder="Filter rows…" autocomplete="off"/>
-          <span class="brut-table-filter__count"></span>
+        <div class="d-flex align-items-center gap-3 p-3" style="border: var(--bw-3) solid var(--ink); border-bottom: none;">
+          <strong style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-tight);">Recent Orders <span style="font-family: var(--font-sans); font-weight: var(--fw-medium); text-transform: none; color: var(--concrete-300); font-size: var(--fs-sm);">(248)</span></strong>
+          <span style="flex:1;"></span>
+          <input class="brut-input" type="search" placeholder="Search orders…" autocomplete="off" style="max-width: 240px;"/>
+          <button class="brut-btn brut-btn--sm" type="button">Export</button>
         </div>
 
         <div class="brut-table-wrap">

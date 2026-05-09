@@ -41,7 +41,7 @@ Each item: observation → current impact → recommended action → severity.
 
 ### D1. Two-tier registry in `define.js` is a smell
 
-`KNOWN_COMPONENTS` (84 entries) and `INTERACTIVE_COMPONENTS` (35 entries) are parallel arrays where the latter should be a subset of the former. Before M7, three components (`combobox`, `table-columns`, `table-filter`) were in `INTERACTIVE_COMPONENTS` but missing from `KNOWN_COMPONENTS` — an invariant violation that nothing detected. The fix was a manual edit.
+`KNOWN_COMPONENTS` (84 entries) and `INTERACTIVE_COMPONENTS` (35 entries) are parallel arrays where the latter should be a subset of the former. Before M7, one component (`combobox`) was in `INTERACTIVE_COMPONENTS` but missing from `KNOWN_COMPONENTS` — an invariant violation that nothing detected. The fix was a manual edit.
 
 **Impact:** silent drift; manifest entries silently dropped. A component flagged interactive but absent from `KNOWN_COMPONENTS` is invisible to the manifest emitter.
 **Recommendation:** collapse to a single source of truth — an array of component descriptors `[{ name: 'switch', kind: 'interactive', cssRoot: '.brut-switch' }]`. Derive `KNOWN_COMPONENTS` and `INTERACTIVE_COMPONENTS` as views. Add a doctor check `INTERACTIVE_COMPONENTS ⊆ KNOWN_COMPONENTS` regardless.
@@ -70,12 +70,11 @@ Three interactive components today have a class root that does NOT match their `
 | Component | Declared class | Hook | Cause |
 |---|---|---|---|
 | counter | `.brut-field__counter` | `data-brut="counter"` | Counter is a sub-element of `.brut-field`, modeled as BEM |
-| table-columns | `.brut-table-columns-btn` | `data-brut="table-columns"` | Trigger button is the labeled element, not the menu |
 | tooltip | `.brut-tip` | `data-brut="tooltip"` | Pre-convention naming |
 
 Plus the `.brut-pager` → `.brut-pagination` rename from M7 didn't touch `demos/*.html`, leaving 201 doctor `UNKNOWN_CLASS` findings as ambient noise.
 
-**Impact:** the central agent-prediction property — "given component name, infer class root" — is 91% accurate (32/35), not 100%. Three components require source reads to use correctly. Worse, the doctor's own META_DRIFT check uses `.brut-<name>` to derive expected modifier selectors, so it false-flags counter and tooltip modifiers.
+**Impact:** the central agent-prediction property — "given component name, infer class root" — is 94% accurate (31/33), not 100%. Two components require source reads to use correctly. Worse, the doctor's own META_DRIFT check uses `.brut-<name>` to derive expected modifier selectors, so it false-flags counter and tooltip modifiers.
 **Recommendation:** decide per component: rename the CSS root (breaking change, but cheap with `npx brut migrate`), or add a doctor allowlist that documents the exception. Don't leave them as silent drift.
 **Severity:** high. Either rename or formalize.
 

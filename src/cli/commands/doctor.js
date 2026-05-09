@@ -20,15 +20,12 @@ const WARNING_TYPES = new Set([
 ]);
 const INFO_TYPES = new Set(['META_DRIFT', 'CLASS_ROOT_EXCEPTION', 'EXAMPLE_DRIFT']);
 
-// Manifest names whose docs id / preview basename uses an irregular plural
-// or a docs alias (e.g. table-filter is documented as "table-global-filter"
-// alongside other table sub-pages). Regular plurals (+s, +es) are auto-derived;
-// only list exceptions here.
+// Manifest names whose docs id / preview basename uses an irregular plural.
+// Regular plurals (+s, +es) are auto-derived; only list exceptions here.
 const PLURAL_ALIASES = {
   btn:            ['buttons'],
   crumbs:         ['breadcrumbs'],
   switch:         ['toggles'],
-  'table-filter': ['table-global-filter'],
 };
 
 // Docs section ids that legitimately do not map to a single manifest component
@@ -78,7 +75,6 @@ const AGGREGATED_PRIMITIVES = new Set([
 // these and CLASS_ROOT_DRIFT (failure) for any other divergence.
 const KNOWN_CLASS_ROOT_EXCEPTIONS = {
   'counter':       { class: '.brut-field__counter',     reason: 'Sub-element of .brut-field (BEM); see ARCHITECTURE.md D4' },
-  'table-columns': { class: '.brut-table-columns-btn',  reason: 'Trigger button is the labeled element; see ARCHITECTURE.md D4' },
   'tooltip':       { class: '.brut-tip',                reason: 'Pre-convention naming; see ARCHITECTURE.md D4' },
 };
 
@@ -275,7 +271,7 @@ export default async function doctor(args) {
     }
 
     // INVARIANT_DRIFT: every interactive component must also be in KNOWN_COMPONENTS.
-    // Pre-M7 a real bug of this kind (combobox/table-columns/table-filter) went
+    // Pre-M7 a real bug of this kind (combobox) went
     // undetected — never let it recur silently.
     const knownSet = new Set(KNOWN_COMPONENTS);
     for (const name of INTERACTIVE_COMPONENTS) {
