@@ -22,8 +22,10 @@ export default defineConfig({
   base: process.env.VITE_BASE ?? '/brut-ui/',
 
   head: [
-    ['meta', { name: 'theme-color', content: '#0a0a0a' }],
+    ['meta', { name: 'theme-color', content: '#FAF7F0' }],
   ],
+
+  appearance: false,
 
   themeConfig: {
     siteTitle: 'BRUT',
