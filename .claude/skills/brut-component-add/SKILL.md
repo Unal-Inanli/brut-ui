@@ -1,6 +1,6 @@
 ---
 name: brut-component-add
-description: Scaffold a new BRUT component end-to-end (CSS, optional JS, meta, preview page, docs section). Use when the user asks to "add a X component", "build a X", "create a X", or references a component from TODO.md. Follows Workflow A from CLAUDE.md.
+description: Scaffold a new BRUT component end-to-end (CSS, optional JS, meta, preview page, docs section). Use when the user asks to "add a X component", "build a X", "create a X". Follows Workflow A from CLAUDE.md.
 ---
 
 # brut-component-add
@@ -10,7 +10,6 @@ Adds a new `.brut-<name>` component to the kit across all required surfaces. Thi
 ## When to use
 
 - User says: "add a X component", "build a X", "create a X".
-- User references a component listed in `TODO.md`.
 - A new component needs to be scaffolded from scratch.
 
 ## When NOT to use
