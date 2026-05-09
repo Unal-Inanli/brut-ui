@@ -1,8 +1,11 @@
 ---
 title: Tag input
+description: Chip-entry field. Enter or comma commits a tag, Backspace at empty input removes the last, and each chip has an x button to delete itself.
 ---
 
 # Tag input
+
+Chip-entry field. Enter or comma commits a tag, Backspace at empty input removes the last, and each chip has an x button to delete itself.
 
 <iframe
   class="brut-preview-frame"

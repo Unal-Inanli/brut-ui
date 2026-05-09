@@ -1,8 +1,11 @@
 ---
 title: Badges + Tags
+description: Compact inline label with semantic color variants for status, count, or category indicators.
 ---
 
 # Badges + Tags
+
+Compact inline label with semantic color variants for status, count, or category indicators.
 
 <iframe
   class="brut-preview-frame"

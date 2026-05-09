@@ -1,8 +1,11 @@
 ---
 title: Tabs + Segments
+description: "One-of-N panel switcher: clicking or arrow-keying a tab reveals the panel whose data-brut-panel matches the tab's data-brut-tab."
 ---
 
 # Tabs + Segments
+
+One-of-N panel switcher: clicking or arrow-keying a tab reveals the panel whose data-brut-panel matches the tab's data-brut-tab.
 
 <iframe
   class="brut-preview-frame"

@@ -1,8 +1,11 @@
 ---
 title: Table — Sticky
+description: Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.
 ---
 
 # Table — Sticky
+
+Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.
 
 <iframe
   class="brut-preview-frame"

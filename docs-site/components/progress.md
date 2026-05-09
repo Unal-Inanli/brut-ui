@@ -1,8 +1,11 @@
 ---
 title: Progress
+description: Determinate or indeterminate horizontal progress bar driven by a CSS --progress variable, with a JS API for live updates.
 ---
 
 # Progress
+
+Determinate or indeterminate horizontal progress bar driven by a CSS --progress variable, with a JS API for live updates.
 
 <iframe
   class="brut-preview-frame"

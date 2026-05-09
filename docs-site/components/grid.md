@@ -1,8 +1,11 @@
 ---
 title: 12-Column Grid
+description: CSS Grid layout with equal-width columns. Requires a column-count modifier to define the grid structure.
 ---
 
 # 12-Column Grid
+
+CSS Grid layout with equal-width columns. Requires a column-count modifier to define the grid structure.
 
 <iframe
   class="brut-preview-frame"

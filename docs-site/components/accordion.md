@@ -1,8 +1,11 @@
 ---
 title: Accordion
+description: Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode.
 ---
 
 # Accordion
+
+Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode.
 
 <iframe
   class="brut-preview-frame"

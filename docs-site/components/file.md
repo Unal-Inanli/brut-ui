@@ -1,8 +1,11 @@
 ---
 title: File
+description: "File picker that wraps a hidden <input type=\"file\"> with a visible button and live filename label."
 ---
 
 # File
+
+File picker that wraps a hidden `<input type="file">` with a visible button and live filename label.
 
 <iframe
   class="brut-preview-frame"

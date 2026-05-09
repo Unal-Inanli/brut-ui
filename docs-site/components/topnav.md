@@ -1,8 +1,11 @@
 ---
 title: Topnav
+description: Sticky page header whose only behavior is the mobile burger toggle for the link list; outside-click and Escape close it.
 ---
 
 # Topnav
+
+Sticky page header whose only behavior is the mobile burger toggle for the link list; outside-click and Escape close it.
 
 <iframe
   class="brut-preview-frame"

@@ -1,8 +1,11 @@
 ---
 title: Rating
+description: Row of 1–N star buttons that records an integer score, with hover preview, click-to-toggle, and full keyboard control.
 ---
 
 # Rating
+
+Row of 1–N star buttons that records an integer score, with hover preview, click-to-toggle, and full keyboard control.
 
 <iframe
   class="brut-preview-frame"

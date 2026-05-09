@@ -1,8 +1,11 @@
 ---
 title: Buttons
+description: Brutalist button with thick border, shadow, and hover lift effect. Works on button, anchor, and input elements.
 ---
 
 # Buttons
+
+Brutalist button with thick border, shadow, and hover lift effect. Works on button, anchor, and input elements.
 
 <iframe
   class="brut-preview-frame"

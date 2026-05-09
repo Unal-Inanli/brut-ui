@@ -1,8 +1,11 @@
 ---
 title: Rows
+description: Settings-style list with leading slot, title and subtitle main, and trailing slot — for users, options, or configurable items.
 ---
 
 # Rows
+
+Settings-style list with leading slot, title and subtitle main, and trailing slot — for users, options, or configurable items.
 
 <iframe
   class="brut-preview-frame"

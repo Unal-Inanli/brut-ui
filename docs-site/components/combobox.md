@@ -1,8 +1,11 @@
 ---
 title: Combobox
+description: Searchable single-select with a text input that filters a static option list and a hidden input mirror for form submission.
 ---
 
 # Combobox
+
+Searchable single-select with a text input that filters a static option list and a hidden input mirror for form submission.
 
 <iframe
   class="brut-preview-frame"

@@ -1,8 +1,11 @@
 ---
 title: Empty state
+description: Empty-state placeholder with icon slot, title, body, and optional action button — for zero-data screens.
 ---
 
 # Empty state
+
+Empty-state placeholder with icon slot, title, body, and optional action button — for zero-data screens.
 
 <iframe
   class="brut-preview-frame"

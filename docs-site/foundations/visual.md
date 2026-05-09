@@ -1,3 +1,7 @@
+---
+title: Visual
+---
+
 # Visual foundations
 
 The rules every BRUT screen obeys. These are encoded in the kit's

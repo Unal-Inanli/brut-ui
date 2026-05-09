@@ -1,8 +1,11 @@
 ---
 title: Date picker
+description: Text field paired with a popover calendar; selecting a day writes ISO YYYY-MM-DD into the visible field and a hidden mirror.
 ---
 
 # Date picker
+
+Text field paired with a popover calendar; selecting a day writes ISO YYYY-MM-DD into the visible field and a hidden mirror.
 
 <iframe
   class="brut-preview-frame"

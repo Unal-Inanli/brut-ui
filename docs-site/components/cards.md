@@ -1,8 +1,11 @@
 ---
 title: Cards
+description: Bordered content container with background, shadow, and padding. A general-purpose surface for grouping related content.
 ---
 
 # Cards
+
+Bordered content container with background, shadow, and padding. A general-purpose surface for grouping related content.
 
 <iframe
   class="brut-preview-frame"

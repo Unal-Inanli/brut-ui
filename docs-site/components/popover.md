@@ -1,8 +1,11 @@
 ---
 title: Popover
+description: Trigger-anchored card with optional head bar, dismissed by click-outside, Escape, or any [data-brut-close] inside.
 ---
 
 # Popover
+
+Trigger-anchored card with optional head bar, dismissed by click-outside, Escape, or any [data-brut-close] inside.
 
 <iframe
   class="brut-preview-frame"

@@ -1,8 +1,11 @@
 ---
 title: Table
+description: Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.
 ---
 
 # Table
+
+Data table with click-to-sort headers, header select-all checkbox, and per-row select checkboxes.
 
 <iframe
   class="brut-preview-frame"

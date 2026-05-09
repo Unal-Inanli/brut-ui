@@ -1,4 +1,5 @@
 ---
+title: BRUT
 layout: home
 
 hero:

@@ -1,8 +1,11 @@
 ---
 title: Search
+description: Text input wrapper with a clear (×) button that appears only when the field has a value and resets the input on click.
 ---
 
 # Search
+
+Text input wrapper with a clear (×) button that appears only when the field has a value and resets the input on click.
 
 <iframe
   class="brut-preview-frame"

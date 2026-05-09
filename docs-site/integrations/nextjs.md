@@ -1,3 +1,7 @@
+---
+title: Next.js
+---
+
 # Use BRUT with Next.js
 
 Works with both the App Router (`app/`) and Pages Router (`pages/`).

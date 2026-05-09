@@ -1,8 +1,11 @@
 ---
 title: OTP
+description: One-time-code input rendered as one cell per digit with auto-advance, paste-fill, and Backspace/Arrow navigation.
 ---
 
 # OTP
+
+One-time-code input rendered as one cell per digit with auto-advance, paste-fill, and Backspace/Arrow navigation.
 
 <iframe
   class="brut-preview-frame"

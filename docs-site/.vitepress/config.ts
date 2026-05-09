@@ -22,7 +22,6 @@ export default defineConfig({
   base: process.env.VITE_BASE ?? '/brut-ui/',
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#0a0a0a' }],
   ],
 
@@ -32,6 +31,7 @@ export default defineConfig({
       { text: 'Get started', link: '/get-started' },
       { text: 'Components', link: '/components/' },
       { text: 'Integrations', link: '/integrations/' },
+      { text: 'Configuration', link: '/configuration' },
       { text: 'Examples', link: '/examples' },
       {
         text: 'Foundations',

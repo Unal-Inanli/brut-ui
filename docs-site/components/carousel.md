@@ -1,8 +1,11 @@
 ---
-title: BRUT &mdash; carousel
+title: Carousel
+description: Single-track slide carousel with prev/next, dots, keyboard, autoplay, optional loop, and pointer-driven swipe.
 ---
 
-# BRUT &mdash; carousel
+# Carousel
+
+Single-track slide carousel with prev/next, dots, keyboard, autoplay, optional loop, and pointer-driven swipe.
 
 <iframe
   class="brut-preview-frame"
