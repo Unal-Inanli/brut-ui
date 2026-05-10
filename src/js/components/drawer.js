@@ -28,6 +28,11 @@
       var sideClass = 'brut-drawer--' + side;
       if (!el.classList.contains(sideClass)) el.classList.add(sideClass);
 
+      // Drawer is a modal dialog. Mirror dialog.js so screen readers announce
+      // it as such even when consumers copy markup that omits these attrs.
+      if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
+      if (!el.hasAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
+
       var scrimId = el.getAttribute('data-brut-scrim');
       var scrim = scrimId ? document.getElementById(scrimId) : null;
 
@@ -42,9 +47,11 @@
       }
 
       var trap = null;
+      var lastTrigger = null;
 
-      function open() {
+      function open(trigger) {
         if (!el.hasAttribute('hidden') && el.classList.contains('brut-drawer--open')) return;
+        lastTrigger = trigger || lastTrigger;
         el.removeAttribute('hidden');
         if (scrim) scrim.removeAttribute('hidden');
         // Force layout so the transition runs from the closed transform.
@@ -62,11 +69,16 @@
         if (scrim) scrim.setAttribute('hidden', '');
         if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
+        // Restore focus to the element that opened the drawer so keyboard
+        // users keep their place. Mirrors dialog.js's pattern.
+        if (lastTrigger && lastTrigger.isConnected) {
+          try { lastTrigger.focus(); } catch (e) {}
+        }
       }
 
       document.querySelectorAll('[data-brut-open="' + el.id + '"]').forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
-        t.addEventListener('click', function (e) { e.preventDefault(); open(); });
+        t.addEventListener('click', function (e) { e.preventDefault(); open(t); });
       });
 
       el.querySelectorAll('[data-brut-close], .brut-drawer__x').forEach(function (t) {
