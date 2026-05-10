@@ -339,6 +339,10 @@
         <pre class="docs-snippet">&lt;link rel="stylesheet" href="dist/brut.css"&gt;
 &lt;script src="dist/brut.js" defer&gt;&lt;/script&gt;  &lt;!-- only if you use a data-brut="…" component --&gt;</pre>
         <p class="lead" style="margin-top: var(--sp-4);">All <code>data-brut="…"</code> components auto-init on <code>DOMContentLoaded</code>. For markup added later, call <code>Brut.init(root)</code> to wire any new instances. Re-init is a no-op.</p>
+        <p class="lead" style="margin-top: var(--sp-4);">For SPA / AJAX / dynamically inserted markup, call <code>Brut.init(root)</code> after insertion. The runtime stamps a <code>__brutInit</code> flag on each wired element so re-init is a no-op — pass the narrowest <code>root</code> to keep the scan cheap.</p>
+        <pre class="docs-snippet">const container = document.getElementById('dynamic-content');
+container.innerHTML = '&lt;div data-brut="dialog"&gt;…&lt;/div&gt;';
+Brut.init(container);   // wire all new components inside `container`</pre>
       </section>
 
       <!-- BUILD -->
