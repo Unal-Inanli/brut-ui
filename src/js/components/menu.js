@@ -53,6 +53,7 @@
         lastTrigger = trigger || lastTrigger;
         el.removeAttribute('hidden');
         position();
+        if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'true');
         var first = el.querySelector('.brut-menu__item');
         if (first) {
           try { first.focus(); } catch (e) { /* ignore */ }
@@ -62,12 +63,14 @@
       function close() {
         if (el.hasAttribute('hidden')) return;
         el.setAttribute('hidden', '');
+        triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 
       triggers.forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
         t.setAttribute('aria-haspopup', 'menu');
+        t.setAttribute('aria-expanded', 'false');
         t.addEventListener('click', function (e) {
           e.preventDefault();
           if (el.hasAttribute('hidden')) open(t); else close();
