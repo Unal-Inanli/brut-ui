@@ -2936,6 +2936,38 @@ button.brut-sidebar__group-title::after {
   .brut-shape { display: none !important; }
 }
 
+/* High-contrast preference: bump border weights and disable softer shadows
+   so users with --prefers-contrast: more get a clearly delineated UI.
+   Uses existing tokens; no new design values introduced. */
+@media (prefers-contrast: more) {
+  :where(.brut-btn, .brut-input, .brut-textarea, .brut-select) {
+    border-width: var(--bw-4);
+  }
+  :where(.brut-card, .brut-empty, .brut-alert) {
+    border-width: var(--bw-3);
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline-width: var(--bw-3);
+  }
+}
+
+/* Windows High Contrast Mode (forced-colors: active):
+   the OS overrides most colors, so we map our visual contracts onto
+   system-color keywords and disable shadows that the OS can't render. */
+/* Sanctioned exception: system-color keywords (Highlight, GrayText) are CSS-defined and OS-resolved, not BRUT tokens. forced-colors mode requires them. */
+@media (forced-colors: active) {
+  :where(.brut-btn, .brut-input, .brut-select, .brut-textarea, .brut-card, .brut-alert, .brut-empty) {
+    forced-color-adjust: auto;
+    box-shadow: none;
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline: var(--bw-3) solid Highlight;
+  }
+  :where(.brut-btn:disabled, .brut-input:disabled, [aria-disabled="true"]) {
+    color: GrayText;
+  }
+}
+
 /* ============================================================
    DOCS-ONLY UTILITIES
    ------------------------------------------------------------
