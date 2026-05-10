@@ -701,6 +701,224 @@ const entries = [
       },
     ],
   },
+  {
+    name: 'divider',
+    description: 'Horizontal rule that draws a thick ink line between sections — registered as a static component but the CSS class block is not yet implemented in src/components.css; the closest in-tree equivalent is the rule pattern documented at the RULE banner (line 2671).',
+    useCases: ['section break inside a card', 'visual separator between list groups', 'thematic break between paragraphs', 'between toolbar segments'],
+    htmlElements: ['hr', 'div'],
+    modifiers: [],
+    notes: 'Component is declared in src/config/define.js with kind:"static" but has no .brut-divider selector in src/components.css and no preview/docs surface. Use a plain <hr> with the existing RULE styling, or treat this as an outstanding component-debt item until the class block lands. Examples below assume the conventional shape and will work once the class is added.',
+    examples: [
+      {
+        title: 'Horizontal rule between sections',
+        html: '<section>First section content.</section>\n<hr class="brut-divider">\n<section>Second section content.</section>',
+      },
+    ],
+  },
+  {
+    name: 'hero',
+    description: 'Full-bleed hero banner with display headline, lead copy, and call-to-action — registered as a static component but the CSS class block is not yet implemented in src/components.css.',
+    useCases: ['landing page hero', 'marketing splash', 'top-of-page banner', 'product launch announcement'],
+    htmlElements: ['section', 'header', 'div'],
+    modifiers: [],
+    notes: 'Component is declared in src/config/define.js with kind:"static" but has no .brut-hero selector in src/components.css and no preview/docs surface. Compose a hero today with .brut-section--ink + .brut-section--loose + .brut-container + .brut-display-1 + .brut-lead. Treat the .brut-hero class as outstanding component-debt.',
+    examples: [
+      {
+        title: 'Hero composed from existing primitives (current pattern)',
+        html: '<section class="brut-section brut-section--ink brut-section--loose">\n  <div class="brut-container">\n    <h1 class="brut-display-1">SHIP SOMETHING BRUTAL</h1>\n    <p class="brut-lead">A vanilla UI kit for builders who like edges sharp and corners square.</p>\n    <a class="brut-btn brut-btn--primary brut-btn--lg" href="/get-started">Get started</a>\n  </div>\n</section>',
+      },
+    ],
+  },
+  {
+    name: 'mono',
+    description: 'Inline monospace run for code-flavored text inside body copy — registered as a static component but the CSS class block is not yet implemented in src/components.css.',
+    useCases: ['inline file path in prose', 'short identifier in body text', 'CLI flag mention', 'shortcut spelled in copy'],
+    htmlElements: ['span', 'code'],
+    modifiers: [],
+    notes: 'Component is declared in src/config/define.js with kind:"static" but has no .brut-mono selector in src/components.css. The font-family token (--font-mono) is used by .brut-code, .brut-pre, and .brut-kbd; for inline code styling today prefer .brut-code. preview/type-mono.html is a typography demo, not a usage page for .brut-mono. Treat this as outstanding component-debt.',
+    examples: [
+      {
+        title: 'Monospace run inside body copy (intended pattern)',
+        html: '<p class="brut-body">Edit the file at <span class="brut-mono">src/config/define.js</span> to register a new component.</p>',
+      },
+    ],
+  },
+  {
+    name: 'notice',
+    description: 'Banner-style call-out for advisory or contextual messaging — registered as a static component but the CSS class block is not yet implemented in src/components.css; functionally similar to .brut-alert.',
+    useCases: ['inline page-top advisory', 'soft system reminder', 'policy or terms callout', 'doc page tip block'],
+    htmlElements: ['div', 'aside'],
+    modifiers: [],
+    notes: 'Component is declared in src/config/define.js with kind:"static" but has no .brut-notice selector in src/components.css and no preview/docs surface. Use .brut-alert (with --info, --warn, --ok, --err) for any banner-style messaging today. Treat .brut-notice as outstanding component-debt.',
+    examples: [
+      {
+        title: 'Use .brut-alert today (current substitute)',
+        html: '<div class="brut-alert brut-alert--info">\n  <div class="brut-alert__icon">i</div>\n  <div>Heads up — scheduled maintenance starts at 02:00 UTC.</div>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'overline',
+    description: 'Eyebrow label rendered above a heading — sans font, extra-small, bold, uppercase, widest tracking, muted concrete-400 color, zero margin.',
+    useCases: ['category label above a hero headline', 'section eyebrow', 'card kicker', 'breadcrumb-style group label'],
+    htmlElements: ['p', 'span', 'div', 'h6'],
+    modifiers: [],
+    notes: 'Differs from .brut-h6 — .brut-overline is muted (concrete-400) and used as a kicker above a larger heading; .brut-h6 is the smallest in-flow heading proper. Pair an overline directly above an .brut-h1 or .brut-display-* for the classic eyebrow lockup.',
+    examples: [
+      {
+        title: 'Eyebrow above a section title',
+        html: '<p class="brut-overline">Pricing</p>\n<h2 class="brut-h2">Simple plans for any team</h2>',
+      },
+      {
+        title: 'Card kicker',
+        html: '<article class="brut-card">\n  <p class="brut-overline">New</p>\n  <h3 class="brut-h3">Workflows v2</h3>\n  <p class="brut-body">Now with conditional steps.</p>\n</article>',
+      },
+    ],
+  },
+  {
+    name: 'pre',
+    description: 'Block-level preformatted code panel — monospace, ink background with paper text, sm size, thick ink border, sm shadow, scroll-on-overflow.',
+    useCases: ['multi-line code sample in docs', 'JSON/YAML payload display', 'CLI session transcript', 'config-file snippet'],
+    htmlElements: ['pre'],
+    modifiers: [],
+    notes: 'Token-color hooks are available for inline syntax highlight: .tok-comment (concrete-300), .tok-keyword (pop-pink), .tok-string (pop-lime), .tok-num (primary). Wrap highlighted runs in <span class="tok-*"> inside the <pre>.',
+    examples: [
+      {
+        title: 'Code block',
+        html: '<pre class="brut-pre"><code>npm install\nnpm run build</code></pre>',
+      },
+      {
+        title: 'Code block with token highlighting',
+        html: '<pre class="brut-pre"><span class="tok-comment">// Snap, never ease.</span>\n<span class="tok-keyword">const</span> ease = <span class="tok-string">\'cubic-bezier(.2,.8,.2,1)\'</span>;\n<span class="tok-keyword">const</span> duration = <span class="tok-num">140</span>;</pre>',
+      },
+    ],
+  },
+  {
+    name: 'prose',
+    description: 'Long-form readable text container — sans, base size, normal line-height, 70ch measure — auto-spaces direct children with a sp-3h gap and tightens spacing around nested headings, lists, and inline code.',
+    useCases: ['blog post body', 'docs article body', 'rendered markdown wrapper', 'long-form content region'],
+    htmlElements: ['article', 'div', 'main', 'section'],
+    modifiers: [],
+    notes: 'Owl-style spacing (".brut-prose > * + *") only targets DIRECT children, so put each paragraph, heading, and list directly inside the container. Nested h2/h3 get extra top margin (sp-8 / sp-6) for clear section breaks. Inline <code> inside .brut-prose picks up the .brut-code styling automatically.',
+    examples: [
+      {
+        title: 'Article body',
+        html: '<article class="brut-prose">\n  <h1 class="brut-h1">Welcome</h1>\n  <p>The first paragraph sits flush with the heading above it.</p>\n  <h2>Subsection</h2>\n  <p>Subsequent children get vertical rhythm automatically.</p>\n  <ul>\n    <li>List items inherit padding</li>\n    <li>Inline <code>code</code> picks up panel styling</li>\n  </ul>\n</article>',
+      },
+    ],
+  },
+  {
+    name: 'quote',
+    description: 'Pull-out quote with a left ink rule — sans, md size, normal line-height, no italic, sp-1h vertical / sp-4 horizontal padding, zero margin.',
+    useCases: ['inline pull quote in an article', 'testimonial inside a card', 'reviewer comment', 'highlight from a longer passage'],
+    htmlElements: ['blockquote', 'div'],
+    modifiers: [],
+    notes: 'Use .brut-pull-quote (separate class) for the larger display-weight pull-out with thick top + bottom rules. .brut-quote stays inline-friendly inside body copy.',
+    examples: [
+      {
+        title: 'Inline blockquote',
+        html: '<blockquote class="brut-quote">Concrete is honest about what it is.</blockquote>',
+      },
+      {
+        title: 'Testimonial in a card',
+        html: '<article class="brut-card">\n  <blockquote class="brut-quote">The fastest UI kit our team has shipped against.</blockquote>\n  <p class="brut-caption">— Jane Doe, Lead Engineer</p>\n</article>',
+      },
+    ],
+  },
+  {
+    name: 'range',
+    description: 'Restyled native single-thumb slider — bone-fill track with thick ink border and sp-icon primary-fill thumb. Wraps a real <input type="range"> for native value, keyboard, and form submission.',
+    useCases: ['volume / brightness slider', 'numeric value picker', 'filter weight control', 'preference percentage input'],
+    htmlElements: ['input[type="range"]'],
+    modifiers: [],
+    notes: 'Apply the class directly to the <input type="range"> element. Stepped behavior comes from the standard step="" attribute. For two-thumb min/max selection, use .brut-range-dual (interactive component, separate JS module).',
+    examples: [
+      {
+        title: 'Default range slider',
+        html: '<input class="brut-range" type="range" min="0" max="100" value="50">',
+      },
+      {
+        title: 'Stepped slider with label',
+        html: '<label class="brut-label" for="volume">Volume</label>\n<input id="volume" class="brut-range" type="range" min="0" max="10" step="1" value="7">',
+      },
+    ],
+  },
+  {
+    name: 'select',
+    description: 'Restyled native dropdown — bone fill, thick ink border, xs shadow, hard ink chevron drawn with two linear-gradients (sanctioned exception per AGENTS.md). 100% width, focus ring flips background to primary-soft.',
+    useCases: ['form single-select', 'sort/filter dropdown', 'toolbar option picker', 'settings choice field'],
+    htmlElements: ['select'],
+    modifiers: [],
+    notes: 'Width is 100% by default — wrap inside a sized parent or grid cell to constrain. Validation states are driven natively via :user-invalid / :user-valid (and the [aria-invalid="true"] attribute). For a searchable rich select with custom rendering, use .brut-combobox or .brut-multiselect (interactive components).',
+    examples: [
+      {
+        title: 'Default select',
+        html: '<select class="brut-select">\n  <option value="">Choose a planet…</option>\n  <option>Mercury</option>\n  <option>Venus</option>\n  <option>Earth</option>\n</select>',
+      },
+      {
+        title: 'Select with optgroups',
+        html: '<select class="brut-select">\n  <optgroup label="Inner">\n    <option>Mercury</option>\n    <option>Venus</option>\n  </optgroup>\n  <optgroup label="Outer">\n    <option>Jupiter</option>\n    <option>Saturn</option>\n  </optgroup>\n</select>',
+      },
+    ],
+  },
+  {
+    name: 'skeleton',
+    description: 'Loading placeholder block with concrete-100 fill, thin ink border, and a hard ink stripe sweep that loops every 800ms (sanctioned loader animation). Pair sizing modifiers to match the content shape being substituted.',
+    useCases: ['async card placeholder', 'image-loading shim', 'list-row placeholder', 'avatar placeholder', 'table-row stand-in'],
+    htmlElements: ['span', 'div'],
+    modifiers: [
+      { name: '--text', height: '1em width:100%', description: '1em-tall full-width line for substituting a row of text' },
+      { name: '--block', description: 'Fixed-height block (--skeleton-h) for substituting a card hero or image' },
+      { name: '--circle', description: 'Square sp-12 box for substituting an avatar' },
+    ],
+    notes: 'The shimmer animation is a sanctioned exception to the 140ms transition cap because it is an animation loop, not a transition. Honors prefers-reduced-motion via the reduce-motion media block in components.css.',
+    examples: [
+      {
+        title: 'Text-line skeletons',
+        html: '<div class="brut-stack brut-stack--xs">\n  <span class="brut-skeleton brut-skeleton--text" style="width: 80%;"></span>\n  <span class="brut-skeleton brut-skeleton--text" style="width: 95%;"></span>\n  <span class="brut-skeleton brut-skeleton--text" style="width: 60%;"></span>\n</div>',
+      },
+      {
+        title: 'Card-loading placeholder',
+        html: '<div class="brut-card">\n  <div class="brut-skeleton brut-skeleton--block" style="height: 120px; margin-bottom: 16px;"></div>\n  <span class="brut-skeleton brut-skeleton--text" style="width: 70%;"></span>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'spinner',
+    description: 'Square loading indicator — thick ink border with the top edge in primary, rotating 360deg every 600ms (sanctioned loader animation). No border-radius — stays brutalist.',
+    useCases: ['inline button loading state', 'async data fetch indicator', 'page-level loading spinner', 'background-task busy state'],
+    htmlElements: ['span', 'div'],
+    modifiers: [
+      { name: '--sm', description: 'sp-6 box with bw-2 border — for inline button or text use' },
+      { name: '--md', description: 'sp-8 box with bw-3 border — the default size' },
+      { name: '--lg', description: 'sp-12 box with bw-3 border — for page-level loading states' },
+    ],
+    notes: 'The 600ms rotation is a sanctioned exception to the 140ms transition cap because it is an animation loop, not a transition. Honors prefers-reduced-motion via the reduce-motion media block in components.css. For determinate progress, use .brut-progress instead.',
+    examples: [
+      {
+        title: 'Spinner inside a loading button',
+        html: '<button class="brut-btn" type="button" disabled>\n  <span class="brut-spinner brut-spinner--sm" style="vertical-align: middle; margin-right: 8px;"></span>\n  SAVING\n</button>',
+      },
+      {
+        title: 'Inline with status text',
+        html: '<div class="brut-cluster brut-cluster--sm">\n  <span class="brut-spinner brut-spinner--sm"></span>\n  <span class="brut-body">Loading…</span>\n</div>',
+      },
+    ],
+  },
+  {
+    name: 'stat',
+    description: 'Number-and-label statistic display block — registered as a static component but the CSS class block is not yet implemented in src/components.css; the closest in-tree equivalent is the existing .brut-num figure class (line 277).',
+    useCases: ['dashboard KPI tile', 'metric in a marketing page', 'inline figure with label', 'reporting summary block'],
+    htmlElements: ['div', 'article'],
+    modifiers: [],
+    notes: 'Component is declared in src/config/define.js with kind:"static" but has no .brut-stat selector in src/components.css and no preview/docs surface. Compose a stat today with .brut-num for the figure plus .brut-overline or .brut-label for the caption. Treat .brut-stat as outstanding component-debt.',
+    examples: [
+      {
+        title: 'Stat composed from existing primitives (current pattern)',
+        html: '<div>\n  <p class="brut-num">12,480</p>\n  <p class="brut-overline">Active users</p>\n</div>',
+      },
+    ],
+  },
 ];
 
 export const STATIC_META = new Map(entries.map(e => [e.name, e]));
