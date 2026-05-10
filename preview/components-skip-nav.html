@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Skip nav</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+<style>
+  body { margin: 0; padding: 0; background: var(--paper); font-family: var(--font-sans); }
+  nav.fake-nav { padding: var(--sp-3) var(--sp-5); border-bottom: var(--bw-3) solid var(--ink); display: flex; gap: var(--sp-4); }
+  nav.fake-nav a { color: var(--ink); font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--tracking-wide); font-size: var(--fs-sm); }
+  main { padding: var(--sp-6); }
+  .instructions { padding: var(--sp-3) var(--sp-5); background: var(--paper-2); border-bottom: var(--bw-1) solid var(--ink); font-size: var(--fs-sm); }
+</style></head>
+<body>
+  <a href="#main-content" class="brut-skip-nav">Skip to main content</a>
+
+  <p class="instructions">Press Tab from the address bar to reveal the skip link in the top-left. Press Enter to jump focus past the navigation to the main region.</p>
+
+  <nav class="fake-nav">
+    <a href="#nope">Home</a>
+    <a href="#nope">Docs</a>
+    <a href="#nope">Components</a>
+    <a href="#nope">Demos</a>
+    <a href="#nope">Blog</a>
+  </nav>
+
+  <main id="main-content">
+    <h1 class="brut-h2">Main content.</h1>
+    <p class="brut-body">Skip-nav lands focus here. The link itself is offscreen until it receives focus, then snaps into the top-left corner using <code>--ink</code> on <code>--paper</code> for full contrast.</p>
+  </main>
+<script src="../dist/brut.js"></script>
+</body></html>
