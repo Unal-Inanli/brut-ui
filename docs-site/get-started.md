@@ -238,6 +238,25 @@ these instead, depending on your setup:
 
 ---
 
+## Dynamic content & SPA usage
+
+`Brut.init(rootElement)` wires every `data-brut="…"` component inside
+`rootElement`. The runtime stamps a `__brutInit` flag on each wired
+element so re-init is a no-op — safe to call after every dynamic insert.
+
+```js
+const container = document.getElementById('dynamic-content');
+container.innerHTML = '<div data-brut="dialog">…</div>';
+Brut.init(container);   // wire all new components inside container
+```
+
+Pass the narrowest `root` (not `document`) to keep the scan cheap.
+A `Brut.destroy(el)` cleanup hook is on the roadmap (see GitHub issue #95)
+but not yet shipped — components stay wired until their elements are
+detached from the DOM.
+
+---
+
 ## What's next?
 
 - **[Integrations](/integrations/)** — Vite, Next.js, Astro, SvelteKit, Nuxt, plain HTML.

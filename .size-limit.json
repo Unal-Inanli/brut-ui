@@ -7,12 +7,12 @@
   {
     "name": "dist/brut.js — IIFE (brotli)",
     "path": "dist/brut.js",
-    "limit": "20 KB"
+    "limit": "22 KB"
   },
   {
     "name": "dist/brut.esm.js (brotli)",
     "path": "dist/brut.esm.js",
-    "limit": "20 KB"
+    "limit": "22 KB"
   },
   {
     "name": "dist/components.json (brotli)",

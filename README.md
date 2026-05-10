@@ -21,11 +21,17 @@ Three install paths. Pick the one that matches how you ship.
 ### CDN — zero install
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.css" />
-<script src="https://cdn.jsdelivr.net/npm/@sprtn/ui@1/dist/brut.js" defer></script>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@sprtn/ui@1.3.2/dist/brut.css"
+      integrity="sha384-2Tt/ow6z+oJUBgh2QNLG3VI5irFWhhskFeaqtEvoMfFxrNtIHQ2rhq9OHYkD+8v2"
+      crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/@sprtn/ui@1.3.2/dist/brut.js"
+        defer
+        integrity="sha384-f9fVrysEZ2o5yHpI7ZXI4A8O3zp07GSA9NbHCztnXHpFy3k5CAP4hRSAb0g8WGje"
+        crossorigin="anonymous"></script>
 ```
 
-`@1` resolves to the latest 1.x release. Pin to an exact version (`@1.0.1`) for production.
+The `integrity` hashes pin the snippet to this exact build — any tampering at the CDN fails the browser's SRI check. Bumping versions means refreshing both the version and the hashes (`curl … | openssl dgst -sha384 -binary | openssl base64 -A`).
 
 ### npm — for any bundler
 

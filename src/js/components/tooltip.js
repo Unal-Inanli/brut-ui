@@ -59,6 +59,38 @@
     ? window.matchMedia('(hover: none) and (pointer: coarse)')
     : null;
 
+  // Module-scope routing so document keydown / pointerdown listeners register
+  // exactly once per module load, not once per init(el) call (#181).
+  // Each entry is a tooltip trigger -> { hide, isPinned, getTip } record.
+  var hideByEl = new WeakMap();
+  var triggers = [];
+
+  function eachTrigger(fn) {
+    for (var i = 0; i < triggers.length; i++) {
+      var el = triggers[i];
+      if (!el.isConnected) continue;
+      var rec = hideByEl.get(el);
+      if (rec) fn(el, rec);
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    eachTrigger(function (el, rec) { rec.hide(); });
+  });
+
+  document.addEventListener('pointerdown', function (e) {
+    eachTrigger(function (el, rec) {
+      if (!rec.isPinned()) return;
+      var tip = rec.getTip();
+      if (!tip) return;
+      var target = e.target;
+      if (el.contains(target)) return;
+      if (tip.contains(target)) return;
+      rec.hide();
+    });
+  });
+
   Brut.register('tooltip', {
     selector: '[data-brut="tooltip"]',
     init: function (el) {
@@ -111,22 +143,17 @@
           e.preventDefault();
           toggle();
         });
-        // Outside-tap dismissal — scoped to the trigger's lifetime so
-        // the listener no-ops once the host element is detached (mirrors
-        // the existing keydown Esc handler pattern).
-        document.addEventListener('pointerdown', function (e) {
-          if (!el.isConnected) return;
-          if (!tip) return;
-          var target = e.target;
-          if (el.contains(target)) return;
-          if (tip.contains(target)) return;
-          hide();
-        });
       }
 
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') hide();
+      // Register this trigger with the module-scope listeners (#181).
+      // Outside-tap dismissal only applies on touch-primary devices to match
+      // the original tap-to-pin behavior; isPinned() encodes that.
+      hideByEl.set(el, {
+        hide: hide,
+        isPinned: function () { return touchPrimary && !!tip; },
+        getTip: function () { return tip; }
       });
+      triggers.push(el);
     }
   });
 })();

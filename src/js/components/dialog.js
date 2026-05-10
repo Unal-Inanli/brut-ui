@@ -15,6 +15,17 @@
 (function () {
   if (!window.Brut) return;
   var titleCounter = 0;
+  var closeByEl = new WeakMap();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('[data-brut="dialog"]:not([hidden])').forEach(function (el) {
+      if (!el.isConnected) return;
+      var c = closeByEl.get(el);
+      if (c) c();
+    });
+  });
+
   Brut.register('dialog', {
     selector: '[data-brut="dialog"]',
     init: function (el) {
@@ -38,6 +49,10 @@
         if (!el.hasAttribute('hidden')) return;
         el.removeAttribute('hidden');
         el.setAttribute('aria-modal', 'true');
+        var siblings = Array.prototype.filter.call(document.body.children, function (child) {
+          return child !== el && !child.classList.contains('brut-scrim');
+        });
+        siblings.forEach(function (child) { child.inert = true; });
         if (scrim) scrim.removeAttribute('hidden');
         if (Brut.scrollLock) Brut.scrollLock.acquire();
         if (Brut.focusTrap) trap = Brut.focusTrap.activate(el);
@@ -48,10 +63,14 @@
         if (trap) { trap.release(); trap = null; }
         el.setAttribute('hidden', '');
         el.removeAttribute('aria-modal');
+        Array.prototype.forEach.call(document.body.children, function (child) {
+          if (child !== el) child.inert = false;
+        });
         if (scrim) scrim.setAttribute('hidden', '');
         if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
+      closeByEl.set(el, close);
 
       document.querySelectorAll('[data-brut-open="' + el.id + '"]').forEach(function (t) {
         t.addEventListener('click', function (e) { e.preventDefault(); open(); });
@@ -60,11 +79,6 @@
       el.querySelectorAll('[data-brut-close], .brut-dialog__x').forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
         t.addEventListener('click', function (e) { e.preventDefault(); close(); });
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (!el.isConnected) return;
-        if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
       });
 
       if (scrim) {

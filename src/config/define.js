@@ -30,6 +30,7 @@ const COMPONENTS = [
   { name: 'drawer',          kind: 'interactive' },
   { name: 'dropzone',        kind: 'interactive' },
   { name: 'empty',           kind: 'static' },
+  { name: 'field',           kind: 'interactive' },
   { name: 'file',            kind: 'interactive' },
   { name: 'footer',          kind: 'static' },
   { name: 'grid',            kind: 'static' },

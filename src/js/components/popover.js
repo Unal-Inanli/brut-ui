@@ -13,11 +13,21 @@
 (function () {
   if (!window.Brut) return;
   var idCounter = 0;
+  var closeByEl = new WeakMap();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('[data-brut="popover"]:not([hidden])').forEach(function (el) {
+      if (!el.isConnected) return;
+      var c = closeByEl.get(el);
+      if (c) c();
+    });
+  });
+
   Brut.register('popover', {
     selector: '[data-brut="popover"]',
     init: function (el) {
       if (!el.id) el.id = 'brut-popover-' + (++idCounter);
-      if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
 
       var triggers = document.querySelectorAll('[data-brut-popover-open="' + el.id + '"]');
       var lastTrigger = null;
@@ -88,10 +98,11 @@
         }
         el.dispatchEvent(new CustomEvent('brut:close', { bubbles: true, detail: { value: false } }));
       }
+      closeByEl.set(el, close);
 
       triggers.forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
-        if (!t.hasAttribute('aria-haspopup')) t.setAttribute('aria-haspopup', 'dialog');
+        if (!t.hasAttribute('aria-haspopup')) t.setAttribute('aria-haspopup', 'true');
         if (!t.hasAttribute('aria-expanded')) t.setAttribute('aria-expanded', 'false');
         if (!t.hasAttribute('aria-controls')) t.setAttribute('aria-controls', el.id);
         t.addEventListener('click', function (e) {
@@ -103,11 +114,6 @@
       el.querySelectorAll('[data-brut-close], .brut-popover__x').forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
         t.addEventListener('click', function (e) { e.preventDefault(); close(); });
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (!el.isConnected) return;
-        if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
       });
 
       document.addEventListener('click', function (e) {
