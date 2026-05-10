@@ -33,6 +33,15 @@
 
       target.addEventListener('input',  refresh);
       target.addEventListener('change', refresh);
+
+      var form = target.closest('form');
+      if (form) {
+        form.addEventListener('reset', function () {
+          if (!el.isConnected) return;
+          setTimeout(refresh, 0);
+        });
+      }
+
       refresh();
     }
   });
