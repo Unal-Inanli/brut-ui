@@ -49,11 +49,23 @@
       if (current < 0) current = 0;
       if (current >= slides.length) current = slides.length - 1;
 
-      // a11y wiring on the root + track.
-      if (!el.hasAttribute('role'))               el.setAttribute('role', 'region');
+      // a11y wiring on the root.
+      if (!el.hasAttribute('role'))                 el.setAttribute('role', 'region');
       if (!el.hasAttribute('aria-roledescription')) el.setAttribute('aria-roledescription', 'carousel');
-      if (!el.hasAttribute('tabindex'))           el.setAttribute('tabindex', '0');
-      track.setAttribute('aria-live', 'polite');
+      if (!el.hasAttribute('tabindex'))             el.setAttribute('tabindex', '0');
+
+      // Visually-hidden live region announces only the position
+      // ("Slide N of M") on change — never the slide content itself.
+      // Skip if the consumer already wired aria-live on the root.
+      var status = null;
+      if (!el.hasAttribute('aria-live')) {
+        status = document.createElement('span');
+        status.className = 'brut-carousel__status';
+        status.setAttribute('aria-live', 'polite');
+        status.setAttribute('aria-atomic', 'true');
+        status.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+        el.appendChild(status);
+      }
 
       // Wired buttons must be type="button".
       if (prevBtn && prevBtn.tagName === 'BUTTON') prevBtn.setAttribute('type', 'button');
@@ -124,6 +136,7 @@
         current = index;
         applyTransform(0);
         updateUI();
+        if (status) status.textContent = 'Slide ' + (current + 1) + ' of ' + slides.length;
         el.dispatchEvent(new CustomEvent('brut:change', { detail: { value: current } }));
       }
 
