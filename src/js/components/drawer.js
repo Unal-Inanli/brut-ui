@@ -19,6 +19,17 @@
 (function () {
   if (!window.Brut) return;
   var titleCounter = 0;
+  var closeByEl = new WeakMap();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('[data-brut="drawer"]:not([hidden])').forEach(function (el) {
+      if (!el.isConnected) return;
+      var c = closeByEl.get(el);
+      if (c) c();
+    });
+  });
+
   Brut.register('drawer', {
     selector: '[data-brut="drawer"]',
     init: function (el) {
@@ -31,7 +42,6 @@
       // Drawer is a modal dialog. Mirror dialog.js so screen readers announce
       // it as such even when consumers copy markup that omits these attrs.
       if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
-      if (!el.hasAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
 
       var scrimId = el.getAttribute('data-brut-scrim');
       var scrim = scrimId ? document.getElementById(scrimId) : null;
@@ -53,6 +63,11 @@
         if (!el.hasAttribute('hidden') && el.classList.contains('brut-drawer--open')) return;
         lastTrigger = trigger || lastTrigger;
         el.removeAttribute('hidden');
+        el.setAttribute('aria-modal', 'true');
+        var siblings = Array.prototype.filter.call(document.body.children, function (child) {
+          return child !== el && !child.classList.contains('brut-scrim');
+        });
+        siblings.forEach(function (child) { child.inert = true; });
         if (scrim) scrim.removeAttribute('hidden');
         // Force layout so the transition runs from the closed transform.
         void el.offsetWidth;
@@ -66,6 +81,10 @@
         if (trap) { trap.release(); trap = null; }
         el.classList.remove('brut-drawer--open');
         el.setAttribute('hidden', '');
+        el.removeAttribute('aria-modal');
+        Array.prototype.forEach.call(document.body.children, function (child) {
+          if (child !== el) child.inert = false;
+        });
         if (scrim) scrim.setAttribute('hidden', '');
         if (Brut.scrollLock) Brut.scrollLock.release();
         el.dispatchEvent(new CustomEvent('brut:close'));
@@ -75,6 +94,7 @@
           try { lastTrigger.focus(); } catch (e) {}
         }
       }
+      closeByEl.set(el, close);
 
       document.querySelectorAll('[data-brut-open="' + el.id + '"]').forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
@@ -84,11 +104,6 @@
       el.querySelectorAll('[data-brut-close], .brut-drawer__x').forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
         t.addEventListener('click', function (e) { e.preventDefault(); close(); });
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (!el.isConnected) return;
-        if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
       });
 
       if (scrim) {
