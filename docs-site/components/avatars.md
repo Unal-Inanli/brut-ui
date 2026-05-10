@@ -6,14 +6,14 @@ title: Avatars + Stats
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-avatars.html"
+  src="../preview/components-avatar.html"
   loading="lazy"
   style="height: 720px;"
   title="Avatars + Stats preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-avatars.html` —
+The preview above is served from `preview/components-avatar.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::

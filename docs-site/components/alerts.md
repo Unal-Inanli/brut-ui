@@ -9,14 +9,14 @@ Notification banner with icon slot and semantic color variants for success, warn
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-alerts.html"
+  src="../preview/components-alert.html"
   loading="lazy"
   style="height: 720px;"
   title="Alerts preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-alerts.html` —
+The preview above is served from `preview/components-alert.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::

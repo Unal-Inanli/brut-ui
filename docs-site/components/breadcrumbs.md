@@ -9,14 +9,14 @@ Hard-edged breadcrumb path navigation — ordered list with link, separator, and
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-breadcrumbs.html"
+  src="../preview/components-crumbs.html"
   loading="lazy"
   style="height: 720px;"
   title="Breadcrumbs preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-breadcrumbs.html` —
+The preview above is served from `preview/components-crumbs.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::

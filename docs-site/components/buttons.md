@@ -9,14 +9,14 @@ Brutalist button with thick border, shadow, and hover lift effect. Works on butt
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-buttons.html"
+  src="../preview/components-btn.html"
   loading="lazy"
   style="height: 720px;"
   title="Buttons preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-buttons.html` —
+The preview above is served from `preview/components-btn.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::

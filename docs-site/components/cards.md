@@ -9,14 +9,14 @@ Bordered content container with background, shadow, and padding. A general-purpo
 
 <iframe
   class="brut-preview-frame"
-  src="../preview/components-cards.html"
+  src="../preview/components-card.html"
   loading="lazy"
   style="height: 720px;"
   title="Cards preview"
 ></iframe>
 
 ::: tip Markup source
-The preview above is served from `preview/components-cards.html` —
+The preview above is served from `preview/components-card.html` —
 the canonical fixture for this component. Copy markup directly from
 the source to use it in your own page.
 :::
