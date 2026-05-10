@@ -2,6 +2,7 @@
 
 > Build it like you mean it.
 
+[![CI](https://github.com/Unal-Inanli/brut-ui/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Unal-Inanli/brut-ui/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@sprtn/ui.svg?style=flat-square&color=000)](https://www.npmjs.com/package/@sprtn/ui)
 [![npm downloads](https://img.shields.io/npm/dm/@sprtn/ui.svg?style=flat-square&color=000)](https://www.npmjs.com/package/@sprtn/ui)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@sprtn/ui?style=flat-square&color=000&label=min%2Bgzip)](https://bundlephobia.com/package/@sprtn/ui)
