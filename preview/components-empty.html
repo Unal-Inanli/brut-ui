@@ -20,9 +20,41 @@
 </div>
 
 <h2>Compact, no shape</h2>
-<div class="brut-empty" style="max-width: 520px; margin-top: 24px;">
+<div class="brut-empty" style="max-width: 520px; margin-top: var(--sp-4);">
   <h3 class="brut-h2 brut-empty__title">All caught up.</h3>
   <p class="brut-body brut-empty__body">Inbox is empty. Take a break.</p>
+</div>
+
+<h2>Search &mdash; no results</h2>
+<div class="brut-empty" style="max-width: 520px; margin-top: var(--sp-4);">
+  <div class="brut-empty__shape" aria-hidden="true"></div>
+  <h3 class="brut-h2 brut-empty__title">No matches.</h3>
+  <p class="brut-body brut-empty__body">Try a broader keyword, or clear the active filters.</p>
+  <div class="brut-empty__action">
+    <button class="brut-btn" type="button">CLEAR FILTERS</button>
+  </div>
+</div>
+
+<h2>Table &mdash; no rows</h2>
+<div class="brut-table-wrap" style="max-width: 720px; margin-top: var(--sp-4);">
+  <table class="brut-table">
+    <thead>
+      <tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="3">
+          <div class="brut-empty">
+            <h3 class="brut-h2 brut-empty__title">No projects yet.</h3>
+            <p class="brut-body brut-empty__body">Create one to populate this view.</p>
+            <div class="brut-empty__action">
+              <button class="brut-btn brut-btn--primary" type="button">NEW PROJECT</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div data-brut="theme-switcher"></div>

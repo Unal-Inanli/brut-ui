@@ -1108,6 +1108,41 @@
   background: var(--ink);
 }
 
+/* PAUSE — WCAG 2.2.2 user-controllable pause for autoplay carousels.
+   Rendered by carousel.js when data-autoplay is set and the user has no
+   prefers-reduced-motion preference. Mirrors the prev/next button style
+   but lives in the top-right corner so it never collides with the
+   centered .brut-carousel__nav row. */
+.brut-carousel__pause {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  z-index: 1;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0 var(--sp-2);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--bw-2) solid var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-2xs);
+}
+.brut-carousel__pause:hover { background: var(--accent); color: var(--ink); }
+.brut-carousel__pause:focus-visible {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+.brut-carousel__pause[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
 /* DIALOG */
 .brut-dialog {
   position: fixed;
@@ -2070,6 +2105,12 @@
 }
 .brut-date__day:hover { background: var(--primary); }
 .brut-date__day--out { color: var(--concrete-300); }
+.brut-date__day--disabled,
+.brut-date__day--disabled:hover {
+  color: var(--concrete-300);
+  background: var(--bone);
+  cursor: not-allowed;
+}
 .brut-date__day--today::after {
   content: "";
   position: absolute;
@@ -2893,6 +2934,38 @@ button.brut-sidebar__group-title::after {
 
   /* Drop decorative shapes */
   .brut-shape { display: none !important; }
+}
+
+/* High-contrast preference: bump border weights and disable softer shadows
+   so users with --prefers-contrast: more get a clearly delineated UI.
+   Uses existing tokens; no new design values introduced. */
+@media (prefers-contrast: more) {
+  :where(.brut-btn, .brut-input, .brut-textarea, .brut-select) {
+    border-width: var(--bw-4);
+  }
+  :where(.brut-card, .brut-empty, .brut-alert) {
+    border-width: var(--bw-3);
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline-width: var(--bw-3);
+  }
+}
+
+/* Windows High Contrast Mode (forced-colors: active):
+   the OS overrides most colors, so we map our visual contracts onto
+   system-color keywords and disable shadows that the OS can't render. */
+/* Sanctioned exception: system-color keywords (Highlight, GrayText) are CSS-defined and OS-resolved, not BRUT tokens. forced-colors mode requires them. */
+@media (forced-colors: active) {
+  :where(.brut-btn, .brut-input, .brut-select, .brut-textarea, .brut-card, .brut-alert, .brut-empty) {
+    forced-color-adjust: auto;
+    box-shadow: none;
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline: var(--bw-3) solid Highlight;
+  }
+  :where(.brut-btn:disabled, .brut-input:disabled, [aria-disabled="true"]) {
+    color: GrayText;
+  }
 }
 
 /* ============================================================

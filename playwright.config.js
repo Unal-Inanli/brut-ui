@@ -25,7 +25,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'pnpm dev',
-    url: `http://localhost:${PORT}/preview/components-buttons.html`,
+    url: `http://localhost:${PORT}/preview/components-btn.html`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
   },

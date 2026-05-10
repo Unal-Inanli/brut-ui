@@ -240,13 +240,13 @@
       <a href="#borders">Borders</a>
 
       <h2>Components</h2>
-      <a href="#buttons">Buttons</a>
+      <a href="#btn">Buttons</a>
       <a href="#badges">Badges</a>
-      <a href="#cards">Cards</a>
+      <a href="#card">Cards</a>
       <a href="#carousel">Carousel</a>
       <a href="#accordion">Accordion</a>
       <a href="#tabs">Tabs</a>
-      <a href="#avatars">Avatars</a>
+      <a href="#avatar">Avatars</a>
       <a href="#copy">Copy</a>
 
       <h2>Data</h2>
@@ -290,7 +290,7 @@
       <a href="#validation">Validation</a>
 
       <h2>Feedback</h2>
-      <a href="#alerts">Alerts</a>
+      <a href="#alert">Alerts</a>
       <a href="#toast">Toast</a>
       <a href="#toast-host">Toast host</a>
       <a href="#tooltip">Tooltip</a>
@@ -554,7 +554,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       </section>
 
       <!-- BUTTONS -->
-      <section class="docs-section" id="buttons">
+      <section class="docs-section" id="btn">
         <h2>Buttons</h2>
         <p class="lead">Brutalist button with thick border, shadow, and hover lift effect. Works on button, anchor, and input elements.</p>
         <div class="docs-preview">
@@ -594,7 +594,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       </section>
 
       <!-- CARDS -->
-      <section class="docs-section" id="cards">
+      <section class="docs-section" id="card">
         <h2>Cards</h2>
         <p class="lead">Border, offset shadow, comfortable padding. No internal dividers.</p>
         <div class="docs-preview docs-preview--start" style="gap: var(--sp-6);">
@@ -1143,7 +1143,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       </section>
 
       <!-- ALERTS -->
-      <section class="docs-section" id="alerts">
+      <section class="docs-section" id="alert">
         <h2>Alerts</h2>
         <p class="lead">Notification banner with icon slot and semantic color variants for success, warning, error, and info states.</p>
         <div class="docs-preview docs-preview--block">
@@ -1377,7 +1377,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- EMPTY STATE -->
       <section class="docs-section" id="empty">
         <h2>Empty state</h2>
-        <p class="lead">Dashed-border placeholder for "nothing here yet" zones. Centered shape + title + body + action slot.</p>
+        <p class="lead">Dashed-border placeholder for "nothing here yet" zones. Centered shape + title + body + action slot. Use it for inbox-zero blank canvases, search-no-results, and table-empty rows.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-empty" style="max-width: 520px;">
             <div class="brut-empty__shape"></div>
@@ -1387,14 +1387,71 @@ border: var(--bw-6) solid var(--ink);</pre>
               <button class="brut-btn brut-btn--primary" type="button">CREATE ONE</button>
             </div>
           </div>
+          <div class="brut-empty" style="max-width: 520px;">
+            <div class="brut-empty__shape" aria-hidden="true"></div>
+            <h3 class="brut-h2 brut-empty__title">No matches.</h3>
+            <p class="brut-body brut-empty__body">Try a broader keyword, or clear the active filters.</p>
+            <div class="brut-empty__action">
+              <button class="brut-btn" type="button">CLEAR FILTERS</button>
+            </div>
+          </div>
+          <div class="brut-table-wrap" style="max-width: 720px;">
+            <table class="brut-table">
+              <thead>
+                <tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3">
+                    <div class="brut-empty">
+                      <h3 class="brut-h2 brut-empty__title">No projects yet.</h3>
+                      <p class="brut-body brut-empty__body">Create one to populate this view.</p>
+                      <div class="brut-empty__action">
+                        <button class="brut-btn brut-btn--primary" type="button">NEW PROJECT</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <pre class="docs-snippet">&lt;div class="brut-empty"&gt;
+        <pre class="docs-snippet">&lt;!-- Inbox zero / blank canvas --&gt;
+&lt;div class="brut-empty"&gt;
   &lt;div class="brut-empty__shape"&gt;&lt;/div&gt;
   &lt;h3 class="brut-h2 brut-empty__title"&gt;No items yet.&lt;/h3&gt;
   &lt;p class="brut-body brut-empty__body"&gt;Add one to get started.&lt;/p&gt;
   &lt;div class="brut-empty__action"&gt;
     &lt;button class="brut-btn brut-btn--primary" type="button"&gt;CREATE ONE&lt;/button&gt;
   &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Search &mdash; no results --&gt;
+&lt;div class="brut-empty"&gt;
+  &lt;div class="brut-empty__shape" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;h3 class="brut-h2 brut-empty__title"&gt;No matches.&lt;/h3&gt;
+  &lt;p class="brut-body brut-empty__body"&gt;Try a broader keyword, or clear the active filters.&lt;/p&gt;
+  &lt;div class="brut-empty__action"&gt;
+    &lt;button class="brut-btn" type="button"&gt;CLEAR FILTERS&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Table &mdash; no rows --&gt;
+&lt;div class="brut-table-wrap"&gt;
+  &lt;table class="brut-table"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Updated&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td colspan="3"&gt;
+        &lt;div class="brut-empty"&gt;
+          &lt;h3 class="brut-h2 brut-empty__title"&gt;No projects yet.&lt;/h3&gt;
+          &lt;p class="brut-body brut-empty__body"&gt;Create one to populate this view.&lt;/p&gt;
+          &lt;div class="brut-empty__action"&gt;
+            &lt;button class="brut-btn brut-btn--primary" type="button"&gt;NEW PROJECT&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
 &lt;/div&gt;</pre>
       </section>
 
@@ -1683,7 +1740,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- DATE -->
       <section class="docs-section" id="date">
         <h2>Date <span class="docs-status docs-status--beta">BETA</span></h2>
-        <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Native <code>Date</code> only — no deps.</p>
+        <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Set <code>data-brut-min</code> / <code>data-brut-max</code> for range constraints. Native <code>Date</code> only — no deps.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-grid brut-grid--2" style="max-width:640px;">
             <div class="brut-field">
@@ -1703,6 +1760,13 @@ border: var(--bw-6) solid var(--ink);</pre>
           </div>
         </div>
         <pre class="docs-snippet">&lt;div class="brut-date" data-brut="date" data-brut-name="due"&gt;
+  &lt;input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" /&gt;
+  &lt;input type="hidden" /&gt;
+&lt;/div&gt;
+
+&lt;!-- With min/max constraints (out-of-range days disabled) --&gt;
+&lt;div class="brut-date" data-brut="date" data-brut-name="delivery"
+     data-brut-min="2026-05-10" data-brut-max="2026-12-31"&gt;
   &lt;input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" /&gt;
   &lt;input type="hidden" /&gt;
 &lt;/div&gt;</pre>
@@ -1913,7 +1977,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       </section>
 
       <!-- AVATARS -->
-      <section class="docs-section" id="avatars">
+      <section class="docs-section" id="avatar">
         <h2>Avatars</h2>
         <p class="lead">Single avatars carry initials or a glyph. Wrap a row of them in <code>.brut-avatar-group</code> for the overlapping stack pattern; the trailing <code>.brut-avatar-group__more</code> shows the overflow count.</p>
         <div class="docs-preview docs-preview--block">
@@ -2455,12 +2519,37 @@ border: var(--bw-6) solid var(--ink);</pre>
         </div>
 
         <div class="docs-block">
-          <h3>Responsive</h3>
+          <h3>Responsive (md tier)</h3>
           <div class="docs-preview docs-preview--block">
             <div class="brut-row">
               <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--primary); padding: var(--sp-2);">12 → md:6 → lg:4</div>
               <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--pop-lime); padding: var(--sp-2);">12 → md:6 → lg:4</div>
               <div class="brut-col-12 brut-col-md-12 brut-col-lg-4" style="background: var(--pop-pink); padding: var(--sp-2);">12 → md:12 → lg:4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Responsive (sm tier)</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--primary); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--pop-lime); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--pop-pink); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--paper-2); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Offsets</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+              <div class="brut-col-4 brut-col-offset-4" style="background: var(--pop-lime); padding: var(--sp-2);">col-4 offset-4</div>
+            </div>
+            <div class="brut-row" style="margin-top: var(--sp-3);">
+              <div class="brut-col-6 brut-col-offset-3" style="background: var(--pop-pink); padding: var(--sp-2);">col-6 offset-3 (centered)</div>
             </div>
           </div>
         </div>
@@ -2471,11 +2560,28 @@ border: var(--bw-6) solid var(--ink);</pre>
   &lt;div class="brut-col-4"&gt;…&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- Responsive: stack on mobile, 2-col on md, 3-col on lg --&gt;
+&lt;!-- Responsive (md tier): stack on mobile, 2-col on md, 3-col on lg --&gt;
 &lt;div class="brut-row"&gt;
   &lt;div class="brut-col-12 brut-col-md-6 brut-col-lg-4"&gt;…&lt;/div&gt;
   &lt;div class="brut-col-12 brut-col-md-6 brut-col-lg-4"&gt;…&lt;/div&gt;
   &lt;div class="brut-col-12 brut-col-md-12 brut-col-lg-4"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Responsive (sm tier): stack on mobile, 2-col on sm, 4-col on lg --&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Offsets: push a column N tracks to the right --&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-4"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-4 brut-col-offset-4"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-6 brut-col-offset-3"&gt;centered&lt;/div&gt;
 &lt;/div&gt;</pre>
       </section>
 

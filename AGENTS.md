@@ -62,7 +62,7 @@ The build is intentionally trivial — it concatenates `tokens/*.css + component
 
 1. **Add the CSS** to `src/components.css` under the `FORMS — extended` banner (or the right component-group banner). Use only tokens from `src/tokens/` (`var(--ink)`, `var(--sp-3)`, `var(--shadow-sm)`, …) — never hardcode hex/px/rgb.
 2. **If the component needs interactivity**, add a JS file at `src/js/components/<name>.js` following the conventions in the next section.
-3. **Create a preview page** at `preview/components-<name>.html` mirroring the existing pattern: `<link rel="stylesheet" href="../dist/brut.css"/>`, optional `<script src="../dist/brut.js"></script>` if the component is JS-bound, plus a minimal `<body>` that renders every variant. Use `preview/components-forms.html` as the template for form components, `preview/components-buttons.html` for static visual components.
+3. **Create a preview page** at `preview/components-<name>.html` mirroring the existing pattern: `<link rel="stylesheet" href="../dist/brut.css"/>`, optional `<script src="../dist/brut.js"></script>` if the component is JS-bound, plus a minimal `<body>` that renders every variant. Use `preview/components-forms.html` as the template for form components, `preview/components-btn.html` for static visual components.
 4. **Add a docs section** to `docs/index.html` with:
    - Sidebar anchor (`<a href="#yourname">…</a>`) under the right `<h2>` group (`Forms`, `Components`, `Feedback`, …).
    - A `<section class="docs-section" id="yourname">` containing a `<h2>`, optional `<p class="lead">`, a `.docs-preview` block with a live render, and a `<pre class="docs-snippet">` with the raw HTML (HTML-entity-escape `<` and `>`).

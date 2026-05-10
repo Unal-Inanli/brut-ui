@@ -191,6 +191,11 @@
       // -- Autoplay ----------------------------------------------------------
       var timer = null;
       var paused = false;
+      // userPaused is the explicit-user-pause flag toggled by the rendered
+      // .brut-carousel__pause button. When true, passive resume paths
+      // (mouseleave / focusout / visibilitychange show) become no-ops, so
+      // the user's intent always wins over hover/focus heuristics. (#182)
+      var userPaused = false;
       var reduced = false;
       try {
         reduced = window.matchMedia &&
@@ -208,7 +213,44 @@
         if (timer) { clearInterval(timer); timer = null; }
       }
       function pauseAuto()  { paused = true;  stopAuto(); }
-      function resumeAuto() { paused = false; startAuto(); }
+      function resumeAuto() {
+        if (userPaused) return;
+        paused = false;
+        startAuto();
+      }
+
+      // WCAG 2.2.2 (Pause, Stop, Hide, Level A): for any moving content
+      // that auto-updates we must expose an explicit user-controllable
+      // pause mechanism. Skip when prefers-reduced-motion already disables
+      // autoplay — there is nothing to control. The button is a direct
+      // child of the root so its absolute positioning resolves against
+      // .brut-carousel.
+      var pauseBtn = null;
+      if (autoplay > 0 && !reduced) {
+        pauseBtn = document.createElement('button');
+        pauseBtn.type = 'button';
+        pauseBtn.className = 'brut-carousel__pause';
+        pauseBtn.setAttribute('aria-pressed', 'false');
+        pauseBtn.setAttribute('aria-label', 'Pause carousel');
+        pauseBtn.textContent = '⏸'; // U+23F8 pause icon
+        pauseBtn.addEventListener('click', function onPauseClick() {
+          var pressed = pauseBtn.getAttribute('aria-pressed') === 'true';
+          if (pressed) {
+            pauseBtn.setAttribute('aria-pressed', 'false');
+            pauseBtn.setAttribute('aria-label', 'Pause carousel');
+            pauseBtn.textContent = '⏸';
+            userPaused = false;
+            resumeAuto();
+          } else {
+            pauseBtn.setAttribute('aria-pressed', 'true');
+            pauseBtn.setAttribute('aria-label', 'Resume carousel');
+            pauseBtn.textContent = '▶'; // U+25B6 play icon
+            userPaused = true;
+            pauseAuto();
+          }
+        });
+        el.appendChild(pauseBtn);
+      }
 
       if (autoplay > 0 && !reduced) {
         el.addEventListener('mouseenter', pauseAuto);

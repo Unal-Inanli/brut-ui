@@ -41,6 +41,27 @@
       var field = el.querySelector('.brut-date__field') || el.querySelector('input[type="text"], input[type="date"], input:not([type])');
       if (!field) return;
 
+      // Parse min/max constraints. Empty/invalid → unconstrained.
+      function parseISODate(s) {
+        if (!s) return null;
+        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+        if (!m) return null;
+        var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        return isNaN(d.getTime()) ? null : d;
+      }
+      var minDate = parseISODate(el.getAttribute('data-brut-min'));
+      var maxDate = parseISODate(el.getAttribute('data-brut-max'));
+
+      function inRange(d) {
+        if (minDate && d < minDate) return false;
+        if (maxDate && d > maxDate) return false;
+        return true;
+      }
+
+      // Mirror min/max onto the visible field for native form validation.
+      if (minDate) field.setAttribute('min', el.getAttribute('data-brut-min'));
+      if (maxDate) field.setAttribute('max', el.getAttribute('data-brut-max'));
+
       // If consumers wire numeric segment inputs (year / month / day), surface
       // the numeric soft keyboard on touch devices. Guard preserves overrides.
       var segments = el.querySelectorAll(
@@ -130,6 +151,10 @@
           if (d.getMonth() !== view.getMonth()) btn.classList.add('brut-date__day--out');
           if (sameYMD(d, today))    btn.classList.add('brut-date__day--today');
           if (sameYMD(d, selected)) btn.classList.add('brut-date__day--selected');
+          if (!inRange(d)) {
+            btn.disabled = true;
+            btn.classList.add('brut-date__day--disabled');
+          }
           if (sameYMD(d, focusDay)) btn.setAttribute('tabindex', '0'); else btn.setAttribute('tabindex', '-1');
           btn.addEventListener('click', function (ev) {
             commit(parseISO(ev.currentTarget.getAttribute('data-iso')));
@@ -184,6 +209,7 @@
 
       function commit(d) {
         if (!d) return;
+        if (!inRange(d)) return;
         selected = d;
         focusDay = new Date(d.getTime());
         view = startOfMonth(d);

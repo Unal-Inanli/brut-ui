@@ -54,13 +54,15 @@
 
       function position() {
         if (!lastTrigger) return;
+        // getBoundingClientRect() is viewport-relative, and we use
+        // position: fixed so the menu is laid out against the viewport
+        // directly — this prevents clipping when the trigger lives inside an
+        // ancestor with overflow:hidden / overflow:auto (#176).
         var r = lastTrigger.getBoundingClientRect();
-        var sx = window.pageXOffset || document.documentElement.scrollLeft;
-        var sy = window.pageYOffset || document.documentElement.scrollTop;
         var gap = 6;
-        el.style.position = 'absolute';
-        el.style.top  = Math.round(r.bottom + sy + gap) + 'px';
-        el.style.left = Math.round(r.left   + sx) + 'px';
+        el.style.position = 'fixed';
+        el.style.top  = Math.round(r.bottom + gap) + 'px';
+        el.style.left = Math.round(r.left) + 'px';
       }
 
       function open(trigger) {

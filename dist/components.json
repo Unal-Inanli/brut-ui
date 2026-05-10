@@ -1,6 +1,6 @@
 {
   "$schema": "https://brut.dev/schema/components-v1.json",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "prefix": "brut",
   "themes": [
     "brutalist",
@@ -10,7 +10,7 @@
   "components": [
     {
       "name": "accordion",
-      "description": "Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode.",
+      "description": "Stacked disclosure panels that expand and collapse on click or keyboard, with optional multi-open mode. Each toggled item dispatches both brut:change (state-machine) and brut:open/brut:close (semantic disclosure) for compatibility with both consumer patterns.",
       "useCases": [
         "FAQ section",
         "shipping and returns details",
@@ -19,6 +19,7 @@
         "product specifications"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-accordion",
       "selector": "[data-brut=\"accordion\"]",
       "modifiers": [],
@@ -33,7 +34,20 @@
         {
           "name": "brut:change",
           "detail": {
+            "value": "boolean (new open state of the toggled item)",
             "open": "boolean (new state of the toggled item)"
+          }
+        },
+        {
+          "name": "brut:open",
+          "detail": {
+            "value": "true"
+          }
+        },
+        {
+          "name": "brut:close",
+          "detail": {
+            "value": "false"
           }
         }
       ],
@@ -47,9 +61,11 @@
         ],
         "aria": [
           "aria-expanded (on each head)",
-          "aria-controls (on head, points to body id)"
+          "aria-controls (on head, points to body id)",
+          "role=\"region\" (on panel)",
+          "aria-labelledby (on panel → trigger id)"
         ],
-        "notes": "Heads default to <button type=\"button\">. Bodies receive an auto-generated id when none is set. The brut:change event bubbles from the toggled item, not the accordion root."
+        "notes": "Heads default to <button type=\"button\"> and receive a sequential auto-generated id (brut-accordion-<n>) when none is set, so panels can reference them via aria-labelledby. Bodies receive a sequential auto-generated id (brut-acc-body-<n>) when none is set, plus role=\"region\" and aria-labelledby pointing to the head id (consumer-supplied attributes are preserved). IDs are assigned via deterministic counters rather than Math.random so SSR-hydrated frameworks (Next.js, Astro, Nuxt, SvelteKit) match server and client output. aria-controls and aria-labelledby are always wired at init whenever a body is present, so screen readers can navigate trigger ↔ panel even when consumers omit ids. Each toggled item dispatches both brut:change (state-machine, with detail.value and detail.open) and brut:open/brut:close (semantic disclosure, with detail.value as the new open boolean) so consumers can subscribe to either pattern. All three events bubble from the toggled item, not the accordion root."
       },
       "examples": [
         {
@@ -60,7 +76,11 @@
           "title": "Allow multiple open",
           "html": "<div class=\"brut-accordion\" data-brut=\"accordion\" data-brut-allow-multi>\n  <div class=\"brut-accordion__item brut-accordion__item--open\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>ONE</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">First panel body.</div>\n  </div>\n  <div class=\"brut-accordion__item brut-accordion__item--open\">\n    <button class=\"brut-accordion__head\" type=\"button\">\n      <span>TWO</span>\n      <span class=\"brut-accordion__icon\" aria-hidden=\"true\"></span>\n    </button>\n    <div class=\"brut-accordion__body\">Second panel body.</div>\n  </div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Disclosure is shape-invariant; no viewport flip."
+      }
     },
     {
       "name": "alert",
@@ -111,15 +131,51 @@
     },
     {
       "name": "aspect",
+      "description": "Fixed aspect-ratio media frame with ink border that crops img, video, or iframe children to cover the box.",
+      "useCases": [
+        "image thumbnail",
+        "video embed wrapper",
+        "media tile",
+        "gallery cell",
+        "oEmbed container"
+      ],
+      "examples": [
+        {
+          "title": "Square image tile",
+          "html": "<div class=\"brut-aspect brut-aspect--square\">\n  <img src=\"/cover.jpg\" alt=\"Cover\">\n</div>"
+        },
+        {
+          "title": "16:9 video embed",
+          "html": "<div class=\"brut-aspect brut-aspect--video\">\n  <iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" allowfullscreen></iframe>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-aspect",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "avatar",
+      "description": "Square ink-bordered identity tile sized for a single user, displaying initials, a portrait, or an icon.",
+      "useCases": [
+        "user profile mark",
+        "comment author",
+        "roster cell",
+        "team member tile",
+        "mention chip"
+      ],
+      "examples": [
+        {
+          "title": "Initials avatar",
+          "html": "<span class=\"brut-avatar\">JD</span>"
+        },
+        {
+          "title": "Image avatar",
+          "html": "<span class=\"brut-avatar\"><img src=\"/users/jane.jpg\" alt=\"Jane\"></span>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-avatar",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "avatar-group",
@@ -196,9 +252,22 @@
     },
     {
       "name": "bar",
+      "description": "Wrapping flex strip that pushes children to opposite ends with space-between for header, toolbar, or footer rows.",
+      "useCases": [
+        "page header strip",
+        "CTA banner row",
+        "toolbar with leading title and trailing actions",
+        "card footer row"
+      ],
+      "examples": [
+        {
+          "title": "Header bar with title and action",
+          "html": "<div class=\"brut-bar\">\n  <h2 class=\"brut-h2\">Dashboard</h2>\n  <button class=\"brut-btn brut-btn--primary\">New</button>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-bar",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "body",
@@ -266,6 +335,14 @@
           "description": "Pop-lime accent background"
         },
         {
+          "name": "--danger",
+          "description": "Destructive action — danger background, paper text; hover inverts to light tint"
+        },
+        {
+          "name": "--outline",
+          "description": "Ghost / outline — transparent fill with ink border; hover inverts to ink on paper"
+        },
+        {
           "name": "--sm",
           "description": "Small size — reduced padding and font size"
         },
@@ -295,9 +372,23 @@
     },
     {
       "name": "caption",
+      "description": "Extra-small muted text in concrete-400 for image captions, table footnotes, or inline metadata.",
+      "useCases": [
+        "image caption",
+        "table footnote",
+        "form helper text",
+        "metadata line",
+        "timestamp label"
+      ],
+      "examples": [
+        {
+          "title": "Figure caption",
+          "html": "<figure>\n  <img src=\"/cover.jpg\" alt=\"Cover\">\n  <figcaption class=\"brut-caption\">Photo by R. Kray, 2026</figcaption>\n</figure>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-caption",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "card",
@@ -342,6 +433,7 @@
         "product highlights"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-carousel",
       "selector": "[data-brut=\"carousel\"]",
       "modifiers": [],
@@ -385,9 +477,13 @@
         "aria": [
           "aria-roledescription",
           "aria-live (on track)",
-          "aria-current (on active dot)"
+          "aria-current (on active dot)",
+          {
+            "name": "aria-pressed",
+            "notes": "on the rendered .brut-carousel__pause button — toggles between false (autoplay running) and true (paused)."
+          }
         ],
-        "notes": "Autoplay respects prefers-reduced-motion and pauses on hover, focus, and tab visibility change. Arrow keys are RTL-aware."
+        "notes": "Autoplay respects prefers-reduced-motion and pauses on hover, focus, and tab visibility change. Arrow keys are RTL-aware. Renders a visible .brut-carousel__pause button satisfying WCAG 2.2.2 when data-autoplay is set and user has no prefers-reduced-motion preference."
       },
       "examples": [
         {
@@ -402,7 +498,11 @@
           "title": "Image content",
           "html": "<div class=\"brut-carousel\" data-brut=\"carousel\" data-current=\"0\">\n  <div class=\"brut-carousel__viewport\">\n    <div class=\"brut-carousel__track\">\n      <div class=\"brut-carousel__slide\"><img src=\"/img/1.jpg\" alt=\"First\"></div>\n      <div class=\"brut-carousel__slide\"><img src=\"/img/2.jpg\" alt=\"Second\"></div>\n      <div class=\"brut-carousel__slide\"><img src=\"/img/3.jpg\" alt=\"Third\"></div>\n    </div>\n  </div>\n  <div class=\"brut-carousel__nav\">\n    <button class=\"brut-carousel__btn brut-carousel__btn--prev\" aria-label=\"Previous slide\"></button>\n    <button class=\"brut-carousel__btn brut-carousel__btn--next\" aria-label=\"Next slide\"></button>\n  </div>\n  <div class=\"brut-carousel__dots\" role=\"tablist\"></div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Track sized to viewport at any tier; no layout flip."
+      }
     },
     {
       "name": "checkbox",
@@ -415,6 +515,7 @@
         "table row selection"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-checkbox",
       "selector": "[data-brut=\"checkbox\"]",
       "modifiers": [
@@ -425,6 +526,7 @@
         {
           "name": "brut:change",
           "detail": {
+            "value": "boolean (current checked state)",
             "checked": "boolean (current checked state)"
           }
         }
@@ -453,7 +555,11 @@
           "title": "With form name",
           "html": "<label class=\"brut-checkbox\" data-brut=\"checkbox\">\n  <input type=\"checkbox\" name=\"agree\" value=\"yes\" hidden/>\n</label>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form control; lays out with its parent at any tier."
+      }
     },
     {
       "name": "cluster",
@@ -527,15 +633,71 @@
     },
     {
       "name": "code",
+      "description": "Inline monospace span with paper-2 background and thin ink border for short code fragments inside running text.",
+      "useCases": [
+        "inline code reference",
+        "API name in prose",
+        "shortcut key spelled out",
+        "CLI flag in docs"
+      ],
+      "examples": [
+        {
+          "title": "Inline code in body copy",
+          "html": "<p class=\"brut-body\">Run <code class=\"brut-code\">npm install</code> before building.</p>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-code",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "col",
+      "description": "Single-column child for the 12-column .brut-row grid; -N variants span N of 12 with sm/md/lg overrides.",
+      "useCases": [
+        "12-column form field",
+        "half-width card",
+        "sidebar plus main split",
+        "responsive grid cell"
+      ],
+      "htmlElements": [
+        "div"
+      ],
+      "modifiers": [
+        {
+          "name": "-1 through -12",
+          "description": "Span N of 12 columns at all viewports"
+        },
+        {
+          "name": "-sm-N",
+          "description": "Span N columns at ≥640px"
+        },
+        {
+          "name": "-md-N",
+          "description": "Span N columns at ≥768px"
+        },
+        {
+          "name": "-lg-N",
+          "description": "Span N columns at ≥1024px"
+        },
+        {
+          "name": "-offset-N",
+          "description": "Start at column N+1 (offset by N)"
+        }
+      ],
+      "notes": "Below 640px, columns inside a .brut-row collapse to full-width unless the parent has .brut-row--no-stack. Use .brut-col-sm-N / .brut-col-md-N / .brut-col-lg-N for tier-aware widths.",
+      "examples": [
+        {
+          "title": "Three equal columns",
+          "html": "<div class=\"brut-row\">\n  <div class=\"brut-col-4\">A</div>\n  <div class=\"brut-col-4\">B</div>\n  <div class=\"brut-col-4\">C</div>\n</div>"
+        },
+        {
+          "title": "Responsive sidebar + main",
+          "html": "<div class=\"brut-row\">\n  <aside class=\"brut-col-12 brut-col-md-3\">Sidebar</aside>\n  <main class=\"brut-col-12 brut-col-md-9\">Main</main>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-col",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "crumbs",
@@ -578,6 +740,7 @@
         "searchable enum field"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-combobox",
       "selector": "[data-brut=\"combobox\"]",
       "modifiers": [
@@ -590,6 +753,11 @@
           "description": "Name for the auto-injected hidden input when one is not supplied in markup"
         },
         {
+          "name": "data-brut-debounce",
+          "values": "integer (milliseconds)",
+          "description": "Optional integer milliseconds. When present and positive, the input handler is debounced by this many ms. Absent or 0 = immediate (default)."
+        },
+        {
           "name": "data-value",
           "values": "string (on each .brut-combobox__opt)",
           "description": "Value written to the hidden input when this option is picked; falls back to option text content"
@@ -599,9 +767,11 @@
         {
           "name": "brut:change",
           "detail": {
-            "value": "string (selected option value)",
-            "label": "string (selected option label)"
-          }
+            "value": "string (selected option value, or \"\" when cleared)",
+            "label": "string (selected option label, or \"\" when cleared)"
+          },
+          "bubbles": true,
+          "notes": "Fires on selection, on text-field clear, and on blur when the current text matches no option label. When data-brut-debounce=\"<ms>\" is set on the wrapper, the typing/filter path is debounced by that many ms; selection (option click/Enter) and blur-clear stay immediate."
         }
       ],
       "formState": {
@@ -621,7 +791,7 @@
           "aria-expanded",
           "aria-selected (on options)"
         ],
-        "notes": "Outside click closes the list. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match."
+        "notes": "The dropdown closes on Escape, outside-click, or any ancestor scroll. Filter is a case-insensitive substring match on option text. The .brut-combobox__empty element is shown when no options match. Clearing the visible text field clears the hidden input and dispatches brut:change with empty value/label, so the form never submits a stale selection. Blurring the input while the text does not match any option label clears the hidden input the same way (simple \"clear\" semantics — the last valid selection is not restored)."
       },
       "examples": [
         {
@@ -632,7 +802,12 @@
           "title": "Pre-filled value",
           "html": "<div class=\"brut-combobox\" data-brut=\"combobox\" data-brut-name=\"framework\">\n  <input class=\"brut-input\" type=\"text\" value=\"Vanilla JS\" placeholder=\"Search…\">\n  <input type=\"hidden\" name=\"framework\" value=\"vanilla\">\n  <ul class=\"brut-combobox__list\">\n    <li class=\"brut-combobox__opt\" data-value=\"vanilla\">Vanilla JS</li>\n    <li class=\"brut-combobox__opt\" data-value=\"svelte\">Svelte</li>\n    <li class=\"brut-combobox__opt\" data-value=\"solid\">Solid</li>\n    <li class=\"brut-combobox__opt\" data-value=\"lit\">Lit</li>\n    <li class=\"brut-combobox__empty\">No matches.</li>\n  </ul>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Listbox docks to bottom edge on phones; anchored below input at sm and above."
+      }
     },
     {
       "name": "container",
@@ -696,7 +871,8 @@
         "SMS message length hint"
       ],
       "kind": "interactive",
-      "class": ".brut-field__counter",
+      "status": "experimental",
+      "class": ".brut-counter",
       "selector": "[data-brut=\"counter\"]",
       "modifiers": [
         "--over"
@@ -713,7 +889,16 @@
           "description": "Optional fallback maximum when the target has no maxlength attribute"
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "name": "brut:change",
+          "detail": {
+            "value": "integer (current character count)",
+            "max": "integer (0 when no max is set)",
+            "over": "boolean (true when value > max and max is set)"
+          }
+        }
+      ],
       "formState": {
         "hiddenInput": false
       },
@@ -724,13 +909,17 @@
       "examples": [
         {
           "title": "Textarea with maxlength",
-          "html": "<label class=\"brut-field__label\" for=\"bio\">Bio</label>\n<textarea id=\"bio\" class=\"brut-textarea\" maxlength=\"120\">Make it loud.</textarea>\n<span class=\"brut-field__counter\" data-brut=\"counter\" data-brut-for=\"bio\"></span>"
+          "html": "<label class=\"brut-field__label\" for=\"bio\">Bio</label>\n<textarea id=\"bio\" class=\"brut-textarea\" maxlength=\"120\">Make it loud.</textarea>\n<span class=\"brut-counter\" data-brut=\"counter\" data-brut-for=\"bio\"></span>"
         },
         {
           "title": "Override max via data attribute",
-          "html": "<input id=\"title\" class=\"brut-input\" type=\"text\">\n<span class=\"brut-field__counter\" data-brut=\"counter\" data-brut-for=\"title\" data-brut-max=\"60\"></span>"
+          "html": "<input id=\"title\" class=\"brut-input\" type=\"text\">\n<span class=\"brut-counter\" data-brut=\"counter\" data-brut-for=\"title\" data-brut-max=\"60\"></span>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Inline character/word count; no responsive flip."
+      }
     },
     {
       "name": "date",
@@ -743,6 +932,7 @@
         "expiry date input"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-date",
       "selector": "[data-brut=\"date\"]",
       "modifiers": [
@@ -753,6 +943,16 @@
           "name": "data-brut-name",
           "values": "string",
           "description": "Name for the auto-injected hidden input when one is not supplied in markup"
+        },
+        {
+          "name": "data-brut-min",
+          "values": "ISO date string (YYYY-MM-DD), or empty for unconstrained",
+          "description": "Earliest selectable date. Days before this are disabled."
+        },
+        {
+          "name": "data-brut-max",
+          "values": "ISO date string (YYYY-MM-DD), or empty for unconstrained",
+          "description": "Latest selectable date. Days after this are disabled."
         }
       ],
       "events": [
@@ -784,7 +984,7 @@
           "aria-expanded",
           "aria-label (on prev/next nav buttons)"
         ],
-        "notes": "Week starts on Monday. Outside-month days are rendered but visually muted via --out. Outside-click closes the popover. PageUp/PageDown shift the visible month and clamp the focused day to the new month's last day."
+        "notes": "Week starts on Monday. Outside-month days are rendered but visually muted via --out. Outside-click closes the popover. PageUp/PageDown shift the visible month and clamp the focused day to the new month's last day. At init, any descendant numeric segment inputs (input[type=\"number\"], .brut-date__year, .brut-date__month, .brut-date__day) receive inputmode=\"numeric\" by default — guarded so consumer-set values win — so touch keyboards open in numeric mode."
       },
       "examples": [
         {
@@ -795,7 +995,12 @@
           "title": "Pre-filled value",
           "html": "<div class=\"brut-date\" data-brut=\"date\" data-brut-name=\"start\">\n  <input class=\"brut-input brut-date__field\" type=\"text\" readonly value=\"2026-05-15\" />\n  <input type=\"hidden\" />\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Calendar popover docks to bottom edge on phones; anchored at sm and above."
+      }
     },
     {
       "name": "dialog",
@@ -808,6 +1013,7 @@
         "destructive action confirmation"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-dialog",
       "selector": "[data-brut=\"dialog\"]",
       "modifiers": [],
@@ -826,6 +1032,11 @@
           "name": "data-brut-close",
           "values": "boolean attribute (on a child)",
           "description": "Marks any element inside the dialog as a close trigger"
+        },
+        {
+          "name": "data-brut-dialog-title",
+          "values": "boolean attribute (on a child)",
+          "description": "Optional override marking the element to wire as aria-labelledby when no h1–h6 is present in .brut-dialog__head"
         }
       ],
       "events": [
@@ -848,20 +1059,27 @@
       "a11y": {
         "role": "dialog",
         "keyboard": [
-          "Escape"
+          "Escape",
+          "Tab",
+          "Shift+Tab"
         ],
         "aria": [
-          "aria-modal (consumer-supplied)",
-          "aria-labelledby (consumer-supplied)"
+          "aria-modal=\"true\"",
+          "aria-labelledby"
         ],
-        "notes": "Toggles the [hidden] attribute rather than display:none. Scrim closes only on direct click (not on bubbling from inner content). The dialog id is required — components without an id are skipped."
+        "notes": "Toggles the [hidden] attribute rather than display:none, and toggles aria-modal=\"true\" in lockstep with open/close. On init, if the dialog has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-dialog-title]) inside .brut-dialog__head, auto-assigning an id when needed. Scrim closes only on direct click (not on bubbling from inner content). Body scroll is locked while the dialog is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the dialog (first focusable child, or the dialog itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The dialog id is required — components without an id are skipped."
       },
       "examples": [
         {
           "title": "Confirm dialog with scrim",
           "html": "<button class=\"brut-btn\" data-brut-open=\"dlg-confirm\">Open confirm</button>\n<div class=\"brut-scrim\" id=\"dlg-confirm-scrim\" hidden></div>\n<div class=\"brut-dialog\" id=\"dlg-confirm\" data-brut=\"dialog\" data-brut-scrim=\"dlg-confirm-scrim\" hidden role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"dlg-confirm-title\">\n  <div class=\"brut-dialog__head\">\n    <span id=\"dlg-confirm-title\">DELETE PROJECT?</span>\n    <button class=\"brut-dialog__x\" data-brut-close>×</button>\n  </div>\n  <div class=\"brut-dialog__body\">\n    This nukes <strong>project-alpha</strong> and all its history.\n  </div>\n  <div class=\"brut-dialog__foot\">\n    <button class=\"brut-btn\" data-brut-close>Cancel</button>\n    <button class=\"brut-btn brut-btn--ink\" data-brut-close>Yes, delete</button>\n  </div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "fullscreen-modal",
+        "breakpoint": "sm",
+        "notes": "Edge-to-edge sheet on phones; centered modal at sm and above."
+      }
     },
     {
       "name": "display",
@@ -914,9 +1132,28 @@
     },
     {
       "name": "divider",
+      "description": "Horizontal rule that draws a thick ink line between sections — registered as a static component but the CSS class block is not yet implemented in src/components.css; the closest in-tree equivalent is the rule pattern documented at the RULE banner (line 2671).",
+      "useCases": [
+        "section break inside a card",
+        "visual separator between list groups",
+        "thematic break between paragraphs",
+        "between toolbar segments"
+      ],
+      "htmlElements": [
+        "hr",
+        "div"
+      ],
+      "modifiers": [],
+      "notes": "Component is declared in src/config/define.js with kind:\"static\" but has no .brut-divider selector in src/components.css and no preview/docs surface. Use a plain <hr> with the existing RULE styling, or treat this as an outstanding component-debt item until the class block lands. Examples below assume the conventional shape and will work once the class is added.",
+      "examples": [
+        {
+          "title": "Horizontal rule between sections",
+          "html": "<section>First section content.</section>\n<hr class=\"brut-divider\">\n<section>Second section content.</section>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-divider",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "drawer",
@@ -929,6 +1166,7 @@
         "notifications drawer"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-drawer",
       "selector": "[data-brut=\"drawer\"]",
       "modifiers": [
@@ -958,6 +1196,11 @@
           "name": "data-brut-close",
           "values": "boolean attribute (on a child)",
           "description": "Marks any element inside the drawer as a close trigger"
+        },
+        {
+          "name": "data-brut-drawer-title",
+          "values": "boolean attribute (on a child)",
+          "description": "Optional override marking the element to wire as aria-labelledby when no h1–h6 is present in .brut-drawer__head"
         }
       ],
       "events": [
@@ -980,12 +1223,15 @@
       "a11y": {
         "role": "dialog",
         "keyboard": [
-          "Escape"
+          "Escape",
+          "Tab",
+          "Shift+Tab"
         ],
         "aria": [
+          "aria-labelledby",
           "aria-label (consumer-supplied)"
         ],
-        "notes": "Forces a layout flush before adding --open so the slide transition runs from the closed transform. The drawer id is required — components without an id are skipped."
+        "notes": "Forces a layout flush before adding --open so the slide transition runs from the closed transform. On init, if the drawer has neither aria-labelledby nor aria-label, the component wires aria-labelledby to the first heading (h1–h6 or [data-brut-drawer-title]) inside .brut-drawer__head, auto-assigning an id when needed. Body scroll is locked while the drawer is open via Brut.scrollLock (reference-counted so nested overlays unlock only when the last one closes). On open, focus moves into the drawer (first focusable child, or the drawer itself if none) and Tab/Shift+Tab cycle within it via Brut.focusTrap; on close, focus returns to the element that triggered the open. The drawer id is required — components without an id are skipped."
       },
       "examples": [
         {
@@ -996,7 +1242,12 @@
           "title": "Bottom sheet",
           "html": "<button class=\"brut-btn\" type=\"button\" data-brut-open=\"dr-bottom\">BOTTOM DRAWER</button>\n<div class=\"brut-scrim\" id=\"dr-bottom-scrim\" hidden></div>\n<div class=\"brut-drawer\" id=\"dr-bottom\" data-brut=\"drawer\" data-brut-side=\"bottom\" data-brut-scrim=\"dr-bottom-scrim\" hidden role=\"dialog\" aria-label=\"Bottom drawer\">\n  <div class=\"brut-drawer__head\">\n    <span>BOTTOM DRAWER</span>\n    <button class=\"brut-drawer__x\" data-brut-close type=\"button\" aria-label=\"Close\">&times;</button>\n  </div>\n  <div class=\"brut-drawer__body\">\n    <p>Bottom drawer is full-width and clamped to 80vh.</p>\n  </div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Left/right drawers re-anchor to bottom edge on phones; anchored side at sm and above."
+      }
     },
     {
       "name": "dropzone",
@@ -1009,6 +1260,7 @@
         "bulk file upload form"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-dropzone",
       "selector": "[data-brut=\"dropzone\"]",
       "modifiers": [
@@ -1019,6 +1271,7 @@
         {
           "name": "brut:change",
           "detail": {
+            "value": "FileList (the input.files reference after assignment)",
             "files": "FileList (the input.files reference after assignment)"
           }
         }
@@ -1047,32 +1300,83 @@
           "title": "Multiple files with accept filter",
           "html": "<label class=\"brut-dropzone\" data-brut=\"dropzone\">\n  <input type=\"file\" name=\"assets\" multiple accept=\"image/*,.pdf\">\n  <span class=\"brut-dropzone__hint\">Drop images or PDFs here.</span>\n  <span class=\"brut-dropzone__sub\">Or click to browse. Multiple allowed.</span>\n</label>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Drop target sizes to its container at any tier."
+      }
     },
     {
       "name": "empty",
-      "description": "Empty-state placeholder with icon slot, title, body, and optional action button — for zero-data screens.",
+      "description": "Empty-state placeholder with shape slot, title, body, and optional action button — for zero-data screens.",
       "useCases": [
         "no search results",
         "empty inbox",
         "unconfigured feature",
-        "first-time-user state"
+        "first-time-user state",
+        "empty table rows"
       ],
       "htmlElements": [
         "div",
         "section"
       ],
       "modifiers": [],
-      "notes": "Compose with brut-empty__icon, brut-empty__title, brut-empty__body, and an optional .brut-btn for the primary action.",
+      "notes": "Compose with brut-empty__shape, brut-empty__title, brut-empty__body, and brut-empty__action wrapping a .brut-btn for the primary action.",
       "examples": [
         {
           "title": "No-results empty state",
-          "html": "<div class=\"brut-empty\">\n  <div class=\"brut-empty__icon\">∅</div>\n  <h3 class=\"brut-empty__title\">Nothing here yet</h3>\n  <p class=\"brut-empty__body\">Try a different filter or add your first item.</p>\n  <button class=\"brut-btn brut-btn--primary\">Add item</button>\n</div>"
+          "html": "<div class=\"brut-empty\">\n  <div class=\"brut-empty__shape\"></div>\n  <h3 class=\"brut-h2 brut-empty__title\">Nothing here yet</h3>\n  <p class=\"brut-body brut-empty__body\">Try a different filter or add your first item.</p>\n  <div class=\"brut-empty__action\">\n    <button class=\"brut-btn brut-btn--primary\" type=\"button\">Add item</button>\n  </div>\n</div>"
         }
       ],
       "kind": "static",
       "class": ".brut-empty",
       "selector": null
+    },
+    {
+      "name": "field",
+      "description": "Form-field wrapper that mirrors .brut-field--invalid / .brut-field--valid modifier classes onto the child input as aria-invalid so screen readers announce validation state.",
+      "useCases": [
+        "form validation",
+        "inline error messaging",
+        "success state",
+        "accessible field wrapper",
+        "WCAG 4.1.2"
+      ],
+      "kind": "interactive",
+      "status": "stable",
+      "class": ".brut-field",
+      "selector": "[data-brut=\"field\"]",
+      "modifiers": [
+        "--invalid",
+        "--valid"
+      ],
+      "dataAttributes": [],
+      "events": [],
+      "formState": {
+        "hiddenInput": false
+      },
+      "a11y": {
+        "role": "",
+        "keyboard": [],
+        "aria": [
+          "aria-invalid (mirrored from .brut-field--invalid)"
+        ],
+        "notes": "A global MutationObserver watches every .brut-field wrapper for class changes and sets aria-invalid=\"true\" on the first descendant input/select/textarea when --invalid is present. The data-brut=\"field\" hook is optional — the wrapper class alone triggers the observer."
+      },
+      "examples": [
+        {
+          "title": "Invalid state — error message + aria-invalid",
+          "html": "<div class=\"brut-field brut-field--invalid\">\n  <label class=\"brut-field__label\" for=\"email\">Email</label>\n  <input id=\"email\" class=\"brut-input\" type=\"email\" value=\"not-an-email\">\n  <span class=\"brut-field__error\">Invalid email address.</span>\n</div>"
+        },
+        {
+          "title": "Valid state — success message",
+          "html": "<div class=\"brut-field brut-field--valid\">\n  <label class=\"brut-field__label\" for=\"username\">Username</label>\n  <input id=\"username\" class=\"brut-input\" type=\"text\" value=\"ada-lovelace\">\n  <span class=\"brut-field__success\">Username is available.</span>\n</div>"
+        }
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Wrapper is layout-neutral; no responsive flip."
+      }
     },
     {
       "name": "file",
@@ -1085,15 +1389,23 @@
         "document submission"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-file",
       "selector": "[data-brut=\"file\"]",
       "modifiers": [],
-      "dataAttributes": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-accept-label",
+          "values": "string",
+          "description": "Optional human-readable hint describing accepted file types or constraints (e.g. \"PNG or JPG, up to 5MB\"). Rendered into a visually-hidden description element and wired to the input via aria-describedby. Falls back to a generic \"Accepted: <accept>\" derived from the native accept attribute when omitted."
+        }
+      ],
       "events": [
         {
           "name": "brut:change",
           "detail": {
-            "value": "FileList (event.detail.files)"
+            "value": "FileList (the selected files)",
+            "files": "FileList (the selected files)"
           }
         }
       ],
@@ -1108,8 +1420,11 @@
           "Space",
           "Enter"
         ],
-        "aria": [],
-        "notes": "Uses a real <label> wrapping the native file input, so click, focus, and keyboard activation are inherited from the browser. The visible button is purely decorative."
+        "aria": [
+          "aria-live (polite, on selection announcement region)",
+          "aria-describedby (on input, points at the hidden accept-label hint)"
+        ],
+        "notes": "Uses a real <label> wrapping the native file input, so click, focus, and keyboard activation are inherited from the browser. The visible button is purely decorative. On init, the component appends a visually-hidden aria-live=\"polite\" region that announces the selected filename(s) after each change. If data-brut-accept-label is set on the wrapper (or the input has an accept attribute), a visually-hidden description is appended and referenced via aria-describedby so screen reader users can discover the file-type constraint before opening the picker."
       },
       "examples": [
         {
@@ -1120,13 +1435,35 @@
           "title": "Multiple files",
           "html": "<label class=\"brut-file\" data-brut=\"file\">\n  <input type=\"file\" name=\"attachments\" multiple>\n  <span class=\"brut-file__btn\">CHOOSE FILES</span>\n  <span class=\"brut-file__name\">No file selected</span>\n</label>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form file picker; no viewport flip."
+      }
     },
     {
       "name": "footer",
+      "description": "Inverted ink-on-paper page footer slab with brand mark, link list, and legal text laid out on a wrapping inner row.",
+      "useCases": [
+        "site footer",
+        "legal and copyright strip",
+        "global navigation footer",
+        "app shell bottom slab"
+      ],
+      "htmlElements": [
+        "footer"
+      ],
+      "modifiers": [],
+      "notes": "Compose with .brut-footer__inner for the centered max-width wrapper; .brut-footer__brand for the lockup; .brut-footer__links + .brut-footer__link for nav; .brut-footer__legal for copyright text.",
+      "examples": [
+        {
+          "title": "Site footer with brand, links, legal",
+          "html": "<footer class=\"brut-footer\">\n  <div class=\"brut-footer__inner\">\n    <a class=\"brut-footer__brand\" href=\"/\"><span>BRUT UI</span></a>\n    <nav class=\"brut-footer__links\">\n      <a class=\"brut-footer__link\" href=\"/docs\">Docs</a>\n      <a class=\"brut-footer__link\" href=\"/github\">GitHub</a>\n    </nav>\n    <span class=\"brut-footer__legal\">&copy; 2026 MIT</span>\n  </div>\n</footer>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-footer",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "grid",
@@ -1186,81 +1523,337 @@
     },
     {
       "name": "h1",
+      "description": "Largest in-flow heading — display font, 3xl size, uppercase, tight tracking, zero margin.",
+      "useCases": [
+        "page title",
+        "article headline",
+        "top-of-section heading",
+        "card title for hero card"
+      ],
+      "htmlElements": [
+        "h1",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Page heading",
+          "html": "<h1 class=\"brut-h1\">Dashboard</h1>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h1",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "h2",
+      "description": "Second-level heading — display font, 2xl size, uppercase, tight tracking, zero margin.",
+      "useCases": [
+        "section heading",
+        "card title",
+        "modal title",
+        "group label above a stack"
+      ],
+      "htmlElements": [
+        "h2",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Section heading",
+          "html": "<h2 class=\"brut-h2\">Recent Activity</h2>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h2",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "h3",
+      "description": "Third-level heading — sans font, xl size, bold weight, snug line-height, zero margin.",
+      "useCases": [
+        "sub-section heading",
+        "card subhead",
+        "list group label",
+        "feature block title"
+      ],
+      "htmlElements": [
+        "h3",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Card subhead",
+          "html": "<h3 class=\"brut-h3\">Open Pull Requests</h3>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h3",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "h4",
+      "description": "Fourth-level heading — sans font, lg size, bold weight, snug line-height, zero margin.",
+      "useCases": [
+        "nested subsection title",
+        "sidebar group heading",
+        "minor card heading"
+      ],
+      "htmlElements": [
+        "h4",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Nested heading",
+          "html": "<h4 class=\"brut-h4\">Filter options</h4>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h4",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "h5",
+      "description": "Fifth-level heading — sans font, md size, bold weight, snug line-height, zero margin.",
+      "useCases": [
+        "compact subhead",
+        "sidebar item heading",
+        "list section divider",
+        "menu group label"
+      ],
+      "htmlElements": [
+        "h5",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Sidebar group heading",
+          "html": "<h5 class=\"brut-h5\">Team</h5>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h5",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "h6",
+      "description": "Smallest heading — sans font, sm size, bold, uppercase, wide tracking — used as a chunky eyebrow label.",
+      "useCases": [
+        "eyebrow heading",
+        "micro section label",
+        "meta heading",
+        "form fieldset legend"
+      ],
+      "htmlElements": [
+        "h6",
+        "legend",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Eyebrow label",
+          "html": "<h6 class=\"brut-h6\">Account settings</h6>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-h6",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "hero",
+      "description": "Full-bleed hero banner with display headline, lead copy, and call-to-action — registered as a static component but the CSS class block is not yet implemented in src/components.css.",
+      "useCases": [
+        "landing page hero",
+        "marketing splash",
+        "top-of-page banner",
+        "product launch announcement"
+      ],
+      "htmlElements": [
+        "section",
+        "header",
+        "div"
+      ],
+      "modifiers": [],
+      "notes": "Component is declared in src/config/define.js with kind:\"static\" but has no .brut-hero selector in src/components.css and no preview/docs surface. Compose a hero today with .brut-section--ink + .brut-section--loose + .brut-container + .brut-display-1 + .brut-lead. Treat the .brut-hero class as outstanding component-debt.",
+      "examples": [
+        {
+          "title": "Hero composed from existing primitives (current pattern)",
+          "html": "<section class=\"brut-section brut-section--ink brut-section--loose\">\n  <div class=\"brut-container\">\n    <h1 class=\"brut-display-1\">SHIP SOMETHING BRUTAL</h1>\n    <p class=\"brut-lead\">A vanilla UI kit for builders who like edges sharp and corners square.</p>\n    <a class=\"brut-btn brut-btn--primary brut-btn--lg\" href=\"/get-started\">Get started</a>\n  </div>\n</section>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-hero",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "input",
+      "description": "Brutalist single-line text input with bone fill, thick ink border, focus ring that flips background to primary-soft.",
+      "useCases": [
+        "form text field",
+        "email input",
+        "search box",
+        "login field",
+        "inline editor"
+      ],
+      "htmlElements": [
+        "input"
+      ],
+      "modifiers": [
+        {
+          "name": "--sm",
+          "description": "Small size — reduced padding and font size"
+        },
+        {
+          "name": "--lg",
+          "description": "Large size — increased padding and font size"
+        },
+        {
+          "name": "--err",
+          "description": "Error state — danger border and background"
+        },
+        {
+          "name": "--ok",
+          "description": "Success state — green border accent"
+        }
+      ],
+      "notes": "Width is 100% by default — wrap inside a sized parent or grid cell to constrain. Validation modifiers also resolve via :user-invalid / :user-valid for native form validation.",
+      "examples": [
+        {
+          "title": "Default input with label",
+          "html": "<label class=\"brut-label\" for=\"email\">Email</label>\n<input id=\"email\" class=\"brut-input\" type=\"email\" placeholder=\"you@example.com\">"
+        },
+        {
+          "title": "Error state",
+          "html": "<input class=\"brut-input brut-input--err\" value=\"not-an-email\">"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-input",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "kbd",
+      "description": "Inline keycap glyph — bone fill, thin ink border, subtle drop shadow — for keyboard shortcuts in body or docs.",
+      "useCases": [
+        "keyboard shortcut hint",
+        "help text key reference",
+        "documentation hotkey",
+        "cheatsheet key"
+      ],
+      "htmlElements": [
+        "kbd",
+        "span"
+      ],
+      "examples": [
+        {
+          "title": "Shortcut in prose",
+          "html": "<p class=\"brut-body\">Press <kbd class=\"brut-kbd\">Ctrl</kbd> + <kbd class=\"brut-kbd\">K</kbd> to open the command palette.</p>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-kbd",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "label",
+      "description": "Display-font field label — extra-small, uppercase, wide tracking — paired above an input or select.",
+      "useCases": [
+        "form field label",
+        "fieldset caption",
+        "switch / checkbox label",
+        "small column header"
+      ],
+      "htmlElements": [
+        "label",
+        "span"
+      ],
+      "examples": [
+        {
+          "title": "Label above input",
+          "html": "<label class=\"brut-label\" for=\"name\">Full name</label>\n<input id=\"name\" class=\"brut-input\">"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-label",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "lead",
+      "description": "Lead paragraph — sans at lg size with normal line-height and a 60ch measure — for the intro under a headline.",
+      "useCases": [
+        "article opening paragraph",
+        "hero subhead",
+        "landing page intro",
+        "feature description blurb"
+      ],
+      "htmlElements": [
+        "p",
+        "div"
+      ],
+      "examples": [
+        {
+          "title": "Article intro",
+          "html": "<h1 class=\"brut-h1\">Manifesto</h1>\n<p class=\"brut-lead\">A concrete kit for builders who like edges to be edges and corners to be square.</p>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-lead",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "link",
+      "description": "Inline ink anchor with thick underline that fills with primary on hover and inverts to deep primary on active.",
+      "useCases": [
+        "inline body link",
+        "docs cross-reference",
+        "footnote anchor",
+        "breadcrumb tail link"
+      ],
+      "htmlElements": [
+        "a"
+      ],
+      "examples": [
+        {
+          "title": "Inline link",
+          "html": "<p class=\"brut-body\">Read the <a class=\"brut-link\" href=\"/docs\">documentation</a> for details.</p>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-link",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "list",
+      "description": "Sans-serif list with square bullets and indented padding; .brut-list--ord switches to decimal numbering.",
+      "useCases": [
+        "feature bullet list",
+        "checklist items",
+        "numbered steps",
+        "sidebar nav list"
+      ],
+      "htmlElements": [
+        "ul",
+        "ol"
+      ],
+      "modifiers": [
+        {
+          "name": "--ord",
+          "description": "Decimal numbering instead of square bullets — pair with <ol>"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Bulleted list",
+          "html": "<ul class=\"brut-list\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+        },
+        {
+          "title": "Ordered list",
+          "html": "<ol class=\"brut-list brut-list--ord\">\n  <li>Install the package</li>\n  <li>Link the stylesheet</li>\n  <li>Drop in the script</li>\n</ol>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-list",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "menu",
@@ -1273,6 +1866,7 @@
         "kebab menu"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-menu",
       "selector": "[data-brut=\"menu\"]",
       "modifiers": [
@@ -1311,9 +1905,12 @@
           "Escape"
         ],
         "aria": [
-          "aria-haspopup=\"menu\" (auto-set on trigger)"
+          "aria-haspopup=\"menu\" (auto-set on trigger)",
+          "role=\"menuitem\" (auto-set on each .brut-menu__item)",
+          "role=\"separator\" (auto-set on each <hr> inside the menu)",
+          "aria-disabled=\"true\" (auto-set on items with the disabled attribute)"
         ],
-        "notes": "Trigger gets type=\"button\" and aria-haspopup automatically. Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll."
+        "notes": "Trigger gets type=\"button\" and aria-haspopup automatically. Items receive role=\"menuitem\" and <hr> separators receive role=\"separator\" during init (existing role attributes such as menuitemcheckbox/menuitemradio are preserved). Escape closes the menu and returns focus to the trigger. Clicking any .brut-menu__item closes the menu. Position recomputes on resize and scroll."
       },
       "examples": [
         {
@@ -1324,13 +1921,37 @@
           "title": "Overflow menu with link items",
           "html": "<button class=\"brut-btn\" type=\"button\" data-brut-menu-open=\"m-links\" aria-label=\"More\">…</button>\n<div class=\"brut-menu\" id=\"m-links\" data-brut=\"menu\" hidden>\n  <a class=\"brut-menu__item\" href=\"#\">Profile</a>\n  <a class=\"brut-menu__item\" href=\"#\">Settings</a>\n  <a class=\"brut-menu__item\" href=\"#\">Help</a>\n  <hr class=\"brut-menu__sep\"/>\n  <a class=\"brut-menu__item brut-menu__item--danger\" href=\"#\">Sign out</a>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Anchored menu docks to bottom edge on phones; anchored to trigger at sm and above."
+      }
     },
     {
       "name": "mono",
+      "description": "Inline monospace run for code-flavored text inside body copy — registered as a static component but the CSS class block is not yet implemented in src/components.css.",
+      "useCases": [
+        "inline file path in prose",
+        "short identifier in body text",
+        "CLI flag mention",
+        "shortcut spelled in copy"
+      ],
+      "htmlElements": [
+        "span",
+        "code"
+      ],
+      "modifiers": [],
+      "notes": "Component is declared in src/config/define.js with kind:\"static\" but has no .brut-mono selector in src/components.css. The font-family token (--font-mono) is used by .brut-code, .brut-pre, and .brut-kbd; for inline code styling today prefer .brut-code. preview/type-mono.html is a typography demo, not a usage page for .brut-mono. Treat this as outstanding component-debt.",
+      "examples": [
+        {
+          "title": "Monospace run inside body copy (intended pattern)",
+          "html": "<p class=\"brut-body\">Edit the file at <span class=\"brut-mono\">src/config/define.js</span> to register a new component.</p>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-mono",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "multiselect",
@@ -1343,6 +1964,7 @@
         "faceted search"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-multiselect",
       "selector": "[data-brut=\"multiselect\"]",
       "modifiers": [
@@ -1408,13 +2030,37 @@
           "title": "Pre-selected options",
           "html": "<div class=\"brut-multiselect\" data-brut=\"multiselect\" data-brut-name=\"tags\">\n  <div class=\"brut-multiselect__field\">\n    <input class=\"brut-multiselect__input\" placeholder=\"Add a tag…\" />\n  </div>\n  <ul class=\"brut-multiselect__list\">\n    <li class=\"brut-multiselect__opt\" data-value=\"news\"  data-selected>News</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"press\" data-selected>Press</li>\n    <li class=\"brut-multiselect__opt\" data-value=\"brand\">Brand</li>\n    <li class=\"brut-multiselect__empty\">No matches.</li>\n  </ul>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Dropdown docks to bottom edge on phones; anchored to control at sm and above."
+      }
     },
     {
       "name": "notice",
+      "description": "Banner-style call-out for advisory or contextual messaging — registered as a static component but the CSS class block is not yet implemented in src/components.css; functionally similar to .brut-alert.",
+      "useCases": [
+        "inline page-top advisory",
+        "soft system reminder",
+        "policy or terms callout",
+        "doc page tip block"
+      ],
+      "htmlElements": [
+        "div",
+        "aside"
+      ],
+      "modifiers": [],
+      "notes": "Component is declared in src/config/define.js with kind:\"static\" but has no .brut-notice selector in src/components.css and no preview/docs surface. Use .brut-alert (with --info, --warn, --ok, --err) for any banner-style messaging today. Treat .brut-notice as outstanding component-debt.",
+      "examples": [
+        {
+          "title": "Use .brut-alert today (current substitute)",
+          "html": "<div class=\"brut-alert brut-alert--info\">\n  <div class=\"brut-alert__icon\">i</div>\n  <div>Heads up — scheduled maintenance starts at 02:00 UTC.</div>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-notice",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "otp",
@@ -1427,6 +2073,7 @@
         "magic-link confirm"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-otp",
       "selector": "[data-brut=\"otp\"]",
       "modifiers": [],
@@ -1440,6 +2087,16 @@
           "name": "data-brut-name",
           "values": "string (default \"otp\")",
           "description": "name attribute on the hidden input that mirrors the joined value"
+        },
+        {
+          "name": "data-brut-label-cell",
+          "values": "string (default \"Digit\")",
+          "description": "i18n override for the per-cell aria-label noun (e.g. \"Ziffer\" → \"Ziffer 1 of 6\")"
+        },
+        {
+          "name": "data-brut-autocomplete",
+          "values": "string (default \"one-time-code\") | \"off\"",
+          "description": "Override the per-cell autocomplete value; \"off\" suppresses the attribute entirely"
         }
       ],
       "events": [
@@ -1468,8 +2125,11 @@
           "Backspace",
           "Paste"
         ],
-        "aria": [],
-        "notes": "Cells are real <input> elements with inputmode=\"numeric\" and autocomplete=\"one-time-code\", so iOS/Android suggest SMS codes. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell."
+        "aria": [
+          "aria-label (per cell)",
+          "aria-live (status region)"
+        ],
+        "notes": "At init, every cell receives inputmode=\"numeric\" and autocomplete=\"one-time-code\" by default (guarded so consumer-set values win); set data-brut-autocomplete on the wrapper to override the autocomplete value, or \"off\" to suppress it. Together these surface the numeric keypad and the iOS SMS one-time-code autofill shortcut. Non-digit keystrokes are stripped. Pasting a longer string fills cells left-to-right from the focused cell. Each cell gets aria-label=\"Digit N of M\" (override the noun via data-brut-label-cell). A visually-hidden aria-live=\"polite\" region announces \"Code complete\" when all cells are filled, in sync with the brut:complete dispatch."
       },
       "examples": [
         {
@@ -1484,13 +2144,42 @@
           "title": "Pre-populated cells",
           "html": "<div class=\"brut-otp\" data-brut=\"otp\" data-brut-name=\"partial\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\" value=\"4\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\" value=\"2\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n  <input class=\"brut-otp__cell\" maxlength=\"1\" inputmode=\"numeric\">\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Cell row keeps width across tiers within its container."
+      }
     },
     {
       "name": "overline",
+      "description": "Eyebrow label rendered above a heading — sans font, extra-small, bold, uppercase, widest tracking, muted concrete-400 color, zero margin.",
+      "useCases": [
+        "category label above a hero headline",
+        "section eyebrow",
+        "card kicker",
+        "breadcrumb-style group label"
+      ],
+      "htmlElements": [
+        "p",
+        "span",
+        "div",
+        "h6"
+      ],
+      "modifiers": [],
+      "notes": "Differs from .brut-h6 — .brut-overline is muted (concrete-400) and used as a kicker above a larger heading; .brut-h6 is the smallest in-flow heading proper. Pair an overline directly above an .brut-h1 or .brut-display-* for the classic eyebrow lockup.",
+      "examples": [
+        {
+          "title": "Eyebrow above a section title",
+          "html": "<p class=\"brut-overline\">Pricing</p>\n<h2 class=\"brut-h2\">Simple plans for any team</h2>"
+        },
+        {
+          "title": "Card kicker",
+          "html": "<article class=\"brut-card\">\n  <p class=\"brut-overline\">New</p>\n  <h3 class=\"brut-h3\">Workflows v2</h3>\n  <p class=\"brut-body\">Now with conditional steps.</p>\n</article>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-overline",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "pagination",
@@ -1503,6 +2192,7 @@
         "image gallery paging"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-pagination",
       "selector": "[data-brut=\"pagination\"]",
       "modifiers": [],
@@ -1526,16 +2216,28 @@
           "name": "data-sibling-count",
           "values": "integer (default 1)",
           "description": "Pages shown on each side of the current page before collapsing into an ellipsis"
+        },
+        {
+          "name": "data-page-sizes",
+          "values": "comma-separated integers, e.g. \"10,25,50,100\"",
+          "description": "When present, renders a `.brut-select` page-size picker. The current page-size is auto-included if missing from the list. Omit the attribute to keep existing markup unchanged."
+        },
+        {
+          "name": "data-brut-label-page-size",
+          "values": "string (default \"Per page:\")",
+          "description": "Label text for the page-size selector; provided for i18n."
         }
       ],
       "events": [
         {
           "name": "brut:change",
           "detail": {
+            "value": "integer (new current page)",
             "page": "integer (new current page)",
             "pageSize": "integer",
             "total": "integer"
-          }
+          },
+          "notes": "Fires on page-button clicks and on page-size selector changes. When the page size changes, `page` resets to 1 and `pageSize` carries the new value; the detail shape is unchanged."
         }
       ],
       "formState": {
@@ -1568,7 +2270,12 @@
           "title": "Wider sibling window",
           "html": "<nav class=\"brut-pagination\" data-brut=\"pagination\" data-total=\"1000\" data-page-size=\"50\" data-page=\"7\" data-sibling-count=\"2\"></nav>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "ellipsis-collapse",
+        "breakpoint": "sm",
+        "notes": "Middle pages collapse to an ellipsis on phones; full row visible at sm and above."
+      }
     },
     {
       "name": "password",
@@ -1581,10 +2288,17 @@
         "API key entry"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-password",
       "selector": "[data-brut=\"password\"]",
       "modifiers": [],
-      "dataAttributes": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-autocomplete",
+          "values": "string (default \"current-password\") | \"off\"",
+          "description": "Override the autocomplete value applied at init; \"off\" suppresses the attribute entirely"
+        }
+      ],
       "events": [],
       "formState": {
         "hiddenInput": false,
@@ -1601,7 +2315,7 @@
           "aria-label on toggle (\"Show password\" / \"Hide password\")",
           "aria-pressed on toggle"
         ],
-        "notes": "Toggle button is forced to type=\"button\" so it never submits the surrounding form. Label text and aria attributes update in sync with the visibility state."
+        "notes": "At init the wrapped input receives autocomplete=\"current-password\" by default — guarded so consumer-set values win, and suppressed when data-brut-autocomplete=\"off\" is on the wrapper — so password managers recognise the field. Toggle button is forced to type=\"button\" so it never submits the surrounding form. Label text and aria attributes update in sync with the visibility state."
       },
       "examples": [
         {
@@ -1612,7 +2326,11 @@
           "title": "With initial value",
           "html": "<div class=\"brut-password\" data-brut=\"password\">\n  <input class=\"brut-input\" type=\"password\" name=\"current\" value=\"hunter2secret\">\n  <button class=\"brut-password__toggle\">SHOW</button>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form input; no viewport flip."
+      }
     },
     {
       "name": "popover",
@@ -1625,6 +2343,7 @@
         "tooltip-style content"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-popover",
       "selector": "[data-brut=\"popover\"]",
       "modifiers": [],
@@ -1643,25 +2362,33 @@
       "events": [
         {
           "name": "brut:open",
-          "detail": {}
+          "detail": {
+            "value": "true"
+          }
         },
         {
           "name": "brut:close",
-          "detail": {}
+          "detail": {
+            "value": "false"
+          }
         }
       ],
       "formState": {
         "hiddenInput": false
       },
       "a11y": {
-        "role": null,
+        "role": "dialog",
         "keyboard": [
           "Escape (close)"
         ],
         "aria": [
+          "role=\"dialog\"",
+          "aria-haspopup=\"dialog\"",
+          "aria-expanded",
+          "aria-controls",
           "aria-label on .brut-popover__x close button"
         ],
-        "notes": "Trigger gets type=\"button\" automatically. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger."
+        "notes": "Trigger gets type=\"button\" automatically and is wired with aria-haspopup=\"dialog\", aria-expanded, and aria-controls pointing at the popover id (auto-generated if missing). The popover element gets role=\"dialog\" unless the consumer set a different role. Click outside or pressing Escape closes the popover. Position recomputes on window resize and capture-phase scroll so it stays anchored to the trigger. Position auto-flips to the opposite side when the preferred side would clip at the viewport edge."
       },
       "examples": [
         {
@@ -1672,13 +2399,40 @@
           "title": "Plain body, no head",
           "html": "<button class=\"brut-btn\" type=\"button\" data-brut-popover-open=\"po-info\">WHAT IS THIS?</button>\n<div class=\"brut-popover\" id=\"po-info\" data-brut=\"popover\" hidden>\n  <div class=\"brut-popover__body\">\n    A popover is a small anchored card. Click the trigger again, click outside, or press Esc to close.\n  </div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Bottom-sheet on phones; anchored to trigger at sm and above."
+      }
     },
     {
       "name": "pre",
+      "description": "Block-level preformatted code panel — monospace, ink background with paper text, sm size, thick ink border, sm shadow, scroll-on-overflow.",
+      "useCases": [
+        "multi-line code sample in docs",
+        "JSON/YAML payload display",
+        "CLI session transcript",
+        "config-file snippet"
+      ],
+      "htmlElements": [
+        "pre"
+      ],
+      "modifiers": [],
+      "notes": "Token-color hooks are available for inline syntax highlight: .tok-comment (concrete-300), .tok-keyword (pop-pink), .tok-string (pop-lime), .tok-num (primary). Wrap highlighted runs in <span class=\"tok-*\"> inside the <pre>.",
+      "examples": [
+        {
+          "title": "Code block",
+          "html": "<pre class=\"brut-pre\"><code>npm install\nnpm run build</code></pre>"
+        },
+        {
+          "title": "Code block with token highlighting",
+          "html": "<pre class=\"brut-pre\"><span class=\"tok-comment\">// Snap, never ease.</span>\n<span class=\"tok-keyword\">const</span> ease = <span class=\"tok-string\">'cubic-bezier(.2,.8,.2,1)'</span>;\n<span class=\"tok-keyword\">const</span> duration = <span class=\"tok-num\">140</span>;</pre>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-pre",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "progress",
@@ -1691,6 +2445,7 @@
         "onboarding completion"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-progress",
       "selector": "[data-brut=\"progress\"]",
       "modifiers": [
@@ -1765,19 +2520,67 @@
           "title": "Indeterminate",
           "html": "<div class=\"brut-progress brut-progress--indeterminate\" aria-label=\"Loading…\">\n  <div class=\"brut-progress__bar\"></div>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Linear bar fills its container at any tier."
+      }
     },
     {
       "name": "prose",
+      "description": "Long-form readable text container — sans, base size, normal line-height, 70ch measure — auto-spaces direct children with a sp-3h gap and tightens spacing around nested headings, lists, and inline code.",
+      "useCases": [
+        "blog post body",
+        "docs article body",
+        "rendered markdown wrapper",
+        "long-form content region"
+      ],
+      "htmlElements": [
+        "article",
+        "div",
+        "main",
+        "section"
+      ],
+      "modifiers": [],
+      "notes": "Owl-style spacing (\".brut-prose > * + *\") only targets DIRECT children, so put each paragraph, heading, and list directly inside the container. Nested h2/h3 get extra top margin (sp-8 / sp-6) for clear section breaks. Inline <code> inside .brut-prose picks up the .brut-code styling automatically.",
+      "examples": [
+        {
+          "title": "Article body",
+          "html": "<article class=\"brut-prose\">\n  <h1 class=\"brut-h1\">Welcome</h1>\n  <p>The first paragraph sits flush with the heading above it.</p>\n  <h2>Subsection</h2>\n  <p>Subsequent children get vertical rhythm automatically.</p>\n  <ul>\n    <li>List items inherit padding</li>\n    <li>Inline <code>code</code> picks up panel styling</li>\n  </ul>\n</article>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-prose",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "quote",
+      "description": "Pull-out quote with a left ink rule — sans, md size, normal line-height, no italic, sp-1h vertical / sp-4 horizontal padding, zero margin.",
+      "useCases": [
+        "inline pull quote in an article",
+        "testimonial inside a card",
+        "reviewer comment",
+        "highlight from a longer passage"
+      ],
+      "htmlElements": [
+        "blockquote",
+        "div"
+      ],
+      "modifiers": [],
+      "notes": "Use .brut-pull-quote (separate class) for the larger display-weight pull-out with thick top + bottom rules. .brut-quote stays inline-friendly inside body copy.",
+      "examples": [
+        {
+          "title": "Inline blockquote",
+          "html": "<blockquote class=\"brut-quote\">Concrete is honest about what it is.</blockquote>"
+        },
+        {
+          "title": "Testimonial in a card",
+          "html": "<article class=\"brut-card\">\n  <blockquote class=\"brut-quote\">The fastest UI kit our team has shipped against.</blockquote>\n  <p class=\"brut-caption\">— Jane Doe, Lead Engineer</p>\n</article>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-quote",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "radio",
@@ -1790,6 +2593,7 @@
         "shipping method"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-radio",
       "selector": "[data-brut=\"radio\"]",
       "modifiers": [
@@ -1838,13 +2642,39 @@
           "title": "Size group",
           "html": "<label class=\"brut-radio brut-radio--on\" data-brut=\"radio\">\n  <input type=\"radio\" name=\"size\" value=\"md\" hidden checked/>\n</label>\n<label class=\"brut-radio\" data-brut=\"radio\">\n  <input type=\"radio\" name=\"size\" value=\"lg\" hidden/>\n</label>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form control; lays out with its parent at any tier."
+      }
     },
     {
       "name": "range",
+      "description": "Restyled native single-thumb slider — bone-fill track with thick ink border and sp-icon primary-fill thumb. Wraps a real <input type=\"range\"> for native value, keyboard, and form submission.",
+      "useCases": [
+        "volume / brightness slider",
+        "numeric value picker",
+        "filter weight control",
+        "preference percentage input"
+      ],
+      "htmlElements": [
+        "input[type=\"range\"]"
+      ],
+      "modifiers": [],
+      "notes": "Apply the class directly to the <input type=\"range\"> element. Stepped behavior comes from the standard step=\"\" attribute. For two-thumb min/max selection, use .brut-range-dual (interactive component, separate JS module).",
+      "examples": [
+        {
+          "title": "Default range slider",
+          "html": "<input class=\"brut-range\" type=\"range\" min=\"0\" max=\"100\" value=\"50\">"
+        },
+        {
+          "title": "Stepped slider with label",
+          "html": "<label class=\"brut-label\" for=\"volume\">Volume</label>\n<input id=\"volume\" class=\"brut-range\" type=\"range\" min=\"0\" max=\"10\" step=\"1\" value=\"7\">"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-range",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "range-dual",
@@ -1857,6 +2687,7 @@
         "duration bracket"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-range-dual",
       "selector": "[data-brut=\"range-dual\"]",
       "modifiers": [],
@@ -1895,6 +2726,16 @@
           "name": "data-brut-name-max",
           "values": "string",
           "description": "Form name for the auto-created hidden input mirroring the upper value"
+        },
+        {
+          "name": "data-brut-prefix",
+          "values": "string",
+          "description": "Prepended to the announced thumb value (e.g. \"$\") for screen-reader unit context"
+        },
+        {
+          "name": "data-brut-suffix",
+          "values": "string",
+          "description": "Appended to the announced thumb value (e.g. \" kg\") for screen-reader unit context"
         }
       ],
       "events": [
@@ -1925,9 +2766,10 @@
           "aria-label (per thumb)",
           "aria-valuemin",
           "aria-valuemax",
-          "aria-valuenow"
+          "aria-valuenow",
+          "aria-valuetext"
         ],
-        "notes": "The lower thumb is clamped at the upper thumb and vice versa via aria-valuemin/aria-valuemax. PageUp/PageDown move by 10× step. Home/End collapse to the opposite thumb or to min/max."
+        "notes": "The lower thumb is clamped at the upper thumb and vice versa via aria-valuemin/aria-valuemax. PageUp/PageDown move by 10× step. Home/End collapse to the opposite thumb or to min/max. aria-valuetext wraps the raw number with data-brut-prefix and data-brut-suffix so screen readers announce unit-aware values (e.g. \"$120\" instead of \"120\")."
       },
       "examples": [
         {
@@ -1942,7 +2784,11 @@
           "title": "Year window",
           "html": "<div class=\"brut-range-dual\"\n     data-brut=\"range-dual\"\n     data-brut-min=\"2000\" data-brut-max=\"2026\" data-brut-step=\"1\"\n     data-brut-value-min=\"2010\" data-brut-value-max=\"2020\"\n     data-brut-name-min=\"year_min\" data-brut-name-max=\"year_max\"></div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Slider track stretches to its container at any tier."
+      }
     },
     {
       "name": "rating",
@@ -1955,6 +2801,7 @@
         "quality scoring"
       ],
       "kind": "interactive",
+      "status": "beta",
       "class": ".brut-rating",
       "selector": "[data-brut=\"rating\"]",
       "modifiers": [
@@ -1973,6 +2820,11 @@
           "name": "data-brut-value",
           "values": "integer (default 0)",
           "description": "Initial score; clamped to 0..N where N is the star count"
+        },
+        {
+          "name": "data-brut-label-star",
+          "values": "string (default \"star\"/\"stars\")",
+          "description": "Override for the per-star aria-label noun (e.g. \"estrella\"); applied as \"<n> <value>\""
         }
       ],
       "events": [
@@ -1988,7 +2840,7 @@
         "name": "hidden input created automatically when data-brut-name is set"
       },
       "a11y": {
-        "role": "slider (wrapper) with role=\"radio\" on each star",
+        "role": "radiogroup",
         "keyboard": [
           "ArrowLeft",
           "ArrowRight",
@@ -1998,12 +2850,12 @@
           "End"
         ],
         "aria": [
-          "aria-valuemin",
-          "aria-valuemax",
-          "aria-valuenow",
-          "aria-checked (per star)"
+          "role=\"radio\" (per star)",
+          "aria-checked (per star)",
+          "aria-label (per star)",
+          "aria-label (group)"
         ],
-        "notes": "Wrapper is the focusable target with tabindex=\"0\". Hover and focus on individual stars preview the score; mouseleave/focusout repaint the locked value. Clicking the active star clears the score (toggle to 0)."
+        "notes": "Container is a radiogroup; each star is a radio. Roving tabindex keeps a single tab stop on the active star (or the first star when cleared); arrow keys move focus and selection together with wrapping. Hover and focus on individual stars preview the score; mouseleave/focusout repaint the locked value. Clicking the active star clears the score (toggle to 0)."
       },
       "examples": [
         {
@@ -2014,7 +2866,11 @@
           "title": "Pre-selected (3 of 5)",
           "html": "<div class=\"brut-rating\" data-brut=\"rating\" data-brut-name=\"quality\" data-brut-value=\"3\">\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n  <button class=\"brut-rating__star\"></button>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Star row keeps intrinsic size at any tier."
+      }
     },
     {
       "name": "row",
@@ -2098,6 +2954,7 @@
         "table toolbar search"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-search",
       "selector": "[data-brut=\"search\"]",
       "modifiers": [
@@ -2106,19 +2963,20 @@
           "description": "Toggled on the wrapper while the input is non-empty; reveals the clear button"
         }
       ],
-      "dataAttributes": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-debounce",
+          "values": "integer (milliseconds)",
+          "description": "Optional integer milliseconds. When present and positive, the input handler is debounced by this many ms. Absent or 0 = immediate (default)."
+        }
+      ],
       "events": [
         {
-          "name": "input",
+          "name": "brut:change",
           "detail": {
-            "value": "string (current input value, native event on the inner input)"
-          }
-        },
-        {
-          "name": "change",
-          "detail": {
-            "value": "string (fires on blur and after the clear button is pressed)"
-          }
+            "value": "string (current input value)"
+          },
+          "notes": "Fires on every keystroke and on clear-button click. When data-brut-debounce=\"<ms>\" is set on the wrapper, the keystroke path is debounced by that many ms; the clear-button path stays immediate."
         }
       ],
       "formState": {
@@ -2133,7 +2991,7 @@
         "aria": [
           "aria-label (on the clear button)"
         ],
-        "notes": "Clearing dispatches both input and change events on the inner field, then refocuses the input so typing can continue uninterrupted."
+        "notes": "Clearing the input refocuses it so typing can continue uninterrupted."
       },
       "examples": [
         {
@@ -2144,7 +3002,11 @@
           "title": "Pre-filled (clear button visible)",
           "html": "<div class=\"brut-search\" data-brut=\"search\">\n  <input class=\"brut-input\" type=\"search\" value=\"button\" placeholder=\"Search…\">\n  <button class=\"brut-search__clear\" aria-label=\"Clear\">×</button>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form input; no viewport flip."
+      }
     },
     {
       "name": "section",
@@ -2228,6 +3090,7 @@
         "chart granularity control"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-segmented",
       "selector": "[data-brut=\"segmented\"]",
       "modifiers": [
@@ -2285,13 +3148,40 @@
           "title": "Form-bound (mirrors to a hidden input)",
           "html": "<div class=\"brut-segmented\" data-brut=\"segmented\" data-brut-name=\"range\">\n  <button class=\"brut-segmented__btn brut-segmented__btn--on\" data-value=\"7d\">7D</button>\n  <button class=\"brut-segmented__btn\" data-value=\"30d\">30D</button>\n  <button class=\"brut-segmented__btn\" data-value=\"90d\">90D</button>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "horizontal-scroll",
+        "breakpoint": "sm",
+        "notes": "Segments scroll horizontally on phones; full row at sm and above."
+      }
     },
     {
       "name": "select",
+      "description": "Restyled native dropdown — bone fill, thick ink border, xs shadow, hard ink chevron drawn with two linear-gradients (sanctioned exception per AGENTS.md). 100% width, focus ring flips background to primary-soft.",
+      "useCases": [
+        "form single-select",
+        "sort/filter dropdown",
+        "toolbar option picker",
+        "settings choice field"
+      ],
+      "htmlElements": [
+        "select"
+      ],
+      "modifiers": [],
+      "notes": "Width is 100% by default — wrap inside a sized parent or grid cell to constrain. Validation states are driven natively via :user-invalid / :user-valid (and the [aria-invalid=\"true\"] attribute). For a searchable rich select with custom rendering, use .brut-combobox or .brut-multiselect (interactive components).",
+      "examples": [
+        {
+          "title": "Default select",
+          "html": "<select class=\"brut-select\">\n  <option value=\"\">Choose a planet…</option>\n  <option>Mercury</option>\n  <option>Venus</option>\n  <option>Earth</option>\n</select>"
+        },
+        {
+          "title": "Select with optgroups",
+          "html": "<select class=\"brut-select\">\n  <optgroup label=\"Inner\">\n    <option>Mercury</option>\n    <option>Venus</option>\n  </optgroup>\n  <optgroup label=\"Outer\">\n    <option>Jupiter</option>\n    <option>Saturn</option>\n  </optgroup>\n</select>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-select",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "sidebar",
@@ -2304,6 +3194,7 @@
         "workspace switcher"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-sidebar",
       "selector": "[data-brut=\"sidebar\"]",
       "modifiers": [
@@ -2321,7 +3212,23 @@
         {
           "name": "brut:change",
           "detail": {
-            "value": "{ group: HTMLElement, closed: boolean }"
+            "value": "boolean (true when the toggled group is open)",
+            "group": "HTMLElement (the toggled group)",
+            "closed": "boolean (new closed state of the group)"
+          }
+        },
+        {
+          "name": "brut:open",
+          "detail": {
+            "value": "true",
+            "group": "HTMLElement (the toggled group)"
+          }
+        },
+        {
+          "name": "brut:close",
+          "detail": {
+            "value": "false",
+            "group": "HTMLElement (the toggled group)"
           }
         }
       ],
@@ -2343,25 +3250,122 @@
           "title": "Two groups + one collapsed group",
           "html": "<aside class=\"brut-sidebar\" data-brut=\"sidebar\">\n  <a class=\"brut-sidebar__brand\" href=\"#\">BRUT</a>\n  <div class=\"brut-sidebar__group\">\n    <button class=\"brut-sidebar__group-title\" type=\"button\">Main</button>\n    <a class=\"brut-sidebar__item brut-sidebar__item--active\" href=\"#\">Dashboard</a>\n    <a class=\"brut-sidebar__item\" href=\"#\">Projects</a>\n    <a class=\"brut-sidebar__item\" href=\"#\">Inbox</a>\n  </div>\n  <div class=\"brut-sidebar__group brut-sidebar__group--closed\">\n    <button class=\"brut-sidebar__group-title\" type=\"button\">Archived</button>\n    <a class=\"brut-sidebar__item\" href=\"#\">Old project</a>\n  </div>\n</aside>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "disclosure-toggle",
+        "breakpoint": "md",
+        "notes": "Hidden behind a toggle button below md; visible inline at md and above."
+      }
     },
     {
       "name": "skeleton",
+      "description": "Loading placeholder block with concrete-100 fill, thin ink border, and a hard ink stripe sweep that loops every 800ms (sanctioned loader animation). Pair sizing modifiers to match the content shape being substituted.",
+      "useCases": [
+        "async card placeholder",
+        "image-loading shim",
+        "list-row placeholder",
+        "avatar placeholder",
+        "table-row stand-in"
+      ],
+      "htmlElements": [
+        "span",
+        "div"
+      ],
+      "modifiers": [
+        {
+          "name": "--text",
+          "height": "1em width:100%",
+          "description": "1em-tall full-width line for substituting a row of text"
+        },
+        {
+          "name": "--block",
+          "description": "Fixed-height block (--skeleton-h) for substituting a card hero or image"
+        },
+        {
+          "name": "--circle",
+          "description": "Square sp-12 box for substituting an avatar"
+        }
+      ],
+      "notes": "The shimmer animation is a sanctioned exception to the 140ms transition cap because it is an animation loop, not a transition. Honors prefers-reduced-motion via the reduce-motion media block in components.css.",
+      "examples": [
+        {
+          "title": "Text-line skeletons",
+          "html": "<div class=\"brut-stack brut-stack--xs\">\n  <span class=\"brut-skeleton brut-skeleton--text\" style=\"width: 80%;\"></span>\n  <span class=\"brut-skeleton brut-skeleton--text\" style=\"width: 95%;\"></span>\n  <span class=\"brut-skeleton brut-skeleton--text\" style=\"width: 60%;\"></span>\n</div>"
+        },
+        {
+          "title": "Card-loading placeholder",
+          "html": "<div class=\"brut-card\">\n  <div class=\"brut-skeleton brut-skeleton--block\" style=\"height: 120px; margin-bottom: 16px;\"></div>\n  <span class=\"brut-skeleton brut-skeleton--text\" style=\"width: 70%;\"></span>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-skeleton",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "small",
+      "description": "Sans-serif body copy at sm size with an 80ch reading measure for fine print, helper text, or footnotes.",
+      "useCases": [
+        "fine print",
+        "helper text under inputs",
+        "disclaimer paragraph",
+        "metadata line under a card"
+      ],
+      "htmlElements": [
+        "small",
+        "p",
+        "span"
+      ],
+      "examples": [
+        {
+          "title": "Form helper text",
+          "html": "<input class=\"brut-input\" type=\"password\">\n<small class=\"brut-small\">At least 12 characters with one symbol.</small>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-small",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "spinner",
+      "description": "Square loading indicator — thick ink border with the top edge in primary, rotating 360deg every 600ms (sanctioned loader animation). No border-radius — stays brutalist.",
+      "useCases": [
+        "inline button loading state",
+        "async data fetch indicator",
+        "page-level loading spinner",
+        "background-task busy state"
+      ],
+      "htmlElements": [
+        "span",
+        "div"
+      ],
+      "modifiers": [
+        {
+          "name": "--sm",
+          "description": "sp-6 box with bw-2 border — for inline button or text use"
+        },
+        {
+          "name": "--md",
+          "description": "sp-8 box with bw-3 border — the default size"
+        },
+        {
+          "name": "--lg",
+          "description": "sp-12 box with bw-3 border — for page-level loading states"
+        }
+      ],
+      "notes": "The 600ms rotation is a sanctioned exception to the 140ms transition cap because it is an animation loop, not a transition. Honors prefers-reduced-motion via the reduce-motion media block in components.css. For determinate progress, use .brut-progress instead.",
+      "examples": [
+        {
+          "title": "Spinner inside a loading button",
+          "html": "<button class=\"brut-btn\" type=\"button\" disabled>\n  <span class=\"brut-spinner brut-spinner--sm\" style=\"vertical-align: middle; margin-right: 8px;\"></span>\n  SAVING\n</button>"
+        },
+        {
+          "title": "Inline with status text",
+          "html": "<div class=\"brut-cluster brut-cluster--sm\">\n  <span class=\"brut-spinner brut-spinner--sm\"></span>\n  <span class=\"brut-body\">Loading…</span>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-spinner",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "stack",
@@ -2423,9 +3427,28 @@
     },
     {
       "name": "stat",
+      "description": "Number-and-label statistic display block — registered as a static component but the CSS class block is not yet implemented in src/components.css; the closest in-tree equivalent is the existing .brut-num figure class (line 277).",
+      "useCases": [
+        "dashboard KPI tile",
+        "metric in a marketing page",
+        "inline figure with label",
+        "reporting summary block"
+      ],
+      "htmlElements": [
+        "div",
+        "article"
+      ],
+      "modifiers": [],
+      "notes": "Component is declared in src/config/define.js with kind:\"static\" but has no .brut-stat selector in src/components.css and no preview/docs surface. Compose a stat today with .brut-num for the figure plus .brut-overline or .brut-label for the caption. Treat .brut-stat as outstanding component-debt.",
+      "examples": [
+        {
+          "title": "Stat composed from existing primitives (current pattern)",
+          "html": "<div>\n  <p class=\"brut-num\">12,480</p>\n  <p class=\"brut-overline\">Active users</p>\n</div>"
+        }
+      ],
+      "kind": "static",
       "class": ".brut-stat",
-      "selector": null,
-      "kind": "static"
+      "selector": null
     },
     {
       "name": "stepper",
@@ -2438,6 +3461,7 @@
         "paginated page size"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-stepper",
       "selector": "[data-brut=\"stepper\"]",
       "modifiers": [],
@@ -2473,7 +3497,7 @@
           "aria-valuemin",
           "aria-valuemax"
         ],
-        "notes": "PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min."
+        "notes": "At init the inner input receives inputmode=\"numeric\" by default (\"decimal\" when its step contains a fractional part), guarded so a consumer-set inputmode wins; this surfaces a numeric soft keyboard on touch devices. PageUp / PageDown move by 10× step. Programmatic input updates suppress duplicate brut:change emissions while still bubbling native input/change. Out-of-range typed values are clamped and snapped to the step grid relative to min."
       },
       "examples": [
         {
@@ -2488,7 +3512,11 @@
           "title": "Decimal step",
           "html": "<div class=\"brut-stepper\" data-brut=\"stepper\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"down\">−</button>\n  <input class=\"brut-stepper__input\" type=\"number\" min=\"0\" max=\"5\" step=\"0.1\" value=\"1.0\">\n  <button class=\"brut-stepper__btn\" data-brut-step=\"up\">+</button>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Numeric input with controls; no viewport flip."
+      }
     },
     {
       "name": "switch",
@@ -2501,6 +3529,7 @@
         "inline form boolean"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-switch",
       "selector": "[data-brut=\"switch\"]",
       "modifiers": [
@@ -2546,7 +3575,11 @@
           "title": "Form-bound with name",
           "html": "<label class=\"brut-switch\" data-brut=\"switch\">\n  <input type=\"checkbox\" name=\"notifications\" hidden>\n  <span class=\"brut-switch__knob\"></span>\n</label>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Form control; no viewport flip."
+      }
     },
     {
       "name": "table",
@@ -2559,6 +3592,7 @@
         "spreadsheet-like data"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-table",
       "selector": "[data-brut=\"table\"]",
       "modifiers": [
@@ -2599,6 +3633,11 @@
           "description": "On a td: explicit value used for sorting (falls back to text content)"
         },
         {
+          "name": "data-sort-direction",
+          "values": "\"ascending\" | \"descending\" | \"none\"",
+          "description": "On a sortable th: written by the JS after each sort to reflect the active direction (every other sortable th gets \"none\")"
+        },
+        {
           "name": "data-brut-select-all",
           "values": "boolean attribute",
           "description": "On a header element: toggles every [data-brut-row-select] in the table"
@@ -2612,16 +3651,27 @@
           "name": "data-brut-col-label",
           "values": "string",
           "description": "On a td (responsive mode): label prefix shown before the cell value when stacked"
+        },
+        {
+          "name": "data-brut-role",
+          "values": "\"empty-state\"",
+          "description": "On a child element: opt-in empty-state slot. Auto-shown when tbody has zero visible rows; the table itself is hidden in that state. A MutationObserver on tbody re-syncs after row additions/removals; consumers do not need to call a refresh API."
         }
       ],
       "events": [
         {
           "name": "brut:change",
           "detail": {
-            "value": "string (sort key) or boolean (when selectAll is true)",
-            "key": "string (sort key, when sorting)",
-            "dir": "\"ascending\" | \"descending\"",
+            "value": "boolean (select-all on/off state)",
             "selectAll": "true (only on select-all toggle)"
+          }
+        },
+        {
+          "name": "brut:sort",
+          "detail": {
+            "value": "{ key, direction }",
+            "key": "string",
+            "direction": "\"ascending\" | \"descending\" | \"none\""
           }
         }
       ],
@@ -2641,7 +3691,7 @@
           "role=\"checkbox\" (on select-all)",
           "aria-checked (on select-all and rows)"
         ],
-        "notes": "Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input."
+        "notes": "Sortable headers are tabindex=0, activated by Space or Enter. Numeric values sort numerically; otherwise locale-aware case-insensitive string sort. Select-all syncs every row checkbox and dispatches a real change event on the underlying input. Auto empty-state: when a [data-brut-role=\"empty-state\"] child is present, it is automatically revealed (and the table hidden) whenever tbody has no visible rows; a MutationObserver keeps this in sync as rows are added or removed."
       },
       "examples": [
         {
@@ -2656,7 +3706,12 @@
           "title": "Compact + bordered",
           "html": "<table class=\"brut-table brut-table--compact brut-table--bordered\">\n  <thead class=\"brut-table__head\">\n    <tr class=\"brut-table__row\">\n      <th class=\"brut-table__cell\">SKU</th>\n      <th class=\"brut-table__cell\">Title</th>\n      <th class=\"brut-table__cell brut-table__cell--num\">Stock</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr class=\"brut-table__row\"><td class=\"brut-table__cell\">A-001</td><td class=\"brut-table__cell\">Bone-white tee</td><td class=\"brut-table__cell brut-table__cell--num\">122</td></tr>\n  </tbody>\n</table>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "horizontal-scroll",
+        "breakpoint": "md",
+        "notes": "Wide tables scroll horizontally below md; expanded layout at md and above."
+      }
     },
     {
       "name": "tabs",
@@ -2669,6 +3724,7 @@
         "wizard or report views"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-tabs",
       "selector": "[data-brut=\"tabs\"]",
       "modifiers": [
@@ -2728,7 +3784,12 @@
           "title": "Panels scoped via data-brut-panels",
           "html": "<div class=\"brut-tabs\" data-brut=\"tabs\" data-brut-panels=\"#detail-panels\">\n  <button class=\"brut-tab brut-tab--on\" data-brut-tab=\"info\">INFO</button>\n  <button class=\"brut-tab\" data-brut-tab=\"logs\">LOGS</button>\n</div>\n<div id=\"detail-panels\">\n  <section data-brut-panel=\"info\">Info</section>\n  <section data-brut-panel=\"logs\" hidden>Logs</section>\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "horizontal-scroll",
+        "breakpoint": "sm",
+        "notes": "Tabs scroll horizontally on phones; full row at sm and above."
+      }
     },
     {
       "name": "tag",
@@ -2805,6 +3866,7 @@
         "keyword filter input"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-tag-input",
       "selector": "[data-brut=\"tag-input\"]",
       "modifiers": [],
@@ -2813,6 +3875,11 @@
           "name": "data-brut-name",
           "values": "string (default \"tags\")",
           "description": "Name attribute for the auto-created hidden input that mirrors comma-joined tag values"
+        },
+        {
+          "name": "data-brut-label",
+          "values": "string (default \"Tags\")",
+          "description": "Override the accessible name applied to the text input when no aria-label or aria-labelledby is present (i18n hook)"
         },
         {
           "name": "data-value",
@@ -2824,6 +3891,7 @@
         {
           "name": "brut:change",
           "detail": {
+            "value": "string[] (current tag values)",
             "tags": "string[] (current tag values)"
           }
         }
@@ -2839,8 +3907,12 @@
           ",",
           "Backspace (when input empty, removes last)"
         ],
-        "aria": [],
-        "notes": "Duplicate values are silently rejected. On blur with non-empty input the pending value is committed. Clicking the wrapper outside the field focuses the field."
+        "aria": [
+          "aria-live=\"polite\" region appended inside the wrapper announces \"Tag X added\" / \"Tag X removed\" on every change",
+          "aria-label on the text input — defaults to \"Tags\", overridable via data-brut-label, skipped if aria-label or aria-labelledby is already set",
+          "aria-label=\"Remove <tagValue>\" on each .brut-tag__x close button so screen readers identify which chip the action targets"
+        ],
+        "notes": "Duplicate values are silently rejected. On blur with non-empty input the pending value is committed. Clicking the wrapper outside the field focuses the field. Each add/remove dispatches into the live region in addition to firing brut:change."
       },
       "examples": [
         {
@@ -2855,7 +3927,11 @@
           "title": "Many tags with custom name",
           "html": "<div class=\"brut-tag-input\" data-brut=\"tag-input\" data-brut-name=\"labels\">\n  <span class=\"brut-tag\" data-value=\"bug\">bug <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"feature\">feature <button class=\"brut-tag__x\">×</button></span>\n  <span class=\"brut-tag\" data-value=\"docs\">docs <button class=\"brut-tag__x\">×</button></span>\n  <input class=\"brut-tag-input__field\" placeholder=\"Add a label…\">\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "wrap",
+        "notes": "Tag chips wrap to new lines via flex-wrap at every tier."
+      }
     },
     {
       "name": "textarea",
@@ -2914,6 +3990,7 @@
         "app settings panel"
       ],
       "kind": "interactive",
+      "status": "experimental",
       "class": ".brut-theme-switcher",
       "selector": "[data-brut=\"theme-switcher\"]",
       "modifiers": [
@@ -2978,7 +4055,11 @@
           "title": "Inside a topnav",
           "html": "<header class=\"brut-topnav\" data-brut=\"topnav\">\n  <div class=\"brut-topnav__inner\">\n    <a class=\"brut-topnav__brand\" href=\"/\">BRUT</a>\n    <div data-brut=\"theme-switcher\" style=\"margin-left:auto;\"></div>\n  </div>\n</header>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Inline control; no viewport flip."
+      }
     },
     {
       "name": "time",
@@ -2991,6 +4072,7 @@
         "availability range bound"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-time",
       "selector": "[data-brut=\"time\"]",
       "modifiers": [
@@ -3060,7 +4142,12 @@
           "title": "15-minute snap",
           "html": "<div class=\"brut-time\" data-brut=\"time\" data-brut-name=\"slot\" data-brut-minute-step=\"15\">\n  <input class=\"brut-input brut-time__field\" type=\"text\" readonly value=\"14:00\" />\n  <input type=\"hidden\" />\n</div>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "bottom-sheet",
+        "breakpoint": "sm",
+        "notes": "Time picker docks to bottom edge on phones; anchored at sm and above."
+      }
     },
     {
       "name": "toast",
@@ -3119,6 +4206,7 @@
         "non-blocking error banners"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-toast-host",
       "selector": "[data-brut=\"toast-host\"]",
       "modifiers": [
@@ -3175,7 +4263,11 @@
           "title": "Programmatic spawn (after host is present)",
           "html": "<div class=\"brut-toast-host brut-toast-host--top-right\" data-brut=\"toast-host\"></div>\n<button class=\"brut-btn\" type=\"button\"\n        onclick=\"Brut.toast({ kind: 'ok', message: 'Saved!', timeout: 4000 })\">SAVE</button>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "static",
+        "notes": "Fixed overlay; positioning unchanged across tiers."
+      }
     },
     {
       "name": "tooltip",
@@ -3188,7 +4280,8 @@
         "keyboard-shortcut reveal"
       ],
       "kind": "interactive",
-      "class": ".brut-tip",
+      "status": "stable",
+      "class": ".brut-tooltip",
       "selector": "[data-brut=\"tooltip\"]",
       "modifiers": [
         {
@@ -3236,7 +4329,7 @@
           "role=\"tooltip\"",
           "aria-describedby (set on trigger while bubble is visible)"
         ],
-        "notes": "Trigger can be any element; if it is a <button> the script forces type=\"button\". Bubble is created on show and removed on hide; only one bubble per trigger. Position is computed from getBoundingClientRect with an 8px gap."
+        "notes": "Trigger can be any element; if it is a <button> the script forces type=\"button\". Bubble is created on show and removed on hide; only one bubble per trigger. Position is computed from getBoundingClientRect with an 8px gap. Position auto-flips to the opposite side when the preferred side would clip at the viewport edge."
       },
       "examples": [
         {
@@ -3251,7 +4344,12 @@
           "title": "On a focusable input",
           "html": "<input class=\"brut-input\" type=\"text\" placeholder=\"Email\"\n       data-brut=\"tooltip\"\n       data-brut-tip=\"We never share email\"\n       data-brut-tip-side=\"bottom\" />"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "hover-fallback",
+        "breakpoint": "sm",
+        "notes": "Hover-on-pointer; tap-to-pin on coarse pointer / phones."
+      }
     },
     {
       "name": "topnav",
@@ -3264,6 +4362,7 @@
         "product landing nav"
       ],
       "kind": "interactive",
+      "status": "stable",
       "class": ".brut-topnav",
       "selector": "[data-brut=\"topnav\"]",
       "modifiers": [
@@ -3272,7 +4371,13 @@
           "description": "Applied while the mobile link drawer is expanded"
         }
       ],
-      "dataAttributes": [],
+      "dataAttributes": [
+        {
+          "name": "data-brut-label-menu",
+          "values": "string (default \"Toggle menu\")",
+          "description": "Override for the burger button aria-label"
+        }
+      ],
       "events": [
         {
           "name": "brut:open",
@@ -3310,7 +4415,12 @@
           "title": "Minimal — brand and burger only",
           "html": "<header class=\"brut-topnav\" data-brut=\"topnav\">\n  <div class=\"brut-topnav__inner\">\n    <a class=\"brut-topnav__brand\" href=\"/\">BRUT</a>\n    <nav class=\"brut-topnav__links\">\n      <a class=\"brut-topnav__link\" href=\"#\">Home</a>\n      <a class=\"brut-topnav__link\" href=\"#\">About</a>\n    </nav>\n    <button class=\"brut-topnav__burger\" aria-label=\"Menu\">≡</button>\n  </div>\n</header>"
         }
-      ]
+      ],
+      "responsive": {
+        "shape": "disclosure-toggle",
+        "breakpoint": "md",
+        "notes": "Burger-toggled menu below md; horizontal nav at md and above."
+      }
     }
   ],
   "utilities": [
