@@ -53,12 +53,24 @@
     tip.style.left = Math.round(left) + 'px';
   }
 
+  // Detect touch-primary at init time. We snapshot .matches once rather than
+  // attaching a `change` listener so init stays leak-free (per #181).
+  var touchPrimaryMql = (typeof window.matchMedia === 'function')
+    ? window.matchMedia('(hover: none) and (pointer: coarse)')
+    : null;
+
   Brut.register('tooltip', {
     selector: '[data-brut="tooltip"]',
     init: function (el) {
       if (el.tagName === 'BUTTON') el.setAttribute('type', 'button');
+      if (!el.hasAttribute('aria-haspopup')) el.setAttribute('aria-haspopup', 'true');
 
       var tip = null;
+      var touchPrimary = !!(touchPrimaryMql && touchPrimaryMql.matches);
+
+      // On touch-primary devices, screen readers benefit from an explicit
+      // expanded affordance since the tooltip is now interactive (tap to pin).
+      if (touchPrimary) el.setAttribute('aria-expanded', 'false');
 
       function show() {
         if (tip) return;
@@ -72,19 +84,45 @@
         tip.textContent = text;
         document.body.appendChild(tip);
         el.setAttribute('aria-describedby', tip.id);
+        if (touchPrimary) el.setAttribute('aria-expanded', 'true');
         position(tip, el, side);
       }
       function hide() {
         if (!tip) return;
         if (tip.parentNode) tip.parentNode.removeChild(tip);
         el.removeAttribute('aria-describedby');
+        if (touchPrimary) el.setAttribute('aria-expanded', 'false');
         tip = null;
+      }
+      function toggle() {
+        if (tip) hide(); else show();
       }
 
       el.addEventListener('mouseenter', show);
       el.addEventListener('mouseleave', hide);
       el.addEventListener('focus', show);
       el.addEventListener('blur', hide);
+
+      // Touch-primary fallback: tap-to-pin (WCAG 2.1 SC 1.4.13).
+      // Hybrid devices keep the hover/focus path above; the click handler
+      // only mounts on touch-primary so desktop double-fire doesn't happen.
+      if (touchPrimary) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          toggle();
+        });
+        // Outside-tap dismissal — scoped to the trigger's lifetime so
+        // the listener no-ops once the host element is detached (mirrors
+        // the existing keydown Esc handler pattern).
+        document.addEventListener('pointerdown', function (e) {
+          if (!el.isConnected) return;
+          if (!tip) return;
+          var target = e.target;
+          if (el.contains(target)) return;
+          if (tip.contains(target)) return;
+          hide();
+        });
+      }
 
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') hide();
