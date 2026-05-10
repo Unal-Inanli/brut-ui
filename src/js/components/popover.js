@@ -51,32 +51,34 @@
         // available. The element may have just been un-hidden; offsetHeight
         // forces a layout if needed.
         var side = Brut.flipSide(lastTrigger, el, preferredSide, gap);
+        // getBoundingClientRect() is viewport-relative, and we use
+        // position: fixed so the bubble is laid out against the viewport
+        // directly — this prevents clipping when the trigger lives inside an
+        // ancestor with overflow:hidden / overflow:auto (#176).
         var r = lastTrigger.getBoundingClientRect();
-        var sx = window.pageXOffset || document.documentElement.scrollLeft;
-        var sy = window.pageYOffset || document.documentElement.scrollTop;
         var bH = el.offsetHeight;
         var bW = el.offsetWidth;
         var top = 0, left = 0;
         switch (side) {
           case 'top':
-            top  = r.top    + sy - bH - gap;
-            left = r.left   + sx;
+            top  = r.top    - bH - gap;
+            left = r.left;
             break;
           case 'left':
-            top  = r.top    + sy;
-            left = r.left   + sx - bW - gap;
+            top  = r.top;
+            left = r.left   - bW - gap;
             break;
           case 'right':
-            top  = r.top    + sy;
-            left = r.right  + sx + gap;
+            top  = r.top;
+            left = r.right  + gap;
             break;
           case 'bottom':
           default:
-            top  = r.bottom + sy + gap;
-            left = r.left   + sx;
+            top  = r.bottom + gap;
+            left = r.left;
             break;
         }
-        el.style.position = 'absolute';
+        el.style.position = 'fixed';
         el.style.top  = Math.round(top)  + 'px';
         el.style.left = Math.round(left) + 'px';
         applySideClass(side);
