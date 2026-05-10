@@ -20,8 +20,13 @@ export default {
     role: 'region',
     roledescription: 'carousel',
     keyboard: ['ArrowLeft', 'ArrowRight', 'Home', 'End'],
-    aria: ['aria-roledescription', 'aria-live (on track)', 'aria-current (on active dot)'],
-    notes: 'Autoplay respects prefers-reduced-motion and pauses on hover, focus, and tab visibility change. Arrow keys are RTL-aware.',
+    aria: [
+      'aria-roledescription',
+      'aria-live (on track)',
+      'aria-current (on active dot)',
+      { name: 'aria-pressed', notes: 'on the rendered .brut-carousel__pause button — toggles between false (autoplay running) and true (paused).' },
+    ],
+    notes: 'Autoplay respects prefers-reduced-motion and pauses on hover, focus, and tab visibility change. Arrow keys are RTL-aware. Renders a visible .brut-carousel__pause button satisfying WCAG 2.2.2 when data-autoplay is set and user has no prefers-reduced-motion preference.',
   },
   examples: [
     {

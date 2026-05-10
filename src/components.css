@@ -1108,6 +1108,41 @@
   background: var(--ink);
 }
 
+/* PAUSE — WCAG 2.2.2 user-controllable pause for autoplay carousels.
+   Rendered by carousel.js when data-autoplay is set and the user has no
+   prefers-reduced-motion preference. Mirrors the prev/next button style
+   but lives in the top-right corner so it never collides with the
+   centered .brut-carousel__nav row. */
+.brut-carousel__pause {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  z-index: 1;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0 var(--sp-2);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--bw-2) solid var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-2xs);
+}
+.brut-carousel__pause:hover { background: var(--accent); color: var(--ink); }
+.brut-carousel__pause:focus-visible {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+.brut-carousel__pause[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
 /* DIALOG */
 .brut-dialog {
   position: fixed;
