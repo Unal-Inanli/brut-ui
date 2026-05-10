@@ -17,6 +17,6 @@
   {
     "name": "dist/components.json (brotli)",
     "path": "dist/components.json",
-    "limit": "30 KB"
+    "limit": "32 KB"
   }
 ]

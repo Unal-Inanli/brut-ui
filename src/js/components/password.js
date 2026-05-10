@@ -6,6 +6,7 @@
      </div> */
 (function () {
   if (!window.Brut) return;
+  var idCounter = 0;
   Brut.register('password', {
     selector: '[data-brut="password"]',
     init: function (el) {
@@ -20,7 +21,11 @@
         input.setAttribute('autocomplete', acOverride || 'current-password');
       }
 
+      if (!input.id) input.id = 'brut-password-' + (++idCounter);
+
       btn.setAttribute('type', 'button');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-controls', input.id);
       btn.textContent = input.type === 'password' ? 'SHOW' : 'HIDE';
       btn.setAttribute('aria-label', input.type === 'password' ? 'Show password' : 'Hide password');
       btn.addEventListener('click', function () {

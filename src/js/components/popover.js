@@ -83,6 +83,9 @@
         if (el.hasAttribute('hidden')) return;
         el.setAttribute('hidden', '');
         if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'false');
+        if (lastTrigger) {
+          try { lastTrigger.focus(); } catch (e) { /* ignore */ }
+        }
         el.dispatchEvent(new CustomEvent('brut:close', { bubbles: true, detail: { value: false } }));
       }
 
