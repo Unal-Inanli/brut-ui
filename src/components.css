@@ -2105,6 +2105,12 @@
 }
 .brut-date__day:hover { background: var(--primary); }
 .brut-date__day--out { color: var(--concrete-300); }
+.brut-date__day--disabled,
+.brut-date__day--disabled:hover {
+  color: var(--concrete-300);
+  background: var(--bone);
+  cursor: not-allowed;
+}
 .brut-date__day--today::after {
   content: "";
   position: absolute;

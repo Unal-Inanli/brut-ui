@@ -9,6 +9,8 @@ export default {
   modifiers: ['--open'],
   dataAttributes: [
     { name: 'data-brut-name', values: 'string', description: 'Name for the auto-injected hidden input when one is not supplied in markup' },
+    { name: 'data-brut-min', values: 'ISO date string (YYYY-MM-DD), or empty for unconstrained', description: 'Earliest selectable date. Days before this are disabled.' },
+    { name: 'data-brut-max', values: 'ISO date string (YYYY-MM-DD), or empty for unconstrained', description: 'Latest selectable date. Days after this are disabled.' },
   ],
   events: [
     { name: 'brut:change', detail: { value: 'string (ISO YYYY-MM-DD)' } },

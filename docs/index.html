@@ -1683,7 +1683,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- DATE -->
       <section class="docs-section" id="date">
         <h2>Date <span class="docs-status docs-status--beta">BETA</span></h2>
-        <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Native <code>Date</code> only — no deps.</p>
+        <p class="lead">Text field with a popover calendar grid. Arrow keys move days, PageUp/PageDown jumps months, Enter commits, Esc closes. Selection writes ISO <code>YYYY-MM-DD</code> to the visible field and a hidden mirror; dispatches <code>brut:change</code> with <code>{ value }</code>. Set <code>data-brut-min</code> / <code>data-brut-max</code> for range constraints. Native <code>Date</code> only — no deps.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-grid brut-grid--2" style="max-width:640px;">
             <div class="brut-field">
@@ -1703,6 +1703,13 @@ border: var(--bw-6) solid var(--ink);</pre>
           </div>
         </div>
         <pre class="docs-snippet">&lt;div class="brut-date" data-brut="date" data-brut-name="due"&gt;
+  &lt;input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" /&gt;
+  &lt;input type="hidden" /&gt;
+&lt;/div&gt;
+
+&lt;!-- With min/max constraints (out-of-range days disabled) --&gt;
+&lt;div class="brut-date" data-brut="date" data-brut-name="delivery"
+     data-brut-min="2026-05-10" data-brut-max="2026-12-31"&gt;
   &lt;input class="brut-input brut-date__field" type="text" readonly placeholder="YYYY-MM-DD" /&gt;
   &lt;input type="hidden" /&gt;
 &lt;/div&gt;</pre>
