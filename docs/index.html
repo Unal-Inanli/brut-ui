@@ -303,8 +303,10 @@
       <h2>Overlays</h2>
       <a href="#dialog">Dialog</a>
       <a href="#drawer">Drawer</a>
+      <a href="#scrim">Scrim</a>
 
       <h2>Navigation</h2>
+      <a href="#skip-nav">Skip nav</a>
       <a href="#topnav">Topnav</a>
       <a href="#theme-switcher">Theme switcher</a>
       <a href="#sidebar">Sidebar nav</a>
@@ -2040,6 +2042,42 @@ border: var(--bw-6) solid var(--ink);</pre>
   &lt;/div&gt;
   &lt;div class="brut-drawer__body"&gt;…&lt;/div&gt;
 &lt;/div&gt;</pre>
+      </section>
+
+      <!-- SCRIM -->
+      <section class="docs-section" id="scrim">
+        <h2>Scrim</h2>
+        <p class="lead">Modal-overlay primitive that <a href="#dialog">dialog</a> and <a href="#drawer">drawer</a> dim the background with. Consumers rarely author scrims directly — pointing <code>data-brut-scrim="&lt;id&gt;"</code> at one wires it to a surface and the runtime toggles its <code>hidden</code> state in lockstep. The standalone class is available for custom overlays that don't fit dialog or drawer.</p>
+        <div class="docs-preview docs-preview--block">
+          <div style="position: relative; height: 200px; border: var(--bw-3) solid var(--ink); background: var(--paper-2); padding: var(--sp-4); overflow: hidden;">
+            <p class="brut-body" style="margin: 0;">Content underneath the scrim.</p>
+            <div class="brut-scrim" style="position: absolute;"></div>
+          </div>
+        </div>
+        <pre class="docs-snippet">&lt;!-- Standalone scrim (covers viewport via position: fixed) --&gt;
+&lt;div class="brut-scrim" hidden&gt;&lt;/div&gt;
+
+&lt;!-- Wired to a dialog: runtime toggles `hidden` in lockstep --&gt;
+&lt;div class="brut-scrim" id="confirm-scrim" hidden&gt;&lt;/div&gt;
+&lt;div class="brut-dialog" id="confirm" data-brut="dialog"
+     data-brut-scrim="confirm-scrim" hidden role="dialog"&gt;
+  &lt;!-- … --&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <!-- SKIP NAV -->
+      <section class="docs-section" id="skip-nav">
+        <h2>Skip nav</h2>
+        <p class="lead">Visually-hidden link that becomes visible on keyboard focus, letting Tab users bypass repetitive navigation and jump straight to main content. Should be the first focusable element on every page. Satisfies WCAG 2.4.1 Bypass Blocks.</p>
+        <div class="docs-preview docs-preview--block">
+          <p class="brut-body" style="margin: 0;">Tab into the link below to reveal the skip-nav (it pins to the top-left of the viewport while focused).</p>
+          <a href="#skip-nav" class="brut-skip-nav">Skip to main content</a>
+        </div>
+        <pre class="docs-snippet">&lt;body&gt;
+  &lt;a href="#main-content" class="brut-skip-nav"&gt;Skip to main content&lt;/a&gt;
+  &lt;nav&gt;…&lt;/nav&gt;
+  &lt;main id="main-content"&gt;…&lt;/main&gt;
+&lt;/body&gt;</pre>
       </section>
 
       <!-- TOPNAV -->

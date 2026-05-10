@@ -13,6 +13,13 @@
       var btn   = el.querySelector('.brut-search__clear');
       if (!input) return;
 
+      // a11y landmark + accessible name. Both guarded so consumer overrides win.
+      if (!el.hasAttribute('role')) el.setAttribute('role', 'search');
+      var hasLabel = input.hasAttribute('aria-label') ||
+                     input.hasAttribute('aria-labelledby') ||
+                     (input.id && document.querySelector('label[for="' + input.id + '"]'));
+      if (!hasLabel) input.setAttribute('aria-label', 'Search');
+
       function refresh() { el.classList.toggle('brut-search--has-value', !!input.value); }
       function emit() {
         el.dispatchEvent(new CustomEvent('brut:change', { bubbles: true, detail: { value: input.value } }));

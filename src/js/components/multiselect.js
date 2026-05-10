@@ -28,6 +28,18 @@
       var emptyEl = list.querySelector('.brut-multiselect__empty');
       var opts = Array.prototype.slice.call(list.querySelectorAll('.brut-multiselect__opt'));
 
+      // Visually-hidden status region announces the filtered count to screen readers.
+      // Consumer-override-guard: skip if an aria-live region is already present.
+      var status = null;
+      if (!el.querySelector('[aria-live]')) {
+        status = document.createElement('span');
+        status.className = 'brut-multiselect__status';
+        status.setAttribute('aria-live', 'polite');
+        status.setAttribute('aria-atomic', 'true');
+        status.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+        el.appendChild(status);
+      }
+
       // Pre-selected options (data-selected attr) seed the Set.
       var selected = Object.create(null);
       opts.forEach(function (o) {
@@ -115,12 +127,19 @@
       function filter() {
         var q = (input.value || '').toLowerCase();
         var any = false;
+        var visibleCount = 0;
         opts.forEach(function (o) {
           var match = labelOf(o).toLowerCase().indexOf(q) !== -1;
           o.style.display = match ? '' : 'none';
-          if (match) any = true;
+          if (match) { any = true; visibleCount++; }
         });
         if (emptyEl) emptyEl.style.display = any ? 'none' : 'block';
+        // Announce filtered count to screen readers via the polite live region.
+        if (status) {
+          status.textContent = visibleCount === 0
+            ? 'No results'
+            : (visibleCount === 1 ? '1 result' : visibleCount + ' results');
+        }
         open();
       }
 
