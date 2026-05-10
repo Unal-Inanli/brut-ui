@@ -379,15 +379,15 @@ const entries = [
   },
   {
     name: 'empty',
-    description: 'Empty-state placeholder with icon slot, title, body, and optional action button — for zero-data screens.',
-    useCases: ['no search results', 'empty inbox', 'unconfigured feature', 'first-time-user state'],
+    description: 'Empty-state placeholder with shape slot, title, body, and optional action button — for zero-data screens.',
+    useCases: ['no search results', 'empty inbox', 'unconfigured feature', 'first-time-user state', 'empty table rows'],
     htmlElements: ['div', 'section'],
     modifiers: [],
-    notes: 'Compose with brut-empty__icon, brut-empty__title, brut-empty__body, and an optional .brut-btn for the primary action.',
+    notes: 'Compose with brut-empty__shape, brut-empty__title, brut-empty__body, and brut-empty__action wrapping a .brut-btn for the primary action.',
     examples: [
       {
         title: 'No-results empty state',
-        html: '<div class="brut-empty">\n  <div class="brut-empty__icon">∅</div>\n  <h3 class="brut-empty__title">Nothing here yet</h3>\n  <p class="brut-empty__body">Try a different filter or add your first item.</p>\n  <button class="brut-btn brut-btn--primary">Add item</button>\n</div>',
+        html: '<div class="brut-empty">\n  <div class="brut-empty__shape"></div>\n  <h3 class="brut-h2 brut-empty__title">Nothing here yet</h3>\n  <p class="brut-body brut-empty__body">Try a different filter or add your first item.</p>\n  <div class="brut-empty__action">\n    <button class="brut-btn brut-btn--primary" type="button">Add item</button>\n  </div>\n</div>',
       },
     ],
   },

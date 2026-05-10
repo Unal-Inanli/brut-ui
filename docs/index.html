@@ -1377,7 +1377,7 @@ border: var(--bw-6) solid var(--ink);</pre>
       <!-- EMPTY STATE -->
       <section class="docs-section" id="empty">
         <h2>Empty state</h2>
-        <p class="lead">Dashed-border placeholder for "nothing here yet" zones. Centered shape + title + body + action slot.</p>
+        <p class="lead">Dashed-border placeholder for "nothing here yet" zones. Centered shape + title + body + action slot. Use it for inbox-zero blank canvases, search-no-results, and table-empty rows.</p>
         <div class="docs-preview docs-preview--block">
           <div class="brut-empty" style="max-width: 520px;">
             <div class="brut-empty__shape"></div>
@@ -1387,14 +1387,71 @@ border: var(--bw-6) solid var(--ink);</pre>
               <button class="brut-btn brut-btn--primary" type="button">CREATE ONE</button>
             </div>
           </div>
+          <div class="brut-empty" style="max-width: 520px;">
+            <div class="brut-empty__shape" aria-hidden="true"></div>
+            <h3 class="brut-h2 brut-empty__title">No matches.</h3>
+            <p class="brut-body brut-empty__body">Try a broader keyword, or clear the active filters.</p>
+            <div class="brut-empty__action">
+              <button class="brut-btn" type="button">CLEAR FILTERS</button>
+            </div>
+          </div>
+          <div class="brut-table-wrap" style="max-width: 720px;">
+            <table class="brut-table">
+              <thead>
+                <tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3">
+                    <div class="brut-empty">
+                      <h3 class="brut-h2 brut-empty__title">No projects yet.</h3>
+                      <p class="brut-body brut-empty__body">Create one to populate this view.</p>
+                      <div class="brut-empty__action">
+                        <button class="brut-btn brut-btn--primary" type="button">NEW PROJECT</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <pre class="docs-snippet">&lt;div class="brut-empty"&gt;
+        <pre class="docs-snippet">&lt;!-- Inbox zero / blank canvas --&gt;
+&lt;div class="brut-empty"&gt;
   &lt;div class="brut-empty__shape"&gt;&lt;/div&gt;
   &lt;h3 class="brut-h2 brut-empty__title"&gt;No items yet.&lt;/h3&gt;
   &lt;p class="brut-body brut-empty__body"&gt;Add one to get started.&lt;/p&gt;
   &lt;div class="brut-empty__action"&gt;
     &lt;button class="brut-btn brut-btn--primary" type="button"&gt;CREATE ONE&lt;/button&gt;
   &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Search &mdash; no results --&gt;
+&lt;div class="brut-empty"&gt;
+  &lt;div class="brut-empty__shape" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;h3 class="brut-h2 brut-empty__title"&gt;No matches.&lt;/h3&gt;
+  &lt;p class="brut-body brut-empty__body"&gt;Try a broader keyword, or clear the active filters.&lt;/p&gt;
+  &lt;div class="brut-empty__action"&gt;
+    &lt;button class="brut-btn" type="button"&gt;CLEAR FILTERS&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Table &mdash; no rows --&gt;
+&lt;div class="brut-table-wrap"&gt;
+  &lt;table class="brut-table"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Updated&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td colspan="3"&gt;
+        &lt;div class="brut-empty"&gt;
+          &lt;h3 class="brut-h2 brut-empty__title"&gt;No projects yet.&lt;/h3&gt;
+          &lt;p class="brut-body brut-empty__body"&gt;Create one to populate this view.&lt;/p&gt;
+          &lt;div class="brut-empty__action"&gt;
+            &lt;button class="brut-btn brut-btn--primary" type="button"&gt;NEW PROJECT&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
 &lt;/div&gt;</pre>
       </section>
 
