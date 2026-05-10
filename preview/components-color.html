@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BRUT — Color preview</title>
+<link rel="stylesheet" href="../dist/brut.css"/>
+</head><body>
+  <main class="brut-section">
+    <div class="brut-container">
+      <h1 class="brut-h1">Color</h1>
+      <p class="brut-lead">Native color picker, restyled. No JS required.</p>
+
+      <div class="brut-stack brut-stack--xl">
+
+        <section class="brut-stack brut-stack--md">
+          <h2 class="brut-h2">Default swatches</h2>
+          <p class="brut-caption">Native <code>&lt;input type="color"&gt;</code> with the BRUT chrome — hard ink border, hard shadow, square swatch.</p>
+          <div class="brut-cluster brut-cluster--lg">
+            <input class="brut-color" type="color" value="#FFD23F" aria-label="Yellow swatch" />
+            <input class="brut-color" type="color" value="#FF6B9D" aria-label="Pink swatch" />
+            <input class="brut-color" type="color" value="#C6F432" aria-label="Lime swatch" />
+            <input class="brut-color" type="color" value="#000000" aria-label="Ink swatch" />
+            <input class="brut-color" type="color" value="#FFFFFF" aria-label="Paper swatch" />
+          </div>
+        </section>
+
+        <section class="brut-stack brut-stack--md">
+          <h2 class="brut-h2">Inside a field</h2>
+          <p class="brut-caption">Wrap with <code>.brut-field</code> + <code>.brut-field__label</code> + <code>.brut-field__hint</code> for a labelled control with helper text.</p>
+          <div class="brut-field">
+            <label class="brut-field__label" for="brand-color">Brand color</label>
+            <input id="brand-color" class="brut-color" type="color" value="#FFD23F" />
+            <span class="brut-field__hint">Used for primary buttons and accents.</span>
+          </div>
+        </section>
+
+        <section class="brut-stack brut-stack--md">
+          <h2 class="brut-h2">In a form (named input)</h2>
+          <p class="brut-caption">The <code>.brut-color</code> element is just a styled native <code>&lt;input type="color"&gt;</code>. Use the native <code>name</code> attribute so the value posts cleanly.</p>
+          <form class="brut-form">
+            <div class="brut-field">
+              <label class="brut-field__label" for="theme-accent">Accent</label>
+              <input id="theme-accent" class="brut-color" type="color" name="accent" value="#FF6B9D" />
+              <span class="brut-field__hint">Posts as <code>accent=&amp;#35;FF6B9D</code>.</span>
+            </div>
+            <div class="brut-field">
+              <label class="brut-field__label" for="theme-surface">Surface</label>
+              <input id="theme-surface" class="brut-color" type="color" name="surface" value="#FFFFFF" />
+              <span class="brut-field__hint">Posts as <code>surface=&amp;#35;FFFFFF</code>.</span>
+            </div>
+          </form>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</body></html>
