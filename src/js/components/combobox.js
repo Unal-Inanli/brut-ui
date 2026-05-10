@@ -13,12 +13,15 @@
    the selected option's data-value (or text). Picking emits brut:change. */
 (function () {
   if (!window.Brut) return;
+  var rootCounter = 0;
   Brut.register('combobox', {
     selector: '[data-brut="combobox"]',
     init: function (el) {
       var input = el.querySelector('input[type="text"], input[type="search"], input:not([type])');
       var list  = el.querySelector('.brut-combobox__list');
       if (!input || !list) return;
+
+      var rootSeq = ++rootCounter;
 
       var hidden = el.querySelector('input[type="hidden"]');
       if (!hidden && el.getAttribute('data-brut-name')) {
@@ -31,6 +34,24 @@
       var opts = Array.prototype.slice.call(list.querySelectorAll('.brut-combobox__opt'));
       var emptyEl = list.querySelector('.brut-combobox__empty');
       var activeIdx = -1;
+
+      // Assign deterministic ids so aria-activedescendant can point at options.
+      if (!list.id) list.id = 'brut-combobox-' + rootSeq + '-list';
+      opts.forEach(function (o, i) {
+        if (!o.id) o.id = 'brut-combobox-' + rootSeq + '-opt-' + i;
+      });
+
+      // Visually-hidden status region announces the filtered count to screen readers.
+      // Consumer-override-guard: skip if an aria-live region is already present.
+      var status = null;
+      if (!el.querySelector('[aria-live]')) {
+        status = document.createElement('span');
+        status.className = 'brut-combobox__status';
+        status.setAttribute('aria-live', 'polite');
+        status.setAttribute('aria-atomic', 'true');
+        status.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+        el.appendChild(status);
+      }
 
       function onScroll() {
         if (!el.isConnected) return;
@@ -45,6 +66,7 @@
       function close() {
         el.classList.remove('brut-combobox--open');
         input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
         setActive(-1);
         document.removeEventListener('scroll', onScroll, { capture: true });
       }
@@ -52,7 +74,12 @@
       function setActive(i) {
         opts.forEach(function (o, j) { o.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
         activeIdx = i;
-        if (i >= 0 && opts[i]) opts[i].scrollIntoView({ block: 'nearest' });
+        if (i >= 0 && opts[i]) {
+          opts[i].scrollIntoView({ block: 'nearest' });
+          input.setAttribute('aria-activedescendant', opts[i].id);
+        } else {
+          input.removeAttribute('aria-activedescendant');
+        }
       }
 
       function visibleOpts() {
@@ -91,21 +118,43 @@
         var raw = input.value || '';
         var q = raw.toLowerCase();
         var any = false;
+        var visibleCount = 0;
         opts.forEach(function (o) {
           var match = o.textContent.toLowerCase().indexOf(q) !== -1;
           o.style.display = match ? '' : 'none';
-          if (match) any = true;
+          if (match) { any = true; visibleCount++; }
         });
         if (emptyEl) emptyEl.style.display = any ? 'none' : 'block';
+        // Announce filtered count to screen readers via the polite live region.
+        if (status) {
+          status.textContent = visibleCount === 0
+            ? 'No results'
+            : (visibleCount === 1 ? '1 result' : visibleCount + ' results');
+        }
         // Clearing the visible field clears the hidden value so the form
-        // never submits a stale selection.
-        if (raw.trim() === '' && hidden && hidden.value !== '') clearValue();
+        // never submits a stale selection. clearValue() emits its own
+        // brut:change; otherwise emit one here surfacing the visible count.
+        if (raw.trim() === '' && hidden && hidden.value !== '') {
+          clearValue();
+        } else {
+          el.dispatchEvent(new CustomEvent('brut:change', {
+            bubbles: true,
+            detail: {
+              value: hidden ? hidden.value : input.value,
+              label: input.value,
+              visible: visibleCount
+            }
+          }));
+        }
         open();
       }
 
-      input.setAttribute('role', 'combobox');
-      input.setAttribute('aria-autocomplete', 'list');
+      // Consumer-override-guard for config-style aria attributes. State attrs
+      // (aria-expanded, aria-activedescendant) stay under runtime control.
+      if (!input.hasAttribute('role')) input.setAttribute('role', 'combobox');
+      if (!input.hasAttribute('aria-autocomplete')) input.setAttribute('aria-autocomplete', 'list');
       input.setAttribute('aria-expanded', 'false');
+      if (!input.hasAttribute('aria-controls')) input.setAttribute('aria-controls', list.id);
       list.setAttribute('role', 'listbox');
       opts.forEach(function (o) { o.setAttribute('role', 'option'); });
 
