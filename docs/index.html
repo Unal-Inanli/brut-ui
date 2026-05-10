@@ -2519,12 +2519,37 @@ border: var(--bw-6) solid var(--ink);</pre>
         </div>
 
         <div class="docs-block">
-          <h3>Responsive</h3>
+          <h3>Responsive (md tier)</h3>
           <div class="docs-preview docs-preview--block">
             <div class="brut-row">
               <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--primary); padding: var(--sp-2);">12 → md:6 → lg:4</div>
               <div class="brut-col-12 brut-col-md-6 brut-col-lg-4" style="background: var(--pop-lime); padding: var(--sp-2);">12 → md:6 → lg:4</div>
               <div class="brut-col-12 brut-col-md-12 brut-col-lg-4" style="background: var(--pop-pink); padding: var(--sp-2);">12 → md:12 → lg:4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Responsive (sm tier)</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--primary); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--pop-lime); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--pop-pink); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+              <div class="brut-col-12 brut-col-sm-6 brut-col-lg-3" style="background: var(--paper-2); padding: var(--sp-2);">12 → sm:6 → lg:3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-block">
+          <h3>Offsets</h3>
+          <div class="docs-preview docs-preview--block">
+            <div class="brut-row">
+              <div class="brut-col-4" style="background: var(--primary); padding: var(--sp-2);">col-4</div>
+              <div class="brut-col-4 brut-col-offset-4" style="background: var(--pop-lime); padding: var(--sp-2);">col-4 offset-4</div>
+            </div>
+            <div class="brut-row" style="margin-top: var(--sp-3);">
+              <div class="brut-col-6 brut-col-offset-3" style="background: var(--pop-pink); padding: var(--sp-2);">col-6 offset-3 (centered)</div>
             </div>
           </div>
         </div>
@@ -2535,11 +2560,28 @@ border: var(--bw-6) solid var(--ink);</pre>
   &lt;div class="brut-col-4"&gt;…&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- Responsive: stack on mobile, 2-col on md, 3-col on lg --&gt;
+&lt;!-- Responsive (md tier): stack on mobile, 2-col on md, 3-col on lg --&gt;
 &lt;div class="brut-row"&gt;
   &lt;div class="brut-col-12 brut-col-md-6 brut-col-lg-4"&gt;…&lt;/div&gt;
   &lt;div class="brut-col-12 brut-col-md-6 brut-col-lg-4"&gt;…&lt;/div&gt;
   &lt;div class="brut-col-12 brut-col-md-12 brut-col-lg-4"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Responsive (sm tier): stack on mobile, 2-col on sm, 4-col on lg --&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-12 brut-col-sm-6 brut-col-lg-3"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Offsets: push a column N tracks to the right --&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-4"&gt;…&lt;/div&gt;
+  &lt;div class="brut-col-4 brut-col-offset-4"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="brut-row"&gt;
+  &lt;div class="brut-col-6 brut-col-offset-3"&gt;centered&lt;/div&gt;
 &lt;/div&gt;</pre>
       </section>
 
