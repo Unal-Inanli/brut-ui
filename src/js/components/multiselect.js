@@ -16,6 +16,8 @@
 (function () {
   if (!window.Brut) return;
 
+  var rootCounter = 0;
+
   Brut.register('multiselect', {
     selector: '[data-brut="multiselect"]',
     init: function (el) {
@@ -24,9 +26,18 @@
       var list  = el.querySelector('.brut-multiselect__list');
       if (!fieldShell || !input || !list) return;
 
+      var rootSeq = ++rootCounter;
+
       var name = el.getAttribute('data-brut-name') || 'values';
       var emptyEl = list.querySelector('.brut-multiselect__empty');
       var opts = Array.prototype.slice.call(list.querySelectorAll('.brut-multiselect__opt'));
+      var activeIdx = -1;
+
+      // Assign deterministic ids so aria-activedescendant can point at options.
+      if (!list.id) list.id = 'brut-multiselect-' + rootSeq + '-list';
+      opts.forEach(function (o, i) {
+        if (!o.id) o.id = 'brut-multiselect-' + rootSeq + '-opt-' + i;
+      });
 
       // Visually-hidden status region announces the filtered count to screen readers.
       // Consumer-override-guard: skip if an aria-live region is already present.
@@ -49,8 +60,42 @@
       function labelOf(o) { return (o.textContent || '').trim(); }
       function valueOf(o) { return o.getAttribute('data-value') || labelOf(o); }
 
-      function open()  { el.classList.add('brut-multiselect--open');    input.setAttribute('aria-expanded', 'true'); }
-      function close() { el.classList.remove('brut-multiselect--open'); input.setAttribute('aria-expanded', 'false'); }
+      function open()  {
+        el.classList.add('brut-multiselect--open');
+        input.setAttribute('aria-expanded', 'true');
+        if (activeIdx < 0) setActive(firstVisibleIdx());
+      }
+      function close() {
+        el.classList.remove('brut-multiselect--open');
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+        activeIdx = -1;
+      }
+
+      function visibleOpts() {
+        return opts.filter(function (o) { return o.style.display !== 'none'; });
+      }
+      function firstVisibleIdx() {
+        for (var i = 0; i < opts.length; i++) {
+          if (opts[i].style.display !== 'none') return i;
+        }
+        return -1;
+      }
+      function setActive(i) {
+        // aria-selected on options reflects selection state, not highlight,
+        // because multiselect lets multiple options be selected at once.
+        // Highlight is communicated via aria-activedescendant + a CSS hook.
+        opts.forEach(function (o, j) {
+          o.classList.toggle('brut-multiselect__opt--active', i === j);
+        });
+        activeIdx = i;
+        if (i >= 0 && opts[i] && opts[i].style.display !== 'none') {
+          opts[i].scrollIntoView({ block: 'nearest' });
+          input.setAttribute('aria-activedescendant', opts[i].id);
+        } else {
+          input.removeAttribute('aria-activedescendant');
+        }
+      }
 
       function syncHidden() {
         // Remove old hidden inputs we created
@@ -153,18 +198,39 @@
       input.addEventListener('focus', open);
       input.addEventListener('input', filter);
       input.addEventListener('keydown', function (e) {
+        var v = visibleOpts();
         if (e.key === 'Backspace' && !input.value) {
           var keys = Object.keys(selected);
           if (keys.length) remove(keys[keys.length - 1]);
         } else if (e.key === 'Escape') {
           close();
+        } else if (e.key === 'ArrowDown') {
+          if (!v.length) return;
+          e.preventDefault();
+          var current = opts[activeIdx];
+          var idxInVisible = v.indexOf(current);
+          var next = v[(idxInVisible + 1 + v.length) % v.length] || v[0];
+          setActive(opts.indexOf(next));
+          open();
+        } else if (e.key === 'ArrowUp') {
+          if (!v.length) return;
+          e.preventDefault();
+          var currentUp = opts[activeIdx];
+          var idxInVisibleUp = v.indexOf(currentUp);
+          var prev = v[(idxInVisibleUp - 1 + v.length) % v.length] || v[v.length - 1];
+          setActive(opts.indexOf(prev));
+          open();
         } else if (e.key === 'Enter') {
-          var first = opts.filter(function (o) { return o.style.display !== 'none'; })[0];
-          if (first) { e.preventDefault(); toggle(first); input.value = ''; filter(); }
+          // Pick the highlighted option (activeIdx); fall back to first visible.
+          var pick = (activeIdx >= 0 && opts[activeIdx] && opts[activeIdx].style.display !== 'none')
+            ? opts[activeIdx]
+            : v[0];
+          if (pick) { e.preventDefault(); toggle(pick); input.value = ''; filter(); }
         }
       });
 
-      opts.forEach(function (o) {
+      opts.forEach(function (o, i) {
+        o.addEventListener('mouseenter', function () { setActive(i); });
         o.addEventListener('mousedown', function (e) { e.preventDefault(); toggle(o); input.focus(); });
       });
 
