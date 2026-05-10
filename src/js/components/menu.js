@@ -12,6 +12,20 @@
    trigger via getBoundingClientRect(). Dispatches brut:open / brut:close. */
 (function () {
   if (!window.Brut) return;
+
+  // Module-scope routing so the document keydown listener registers exactly
+  // once per module load, not once per init(el) call (#181).
+  var closeByEl = new WeakMap();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('[data-brut="menu"]:not([hidden])').forEach(function (el) {
+      if (!el.isConnected) return;
+      var c = closeByEl.get(el);
+      if (c) c();
+    });
+  });
+
   Brut.register('menu', {
     selector: '[data-brut="menu"]',
     init: function (el) {
@@ -67,6 +81,17 @@
         el.dispatchEvent(new CustomEvent('brut:close'));
       }
 
+      // Module-scope keydown router calls this; restores focus to the trigger
+      // that opened the menu (matches the prior in-init Esc handler behavior).
+      function closeAndRestoreFocus() {
+        if (el.hasAttribute('hidden')) return;
+        close();
+        if (lastTrigger) {
+          try { lastTrigger.focus(); } catch (err) { /* ignore */ }
+        }
+      }
+      closeByEl.set(el, closeAndRestoreFocus);
+
       triggers.forEach(function (t) {
         if (t.tagName === 'BUTTON') t.setAttribute('type', 'button');
         t.setAttribute('aria-haspopup', 'menu');
@@ -111,16 +136,6 @@
         } else if (e.key === 'End') {
           e.preventDefault();
           list[list.length - 1].focus();
-        }
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (!el.isConnected) return;
-        if (e.key === 'Escape' && !el.hasAttribute('hidden')) {
-          close();
-          if (lastTrigger) {
-            try { lastTrigger.focus(); } catch (err) { /* ignore */ }
-          }
         }
       });
 

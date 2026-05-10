@@ -12,6 +12,20 @@
 */
 (function () {
   if (!window.Brut) return;
+
+  // Module-scope routing so the document keydown listener registers exactly
+  // once per module load, not once per init(el) call (#181).
+  var closeByEl = new WeakMap();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('[data-brut="topnav"]').forEach(function (el) {
+      if (!el.isConnected) return;
+      var c = closeByEl.get(el);
+      if (c) c();
+    });
+  });
+
   Brut.register('topnav', {
     selector: '[data-brut="topnav"]',
     init: function (el) {
@@ -32,6 +46,8 @@
         burger.setAttribute('aria-expanded', open ? 'true' : 'false');
         el.dispatchEvent(new CustomEvent(open ? 'brut:open' : 'brut:close'));
       }
+      function close() { if (isOpen()) setOpen(false); }
+      closeByEl.set(el, close);
 
       burger.addEventListener('click', function (e) {
         e.preventDefault();
@@ -43,10 +59,6 @@
         if (!isOpen()) return;
         if (el.contains(e.target)) return;
         setOpen(false);
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && isOpen()) setOpen(false);
       });
 
       // Close menu when a link is clicked (mobile UX).
