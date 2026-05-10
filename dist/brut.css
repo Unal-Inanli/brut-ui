@@ -78,6 +78,7 @@
   --tracking-tight:    -0.02em;
   --tracking-normal:   0;
   --tracking-wide:     0.04em;
+  --tracking-mid:      0.06em;
   --tracking-wider:    0.08em;
   --tracking-widest:   0.12em;   /* for ALL CAPS labels */
 
@@ -106,6 +107,7 @@
   --r-1: 2px;
   --r-2: 4px;
   --r-3: 8px;
+  --radius-circle: 50%;   /* full circle — used for round thumbs/dots */
 
   /* ---------- SPACING ---------- */
 
@@ -134,6 +136,8 @@
   --ease-snap:    cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-instant: steps(1, end);
   --dur-fast:   80ms;
+  --dur-snap:   100ms;  /* between fast and base — interactive knob slides */
+  --dur-notice: 120ms;  /* short notice animations like toast entrance */
   --dur-base:   140ms;
   --dur-slow:   220ms;
 
@@ -270,6 +274,12 @@
   --progress-h:    var(--sp-6);
   --progress-h-sm: var(--sp-3);
   --progress-h-lg: var(--sp-8);
+
+  /* ---------- TABLE STICKY STACK ---------- */
+  /* Table sticky cells stack above the base sticky layer. */
+  --z-table-sticky-col:    var(--z-sticky);
+  --z-table-sticky-header: calc(var(--z-sticky) + 1);
+  --z-table-sticky-corner: calc(var(--z-sticky) + 2);
 
   /* ---------- CAROUSEL ---------- */
   --carousel-gap:              var(--sp-2);
@@ -462,6 +472,14 @@ pre code {
 ::selection { background: var(--primary); color: var(--ink); }
 /* Shared component styles for docs page — these classes are referenced
    by the inline previews AND by the code snippets the user copies. */
+/* Global focus-visible — keyboard users always see a ring; mouse focus stays clean. */
+:where(:focus-visible) {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+:where(:focus:not(:focus-visible)) {
+  outline: none;
+}
 /* ============================================================
    TYPOGRAPHY
    Component-level classes that compose the type tokens into
@@ -683,7 +701,7 @@ pre code {
 .brut-pre .tok-keyword { color: var(--pop-pink); }
 .brut-pre .tok-string  { color: var(--pop-lime); }
 .brut-pre .tok-num     { color: var(--primary); }
-/* LISTS — square bullets, hard counters, optional check. */
+/* LISTS — square bullets, hard counters. */
 .brut-list {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
@@ -693,26 +711,6 @@ pre code {
   margin: 0;
 }
 .brut-list--ord { list-style: decimal; }
-.brut-list--check {
-  list-style: none;
-  padding-left: 0;
-}
-.brut-list--check li {
-  position: relative;
-  padding-left: var(--switch-track-h);
-}
-.brut-list--check li::before {
-  content: "✓";
-  position: absolute; left: 0; top: 0;
-  width: var(--control-sm); height: var(--control-sm);
-  font-family: var(--font-display);
-  font-size: var(--fs-sm);
-  background: var(--primary);
-  border: var(--bw-1) solid var(--ink);
-  display: inline-flex;
-  align-items: center; justify-content: center;
-  line-height: 1;
-}
 .brut-list li + li { margin-top: var(--sp-1); }
 /* DROP CAP — first letter as a hard ink block. */
 .brut-drop-cap::first-letter {
@@ -767,7 +765,7 @@ pre code {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wide);
   padding: var(--sp-3) var(--sp-4h);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-sm);
@@ -775,8 +773,8 @@ pre code {
   background: var(--bone);
   color: var(--ink);
   line-height: 1;
-  transition: transform 80ms cubic-bezier(.2,.8,.2,1),
-              box-shadow 80ms cubic-bezier(.2,.8,.2,1);
+  transition: transform var(--dur-fast) cubic-bezier(.2,.8,.2,1),
+              box-shadow var(--dur-fast) cubic-bezier(.2,.8,.2,1);
 }
 .brut-btn:hover  { transform: translate(calc(var(--bw-1) * -1), calc(var(--bw-1) * -1)); box-shadow: var(--shadow-md); }
 .brut-btn:active { transform: translate(var(--bw-1), var(--bw-1)); box-shadow: 0 0 0 0 var(--ink); }
@@ -784,16 +782,45 @@ pre code {
 .brut-btn--ink     { background: var(--ink);      color: var(--paper); }
 .brut-btn--pink    { background: var(--pop-pink); color: var(--ink); }
 .brut-btn--lime    { background: var(--pop-lime); color: var(--ink); }
+.brut-btn--danger  { background: var(--danger);   color: var(--paper); border-color: var(--danger); }
+.brut-btn--danger:hover  { background: var(--danger-bg); color: var(--danger); }
+.brut-btn--outline { background: transparent;     color: var(--ink); }
+.brut-btn--outline:hover { background: var(--ink); color: var(--paper); }
 .brut-btn--sm { padding: var(--sp-2) var(--sp-3); font-size: var(--fs-xs); border-width: var(--bw-2);
                 box-shadow: var(--shadow-2xs); }
 .brut-btn--lg { padding: var(--sp-4) var(--sp-6); font-size: var(--fs-md);
                 box-shadow: var(--shadow-md); }
+/* COPY — inline value + copy-to-clipboard button. JS reads .brut-copy__value
+   (or data-brut-value), writes to navigator.clipboard, and flashes the label. */
+.brut-copy {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-2);
+  border: var(--bw-2) solid var(--ink);
+  background: var(--bone);
+  font-family: var(--font-mono);
+  max-width: 100%;
+}
+.brut-copy__value {
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.brut-copy__btn {
+  flex-shrink: 0;
+}
 /* BADGE */
 .brut-badge {
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
   padding: var(--badge-pad-v) var(--sp-2h);
   border: var(--bw-2) solid var(--ink);
   background: var(--bone);
@@ -898,7 +925,7 @@ pre code {
 .brut-table--sticky-head thead th {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: var(--z-table-sticky-header);
   background: var(--ink);
   border-bottom: var(--bw-3) solid var(--ink);
 }
@@ -907,13 +934,13 @@ pre code {
 .brut-table--sticky-col th:first-child {
   position: sticky;
   left: 0;
-  z-index: 1;
+  z-index: var(--z-table-sticky-col);
   background: var(--paper-2);
   border-right: var(--bw-3) solid var(--ink);
 }
 /* Sticky-head thead th already has ink bg; keep it opaque over column content. */
 .brut-table--sticky-head.brut-table--sticky-col thead th:first-child {
-  z-index: 3;
+  z-index: var(--z-table-sticky-corner);
   background: var(--ink);
 }
 /* ROWS — settings-style list: lead / title+sub / trail. */
@@ -960,7 +987,7 @@ pre code {
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-wider);
 }
 .brut-input {
   font-family: var(--font-sans);
@@ -974,7 +1001,7 @@ pre code {
   width: 100%;
   box-sizing: border-box;
 }
-.brut-input:focus {
+.brut-input:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -992,7 +1019,7 @@ pre code {
   position: absolute; top: var(--bw-1); left: var(--bw-1);
   width: var(--control-sm); height: var(--control-sm);
   background: var(--ink);
-  transition: left 100ms cubic-bezier(.2,.8,.2,1);
+  transition: left var(--dur-snap) cubic-bezier(.2,.8,.2,1);
 }
 .brut-switch--on .brut-switch__knob { left: var(--switch-knob-on); }
 /* CHECKBOX */
@@ -1062,7 +1089,7 @@ pre code {
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink);
-  animation: brut-toast-in 120ms var(--ease-snap);
+  animation: brut-toast-in var(--dur-notice) var(--ease-snap);
 }
 .brut-toast--leaving { opacity: 0; transition: opacity var(--dur-base) var(--ease-snap); }
 @keyframes brut-toast-in {
@@ -1102,7 +1129,8 @@ pre code {
 .brut-toast--info { background: var(--info-bg); }
 .brut-toast--info .brut-toast__icon { background: var(--info);    color: var(--paper); }
 /* TOOLTIP — flat ink bubble appended to <body> by JS, anchored to a trigger. */
-.brut-tip {
+.brut-tooltip,
+.brut-tip { /* @deprecated since 1.x — use .brut-tooltip; alias removed in 2.0. See MIGRATION.md. */
   position: absolute;
   z-index: var(--z-popover);
   background: var(--ink);
@@ -1117,6 +1145,16 @@ pre code {
   white-space: nowrap;
   pointer-events: none;
 }
+/* Side modifiers — visual carve-outs are JS-positioned; classes exist so
+   styling hooks (and future arrows) can target each side. */
+.brut-tooltip--top,
+.brut-tip--top { /* @deprecated alias — use .brut-tooltip--top */ }
+.brut-tooltip--bottom,
+.brut-tip--bottom { /* @deprecated alias — use .brut-tooltip--bottom */ }
+.brut-tooltip--left,
+.brut-tip--left { /* @deprecated alias — use .brut-tooltip--left */ }
+.brut-tooltip--right,
+.brut-tip--right { /* @deprecated alias — use .brut-tooltip--right */ }
 /* POPOVER — anchored card opened by trigger. JS positions + toggles. */
 .brut-popover {
   position: absolute;
@@ -1298,7 +1336,7 @@ pre code {
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: var(--fs-xs);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-2h) var(--sp-4);
   background: transparent;
   border: 0;
@@ -1324,7 +1362,7 @@ pre code {
   cursor: pointer;
   position: relative;
 }
-.brut-tab--on { background: var(--primary); z-index: 2; }
+.brut-tab--on { background: var(--primary); z-index: var(--z-sticky); }
 /* ACCORDION — stacked disclosure panels. JS toggles --open on items. */
 .brut-accordion {
   display: block;
@@ -1494,6 +1532,40 @@ pre code {
 .brut-carousel__dot[aria-current="true"] {
   background: var(--ink);
 }
+/* PAUSE — WCAG 2.2.2 user-controllable pause for autoplay carousels.
+   Rendered by carousel.js when data-autoplay is set and the user has no
+   prefers-reduced-motion preference. Mirrors the prev/next button style
+   but lives in the top-right corner so it never collides with the
+   centered .brut-carousel__nav row. */
+.brut-carousel__pause {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  z-index: 1;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0 var(--sp-2);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--bw-2) solid var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-2xs);
+}
+.brut-carousel__pause:hover { background: var(--accent); color: var(--ink); }
+.brut-carousel__pause:focus-visible {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: var(--sp-1);
+}
+.brut-carousel__pause[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
 /* DIALOG */
 .brut-dialog {
   position: fixed;
@@ -1618,7 +1690,7 @@ pre code {
   cursor: pointer;
 }
 .brut-menu__item:hover,
-.brut-menu__item:focus {
+.brut-menu__item:focus-visible {
   background: var(--primary);
   outline: 0;
 }
@@ -1626,7 +1698,7 @@ pre code {
   color: var(--danger);
 }
 .brut-menu__item--danger:hover,
-.brut-menu__item--danger:focus {
+.brut-menu__item--danger:focus-visible {
   background: var(--danger);
   color: var(--paper);
 }
@@ -1647,8 +1719,6 @@ pre code {
    ============================================================ */
 /* FORM container — vertical stack of fields. */
 .brut-form        { display: flex; flex-direction: column; gap: var(--sp-5); }
-.brut-form--tight { gap: var(--sp-3); }
-.brut-form--loose { gap: var(--sp-8); }
 /* FIELD — label + control + hint/error/counter wrapper. */
 .brut-field       { display: flex; flex-direction: column; gap: var(--sp-1); }
 .brut-field__label {
@@ -1663,19 +1733,26 @@ pre code {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--danger);
+  display: block;
+  margin-top: var(--sp-1);
 }
 .brut-field__success {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--success);
 }
-.brut-field__counter {
+.brut-counter,
+.brut-field__counter { /* @deprecated since 1.x — use .brut-counter; alias removed in 2.0. See MIGRATION.md. */
   font-family: var(--font-mono);
   font-size: var(--fs-badge);
   color: var(--concrete-400);
   align-self: flex-end;
 }
-.brut-field__counter--over { color: var(--danger); font-weight: var(--fw-bold); }
+.brut-counter--over,
+.brut-field__counter--over { /* @deprecated alias — use .brut-counter--over */
+  color: var(--danger);
+  font-weight: var(--fw-bold);
+}
 .brut-field--inline {
   display: grid;
   grid-template-columns: var(--field-label-w) 1fr;
@@ -1696,6 +1773,27 @@ pre code {
   background: var(--success-bg);
 }
 .brut-field--valid .brut-field__label { color: var(--success); }
+/* VALIDATION
+   Native :invalid and aria-invalid are styled identically; the
+   .brut-field__error class displays an error message under the input.
+   Existing .brut-field__error (above) sets color + font-size; we only
+   add layout here so consumers can drop a <span class="brut-field__error">
+   directly under any input without an extra wrapper. */
+.brut-input:invalid,
+.brut-textarea:invalid,
+.brut-select:invalid {
+  border-color: var(--danger);
+}
+[aria-invalid="true"].brut-input,
+[aria-invalid="true"].brut-textarea,
+[aria-invalid="true"].brut-select,
+.brut-field[aria-invalid="true"] .brut-input,
+.brut-field[aria-invalid="true"] .brut-textarea,
+.brut-field[aria-invalid="true"] .brut-select,
+.brut-combobox[aria-invalid="true"],
+.brut-otp[aria-invalid="true"] {
+  border-color: var(--danger);
+}
 /* INPUT — variants + states on the existing .brut-input. */
 .brut-input--sm {
   padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
@@ -1707,7 +1805,7 @@ pre code {
   border-color: var(--danger);
   background: var(--danger-bg);
 }
-.brut-input--err:focus { background: var(--danger-bg); }
+.brut-input--err:focus-visible { background: var(--danger-bg); }
 .brut-input--ok {
   border-color: var(--success);
   background: var(--success-bg);
@@ -1752,7 +1850,7 @@ pre code {
   flex: 1;
   min-width: 0;
 }
-.brut-input-group > .brut-input:focus { background: transparent; box-shadow: none; }
+.brut-input-group > .brut-input:focus-visible { background: transparent; box-shadow: none; }
 .brut-input-group__addon {
   display: inline-flex;
   align-items: center;
@@ -1783,9 +1881,25 @@ pre code {
   resize: vertical;
   min-height: var(--textarea-min-h);
 }
-.brut-textarea:focus {
+.brut-textarea:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
+}
+/* TEXTAREA — variants + states; mirrors .brut-input--sm/--lg/--err/--ok. */
+.brut-textarea--sm {
+  padding: var(--sp-2) var(--sp-2h); font-size: var(--fs-tab);
+  border-width: var(--bw-2);
+  box-shadow: var(--shadow-xs);
+}
+.brut-textarea--lg { padding: var(--sp-4) var(--sp-4h); font-size: var(--fs-md); box-shadow: var(--shadow-sm); }
+.brut-textarea--err {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.brut-textarea--err:focus-visible { background: var(--danger-bg); }
+.brut-textarea--ok {
+  border-color: var(--success);
+  background: var(--success-bg);
 }
 /* SELECT — styled native, hard chevron (no SVG, no font icon). */
 .brut-select {
@@ -1812,7 +1926,7 @@ pre code {
   background-size: var(--sp-1h) var(--sp-1h), var(--sp-1h) var(--sp-1h);
   background-repeat: no-repeat;
 }
-.brut-select:focus {
+.brut-select:focus-visible {
   background-color: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -1820,7 +1934,7 @@ pre code {
 .brut-radio {
   width: var(--control-icon); height: var(--control-icon);
   border: var(--bw-2) solid var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: var(--bone);
   box-shadow: var(--shadow-xs);
   position: relative;
@@ -1833,7 +1947,7 @@ pre code {
   position: absolute;
   inset: var(--sp-1);
   background: var(--ink);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
 }
 /* RANGE / SLIDER — native, restyled. */
 .brut-range {
@@ -1918,7 +2032,7 @@ pre code {
   padding: 0;
   outline: none;
 }
-.brut-range-dual__thumb:focus { background: var(--ink); box-shadow: var(--shadow-sm); }
+.brut-range-dual__thumb:focus-visible { background: var(--ink); box-shadow: var(--shadow-sm); }
 .brut-range-dual__thumb:active { cursor: grabbing; }
 /* FILE INPUT — chunky button + filename label. */
 .brut-file {
@@ -1940,7 +2054,7 @@ pre code {
   font-family: var(--font-display);
   font-size: var(--fs-xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-2h) var(--sp-3h);
   border: var(--bw-3) solid var(--ink);
   background: var(--primary);
@@ -2028,7 +2142,7 @@ pre code {
   font-family: var(--font-display);
   font-size: var(--fs-2xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-1) var(--sp-2);
   cursor: pointer;
   line-height: 1;
@@ -2067,7 +2181,7 @@ pre code {
   padding: 0;
   color: var(--ink);
 }
-.brut-otp__cell:focus {
+.brut-otp__cell:focus-visible {
   background: var(--primary-soft);
   box-shadow: var(--shadow-sm);
 }
@@ -2080,7 +2194,7 @@ pre code {
   font-family: var(--font-display);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-mid);
   padding: var(--sp-1) var(--sp-2);
   background: var(--primary);
   border: var(--bw-2) solid var(--ink);
@@ -2387,6 +2501,12 @@ pre code {
 }
 .brut-date__day:hover { background: var(--primary); }
 .brut-date__day--out { color: var(--concrete-300); }
+.brut-date__day--disabled,
+.brut-date__day--disabled:hover {
+  color: var(--concrete-300);
+  background: var(--bone);
+  cursor: not-allowed;
+}
 .brut-date__day--today::after {
   content: "";
   position: absolute;
@@ -2397,7 +2517,7 @@ pre code {
 }
 .brut-date__day--selected { background: var(--ink); color: var(--paper); }
 .brut-date__day--selected::after { background: var(--paper); }
-.brut-date__day:focus { outline: var(--bw-2) solid var(--ink); outline-offset: calc(var(--bw-1) * -1); }
+.brut-date__day:focus-visible { outline: var(--bw-2) solid var(--ink); outline-offset: calc(var(--bw-1) * -1); }
 /* TIME — hour / minute steppers (reuses .brut-stepper) + optional 12/24 segmented. */
 .brut-time { position: relative; display: block; }
 .brut-time__field { width: 100%; box-sizing: border-box; cursor: pointer; }
@@ -2814,7 +2934,6 @@ button.brut-sidebar__group-title::after {
   background: var(--paper);
 }
 .brut-section--tight   { padding-block: var(--sp-8); }
-.brut-section--loose   { padding-block: var(--sp-20); }
 .brut-section--flush   { border-bottom: 0; }
 .brut-section--paper   { background: var(--paper); }
 .brut-section--paper-2 { background: var(--paper-2); }
@@ -2843,12 +2962,9 @@ button.brut-sidebar__group-title::after {
   align-items: center;
   gap: var(--sp-3);
 }
-.brut-cluster--xs  { gap: var(--sp-1); }
 .brut-cluster--sm  { gap: var(--sp-2); }
 .brut-cluster--md  { gap: var(--sp-3); }
 .brut-cluster--lg  { gap: var(--sp-4); }
-.brut-cluster--xl  { gap: var(--sp-6); }
-.brut-cluster--end     { justify-content: flex-end; }
 .brut-cluster--center  { justify-content: center; }
 .brut-cluster--between { justify-content: space-between; }
 /* BAR — header / CTA / footer strip. justify-content: space-between
@@ -2871,8 +2987,6 @@ button.brut-sidebar__group-title::after {
 .brut-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .brut-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .brut-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.brut-grid--tight { gap: var(--sp-2); }
-.brut-grid--loose { gap: var(--sp-10); }
 /* 12-COLUMN GRID — Bootstrap-parity. Use .brut-row as parent,
    .brut-col-{1-12} for explicit widths, .brut-col for equal-width auto. */
 .brut-row {
@@ -2967,7 +3081,6 @@ button.brut-sidebar__group-title::after {
 }
 .brut-split__main { flex: 1; min-width: 0; }
 .brut-split__side { flex: none; width: var(--split-side-w); }
-.brut-split--reverse { flex-direction: row-reverse; }
 /* RULE — var(--bw-3) ink divider. Replaces hand-rolled <hr>s. */
 .brut-rule {
   border: 0;
@@ -3004,13 +3117,11 @@ button.brut-sidebar__group-title::after {
   object-fit: cover;
   display: block;
 }
-/* SCRIM — diagonal-striped overlay for modals. The only sanctioned
-   use of transparency in the kit. */
 .brut-scrim {
   position: fixed;
   inset: 0;
-  background:
-    repeating-linear-gradient(45deg,
+  /* Sanctioned exception: scrim hatch drawn via gradient until an SVG sprite ships (see AGENTS.md §Carve-outs). Do NOT use gradients elsewhere. */
+  background: repeating-linear-gradient(45deg,
       var(--scrim-bg-soft) 0 var(--sp-px),
       transparent var(--sp-px) var(--sp-2)),
     var(--scrim-bg);
@@ -3031,20 +3142,15 @@ button.brut-sidebar__group-title::after {
   background: var(--primary);
   border: var(--bw-3) solid var(--ink);
   box-shadow: var(--shadow-md);
-  z-index: 0;
+  z-index: var(--z-base);
   pointer-events: none;
 }
 .brut-shape--pink   { background: var(--pop-pink); }
 .brut-shape--lime   { background: var(--pop-lime); }
 .brut-shape--blue   { background: var(--pop-blue); }
-.brut-shape--orange { background: var(--pop-orange); }
-.brut-shape--purple { background: var(--pop-purple); }
-.brut-shape--mint   { background: var(--pop-mint); }
 .brut-shape--rot-l  { transform: rotate(-8deg); }
 .brut-shape--rot-r  { transform: rotate(8deg); }
 .brut-shape--offset-tr { top: calc(var(--sp-6) * -1);    right: calc(var(--sp-6) * -1);  }
-.brut-shape--offset-tl { top: calc(var(--sp-6) * -1);    left: calc(var(--sp-6) * -1);   }
-.brut-shape--offset-br { bottom: calc(var(--sp-6) * -1); right: calc(var(--sp-6) * -1);  }
 .brut-shape--offset-bl { bottom: calc(var(--sp-6) * -1); left: calc(var(--sp-6) * -1);   }
 /* SPACER — flex filler. Use inside a .brut-bar or .brut-cluster
    to push children apart without margin tricks. */
@@ -3060,8 +3166,7 @@ button.brut-sidebar__group-title::after {
   .brut-table--responsive thead { display: none; }
   .brut-table--responsive,
   .brut-table--responsive tbody,
-  .brut-table--responsive tr,
-  .brut-table--responsive td { display: block; width: 100%; }
+  .brut-table--responsive tr { display: block; width: 100%; }
   .brut-table--responsive tr {
     border: var(--bw-3) solid var(--ink);
     box-shadow: var(--shadow-sm);
@@ -3069,6 +3174,8 @@ button.brut-sidebar__group-title::after {
     margin-bottom: var(--sp-3);
   }
   .brut-table--responsive td {
+    display: block;
+    width: 100%;
     padding: var(--sp-3) var(--sp-4);
     border: 0;
     border-top: var(--bw-1) solid var(--concrete-200);
@@ -3119,6 +3226,132 @@ button.brut-sidebar__group-title::after {
 .brut-theme-switcher__btn:hover { background: var(--concrete-50); }
 .brut-theme-switcher__btn--on { background: var(--ink); color: var(--paper); }
 .brut-theme-switcher__btn--on:hover { background: var(--ink); color: var(--paper); }
+/* Honour prefers-reduced-motion: disable transitions and animations on motion-driven components. */
+@media (prefers-reduced-motion: reduce) {
+  .brut-link,
+  .brut-btn,
+  .brut-table__cell--sortable,
+  .brut-rows__item,
+  .brut-input,
+  .brut-switch__knob,
+  .brut-toast,
+  .brut-popover,
+  .brut-progress__bar,
+  .brut-tab--on,
+  .brut-drawer,
+  .brut-menu,
+  .brut-file__btn,
+  .brut-topnav__link,
+  .brut-sidebar__item,
+  .brut-footer__link,
+  .brut-crumbs__link,
+  .brut-pagination__btn,
+  .brut-theme-switcher__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* Skip-to-main-content link — visually hidden until keyboard focus reveals it. */
+.brut-skip-nav {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: var(--z-toast);
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font: inherit;
+}
+.brut-skip-nav:focus,
+.brut-skip-nav:focus-visible {
+  top: var(--sp-2);
+  left: var(--sp-2);
+}
+/* PRINT — hide interactive chrome and decorative ink-heavy elements; flatten overlays so their content stays accessible. */
+@media print {
+  /* Hide navigation and interactive chrome */
+  .brut-topnav,
+  .brut-sidebar,
+  .brut-toast-host,
+  .brut-toast,
+  .brut-spinner,
+  .brut-skeleton,
+  .brut-scrim,
+  .brut-skip-nav { display: none !important; }
+
+  /* Flatten overlays so their content prints inline if visible */
+  .brut-dialog,
+  .brut-drawer {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure tables print in full */
+  .brut-table-wrap { overflow: visible !important; }
+
+  /* Drop decorative shapes */
+  .brut-shape { display: none !important; }
+}
+/* High-contrast preference: bump border weights and disable softer shadows
+   so users with --prefers-contrast: more get a clearly delineated UI.
+   Uses existing tokens; no new design values introduced. */
+@media (prefers-contrast: more) {
+  :where(.brut-btn, .brut-input, .brut-textarea, .brut-select) {
+    border-width: var(--bw-4);
+  }
+  :where(.brut-card, .brut-empty, .brut-alert) {
+    border-width: var(--bw-3);
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline-width: var(--bw-3);
+  }
+}
+/* Windows High Contrast Mode (forced-colors: active):
+   the OS overrides most colors, so we map our visual contracts onto
+   system-color keywords and disable shadows that the OS can't render. */
+/* Sanctioned exception: system-color keywords (Highlight, GrayText) are CSS-defined and OS-resolved, not BRUT tokens. forced-colors mode requires them. */
+@media (forced-colors: active) {
+  :where(.brut-btn, .brut-input, .brut-select, .brut-textarea, .brut-card, .brut-alert, .brut-empty) {
+    forced-color-adjust: auto;
+    box-shadow: none;
+  }
+  :where(.brut-btn:focus-visible, .brut-input:focus-visible, .brut-textarea:focus-visible, .brut-select:focus-visible) {
+    outline: var(--bw-3) solid Highlight;
+  }
+  :where(.brut-btn:disabled, .brut-input:disabled, [aria-disabled="true"]) {
+    color: GrayText;
+  }
+}
+/* ============================================================
+   DOCS-ONLY UTILITIES
+   ------------------------------------------------------------
+   Classes prefixed `.docs-*` are scoped to docs/index.html and
+   are NOT part of the consumer-facing API. Do not document
+   these in component sections or expose them in dist/components.json.
+   ============================================================ */
+/* COMPONENT STATUS BADGES — beta / experimental flags rendered in docs/. */
+.docs-status {
+  display: inline-block;
+  margin-left: var(--sp-2);
+  padding: var(--sp-1);
+  border: var(--bw-1) solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.docs-status--beta {
+  background: var(--accent);
+  color: var(--ink);
+}
+.docs-status--experimental {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
 /* ============================================
    BRUT — Utility Classes
    Bootstrap-compatible naming. All values reference
