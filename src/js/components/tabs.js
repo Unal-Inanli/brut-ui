@@ -14,6 +14,8 @@
      Home / End              — focus & activate first / last */
 (function () {
   if (!window.Brut) return;
+  var tabIdCounter = 0;
+  var panelIdCounter = 0;
   Brut.register('tabs', {
     selector: '[data-brut="tabs"]',
     init: function (el) {
@@ -23,6 +25,8 @@
       if (panelRoot) {
         panelRoot.querySelectorAll('[data-brut-panel]').forEach(function (p) {
           panels[p.getAttribute('data-brut-panel')] = p;
+          p.setAttribute('role', 'tabpanel');
+          if (!p.id) p.id = 'brut-tabpanel-' + (++panelIdCounter);
         });
       }
 
@@ -49,6 +53,13 @@
       tabs().forEach(function (btn) {
         btn.setAttribute('type', 'button');
         btn.setAttribute('role', 'tab');
+        if (!btn.id) btn.id = 'brut-tab-' + (++tabIdCounter);
+        var key = btn.getAttribute('data-brut-tab');
+        var p = panels[key];
+        if (p) {
+          p.setAttribute('aria-labelledby', btn.id);
+          btn.setAttribute('aria-controls', p.id);
+        }
         btn.addEventListener('click', function () { activate(btn); });
       });
 
